@@ -1,0 +1,874 @@
+{
+    "url": "http://mongodb.com/docs/drivers/php/laravel-mongodb/v4.1",
+    "includeInGlobalSearch": false,
+    "documents": [
+        {
+            "slug": "issues-and-help",
+            "title": "Issues & Help",
+            "headings": [
+                "Bugs / Feature Requests",
+                "Pull Requests"
+            ],
+            "paragraphs": "We are lucky to have a vibrant PHP community that includes users of varying\nexperience with MongoDB PHP Library and Laravel MongoDB. To get support for\ngeneral questions, search or post in the\n MongoDB PHP Community Forums . To learn more about MongoDB support options, see the\n Technical Support  page. If you find a bug or want to see a new feature in Laravel MongoDB,\nplease report it as a GitHub issue in the  mongodb/laravel-mongodb  repository. If you want to contribute code, see the  Pull Requests  section\nfor instructions on submitting pull requests. To report a bug or request a new feature, perform the following steps: If you've identified a security vulnerability in any official MongoDB\nproduct, please report it according to the instructions found in the\n Create a Vulnerability Report page . For general questions and support requests, please use one of MongoDB's\n Technical Support  channels. Review the  GitHub issues list \nin the source repository and search for any existing issues that address your concern. If you find a matching issue, you can reply to the thread to report that\nyou have a similar issue or request. If you cannot find a matching issue, click  New issue  and select\nthe appropriate issue type. If you select \"Bug report\" or \"Feature request\" as the issue type, please provide as\nmuch information as possible about the issue. Click  Submit new issue \nto complete your submission. We are happy to accept contributions to help improve Laravel MongoDB. We track current development in  PHPORM \nMongoDB JIRA project. To learn more about contributing to this project, see the\n CONTRIBUTING.md \nguide on GitHub.",
+            "code": [],
+            "preview": "We are lucky to have a vibrant PHP community that includes users of varying\nexperience with MongoDB PHP Library and Laravel MongoDB. To get support for\ngeneral questions, search or post in the\nMongoDB PHP Community Forums.",
+            "tags": null,
+            "facets": null
+        },
+        {
+            "slug": "compatibility",
+            "title": "Compatibility",
+            "headings": [
+                "Laravel Compatibility"
+            ],
+            "paragraphs": "The following compatibility table specifies the versions of Laravel and\nLaravel MongoDB that you can use together. To find compatibility information for unmaintained versions of Laravel MongoDB,\nsee  Laravel Version Compatibility \non GitHub. Laravel MongoDB Version Laravel 10.x Laravel 9.x 4.1 \u2713 4.0 \u2713",
+            "code": [],
+            "preview": "The following compatibility table specifies the versions of Laravel and\nLaravel MongoDB that you can use together.",
+            "tags": null,
+            "facets": {
+                "genre": [
+                    "reference"
+                ]
+            }
+        },
+        {
+            "slug": "quick-start",
+            "title": "Quick Start",
+            "headings": [
+                "Overview"
+            ],
+            "paragraphs": "This guide shows you how to add the Laravel MongoDB package to a new Laravel web\napplication, connect to a MongoDB cluster hosted on MongoDB Atlas, and perform\nread and write operations on the data. Laravel MongoDB extends the Laravel Eloquent and Query Builder syntax to\nstore and retrieve data from MongoDB. MongoDB Atlas is a fully managed cloud database service that hosts your\nMongoDB deployments. You can create your own free (no credit card\nrequired) MongoDB Atlas deployment by following the steps in this guide. Follow the steps in this guide to create a sample Laravel web application\nthat connects to a MongoDB deployment. If you prefer to set up your development environment in GitHub Codespaces\nor Docker, see the linked code repository in the\n How to Build a Laravel + MongoDB Back End Service \nMongoDB Developer Center tutorial. You can learn how to set up a local Laravel development environment\nand perform CRUD operations by viewing the\n Getting Started with Laravel and MongoDB \nMongoDB University Learning Byte. If you prefer to connect to MongoDB by using the PHP Library driver without\nLaravel, see  Connecting to MongoDB \nin the PHP Library documentation. You can download the complete web application project by cloning the\n laravel-quickstart \nGitHub repository.",
+            "code": [],
+            "preview": "This guide shows you how to add the Laravel MongoDB package to a new Laravel web\napplication, connect to a MongoDB cluster hosted on MongoDB Atlas, and perform\nread and write operations on the data.",
+            "tags": "php framework, odm",
+            "facets": {
+                "genre": [
+                    "tutorial"
+                ]
+            }
+        },
+        {
+            "slug": "upgrade",
+            "title": "Upgrade Library Version",
+            "headings": [
+                "Overview",
+                "How to Upgrade",
+                "Breaking Changes",
+                "Version 4.x Breaking Changes"
+            ],
+            "paragraphs": "On this page, you can learn how to upgrade Laravel MongoDB to a new major version.\nThis page also includes the changes you must make to your application to upgrade\nyour object-document mapper (ODM) version without losing functionality, if applicable. Before you upgrade, perform the following actions: To upgrade your library version, run the following command in your application's\ndirectory: To upgrade to a different version of the library, replace the information after\n laravel-mongodb:  with your preferred version number. Ensure the new library version is compatible with the MongoDB Server version\nyour application connects to and the version of Laravel that your\napplication runs on. See the  Compatibility \npage for this information. Address any breaking changes between the version of Laravel MongoDB that\nyour application currently uses and your planned upgrade version in the\n Breaking Changes  section of this guide. A breaking change is a modification in a convention or behavior in\na specific version of Laravel MongoDB that might prevent your application\nfrom working as expected. The breaking changes in this section are categorized by the major\nversion releases that introduced them. When upgrading library versions,\naddress all the breaking changes between your current version and the\nplanned upgrade version. This library version introduces the following breaking changes: Minimum Laravel version is now 10.0. For instructions on upgrading your Laravel version,\nsee the  Upgrade Guide  in the Laravel\ndocumentation. Dependency name is now  \"mongodb/laravel-mongodb\" . Ensure that the dependency\nname in your  composer.json  file is  \"mongodb/laravel-mongodb\": \"^4.0\" . Then, run\n composer update . Namespace is now  MongoDB\\Laravel\\ . Ensure that you change the namespace from  Jenssegers\\Mongodb\\ \nto  MongoDB\\Laravel\\  in your models and config files. Removes support for non-Laravel projects. Removes support for the  $dates  property. Ensure that you change all instances of  $dates \nto  $casts  in your model files. Model::unset($field)  does not persist the change. Ensure that you follow all calls to\n Model::unset($field)  with  Model::save() . Removes the  Query\\Builder::whereAll($column, $values)  method. Ensure that you replace all calls\nto  Query\\Builder::whereAll($column, $values)  with  Query\\Builder::where($column, 'all', $values) . Query\\Builder::delete()  can delete one or all documents. Ensure that you pass only the values\n 1  or  null  to  limit() . whereDate() ,  whereDay() ,  whereMonth() ,  whereYear() , and  whereTime()  methods\nnow use MongoDB operators on date fields. Adds the  MongoDB\\Laravel\\Eloquent\\MassPrunable  trait. Ensure that you replace all instances of\n Illuminate\\Database\\Eloquent\\MassPrunable  with  MongoDB\\Laravel\\Eloquent\\MassPrunable \nin your models. Removes support for the following  Query\\Builder  methods: toSql() toRawSql() whereColumn() whereFullText() groupByRaw() orderByRaw() unionAll() union() having() havingRaw() havingBetween() whereIntegerInRaw() orWhereIntegerInRaw() whereIntegerNotInRaw() orWhereIntegerNotInRaw()",
+            "code": [
+                {
+                    "lang": "bash",
+                    "value": "composer require mongodb/laravel-mongodb:4.1"
+                }
+            ],
+            "preview": "On this page, you can learn how to upgrade Laravel MongoDB to a new major version.\nThis page also includes the changes you must make to your application to upgrade\nyour object-document mapper (ODM) version without losing functionality, if applicable.",
+            "tags": "php framework, odm, code example",
+            "facets": {
+                "genre": [
+                    "tutorial"
+                ]
+            }
+        },
+        {
+            "slug": "eloquent-models",
+            "title": "Eloquent Models",
+            "headings": [
+                "Extending the base model",
+                "Soft Deletes",
+                "Prunable",
+                "Dates",
+                "Extending the Authenticatable base model",
+                "Guarding attributes",
+                "Schema",
+                "Basic Usage",
+                "Geospatial indexes",
+                "Relationships",
+                "Basic Usage",
+                "belongsToMany and pivots",
+                "EmbedsMany Relationship",
+                "EmbedsOne Relationship",
+                "Cross-Database Relationships"
+            ],
+            "paragraphs": "This package includes a MongoDB enabled Eloquent class that you can use to\ndefine models for corresponding collections. To get started, create a new model class in your  app\\Models\\  directory. Just like a regular model, the MongoDB model class will know which collection\nto use based on the model name. For  Book , the collection  books  will\nbe used. To change the collection, pass the  $collection  property: Likewise, you may define a  connection  property to override the name of the\ndatabase connection to reference the model. MongoDB documents are automatically stored with a unique ID that is stored\nin the  _id  property. If you wish to use your own ID, substitute the\n $primaryKey  property and set it to your own primary key attribute name. When soft deleting a model, it is not actually removed from your database.\nInstead, a  deleted_at  timestamp is set on the record. To enable soft delete for a model, apply the  MongoDB\\Laravel\\Eloquent\\SoftDeletes \nTrait to the model: For more information check  Laravel Docs about Soft Deleting . Prunable  and  MassPrunable  traits are Laravel features to automatically\nremove models from your database. You can use  Illuminate\\Database\\Eloquent\\Prunable \ntrait to remove models one by one. If you want to remove models in bulk, you\nmust use the  MongoDB\\Laravel\\Eloquent\\MassPrunable  trait instead: it\nwill be more performant but can break links with other documents as it does\nnot load the models. For more information check  Laravel Docs about Pruning Models . Eloquent allows you to work with Carbon or DateTime objects instead of MongoDate objects. Internally, these dates will be converted to MongoDate objects when saved to the database. This allows you to execute queries like this: This package includes a MongoDB Authenticatable Eloquent class  MongoDB\\Laravel\\Auth\\User \nthat you can use to replace the default Authenticatable class  Illuminate\\Foundation\\Auth\\User \nfor your  User  model. When choosing between guarding attributes or marking some as fillable, Taylor\nOtwell prefers the fillable route.  This is in light of\n recent security issues described here . Keep in mind guarding still works, but you may experience unexpected behavior. The database driver also has (limited) schema builder support. You can\nconveniently manipulate collections and set indexes. You can also pass all the parameters specified  in the MongoDB docs \nto the  $options  parameter: Inherited operations: MongoDB specific operations: All other (unsupported) operations are implemented as dummy pass-through\nmethods because MongoDB does not use a predefined schema. Read more about the schema builder on  Laravel Docs create and drop collection hasCollection index and dropIndex (compound indexes supported as well) unique background sparse expire geospatial Geospatial indexes can improve query performance of location-based documents. They come in two forms:  2d  and  2dsphere . Use the schema builder to add\nthese to a collection. To add a  2dsphere  index: The only available relationships are: The MongoDB-specific relationships are: Here is a small example: The inverse relation of  hasMany  is  belongsTo : hasOne hasMany belongsTo belongsToMany embedsOne embedsMany The belongsToMany relation will not use a pivot \"table\" but will push id's to\na  related_ids  attribute instead. This makes the second parameter for the\nbelongsToMany method useless. If you want to define custom keys for your relation, set it to  null : If you want to embed models, rather than referencing them, you can use the\n embedsMany  relation. This relation is similar to the  hasMany  relation\nbut embeds the models inside the parent object. REMEMBER  : These relations return Eloquent collections, they don't return\nquery builder objects! You can access the embedded models through the dynamic property: The inverse relation is auto  magically  available. You can omit the reverse\nrelation definition. Inserting and updating embedded models works similar to the  hasMany  relation: You can update embedded models using their  save  method (available since\nrelease 2.0.0): You can remove an embedded model by using the  destroy  method on the\nrelation, or the  delete  method on the model (available since release 2.0.0): If you want to add or remove an embedded model, without touching the database,\nyou can use the  associate  and  dissociate  methods. To eventually write the changes to the database, save the parent object: Like other relations, embedsMany assumes the local key of the relationship\nbased on the model name. You can override the default local key by passing a\nsecond argument to the embedsMany method: Embedded relations will return a Collection of embedded items instead of a\nquery builder. Check out the available operations here:\n https://laravel.com/docs/master/collections The embedsOne relation is similar to the embedsMany relation, but only embeds a single model. You can access the embedded models through the dynamic property: Inserting and updating embedded models works similar to the  hasOne  relation: You can update the embedded model using the  save  method (available since\nrelease 2.0.0): You can replace the embedded model with a new model like this: If you're using a hybrid MongoDB and SQL setup, you can define relationships\nacross them. The model will automatically return a MongoDB-related or SQL-related relation\nbased on the type of the related model. If you want this functionality to work both ways, your SQL-models will need\nto use the  MongoDB\\Laravel\\Eloquent\\HybridRelations  trait. This functionality only works for ``hasOne``, ``hasMany`` and ``belongsTo``. The SQL model must use the  HybridRelations  trait: Within your MongoDB model, you must define the following relationship:",
+            "code": [
+                {
+                    "lang": "php",
+                    "value": "namespace App\\Models;\n\nuse MongoDB\\Laravel\\Eloquent\\Model;\n\nclass Book extends Model\n{\n    //\n}"
+                },
+                {
+                    "lang": "php",
+                    "value": "use MongoDB\\Laravel\\Eloquent\\Model;\n\nclass Book extends Model\n{\n    protected $collection = 'my_books_collection';\n}"
+                },
+                {
+                    "lang": "php",
+                    "value": "use MongoDB\\Laravel\\Eloquent\\Model;\n\nclass Book extends Model\n{\n    protected $primaryKey = 'id';\n}\n\n// MongoDB will also create _id, but the 'id' property will be used for primary key actions like find().\nBook::create(['id' => 1, 'title' => 'The Fault in Our Stars']);"
+                },
+                {
+                    "lang": "php",
+                    "value": "use MongoDB\\Laravel\\Eloquent\\Model;\n\nclass Book extends Model\n{\n    protected $connection = 'mongodb';\n}"
+                },
+                {
+                    "lang": "php",
+                    "value": "use MongoDB\\Laravel\\Eloquent\\SoftDeletes;\n\nclass User extends Model\n{\n    use SoftDeletes;\n}"
+                },
+                {
+                    "lang": "php",
+                    "value": "use MongoDB\\Laravel\\Eloquent\\Model;\nuse MongoDB\\Laravel\\Eloquent\\MassPrunable;\n\nclass Book extends Model\n{\n    use MassPrunable;\n}"
+                },
+                {
+                    "lang": "php",
+                    "value": "use MongoDB\\Laravel\\Eloquent\\Model;\n\nclass User extends Model\n{\n    protected $casts = ['birthday' => 'datetime'];\n}"
+                },
+                {
+                    "lang": "php",
+                    "value": "$users = User::where(\n    'birthday', '>',\n    new DateTime('-18 years')\n)->get();"
+                },
+                {
+                    "lang": "php",
+                    "value": "use MongoDB\\Laravel\\Auth\\User as Authenticatable;\n\nclass User extends Authenticatable\n{\n\n}"
+                },
+                {
+                    "lang": "php",
+                    "value": "Schema::create('users', function ($collection) {\n    $collection->index('name');\n    $collection->unique('email');\n});"
+                },
+                {
+                    "lang": "php",
+                    "value": "Schema::create('users', function ($collection) {\n    $collection->index(\n        'username',\n        null,\n        null,\n        [\n            'sparse' => true,\n            'unique' => true,\n            'background' => true,\n        ]\n    );\n});"
+                },
+                {
+                    "lang": "php",
+                    "value": "Schema::create('bars', function ($collection) {\n    $collection->geospatial('location', '2d');\n});"
+                },
+                {
+                    "lang": "php",
+                    "value": "Schema::create('bars', function ($collection) {\n    $collection->geospatial('location', '2dsphere');\n});"
+                },
+                {
+                    "lang": "php",
+                    "value": "use MongoDB\\Laravel\\Eloquent\\Model;\n\nclass User extends Model\n{\n    public function items()\n    {\n        return $this->hasMany(Item::class);\n    }\n}"
+                },
+                {
+                    "lang": "php",
+                    "value": "use MongoDB\\Laravel\\Eloquent\\Model;\n\nclass Item extends Model\n{\n    public function user()\n    {\n        return $this->belongsTo(User::class);\n    }\n}"
+                },
+                {
+                    "lang": "php",
+                    "value": "use MongoDB\\Laravel\\Eloquent\\Model;\n\nclass User extends Model\n{\n    public function groups()\n    {\n        return $this->belongsToMany(\n            Group::class, null, 'user_ids', 'group_ids'\n        );\n    }\n}"
+                },
+                {
+                    "lang": "php",
+                    "value": "use MongoDB\\Laravel\\Eloquent\\Model;\n\nclass User extends Model\n{\n    public function books()\n    {\n        return $this->embedsMany(Book::class);\n    }\n}"
+                },
+                {
+                    "lang": "php",
+                    "value": "$user = User::first();\n\nforeach ($user->books as $book) {\n    //\n}"
+                },
+                {
+                    "lang": "php",
+                    "value": "$book = User::first()->books()->first();\n\n$user = $book->user;"
+                },
+                {
+                    "lang": "php",
+                    "value": "$book = $user->books()->save(\n    new Book(['title' => 'A Game of Thrones'])\n);\n\n// or\n$book =\n    $user->books()\n         ->create(['title' => 'A Game of Thrones']);"
+                },
+                {
+                    "lang": "php",
+                    "value": "$book = $user->books()->first();\n\n$book->title = 'A Game of Thrones';\n$book->save();"
+                },
+                {
+                    "lang": "php",
+                    "value": "$book->delete();\n\n// Similar operation\n$user->books()->destroy($book);"
+                },
+                {
+                    "lang": "php",
+                    "value": "$user->books()->associate($book);\n$user->save();"
+                },
+                {
+                    "lang": "php",
+                    "value": "use MongoDB\\Laravel\\Eloquent\\Model;\n\nclass User extends Model\n{\n    public function books()\n    {\n        return $this->embedsMany(Book::class, 'local_key');\n    }\n}"
+                },
+                {
+                    "lang": "php",
+                    "value": "use MongoDB\\Laravel\\Eloquent\\Model;\n\nclass Book extends Model\n{\n    public function author()\n    {\n        return $this->embedsOne(Author::class);\n    }\n}"
+                },
+                {
+                    "lang": "php",
+                    "value": "$book = Book::first();\n$author = $book->author;"
+                },
+                {
+                    "lang": "php",
+                    "value": "$author = $book->author()->save(\n    new Author(['name' => 'John Doe'])\n);\n\n// Similar\n$author =\n    $book->author()\n         ->create(['name' => 'John Doe']);"
+                },
+                {
+                    "lang": "php",
+                    "value": "$author = $book->author;\n\n$author->name = 'Jane Doe';\n$author->save();"
+                },
+                {
+                    "lang": "php",
+                    "value": "$newAuthor = new Author(['name' => 'Jane Doe']);\n\n$book->author()->save($newAuthor);"
+                },
+                {
+                    "lang": "php",
+                    "value": "use MongoDB\\Laravel\\Eloquent\\HybridRelations;\n\nclass User extends Model\n{\n    use HybridRelations;\n\n    protected $connection = 'mysql';\n\n    public function messages()\n    {\n        return $this->hasMany(Message::class);\n    }\n}"
+                },
+                {
+                    "lang": "php",
+                    "value": "use MongoDB\\Laravel\\Eloquent\\Model;\n\nclass Message extends Model\n{\n    protected $connection = 'mongodb';\n\n    public function user()\n    {\n        return $this->belongsTo(User::class);\n    }\n}"
+                }
+            ],
+            "preview": "This package includes a MongoDB enabled Eloquent class that you can use to\ndefine models for corresponding collections.",
+            "tags": "php framework, odm, code example",
+            "facets": {
+                "genre": [
+                    "tutorial"
+                ]
+            }
+        },
+        {
+            "slug": "",
+            "title": "Laravel MongoDB",
+            "headings": [
+                "Introduction",
+                "Quick Start",
+                "Fundamentals",
+                "Issues & Help",
+                "Compatibility",
+                "Upgrade Versions"
+            ],
+            "paragraphs": "Welcome to the documentation site for the official Laravel MongoDB package.\nThis package extends methods in the PHP Laravel API to work with MongoDB as\na datastore in your Laravel application. Laravel MongoDB allows you to use\nLaravel Eloquent and Query Builder syntax to work with your MongoDB data. This documentation describes the  mongodb/laravel-mongodb  package,\nformerly named  jenssegers/mongodb . This package is now owned and\nmaintained by MongoDB, Inc. and is compatible with Laravel 10.x and\nlater. Learn how to add Laravel MongoDB to a Laravel web application, connect to\nMongoDB hosted on MongoDB Atlas, and begin working with data in the\n Quick Start  section. To learn how to perform the following tasks by using the Laravel MongoDB,\nsee the following content: Retrieve Data Eloquent Models Query Builder User authentication Queues Transactions Learn how to report bugs, contribute to the library, and find\nmore resources in the  Issues & Help  section. To learn more about which versions of the Laravel MongoDB package and Laravel are\ncompatible, see the  Compatibility  section. Learn what changes you might need to make to your application to upgrade\nversions in the  Upgrade Library Version  section.",
+            "code": [],
+            "preview": "Welcome to the documentation site for the official Laravel MongoDB package.\nThis package extends methods in the PHP Laravel API to work with MongoDB as\na datastore in your Laravel application. Laravel MongoDB allows you to use\nLaravel Eloquent and Query Builder syntax to work with your MongoDB data.",
+            "tags": "php framework, odm, eloquent, query builder",
+            "facets": {
+                "genre": [
+                    "reference"
+                ]
+            }
+        },
+        {
+            "slug": "query-builder",
+            "title": "Query Builder",
+            "headings": [
+                "Available operations",
+                "MongoDB-specific operators",
+                "MongoDB-specific Geo operations",
+                "Inserts, updates and deletes",
+                "MongoDB specific operations"
+            ],
+            "paragraphs": "The database driver plugs right into the original query builder. When using MongoDB connections, you will be able to build fluent queries to\nperform database operations. For your convenience, there is a  collection  alias for  table  and\nother MongoDB specific operators/operations. If you are familiar with  Eloquent Queries ,\nthere is the same functionality. Retrieving all models Retrieving a record by primary key Where OR Statements AND statements NOT statements whereIn When using  whereNotIn  objects will be returned if the field is\nnon-existent. Combine with  whereNotNull('age')  to omit those documents. whereBetween whereNull whereDate The usage is the same as  whereMonth  /  whereDay  /  whereYear  /  whereTime Advanced wheres orderBy Offset & Limit (skip & take) groupBy Selected columns that are not grouped will be aggregated with the  $last \nfunction. Distinct Distinct requires a field for which to return the distinct values. Distinct can be combined with  where : Like Aggregation Aggregations are only available for MongoDB versions greater than 2.2.x Aggregations can be combined with  where : Aggregations can be also used on sub-documents: Incrementing/Decrementing the value of a column Perform increments or decrements (default 1) on specified attributes: The number of updated objects is returned: You may also specify more columns to update: This aggregation only works with single sub-documents (like  EmbedsOne )\nnot subdocument arrays (like  EmbedsMany ). In addition to the Laravel Eloquent operators, all available MongoDB query\noperators can be used with  where : It generates the following MongoDB filter: Exists Matches documents that have the specified field. All Matches arrays that contain all elements specified in the query. Size Selects documents if the array field is a specified size. Regex Selects documents where values match a specified regular expression. The inverse of regexp: ElemMatch The  $elemMatch  operator\nmatches documents that contain an array field with at least one element that\nmatches all the specified query criteria. The following query matches only those documents where the results array\ncontains at least one element that is both greater than or equal to 80 and\nis less than 85: A closure can be used to create more complex sub-queries. The following query matches only those documents where the results array\ncontains at least one element with both product equal to \"xyz\" and score\ngreater than or equal to 8: Type Selects documents if a field is of the specified type. For more information\ncheck:  $type  in the\nMongoDB Server documentation. Mod Performs a modulo operation on the value of a field and selects documents with\na specified result. You can also use the Laravel regexp operations. These will automatically\nconvert your regular expression string to a  MongoDB\\BSON\\Regex  object. Near GeoWithin GeoIntersects GeoNear You can make a  geoNear  query on MongoDB.\nYou can omit specifying the automatic fields on the model.\nThe returned instance is a collection, so you can call the  Collection  operations.\nMake sure that your model has a  location  field, and a\n 2ndSphereIndex .\nThe data in the  location  field must be saved as  GeoJSON .\nThe  location  points must be saved as  WGS84 \nreference system for geometry calculation. That means that you must\nsave  longitude and latitude , in that order specifically, and to find near\nwith calculated distance, you  must do the same way . Inserting, updating and deleting records works just like the original Eloquent.\nPlease check  Laravel Docs' Eloquent section . Here, only the MongoDB-specific operations are specified. Raw Expressions These expressions will be injected directly into the query. You can also perform raw expressions on the internal MongoCollection object.\nIf this is executed on the model class, it will return a collection of models. If this is executed on the query builder, it will return the original response. Cursor timeout To prevent  MongoCursorTimeout  exceptions, you can manually set a timeout\nvalue that will be applied to the cursor: Upsert Update or insert a document. Other options for the update method can be\npassed directly to the native update method. Projections You can apply projections to your queries using the  project  method. Projections with Pagination Push Add items to an array. If you  DON'T  want duplicate items, set the third parameter to  true : Pull Remove an item from an array. Unset Remove one or more fields from a document. Using the native  unset  on models will work as well:",
+            "code": [
+                {
+                    "lang": "php",
+                    "value": "$books = DB::collection('books')->get();\n\n$hungerGames =\n    DB::collection('books')\n        ->where('name', 'Hunger Games')\n        ->first();"
+                },
+                {
+                    "lang": "php",
+                    "value": "$users = User::all();"
+                },
+                {
+                    "lang": "php",
+                    "value": "$user = User::find('517c43667db388101e00000f');"
+                },
+                {
+                    "lang": "php",
+                    "value": "$posts =\n    Post::where('author.name', 'John')\n        ->take(10)\n        ->get();"
+                },
+                {
+                    "lang": "php",
+                    "value": "$posts =\n    Post::where('votes', '>', 0)\n        ->orWhere('is_approved', true)\n        ->get();"
+                },
+                {
+                    "lang": "php",
+                    "value": "$users =\n    User::where('age', '>', 18)\n        ->where('name', '!=', 'John')\n        ->get();"
+                },
+                {
+                    "lang": "php",
+                    "value": "$users = User::whereNot('age', '>', 18)->get();"
+                },
+                {
+                    "lang": "php",
+                    "value": "$users = User::whereIn('age', [16, 18, 20])->get();"
+                },
+                {
+                    "lang": "php",
+                    "value": "$posts = Post::whereBetween('votes', [1, 100])->get();"
+                },
+                {
+                    "lang": "php",
+                    "value": "$users = User::whereNull('age')->get();"
+                },
+                {
+                    "lang": "php",
+                    "value": "$users = User::whereDate('birthday', '2021-5-12')->get();"
+                },
+                {
+                    "lang": "php",
+                    "value": "$users =\n    User::where('name', 'John')\n        ->orWhere(function ($query) {\n            return $query\n                ->where('votes', '>', 100)\n                ->where('title', '<>', 'Admin');\n        })->get();"
+                },
+                {
+                    "lang": "php",
+                    "value": "$users = User::orderBy('age', 'desc')->get();"
+                },
+                {
+                    "lang": "php",
+                    "value": "$users =\n    User::skip(10)\n        ->take(5)\n        ->get();"
+                },
+                {
+                    "lang": "php",
+                    "value": "$users =\n    Users::groupBy('title')\n        ->get(['title', 'name']);"
+                },
+                {
+                    "lang": "php",
+                    "value": "$users = User::distinct()->get(['name']);\n\n// Equivalent to:\n$users = User::distinct('name')->get();"
+                },
+                {
+                    "lang": "php",
+                    "value": "$users =\n    User::where('active', true)\n        ->distinct('name')\n        ->get();"
+                },
+                {
+                    "lang": "php",
+                    "value": "$spamComments = Comment::where('body', 'like', '%spam%')->get();"
+                },
+                {
+                    "lang": "php",
+                    "value": "$total = Product::count();\n$price = Product::max('price');\n$price = Product::min('price');\n$price = Product::avg('price');\n$total = Product::sum('price');"
+                },
+                {
+                    "lang": "php",
+                    "value": "$sold = Orders::where('sold', true)->sum('price');"
+                },
+                {
+                    "lang": "php",
+                    "value": "$total = Order::max('suborder.price');"
+                },
+                {
+                    "lang": "php",
+                    "value": "Cat::where('name', 'Kitty')->increment('age');\n\nCar::where('name', 'Toyota')->decrement('weight', 50);"
+                },
+                {
+                    "lang": "php",
+                    "value": "$count = User::increment('age');"
+                },
+                {
+                    "lang": "php",
+                    "value": "Cat::where('age', 3)\n    ->increment('age', 1, ['group' => 'Kitty Club']);\n\nCar::where('weight', 300)\n    ->decrement('weight', 100, ['latest_change' => 'carbon fiber']);"
+                },
+                {
+                    "lang": "php",
+                    "value": "User::where($fieldName, $operator, $value)->get();"
+                },
+                {
+                    "lang": "ts",
+                    "value": "{ $fieldName: { $operator: $value } }"
+                },
+                {
+                    "lang": "php",
+                    "value": "User::where('age', 'exists', true)->get();"
+                },
+                {
+                    "lang": "php",
+                    "value": "User::where('roles', 'all', ['moderator', 'author'])->get();"
+                },
+                {
+                    "lang": "php",
+                    "value": "Post::where('tags', 'size', 3)->get();"
+                },
+                {
+                    "lang": "php",
+                    "value": "use MongoDB\\BSON\\Regex;\n\nUser::where('name', 'regex', new Regex('.*doe', 'i'))->get();"
+                },
+                {
+                    "lang": "php",
+                    "value": "User::where('name', 'regexp', '/.*doe/i')->get();"
+                },
+                {
+                    "lang": "php",
+                    "value": "User::where('name', 'not regexp', '/.*doe/i')->get();"
+                },
+                {
+                    "lang": "php",
+                    "value": "User::where('results', 'elemMatch', ['gte' => 80, 'lt' => 85])->get();"
+                },
+                {
+                    "lang": "php",
+                    "value": "User::where('results', 'elemMatch', function (Builder $builder) {\n    $builder\n        ->where('product', 'xyz')\n        ->andWhere('score', '>', 50);\n})->get();"
+                },
+                {
+                    "lang": "php",
+                    "value": "User::where('age', 'type', 2)->get();"
+                },
+                {
+                    "lang": "php",
+                    "value": "User::where('age', 'mod', [10, 0])->get();"
+                },
+                {
+                    "lang": "php",
+                    "value": "$bars = Bar::where('location', 'near', [\n    '$geometry' => [\n        'type' => 'Point',\n        'coordinates' => [\n            -0.1367563, // longitude\n            51.5100913, // latitude\n        ],\n    ],\n    '$maxDistance' => 50,\n])->get();"
+                },
+                {
+                    "lang": "php",
+                    "value": "$bars = Bar::where('location', 'geoWithin', [\n    '$geometry' => [\n        'type' => 'Polygon',\n        'coordinates' => [\n            [\n                [-0.1450383, 51.5069158],\n                [-0.1367563, 51.5100913],\n                [-0.1270247, 51.5013233],\n                [-0.1450383, 51.5069158],\n            ],\n        ],\n    ],\n])->get();"
+                },
+                {
+                    "lang": "php",
+                    "value": "$bars = Bar::where('location', 'geoIntersects', [\n    '$geometry' => [\n        'type' => 'LineString',\n        'coordinates' => [\n            [-0.144044, 51.515215],\n            [-0.129545, 51.507864],\n        ],\n    ],\n])->get();"
+                },
+                {
+                    "lang": null,
+                    "value": "Bar::find(\"63a0cd574d08564f330ceae2\")->update(\n    [\n        'location' => [\n            'type' => 'Point',\n            'coordinates' => [\n                -0.1367563,\n                51.5100913\n            ]\n        ]\n    ]\n);\n$bars = Bar::raw(function ($collection) {\n    return $collection->aggregate([\n        [\n            '$geoNear' => [\n                \"near\" => [ \"type\" =>  \"Point\", \"coordinates\" =>  [-0.132239, 51.511874] ],\n                \"distanceField\" =>  \"dist.calculated\",\n                \"minDistance\" =>  0,\n                \"maxDistance\" =>  6000,\n                \"includeLocs\" =>  \"dist.location\",\n                \"spherical\" =>  true,\n            ]\n        ]\n    ]);\n});"
+                },
+                {
+                    "lang": "php",
+                    "value": "User::whereRaw([\n    'age' => ['$gt' => 30, '$lt' => 40],\n])->get();\n\nUser::whereRaw([\n    '$where' => '/.*123.*/.test(this.field)',\n])->get();\n\nUser::whereRaw([\n    '$where' => '/.*123.*/.test(this[\"hyphenated-field\"])',\n])->get();"
+                },
+                {
+                    "lang": "php",
+                    "value": "DB::collection('users')->timeout(-1)->get();"
+                },
+                {
+                    "lang": "php",
+                    "value": "// Query Builder\nDB::collection('users')\n    ->where('name', 'John')\n    ->update($data, ['upsert' => true]);\n\n// Eloquent\n$user->update($data, ['upsert' => true]);"
+                },
+                {
+                    "lang": "php",
+                    "value": "DB::collection('items')\n    ->project(['tags' => ['$slice' => 1]])\n    ->get();\n\nDB::collection('items')\n    ->project(['tags' => ['$slice' => [3, 7]]])\n    ->get();"
+                },
+                {
+                    "lang": "php",
+                    "value": "$limit = 25;\n$projections = ['id', 'name'];\n\nDB::collection('items')\n    ->paginate($limit, $projections);"
+                },
+                {
+                    "lang": "php",
+                    "value": "DB::collection('users')\n    ->where('name', 'John')\n    ->push('items', 'boots');\n\n$user->push('items', 'boots');"
+                },
+                {
+                    "lang": "php",
+                    "value": "DB::collection('users')\n    ->where('name', 'John')\n    ->push('messages', [\n        'from' => 'Jane Doe',\n        'message' => 'Hi John',\n    ]);\n\n$user->push('messages', [\n    'from' => 'Jane Doe',\n    'message' => 'Hi John',\n]);"
+                },
+                {
+                    "lang": "php",
+                    "value": "DB::collection('users')\n    ->where('name', 'John')\n    ->push('items', 'boots', true);\n\n$user->push('items', 'boots', true);"
+                },
+                {
+                    "lang": "php",
+                    "value": "DB::collection('users')\n    ->where('name', 'John')\n    ->pull('items', 'boots');\n\n$user->pull('items', 'boots');"
+                },
+                {
+                    "lang": "php",
+                    "value": "DB::collection('users')\n    ->where('name', 'John')\n    ->pull('messages', [\n        'from' => 'Jane Doe',\n        'message' => 'Hi John',\n    ]);\n\n$user->pull('messages', [\n    'from' => 'Jane Doe',\n    'message' => 'Hi John',\n]);"
+                },
+                {
+                    "lang": "php",
+                    "value": "DB::collection('users')\n    ->where('name', 'John')\n    ->unset('note');\n\n$user->unset('note');\n\n$user->save();"
+                },
+                {
+                    "lang": "php",
+                    "value": "unset($user['note']);\nunset($user->node);"
+                }
+            ],
+            "preview": "The database driver plugs right into the original query builder.",
+            "tags": "php framework, odm, code example",
+            "facets": {
+                "genre": [
+                    "tutorial"
+                ]
+            }
+        },
+        {
+            "slug": "queues",
+            "title": "Queues",
+            "headings": [],
+            "paragraphs": "If you want to use MongoDB as your database backend for Laravel Queue, change\nthe driver in  config/queue.php : If you want to use MongoDB to handle failed jobs, change the database in\n config/queue.php : Add the service provider in  config/app.php :",
+            "code": [
+                {
+                    "lang": "php",
+                    "value": "'connections' => [\n    'database' => [\n        'driver' => 'mongodb',\n        // You can also specify your jobs specific database created on config/database.php\n        'connection' => 'mongodb-job',\n        'table' => 'jobs',\n        'queue' => 'default',\n        'expire' => 60,\n    ],\n],"
+                },
+                {
+                    "lang": "php",
+                    "value": "'failed' => [\n    'driver' => 'mongodb',\n    // You can also specify your jobs specific database created on config/database.php\n    'database' => 'mongodb-job',\n    'table' => 'failed_jobs',\n],"
+                },
+                {
+                    "lang": "php",
+                    "value": "MongoDB\\Laravel\\MongoDBQueueServiceProvider::class,"
+                }
+            ],
+            "preview": "If you want to use MongoDB as your database backend for Laravel Queue, change\nthe driver in config/queue.php:",
+            "tags": "php framework, odm, code example",
+            "facets": {
+                "genre": [
+                    "tutorial"
+                ]
+            }
+        },
+        {
+            "slug": "user-authentication",
+            "title": "User authentication",
+            "headings": [],
+            "paragraphs": "If you want to use Laravel's native Auth functionality, register this included\nservice provider: This service provider will slightly modify the internal  DatabaseReminderRepository \nto add support for MongoDB based password reminders. If you don't use password reminders, you can omit this service provider.",
+            "code": [
+                {
+                    "lang": "php",
+                    "value": "MongoDB\\Laravel\\Auth\\PasswordResetServiceProvider::class,"
+                }
+            ],
+            "preview": "If you want to use Laravel's native Auth functionality, register this included\nservice provider:",
+            "tags": "php framework, odm, code example",
+            "facets": {
+                "genre": [
+                    "tutorial"
+                ]
+            }
+        },
+        {
+            "slug": "retrieve",
+            "title": "Retrieve Data",
+            "headings": [
+                "Overview",
+                "Before You Get Started",
+                "Retrieve Documents that Match a Query",
+                "Use Eloquent Models to Retrieve Documents",
+                "Use Laravel Queries to Retrieve Documents",
+                "Retrieve All Documents in a Collection",
+                "Modify Behavior",
+                "Skip and Limit Results",
+                "Return the First Result"
+            ],
+            "paragraphs": "In this guide, you can learn how to use Laravel MongoDB to perform  find operations \non your MongoDB collections. Find operations allow you to retrieve documents based on\ncriteria that you specify. This guide shows you how to perform the following tasks: Retrieve Documents that Match a Query Retrieve All Documents in a Collection Modify Find Operation Behavior To run the code examples in this guide, complete the  Quick Start \ntutorial. This tutorial provides instructions on setting up a MongoDB Atlas instance with\nsample data and creating the following files in your Laravel web application: The following sections describe how to edit the files in your Laravel application to run\nthe find operation code examples and view the expected output. Movie.php  file, which contains a  Movie  model to represent documents in the  movies \ncollection MovieController.php  file, which contains a  show()  function to run database operations browse_movies.blade.php  file, which contains HTML code to display the results of database\noperations You can retrieve documents that match a set of criteria by passing a query filter to the  where() \nmethod. A query filter specifies field value requirements and instructs the find operation\nto only return documents that meet these requirements. To run the query, call the  where() \nmethod on an Eloquent model or query builder that represents your collection. You can use one of the following  where()  method calls to build a query: After building your query with the  where()  method, use the  get()  method to\nretrieve the query results. To apply multiple sets of criteria to the find operation, you can chain a series\nof  where()  methods together. where('<field name>', <value>) : builds a query that matches documents in which the\ntarget field has the exact specified value where('<field name>', '<comparison operator>', <value>) : builds a query that matches\ndocuments in which the target field's value meets the comparison criteria To learn more about other query methods in Laravel MongoDB, see the  Query Builder \npage. You can use Laravel's Eloquent object-relational mapper (ORM) to create models that represent\nMongoDB collections. To retrieve documents from a collection, call the  where()  method\non the collection's corresponding Eloquent model. This example calls two  where()  methods on the  Movie  Eloquent model to retrieve\ndocuments that meet the following criteria: year  field has a value of  2010 imdb.rating  nested field has a value greater than  8.5 Use the following syntax to specify the query: To see the query results in the  browse_movies  view, edit the  show()  function\nin the  MovieController.php  file to resemble the following code: You can use Laravel's database query builder to run find operations instead of using Eloquent\nmodels. To run the database query, import the  DB  facade into your controller file and use\nLaravel's query builder syntax. This example uses Laravel's query builder to retrieve documents in which the value\nof the  imdb.votes  nested field is  350 . Use the following syntax to specify the query: To see the query results in the  browse_movies  view, edit the  show()  function\nin the  MovieController.php  file to resemble the following code: Then, make the following changes to your Laravel Quick Start application: Import the  DB  facade into your  MovieController.php  file by adding the\n use Illuminate\\Support\\Facades\\DB  use statement Replace the contents of your  browse_movies.blade.php  file with the following code: Since the Laravel query builder returns data as an array rather than as instances of the Eloquent model class,\nthe view accesses the fields by using the array syntax instead of the  ->  object operator. You can retrieve all documents in a collection by omitting the query filter.\nTo return the documents, call the  get()  method on an Eloquent model that\nrepresents your collection. Alternatively, you can use the  get()  method's\nalias  all()  to perform the same operation. Use the following syntax to run a find operation that matches all documents: The  movies  collection in the Atlas sample dataset contains a large amount of data.\nRetrieving and displaying all documents in this collection might cause your web\napplication to time out. To avoid this issue, specify a document limit by using the  take()  method. For\nmore information about  take() , see the  Modify Behavior  section of this\nguide. You can modify the results of a find operation by chaining additional methods\nto  where() . The following sections demonstrate how to modify the behavior of the  where() \nmethod: Skip and Limit Results  uses the  skip()  method to set the number of documents\nto skip and the  take()  method to set the total number of documents to return Return the First Result  uses the  first()  method to return the first document\nthat matches the query filter This example queries for documents in which the  year  value is  1999 .\nThe operation skips the first  2  matching documents and outputs a total of  3 \ndocuments. Use the following syntax to specify the query: To see the query results in the  browse_movies  view, edit the  show()  function\nin the  MovieController.php  file to resemble the following code: To retrieve the first document that matches a set of criteria, use the  where()  method\nfollowed by the  first()  method. Chain the  orderBy()  method to  first()  to get consistent results when you query on a unique\nvalue. If you omit the  orderBy()  method, MongoDB returns the matching documents according to\nthe documents' natural order, or as they appear in the collection. This example queries for documents in which the value of the  runtime  field is\n 30  and returns the first matching document according to the value of the  _id \nfield. Use the following syntax to specify the query: To see the query results in the  browse_movies  view, edit the  show()  function\nin the  MovieController.php  file to resemble the following code: To learn more about sorting, see the following resources: Natural order \nin the Server manual glossary Ordering, Grouping, Limit and Offset \nin the Laravel documentation",
+            "code": [
+                {
+                    "lang": "php",
+                    "value": "$movies = Movie::where('year', 2010)\n    ->where('imdb.rating', '>', 8.5)\n    ->get();"
+                },
+                {
+                    "lang": "php",
+                    "value": "class MovieController\n{\n    public function show()\n    {\n         $movies = Movie::where('year', 2010)\n             ->where('imdb.rating', '>', 8.5)\n             ->get();\n\n         return view('browse_movies', [\n             'movies' => $movies\n         ]);\n    }\n}"
+                },
+                {
+                    "lang": "none",
+                    "value": "Title: Inception\nYear: 2010\nRuntime: 148\nIMDB Rating: 8.8\nIMDB Votes: 1294646\nPlot: A thief who steals corporate secrets through use of dream-sharing\ntechnology is given the inverse task of planting an idea into the mind of a CEO.\n\nTitle: Senna\nYear: 2010\nRuntime: 106\nIMDB Rating: 8.6\nIMDB Votes: 41904\nPlot: A documentary on Brazilian Formula One racing driver Ayrton Senna, who won the\nF1 world championship three times before his death at age 34."
+                },
+                {
+                    "lang": "php",
+                    "value": "$movies = DB::connection('mongodb')\n    ->collection('movies')\n    ->where('imdb.votes', 350)\n    ->get();"
+                },
+                {
+                    "lang": "php",
+                    "value": "class MovieController\n{\n    public function show()\n    {\n         $movies = DB::connection('mongodb')\n             ->collection('movies')\n             ->where('imdb.votes', 350)\n             ->get();\n\n         return view('browse_movies', [\n             'movies' => $movies\n         ]);\n    }\n}"
+                },
+                {
+                    "lang": "none",
+                    "value": "Title: Murder in New Hampshire: The Pamela Wojas Smart Story\nYear: 1991\nRuntime: 100\nIMDB Rating: 5.9\nIMDB Votes: 350\nPlot: Pamela Smart knows exactly what she wants and is willing to do\nanything to get it. She is fed up with teaching, and her marriage offers\nlittle excitement. Looking for a way out she applies ...\n\nTitle: Ah Fu\nYear: 2000\nRuntime: 105\nIMDB Rating: 6.6\nIMDB Votes: 350\nPlot: After a 13-year imprisonment in Hong Kong, a kickboxer challenges the\ncurrent champion in order to restore his honor.\n\nTitle: Bandage\nYear: 2010\nRuntime: 119\nIMDB Rating: 7\nIMDB Votes: 350\nPlot: Four boys have their friendship and musical talents tested in the ever\nchanging worlds of the music industry and real life in 1990s Japan.\n\nTitle: Great Migrations\nYear: 2010\nRuntime: 45\nIMDB Rating: 8.2\nIMDB Votes: 350\nPlot: Great Migrations takes viewers on the epic journeys animals undertake to\nensure the survival of their species."
+                },
+                {
+                    "lang": "php",
+                    "value": "<!DOCTYPE html>\n<html>\n<head>\n   <title>Browse Movies</title>\n</head>\n<body>\n<h2>Movies</h2>\n\n@forelse ($movies as $movie)\n<p>\n   Title: {{ $movie['title'] }}<br>\n   Year: {{ $movie['year'] }}<br>\n   Runtime: {{ $movie['runtime'] }}<br>\n   IMDB Rating: {{ $movie['imdb']['rating'] }}<br>\n   IMDB Votes: {{ $movie['imdb']['votes'] }}<br>\n   Plot: {{ $movie['plot'] }}<br>\n</p>\n@empty\n   <p>No results</p>\n@endforelse\n\n</body>\n</html>"
+                },
+                {
+                    "lang": "php",
+                    "value": "$movies = Movie::get();"
+                },
+                {
+                    "lang": "php",
+                    "value": "$movies = Movie::where('year', 1999)\n    ->skip(2)\n    ->take(3)\n    ->get();"
+                },
+                {
+                    "lang": "php",
+                    "value": "class MovieController\n{\n    public function show()\n    {\n         $movies = Movie::where('year', 1999)\n             ->skip(2)\n             ->take(3)\n             ->get();\n\n         return view('browse_movies', [\n             'movies' => $movies\n         ]);\n    }\n}"
+                },
+                {
+                    "lang": "none",
+                    "value": "Title: Three Kings\nYear: 1999\nRuntime: 114\nIMDB Rating: 7.2\nIMDB Votes: 130677\nPlot: In the aftermath of the Persian Gulf War, 4 soldiers set out to steal gold\nthat was stolen from Kuwait, but they discover people who desperately need their help.\n\nTitle: Toy Story 2\nYear: 1999\nRuntime: 92\nIMDB Rating: 7.9\nIMDB Votes: 346655\nPlot: When Woody is stolen by a toy collector, Buzz and his friends vow to rescue him,\nbut Woody finds the idea of immortality in a museum tempting.\n\nTitle: Beowulf\nYear: 1999\nRuntime: 95\nIMDB Rating: 4\nIMDB Votes: 9296\nPlot: A sci-fi update of the famous 6th Century poem. In a beseiged land, Beowulf must\nbattle against the hideous creature Grendel and his vengeance seeking mother."
+                },
+                {
+                    "lang": "php",
+                    "value": "$movies = Movie::where('runtime', 30)\n    ->orderBy('_id')\n    ->first();"
+                },
+                {
+                    "lang": "php",
+                    "value": "class MovieController\n{\n    public function show()\n    {\n        $movies = Movie::where('runtime', 30)\n            ->orderBy('_id')\n            ->first();\n\n        return view('browse_movies', [\n            'movies' => $movies\n        ]);\n    }\n}"
+                },
+                {
+                    "lang": "none",
+                    "value": "Title: Statues also Die\nYear: 1953\nRuntime: 30\nIMDB Rating: 7.6\nIMDB Votes: 620\nPlot: A documentary of black art."
+                }
+            ],
+            "preview": "In this guide, you can learn how to use Laravel MongoDB to perform find operations\non your MongoDB collections. Find operations allow you to retrieve documents based on\ncriteria that you specify.",
+            "tags": "find one, find many, code example",
+            "facets": {
+                "genre": [
+                    "tutorial"
+                ]
+            }
+        },
+        {
+            "slug": "transactions",
+            "title": "Transactions",
+            "headings": [
+                "Database Testing"
+            ],
+            "paragraphs": "MongoDB transactions require the following software and topology: You can find more information  in the MongoDB docs To abort a transaction, call the  rollBack  method at any point during the transaction: MongoDB version 4.0 or later A replica set deployment or sharded cluster Transactions in MongoDB cannot be nested. DB::beginTransaction() function\nwill start new transactions in a new created or existing session and will\nraise the RuntimeException when transactions already exist. See more in\nMongoDB official docs  Transactions and Sessions . For testing, the traits  Illuminate\\Foundation\\Testing\\DatabaseTransactions \nand  Illuminate\\Foundation\\Testing\\RefreshDatabase  are not yet supported.\nInstead, create migrations and use the  DatabaseMigrations  trait to reset\nthe database after each test:",
+            "code": [
+                {
+                    "lang": "php",
+                    "value": "DB::transaction(function () {\n    User::create(['name' => 'john', 'age' => 19, 'title' => 'admin', 'email' => 'john@example.com']);\n    DB::collection('users')->where('name', 'john')->update(['age' => 20]);\n    DB::collection('users')->where('name', 'john')->delete();\n});"
+                },
+                {
+                    "lang": "php",
+                    "value": "// begin a transaction\nDB::beginTransaction();\nUser::create(['name' => 'john', 'age' => 19, 'title' => 'admin', 'email' => 'john@example.com']);\nDB::collection('users')->where('name', 'john')->update(['age' => 20]);\nDB::collection('users')->where('name', 'john')->delete();\n\n// commit changes\nDB::commit();"
+                },
+                {
+                    "lang": "php",
+                    "value": "DB::beginTransaction();\nUser::create(['name' => 'john', 'age' => 19, 'title' => 'admin', 'email' => 'john@example.com']);\n\n// Abort the transaction, discarding any data created as part of it\nDB::rollBack();"
+                },
+                {
+                    "lang": "php",
+                    "value": "DB::beginTransaction();\nUser::create(['name' => 'john', 'age' => 20, 'title' => 'admin']);\n\n// This call to start a nested transaction will raise a RuntimeException\nDB::beginTransaction();\nDB::collection('users')->where('name', 'john')->update(['age' => 20]);\nDB::commit();\nDB::rollBack();"
+                },
+                {
+                    "lang": "php",
+                    "value": "use Illuminate\\Foundation\\Testing\\DatabaseMigrations;"
+                }
+            ],
+            "preview": "MongoDB transactions require the following software and topology:",
+            "tags": "php framework, odm, code example",
+            "facets": {
+                "genre": [
+                    "tutorial"
+                ]
+            }
+        },
+        {
+            "slug": "quick-start/create-a-connection-string",
+            "title": "Create a Connection String",
+            "headings": [
+                "Find your MongoDB Atlas connection string",
+                "Copy your connection string",
+                "Update the placeholders"
+            ],
+            "paragraphs": "You can connect to your MongoDB deployment by providing a\n connection URI , also called a  connection string , which\ninstructs the driver on how to connect to a MongoDB deployment\nand how to behave while connected. The connection string includes the hostname or IP address and\nport of your deployment, the authentication mechanism, user credentials\nwhen applicable, and connection options. To connect to an instance or deployment not hosted on Atlas, see\n Connection Strings  in the Server\nmanual. After completing these steps, you have a connection string that\ncontains your database username and password. To retrieve your connection string for the deployment that\nyou created in the  previous step ,\nlog in to your Atlas account. Then, navigate to the\n Database  section and click the  Connect  button\nfor your new deployment. Proceed to the  Connect your application  section. Select\n\"PHP\" from the  Driver  selection menu and the version\nthat best matches the version you installed from the  Version \nselection menu. Select the  Password (SCRAM)  authentication mechanism. Deselect the  Include full driver code example  option to view\nthe connection string. Click the button on the right of the connection string to copy it\nto your clipboard. Paste this connection string into a file in your preferred text editor\nand replace the  <username>  and  <password>  placeholders with\nyour database user's username and password. Save this file to a safe location for use in the next step. If you run into issues, ask for help in the\n MongoDB Community Forums  or submit feedback by using\nthe  Rate this page  tab on the right or bottom right\nside of the page.",
+            "code": [],
+            "preview": "You can connect to your MongoDB deployment by providing a\nconnection URI, also called a connection string, which\ninstructs the driver on how to connect to a MongoDB deployment\nand how to behave while connected.",
+            "tags": null,
+            "facets": null
+        },
+        {
+            "slug": "quick-start/write-data",
+            "title": "Write Data to MongoDB",
+            "headings": [
+                "Implement the function to insert data",
+                "Add an API route that calls the controller function",
+                "Update the model fields",
+                "Post a request to the API",
+                "View the data"
+            ],
+            "paragraphs": "Replace the  store()  method in the  MovieController.php  file,\nlocated in the  app/Http/Controllers  directory with the following\ncode: Import the controller and add an API route that calls the  store() \nmethod in the  routes/api.php  file: Update the  Movie  model in the  app/Models  directory to\nspecify the fields that the  fill()  method populates as shown in the\nfollowing code: Create a file called  movie.json  and insert the following data: Send the JSON payload to the endpoint as a  POST  request by running\nthe following command in your shell: Open  http://127.0.0.1:8000/browse_movies  in your web browser to view\nthe movie information that you submitted. The inserted movie appears at\nthe top of the results. If you run into issues, ask for help in the\n MongoDB Community Forums  or submit feedback by using\nthe  Rate this page  tab on the right or bottom right\nside of the page.",
+            "code": [
+                {
+                    "lang": "php",
+                    "value": "public function store(Request $request)\n{\n    $data = $request->all();\n    $movie = new Movie();\n    $movie->fill($data);\n    $movie->save();\n}"
+                },
+                {
+                    "lang": "php",
+                    "value": "use App\\Http\\Controllers\\MovieController;\n\n// ...\n\nRoute::resource('movies', MovieController::class)->only([\n  'store'\n]);"
+                },
+                {
+                    "lang": "php",
+                    "value": "class Movie extends Model\n{\n   protected $connection = 'mongodb';\n   protected $fillable = ['title', 'year', 'runtime', 'imdb', 'plot'];\n}"
+                },
+                {
+                    "lang": "json",
+                    "value": "{\n  \"title\": \"The Laravel MongoDB Quick Start\",\n  \"year\": 2024,\n  \"runtime\": 15,\n  \"imdb\": {\n    \"rating\": 9.5,\n    \"votes\": 1\n  },\n  \"plot\": \"This movie entry was created by running through the Laravel MongoDB Quick Start tutorial.\"\n}"
+                },
+                {
+                    "lang": "bash",
+                    "value": "curl -H \"Content-Type: application/json\" --data @movie.json http://localhost:8000/api/movies"
+                }
+            ],
+            "preview": "Replace the store() method in the MovieController.php file,\nlocated in the app/Http/Controllers directory with the following\ncode:",
+            "tags": "test connection, runnable, code example",
+            "facets": {
+                "genre": [
+                    "tutorial"
+                ]
+            }
+        },
+        {
+            "slug": "quick-start/download-and-install",
+            "title": "Download and Install",
+            "headings": [
+                "Prerequisites",
+                "Download and Install the Dependencies",
+                "Install the MongoDB PHP Extension",
+                "Install Laravel",
+                "Create a Laravel application",
+                "Add a Laravel application encryption key",
+                "Add Laravel MongoDB to the dependencies"
+            ],
+            "paragraphs": "To create the Quick Start application, you need the following software\ninstalled in your development environment: PHP Composer A terminal app and shell. For MacOS users, use Terminal or a similar app.\nFor Windows users, use PowerShell. Complete the following steps to install and add the Laravel MongoDB dependencies\nto a Laravel web application. Laravel MongoDB requires the MongoDB PHP Extension to manage MongoDB\nconnections and commands.\nFollow the  Installing the MongoDB PHP Driver with PECL \nguide to install the MongoDB PHP Extension. Ensure that the version of Laravel you install is compatible with the\nversion of Laravel MongoDB. To learn which versions are compatible,\nsee the  Compatibility  page. Run the following command to install Laravel: When the installation completes, the command outputs the following message: Run the following command to generate a new Laravel web application\ncalled  my-app : When the installation completes, the command outputs the following message: Navigate to the application directory you created in the previous step: Run the following command to add the Laravel application encryption\nkey, which is required to encrypt cookies: Run the following command to add the Laravel MongoDB dependency to\nyour application: When the installation completes, verify that the  composer.json  file\nincludes the following line in the  require  object: After completing these steps, you have a new Laravel project with the\nLaravel MongoDB dependencies installed. If you run into issues, ask for help in the\n MongoDB Community Forums  or submit feedback by using\nthe  Rate this page  tab on the right or bottom right\nside of the page.",
+            "code": [
+                {
+                    "lang": "bash",
+                    "value": "composer global require laravel/installer"
+                },
+                {
+                    "lang": "none",
+                    "value": "Using version ^<version number> for laravel/installer"
+                },
+                {
+                    "lang": "bash",
+                    "value": "laravel new my-app"
+                },
+                {
+                    "lang": "none",
+                    "value": "INFO  Application ready in [my-app]. You can start your local development using:\n\n\u279c cd my-app\n\u279c php artisan serve\n\nNew to Laravel? Check out our bootcamp and documentation. Build something amazing!"
+                },
+                {
+                    "lang": "bash",
+                    "value": "cd my-app"
+                },
+                {
+                    "lang": "bash",
+                    "value": "php artisan key:generate"
+                },
+                {
+                    "lang": "bash",
+                    "value": "composer require mongodb/laravel-mongodb:^4.1"
+                },
+                {
+                    "lang": "json",
+                    "value": "\"mongodb/laravel-mongodb\": \"^4.1\""
+                }
+            ],
+            "preview": "To create the Quick Start application, you need the following software\ninstalled in your development environment:",
+            "tags": "php framework, odm, code example",
+            "facets": {
+                "genre": [
+                    "tutorial"
+                ]
+            }
+        },
+        {
+            "slug": "quick-start/next-steps",
+            "title": "Next Steps",
+            "headings": [],
+            "paragraphs": "Congratulations on completing the Quick Start tutorial! After you complete these steps, you have a Laravel web application that\nuses the Laravel MongoDB package to connect to your MongoDB deployment, run a query on\nthe sample data, and render a retrieved result. You can download the web application project by cloning the\n laravel-quickstart \nGitHub repository. Learn more about Laravel MongoDB features from the following resources: Eloquent Models : use Eloquent model classes to work\nwith MongoDB data. Query Builder : use the query builder to specify MongoDB\nqueries and aggregations.",
+            "code": [],
+            "preview": "Congratulations on completing the Quick Start tutorial!",
+            "tags": "learn more",
+            "facets": {
+                "genre": [
+                    "reference"
+                ]
+            }
+        },
+        {
+            "slug": "quick-start/create-a-deployment",
+            "title": "Create a MongoDB Deployment",
+            "headings": [
+                "Create a free MongoDB deployment on Atlas",
+                "Save your credentials"
+            ],
+            "paragraphs": "You can create a free tier MongoDB deployment on MongoDB Atlas\nto store and manage your data. MongoDB Atlas hosts and manages\nyour MongoDB database in the cloud. After completing these steps, you have a new free tier MongoDB deployment on\nAtlas, database user credentials, and sample data loaded into your database. Complete the  Get Started with Atlas \nguide to set up a new Atlas account and load sample data into a new free\ntier MongoDB deployment. After you create your database user, save that user's\nusername and password to a safe location for use in an upcoming step. If you run into issues, ask for help in the\n MongoDB Community Forums  or submit feedback by using\nthe  Rate this page  tab on the right or bottom right\nside of the page.",
+            "code": [],
+            "preview": "You can create a free tier MongoDB deployment on MongoDB Atlas\nto store and manage your data. MongoDB Atlas hosts and manages\nyour MongoDB database in the cloud.",
+            "tags": null,
+            "facets": null
+        },
+        {
+            "slug": "quick-start/configure-mongodb",
+            "title": "Configure Your MongoDB Connection",
+            "headings": [
+                "Set the connection string in the database configuration",
+                "Add the Laravel MongoDB provider"
+            ],
+            "paragraphs": "After completing these steps, your Laravel web application is ready to\nconnect to MongoDB. Open the  database.php  file in the  config  directory and\nset the default database connection to  mongodb  as shown\nin the following line: Add the following highlighted  mongodb  entry to the  connections  array\nin the same file. Replace the  <connection string>  placeholder with the\nconnection string that you copied from the  Create a Connection String \nstep in the following code example: Open the  app.php  file in the  config  directory and\nadd the following entry into the  providers  array: If you run into issues, ask for help in the\n MongoDB Community Forums  or submit feedback by using\nthe  Rate this page  tab on the right or bottom right\nside of the page.",
+            "code": [
+                {
+                    "lang": "php",
+                    "value": "'default' => env('DB_CONNECTION', 'mongodb'),"
+                },
+                {
+                    "lang": "php",
+                    "value": "'connections' => [\n  'mongodb' => [\n    'driver' => 'mongodb',\n    'dsn' => env('DB_URI', '<connection string>'),\n    'database' => 'sample_mflix',\n  ],\n\n// ..."
+                },
+                {
+                    "lang": null,
+                    "value": "MongoDB\\Laravel\\MongoDBServiceProvider::class,"
+                }
+            ],
+            "preview": "After completing these steps, your Laravel web application is ready to\nconnect to MongoDB.",
+            "tags": "test connection, runnable, code example",
+            "facets": {
+                "genre": [
+                    "tutorial"
+                ]
+            }
+        },
+        {
+            "slug": "quick-start/view-data",
+            "title": "View MongoDB Data",
+            "headings": [
+                "Create a model and controller",
+                "Edit the model to use Laravel MongoDB",
+                "Add a controller function",
+                "Add a web route",
+                "Generate a view",
+                "Start your Laravel application",
+                "View the movie data"
+            ],
+            "paragraphs": "Create a model called  Movie  to represent data from the sample\n movies  collection in your MongoDB database and the corresponding\nresource controller by running the following command: When the command completes, it outputs the following message: Open the  Movie.php  model in your  app/Models  directory and\nmake the following edits: The edited  Movie.php  file contains the following code: Replace the  Illuminate\\Database\\Eloquent\\Model  import with  MongoDB\\Laravel\\Eloquent\\Model Specify  mongodb  in the  $connection  field Open the  MovieController.php  file in your  app/Http/Controllers \ndirectory. Replace the  show()  function with the\nfollowing code to retrieve results that match a\ndatabase query and render it in the view: Open the  web.php  file in the  routes  directory.\nAdd an import for the  MovieController  and a route called\n browse_movies  as shown in the following code: Run the following command from the application root directory\nto create a view that displays movie data: After you run the command, it outputs the following message: Open the  browse_movie.blade.php  view file in the  resources/views \ndirectory. Replace the contents with the following code and save the\nchanges: Run the following command from the application root directory\nto start your PHP built-in web server: After the server starts, it outputs the following message: Open the URL  http://127.0.0.1:8000/browse_movies  in your web browser.\nThe page shows a list of movies and details about each of them. You can run the  php artisan route:list  command from your application\nroot directory to view a list of available routes. If you run into issues, ask for help in the\n MongoDB Community Forums  or submit feedback by using\nthe  Rate this page  tab on the right or bottom right\nside of the page.",
+            "code": [
+                {
+                    "lang": "bash",
+                    "value": "php artisan make:model Movie -cr"
+                },
+                {
+                    "lang": "none",
+                    "value": "INFO  Model [app/Models/Movie.php] created successfully.\n\nINFO  Controller [app/Http/Controllers/MovieController.php] created successfully."
+                },
+                {
+                    "lang": "php",
+                    "value": "<?php\n\nnamespace App\\Models;\n\nuse MongoDB\\Laravel\\Eloquent\\Model;\n\nclass Movie extends Model\n{\n    protected $connection = 'mongodb';\n}"
+                },
+                {
+                    "lang": "php",
+                    "value": "public function show()\n{\n  return view('browse_movies', [\n    'movies' => Movie::where('runtime', '<', 60)\n       ->where('imdb.rating', '>', 8.5)\n       ->orderBy('imdb.rating', 'desc')\n       ->take(10)\n       ->get()\n  ]);\n}"
+                },
+                {
+                    "lang": "php",
+                    "value": "<?php\n\n// ...\nuse App\\Http\\Controllers\\MovieController;\n\nRoute::get('/browse_movies/', [MovieController::class, 'show']);"
+                },
+                {
+                    "lang": "bash",
+                    "value": "php artisan make:view browse_movies"
+                },
+                {
+                    "lang": "none",
+                    "value": "INFO  View [resources/views/browse_movie.blade.php] created successfully."
+                },
+                {
+                    "lang": "html",
+                    "value": "<!DOCTYPE html>\n<html>\n<head>\n   <title>Browse Movies</title>\n</head>\n<body>\n<h2>Movies</h2>\n\n@forelse ($movies as $movie)\n  <p>\n    Title: {{ $movie->title }}<br>\n    Year: {{ $movie->year }}<br>\n    Runtime: {{ $movie->runtime }}<br>\n    IMDB Rating: {{ $movie->imdb['rating'] }}<br>\n    IMDB Votes: {{ $movie->imdb['votes'] }}<br>\n    Plot: {{ $movie->plot }}<br>\n  </p>\n@empty\n    <p>No results</p>\n@endforelse\n\n</body>\n</html>"
+                },
+                {
+                    "lang": "bash",
+                    "value": "php artisan serve"
+                },
+                {
+                    "lang": "none",
+                    "value": "INFO  Server running on [http://127.0.0.1:8000].\n\nPress Ctrl+C to stop the server"
+                }
+            ],
+            "preview": "Create a model called Movie to represent data from the sample\nmovies collection in your MongoDB database and the corresponding\nresource controller by running the following command:",
+            "tags": "test connection, runnable, code example",
+            "facets": {
+                "genre": [
+                    "tutorial"
+                ]
+            }
+        }
+    ]
+}

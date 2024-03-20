@@ -1,0 +1,387 @@
+{
+    "url": "http://mongodb.com/docs/languages/python/pymongo-arrow-driver/current",
+    "includeInGlobalSearch": true,
+    "documents": [
+        {
+            "slug": "faq",
+            "title": "Frequently Asked Questions",
+            "headings": [
+                "Why Do I Get ModuleNotFoundError: No module named 'polars' When Using PyMongoArrow?"
+            ],
+            "paragraphs": "This page contains frequently asked questions and their answers. PyMongoArrow raises this error when an application attempts to use a PyMongoArrow API\nthat returns query result-sets as a  polars.DataFrame  instance without\nhaving  polars  installed in the Python environment. Since  polars  is not\na direct dependency of PyMongoArrow, it's not automatically installed when\nyou install  pymongoarrow . You must install  polars  separately with the\nfollowing shell command:",
+            "code": [
+                {
+                    "lang": "sh",
+                    "value": "$ python -m pip install polars"
+                }
+            ],
+            "preview": "This page contains frequently asked questions and their answers.",
+            "tags": "help, troubleshoot",
+            "facets": {
+                "genre": [
+                    "reference"
+                ]
+            }
+        },
+        {
+            "slug": "schemas",
+            "title": "Schema Examples",
+            "headings": [
+                "Nested Data with Schema",
+                "Nested Data with Projections"
+            ],
+            "paragraphs": "This guide shows examples of how to use PyMongoArrow schemas in common situations. When performing aggregate or find operations, you can provide a schema for nested data\nby using the  struct  object. There can be conflicting\nnames in sub-documents compared to their parent documents. You can do the same thing when using Pandas and NumPy: You can also use projections to flatten the data before passing it to PyMongoArrow.\nThe following example illustrates how to do this by using a very simple nested document\nstructure: When performing an aggregate operation, you can flatten the fields by using the  $project \nstage, as shown in the following example:",
+            "code": [
+                {
+                    "lang": "python",
+                    "value": ">>> from pymongo import MongoClient\n... from pymongoarrow.api import Schema, find_arrow_all\n... from pyarrow import struct, field, int32\n... coll = MongoClient().db.coll\n... coll.insert_many(\n...     [\n...         {\"start\": \"string\", \"prop\": {\"name\": \"foo\", \"start\": 0}},\n...         {\"start\": \"string\", \"prop\": {\"name\": \"bar\", \"start\": 10}},\n...     ]\n... )\n... arrow_table = find_arrow_all(\n...     coll, {}, schema=Schema({\"start\": str, \"prop\": struct([field(\"start\", int32())])})\n... )\n... print(arrow_table)\npyarrow.Table\nstart: string\nprop: struct<start: int32>\n  child 0, start: int32\n----\nstart: [[\"string\",\"string\"]]\nprop: [\n  -- is_valid: all not null\n  -- child 0 type: int32\n[0,10]]"
+                },
+                {
+                    "lang": "python",
+                    "value": ">>> df = find_pandas_all(\n...     coll, {}, schema=Schema({\"start\": str, \"prop\": struct([field(\"start\", int32())])})\n... )\n... print(df)\n    start           prop\n0  string   {'start': 0}\n1  string  {'start': 10}"
+                },
+                {
+                    "lang": "python",
+                    "value": ">>> df = find_pandas_all(\n...     coll,\n...     {\n...         \"prop.start\": {\n...             \"$gte\": 0,\n...             \"$lte\": 10,\n...         }\n...     },\n...     projection={\"propName\": \"$prop.name\", \"propStart\": \"$prop.start\"},\n...     schema=Schema({\"_id\": ObjectIdType(), \"propStart\": int, \"propName\": str}),\n... )\n... print(df)\n                                 _id  propStart propName\n0  b'c\\xec2\\x98R(\\xc9\\x1e@#\\xcc\\xbb'          0      foo\n1  b'c\\xec2\\x98R(\\xc9\\x1e@#\\xcc\\xbc'         10      bar"
+                },
+                {
+                    "lang": "pycon",
+                    "value": ">>> df = aggregate_pandas_all(\n...     coll,\n...     pipeline=[\n...         {\"$match\": {\"prop.start\": {\"$gte\": 0, \"$lte\": 10}}},\n...         {\n...             \"$project\": {\n...                 \"propStart\": \"$prop.start\",\n...                 \"propName\": \"$prop.name\",\n...             }\n...         },\n...     ],\n... )"
+                }
+            ],
+            "preview": "This guide shows examples of how to use PyMongoArrow schemas in common situations.",
+            "tags": "pandas, numpy, flatten",
+            "facets": {
+                "genre": [
+                    "reference"
+                ]
+            }
+        },
+        {
+            "slug": "previous-versions",
+            "title": "Previous Versions",
+            "headings": [],
+            "paragraphs": "The following links direct you to documentation for previous versions of PyMongoArrow. Version 1.2 Version 1.1 Version 1.0 Version 0.7 Version 0.6 Version 0.5 Version 0.4",
+            "code": [],
+            "preview": "The following links direct you to documentation for previous versions of PyMongoArrow.",
+            "tags": "old, backwards, downgrade, upgrade",
+            "facets": {
+                "genre": [
+                    "reference"
+                ]
+            }
+        },
+        {
+            "slug": "comparison",
+            "title": "Comparing to PyMongo",
+            "headings": [
+                "Reading Data",
+                "Writing Data",
+                "Benchmarks"
+            ],
+            "paragraphs": "In this guide, you can learn about the differences between PyMongoArrow and the\nPyMongo driver. This guide assumes familiarity with basic  PyMongo  and  MongoDB  concepts. The most basic way to read data using PyMongo is: This works, but you have to exclude the  _id  field, otherwise you get the following error: The following code example shows a workaround for the preceding error when\nusing PyMongo: Even though this avoids the error, a drawback is that Arrow can't identify that  _id  is an ObjectId,\nas noted by the schema showing  _id  as a string. PyMongoArrow supports BSON types\nthrough Arrow or Pandas Extension Types. This allows you to avoid the preceding\nworkaround. With this method, Arrow correctly identifies the type. This has limited\nuse for non-numeric extension types, but avoids unnecessary casting for certain\noperations, such as sorting datetimes. Additionally, PyMongoArrow supports Pandas extension types.\nWith PyMongo, a  Decimal128  value behaves as follows: The equivalent in PyMongoArrow is: In both cases, the underlying values are the BSON class type: Writing data from an Arrow table using PyMongo looks like the following: The equivalent in PyMongoArrow is: As of PyMongoArrow 1.0, the main advantage to using the  write  function\nis that it iterates over the arrow table, data frame, or numpy array,\nand doesn't convert the entire object to a list. The following measurements were taken with PyMongoArrow version 1.0 and\nPyMongo version 4.4. For insertions, the library performs about the same as when\nusing conventional PyMongo, and uses the same amount of memory. For reads, the library is slower for small documents and nested\ndocuments, but faster for large documents. It uses less memory in all cases.",
+            "code": [
+                {
+                    "lang": "python",
+                    "value": "coll = db.benchmark\nf = list(coll.find({}, projection={\"_id\": 0}))\ntable = pyarrow.Table.from_pylist(f)"
+                },
+                {
+                    "lang": "python",
+                    "value": "pyarrow.lib.ArrowInvalid: Could not convert ObjectId('642f2f4720d92a85355671b3') with type ObjectId: did not recognize Python value type when inferring an Arrow data type"
+                },
+                {
+                    "lang": "python",
+                    "value": ">>> f = list(coll.find({}))\n>>> for doc in f:\n...     doc[\"_id\"] = str(doc[\"_id\"])\n...\n>>> table = pyarrow.Table.from_pylist(f)\n>>> print(table)\npyarrow.Table\n_id: string\nx: int64\ny: double"
+                },
+                {
+                    "lang": "python",
+                    "value": ">>> from pymongoarrow.types import ObjectIdType\n>>> schema = Schema({\"_id\": ObjectIdType(), \"x\": pyarrow.int64(), \"y\": pyarrow.float64()})\n>>> table = find_arrow_all(coll, {}, schema=schema)\n>>> print(table)\npyarrow.Table\n_id: extension<arrow.py_extension_type<ObjectIdType>>\nx: int64\ny: double"
+                },
+                {
+                    "lang": "python",
+                    "value": "f = list(coll.find({}, projection={\"_id\": 0, \"x\": 0}))\nnaive_table = pyarrow.Table.from_pylist(f)\n\nschema = Schema({\"time\": pyarrow.timestamp(\"ms\")})\ntable = find_arrow_all(coll, {}, schema=schema)\n\nassert (\n    table.sort_by([(\"time\", \"ascending\")])[\"time\"]\n    == naive_table[\"time\"].cast(pyarrow.timestamp(\"ms\")).sort()\n)"
+                },
+                {
+                    "lang": "python",
+                    "value": "coll = client.test.test\ncoll.insert_many([{\"value\": Decimal128(str(i))} for i in range(200)])\ncursor = coll.find({})\ndf = pd.DataFrame(list(cursor))\nprint(df.dtypes)\n# _id      object\n# value    object"
+                },
+                {
+                    "lang": "python",
+                    "value": "from pymongoarrow.api import find_pandas_all\ncoll = client.test.test\ncoll.insert_many([{\"value\": Decimal128(str(i))} for i in range(200)])\ndf = find_pandas_all(coll, {})\nprint(df.dtypes)\n# _id      bson_PandasObjectId\n# value    bson_PandasDecimal128"
+                },
+                {
+                    "lang": "python",
+                    "value": "print(df[\"value\"][0])\nDecimal128(\"0\")"
+                },
+                {
+                    "lang": "python",
+                    "value": "data = arrow_table.to_pylist()\ndb.collname.insert_many(data)"
+                },
+                {
+                    "lang": "python",
+                    "value": "from pymongoarrow.api import write\n\nwrite(db.collname, arrow_table)"
+                },
+                {
+                    "lang": "none",
+                    "value": "ProfileInsertSmall.peakmem_insert_conventional      107M\nProfileInsertSmall.peakmem_insert_arrow             108M\nProfileInsertSmall.time_insert_conventional         202\u00b10.8ms\nProfileInsertSmall.time_insert_arrow                181\u00b10.4ms\n\nProfileInsertLarge.peakmem_insert_arrow             127M\nProfileInsertLarge.peakmem_insert_conventional      125M\nProfileInsertLarge.time_insert_arrow                425\u00b11ms\nProfileInsertLarge.time_insert_conventional         440\u00b11ms"
+                },
+                {
+                    "lang": "none",
+                    "value": "ProfileReadSmall.peakmem_conventional_arrow     85.8M\nProfileReadSmall.peakmem_to_arrow               83.1M\nProfileReadSmall.time_conventional_arrow        38.1\u00b10.3ms\nProfileReadSmall.time_to_arrow                  60.8\u00b10.3ms\n\nProfileReadLarge.peakmem_conventional_arrow     138M\nProfileReadLarge.peakmem_to_arrow               106M\nProfileReadLarge.time_conventional_ndarray      243\u00b120ms\nProfileReadLarge.time_to_arrow                  186\u00b10.8ms\n\nProfileReadDocument.peakmem_conventional_arrow  209M\nProfileReadDocument.peakmem_to_arrow            152M\nProfileReadDocument.time_conventional_arrow     865\u00b17ms\nProfileReadDocument.time_to_arrow               937\u00b11ms"
+                }
+            ],
+            "preview": "In this guide, you can learn about the differences between PyMongoArrow and the\nPyMongo driver. This guide assumes familiarity with basic PyMongo and MongoDB concepts.",
+            "tags": "PyMongo, equivalence",
+            "facets": {
+                "genre": [
+                    "reference"
+                ]
+            }
+        },
+        {
+            "slug": "quick-start",
+            "title": "Quick Start",
+            "headings": [
+                "Prerequisites",
+                "Extending PyMongo",
+                "Test Data",
+                "Defining the Schema",
+                "Find Operations",
+                "Aggregate Operations",
+                "Writing to MongoDB",
+                "Writing to Other Formats"
+            ],
+            "paragraphs": "This tutorial is intended as an introduction to working with\n PyMongoArrow . The tutorial assumes the reader is familiar with basic\n PyMongo  and\n MongoDB  concepts. Ensure that you have the PyMongoArrow distribution\n installed . In the Python shell, the following should\nrun without raising an exception: This tutorial also assumes that a MongoDB instance is running on the\ndefault host and port. After you have  downloaded and installed  MongoDB, you can start\nit as shown in the following code example: The  pymongoarrow.monkey  module provides an interface to patch PyMongo\nin place, and add PyMongoArrow functionality directly to\n Collection  instances: After you run the  monkey.patch_all()  method, new instances of\nthe  Collection  class will contain the PyMongoArrow APIs--\nfor example, the  pymongoarrow.api.find_pandas_all()  method. You can also use any of the PyMongoArrow APIs\nby importing them from the  pymongoarrow.api  module. If you do,\nyou must pass the instance of the  Collection  on which the operation is to be\nrun as the first argument when calling the API method. The following code uses PyMongo to add sample data to your cluster: PyMongoArrow relies on a data schema to marshall\nquery result sets into tabular form. If you don't provide this schema, PyMongoArrow\ninfers one from the data. You can define the schema by\ncreating a  Schema  object and mapping the field names\nto type-specifiers, as shown in the following example: MongoDB uses embedded documents to represent nested data. PyMongoArrow offers\nfirst-class support for these documents: PyMongoArrow also supports lists and nested lists: PyMongoArrow includes multiple permissible type-identifiers for each supported BSON\ntype. For a full list of these data types and their associated type-identifiers, see\n Data Types . The following code example shows how to load all records that have a non-zero\nvalue for the  amount  field as a  pandas.DataFrame  object: You can also load the same result set as a  pyarrow.Table  instance: Or as a  polars.DataFrame  instance: Or as a NumPy  arrays  object: When using NumPy, the return value is a dictionary where the keys are field\nnames and the values are the corresponding  numpy.ndarray  instances. In all of the preceding examples, you can omit the schema as shown in the following\nexample: If you omit the schema, PyMongoArrow tries to automatically apply a schema based on\nthe data contained in the first batch. Running an aggregate operation is similar to running a find operation, but it takes a\nsequence of operations to perform. The following is a simple example of the  aggregate_pandas_all()  method that outputs a\nnew dataframe in which all  _id  values are grouped together and their  amount  values\nsummed: You can also run aggregate operations on embedded documents.\nThe following example unwinds values in the nested  txn  field, counts the number of each\nvalue, then returns the results as a list of NumPy  ndarray  objects, sorted in\ndescending order: For more information about aggregation pipelines, see the\n MongoDB Server documentation . You can use the  write()  method to write objects of the following types to MongoDB: Arrow  Table Pandas  DataFrame NumPy  ndarray Polars  DataFrame NumPy arrays are specified as  dict[str, ndarray] . Once result sets have been loaded, you can then write them to any format that the package\nsupports. For example, to write the table referenced by the variable  arrow_table  to a Parquet\nfile named  example.parquet , run the following code: Pandas also supports writing  DataFrame  instances to a variety\nof formats, including CSV and HDF. To write the data frame\nreferenced by the variable  df  to a CSV file named  out.csv , run the following\ncode: The Polars API is a mix of the two preceding examples: Nested data is supported for parquet read and write operations, but is not well\nsupported by Arrow or Pandas for CSV read and write operations.",
+            "code": [
+                {
+                    "lang": "python",
+                    "value": ">>> import pymongoarrow as pma"
+                },
+                {
+                    "lang": "bash",
+                    "value": "$ mongod"
+                },
+                {
+                    "lang": "python",
+                    "value": "from pymongoarrow.monkey import patch_all\npatch_all()"
+                },
+                {
+                    "lang": "python",
+                    "value": "from datetime import datetime\nfrom pymongo import MongoClient\nclient = MongoClient()\nclient.db.data.insert_many([\n  {'_id': 1, 'amount': 21, 'last_updated': datetime(2020, 12, 10, 1, 3, 1), 'account': {'name': 'Customer1', 'account_number': 1}, 'txns': ['A']},\n  {'_id': 2, 'amount': 16, 'last_updated': datetime(2020, 7, 23, 6, 7, 11), 'account': {'name': 'Customer2', 'account_number': 2}, 'txns': ['A', 'B']},\n  {'_id': 3, 'amount': 3,  'last_updated': datetime(2021, 3, 10, 18, 43, 9), 'account': {'name': 'Customer3', 'account_number': 3}, 'txns': ['A', 'B', 'C']},\n  {'_id': 4, 'amount': 0,  'last_updated': datetime(2021, 2, 25, 3, 50, 31), 'account': {'name': 'Customer4', 'account_number': 4}, 'txns': ['A', 'B', 'C', 'D']}])"
+                },
+                {
+                    "lang": "python",
+                    "value": "from pymongoarrow.api import Schema\nschema = Schema({'_id': int, 'amount': float, 'last_updated': datetime})"
+                },
+                {
+                    "lang": "python",
+                    "value": "schema = Schema({'_id': int, 'amount': float, 'account': { 'name': str, 'account_number': int}})"
+                },
+                {
+                    "lang": "python",
+                    "value": "from pyarrow import list_, string\nschema = Schema({'txns': list_(string())})\npolars_df = client.db.data.find_polars_all({'amount': {'$gt': 0}}, schema=schema)"
+                },
+                {
+                    "lang": "python",
+                    "value": "df = client.db.data.find_pandas_all({'amount': {'$gt': 0}}, schema=schema)"
+                },
+                {
+                    "lang": "python",
+                    "value": "arrow_table = client.db.data.find_arrow_all({'amount': {'$gt': 0}}, schema=schema)"
+                },
+                {
+                    "lang": "python",
+                    "value": "df = client.db.data.find_polars_all({'amount': {'$gt': 0}}, schema=schema)"
+                },
+                {
+                    "lang": "python",
+                    "value": "ndarrays = client.db.data.find_numpy_all({'amount': {'$gt': 0}}, schema=schema)"
+                },
+                {
+                    "lang": "python",
+                    "value": "arrow_table = client.db.data.find_arrow_all({'amount': {'$gt': 0}})"
+                },
+                {
+                    "lang": "python",
+                    "value": "df = client.db.data.aggregate_pandas_all([{'$group': {'_id': None, 'total_amount': { '$sum': '$amount' }}}])"
+                },
+                {
+                    "lang": "python",
+                    "value": "pipeline = [{'$unwind': '$txns'}, {'$group': {'_id': '$txns', 'count': {'$sum': 1}}}, {'$sort': {\"count\": -1}}]\nndarrays = client.db.data.aggregate_numpy_all(pipeline)"
+                },
+                {
+                    "lang": "python",
+                    "value": "from pymongoarrow.api import write\nfrom pymongo import MongoClient\ncoll = MongoClient().db.my_collection\nwrite(coll, df)\nwrite(coll, arrow_table)\nwrite(coll, ndarrays)"
+                },
+                {
+                    "lang": "python",
+                    "value": "import pyarrow.parquet as pq\npq.write_table(arrow_table, 'example.parquet')"
+                },
+                {
+                    "lang": "python",
+                    "value": "df.to_csv('out.csv', index=False)"
+                },
+                {
+                    "lang": "python",
+                    "value": "import polars as pl\ndf = pl.DataFrame({\"foo\": [1, 2, 3, 4, 5]})\ndf.write_parquet('example.parquet')"
+                }
+            ],
+            "preview": "This tutorial is intended as an introduction to working with\nPyMongoArrow. The tutorial assumes the reader is familiar with basic\nPyMongo and\nMongoDB concepts.",
+            "tags": "tutorial, introduction, setup, begin",
+            "facets": {
+                "genre": [
+                    "reference"
+                ]
+            }
+        },
+        {
+            "slug": "whats-new",
+            "title": "What's New",
+            "headings": [
+                "Changes in Version 1.3.0",
+                "Changes in Version 1.2.0",
+                "Changes in Version 1.1.0",
+                "Changes in Version 1.0.2",
+                "Changes in Version 1.0.1",
+                "Changes in Version 0.7.0",
+                "Changes in Version 0.6.3",
+                "Changes in Version 0.6.2",
+                "Changes in Version 0.5.1",
+                "Changes in Version 0.5.0",
+                "Changes in Version 0.4.0",
+                "Changes in Version 0.3.0",
+                "Changes in Version 0.2.0",
+                "Changes in Version 0.1.1",
+                "Changes in Version 0.1.0"
+            ],
+            "paragraphs": "Support for Polars Support for PyArrow.DataTypes: large_list, large_string, date32, date64 Support for PyArrow 14.0. Support for Python 3.12. Support for PyArrow 13.0. Revert bug fix for nested extension objects in auto schema, since it\ncaused a performance regression. Bug fix for projection on nested fields. Bug fix for nested extension objects in auto schema. Support BSON binary type. Support BSON Decimal128 type. Support Pandas 2.0 and Pandas extension types. Support PyArrow 12.0. Added support for BSON Embedded Document type. Added support for BSON Array type. Support PyArrow 11.0. Added wheels for Linux AArch64 and Python 3.11. Fixed handling of time zones in schema auto-discovery. Fixed  ImportError  on Windows by building  libbson  in \"Release\" mode. Support PyArrow 10.0. Fixed auto-discovery of schemas for aggregation and  numpy  methods. Added documentation for auto-discovery of schemas. Support auto-discovery of schemas in  find/aggregate_*_all  methods.\nIf the schema is not given, it will be inferred using the first\ndocument in the result set. Support PyArrow 9.0. Improve error message for lib ImportError. Support for  Decimal128  type. Support for macOS arm64 architecture on Python 3.9+. Support for writing tabular datasets (materialized as\nPyArrow Tables, Pandas DataFrames, or NumPy arrays) to MongoDB\nby using the  write()  function.\nFor more information, see the  Quick Start  guide for more info. Support for  PyArrow  7.0. Support for the  ObjectId  type. Improve error message when schema contains an unsupported type. Add support for BSON string type. Add support for BSON boolean type. Upgraded to bundle  libbson  1.21.1.\nIf installing from source, the minimum supported  libbson  version is now 1.21.0. Dropped Python 3.6 support (it was dropped in  PyArrow  7.0). Support for PyMongo 4.0. Support for Python 3.10. Support for Windows. The  find_arrow_all()  method now accepts a user-provided  projection . The  find_arrow_all()  method now accepts a  session  object. Note: PyMongoArrow now requires  pyarrow  v6.0.x. Fixed a bug that caused Linux wheels to be created without the appropriate\n manylinux  platform tags. Support for efficiently converting find and aggregate query result sets into\nArrow/Pandas/Numpy data structures. Support for patching PyMongo's APIs by using the  monkey.patch_all()  method. Support for loading the following  BSON types : 64-bit binary floating point 32-bit integer 64-bit integer Timestamp",
+            "code": [],
+            "preview": null,
+            "tags": "change, update, upgrade, compatible, backwards",
+            "facets": {
+                "genre": [
+                    "reference"
+                ]
+            }
+        },
+        {
+            "slug": "",
+            "title": "MongoDB PyMongoArrow",
+            "headings": [
+                "Introduction",
+                "Installation",
+                "Quick Start",
+                "What's New",
+                "Comparing to PyMongo",
+                "Schemas",
+                "Data Types",
+                "FAQ",
+                "API Documentation",
+                "Getting Help",
+                "Issues",
+                "Feature Requests and Feedback",
+                "Contributing"
+            ],
+            "paragraphs": "PyMongoArrow  is a  PyMongo  extension\ncontaining tools for loading  MongoDB  query\nresult-sets as   Apache Arrow  tables,\n NumPy  arrays, and  Pandas \nor  Polars  DataFrames.\nPyMongoArrow is the recommended way to materialize MongoDB query result-sets as\ncontiguous-in-memory typed arrays suited for in-memory analytical processing\napplications. Learn how to install or upgrade PyMongoArrow, see the  Install and Upgrade  section. Learn how to begin working with data in the  Quick Start  section. For a list of new features and changes in each version, see the  What's New \nsection. For a comparison between PyMongoArrow and PyMongo, see the  Comparing to\nPyMongo  section. For examples of using PyMongoArrow schemas, see the  Schema Examples  section. Learn about the types of data supported with PyMongoArrow in the  Data Types  section. For answers to commonly asked questions about PyMongoArrow, see the\n FAQ  section. For detailed information about types and methods in PyMongoArrow, see\nthe  PyMongoArrow API documentation . If you're having trouble or have questions about PyMongoArrow, ask your question on\nthe  MongoDB Community Forum .\nOnce you get an answer, it'd be great if you could work it back into this\ndocumentation and contribute. Report all issues at the main  MongoDB JIRA bug tracker  in the PyMongoArrow\nproject. Use the  feedback engine \nto send feature requests and general feedback about PyMongoArrow. Contributions to PyMongoArrow are encouraged. To contribute, fork the project on\n GitHub \nand send a pull request.",
+            "code": [],
+            "preview": "PyMongoArrow is a PyMongo extension\ncontaining tools for loading MongoDB query\nresult-sets as  Apache Arrow tables,\nNumPy arrays, and Pandas\nor Polars DataFrames.\nPyMongoArrow is the recommended way to materialize MongoDB query result-sets as\ncontiguous-in-memory typed arrays suited for in-memory analytical processing\napplications.",
+            "tags": "home, about",
+            "facets": {
+                "programming_language": [
+                    "python"
+                ]
+            }
+        },
+        {
+            "slug": "installation",
+            "title": "Installing and Upgrading",
+            "headings": [
+                "System Compatibility",
+                "Python Compatibility",
+                "Installation",
+                "Install with Pip",
+                "Install with Conda",
+                "Install from Source",
+                "Dependencies"
+            ],
+            "paragraphs": "In this guide, you can learn how to install and upgrade PyMongoArrow. PyMongoArrow is regularly built and tested on macOS and Linux\n(Ubuntu 20.04). PyMongoArrow is compatible with CPython versions 3.8, 3.9, 3.10, 3.11, and 3.12. You can install  PyMongoArrow  in three ways: Pip Conda From source We recommend using pip to install PyMongoArrow on all platforms.\nPyMongoArrow is available on  PyPI . To get a specific version of pymongo: To upgrade using pip: You can then try to re-install  pymongoarrow . We currently distribute wheels for macOS, Windows, and Linux on x86_64\narchitectures. If the install fails because of an error, such as  ValueError: Could\nnot find \"libbson-1.0\" library , it means that  pip  failed to find a\nsuitable wheel for your platform. We recommend first ensuring you have\n pip  >= 20.3 installed. To upgrade  pip , run the following shell command: PyMongoArrow is available for  conda  users by running the following shell\ncommand: If the above options still do not allow you to install  pymongoarrow  on your\nsystem, you can install from source. To learn how, see the  Contributing Guide . PyMongoArrow requires the following: To use PyMongoArrow with a PyMongo feature that requires an optional\ndependency, users must install PyMongo with the dependency manually. For example, to use PyMongoArrow with Client-Side Field Level Encryption,\nyou must install PyMongo with the  encryption  option in addition to installing\nPyMongoArrow: Applications intending to use PyMongoArrow APIs that return query result-sets\nas  pandas.DataFrame  instances, such as  ~pymongoarrow.api.find_pandas_all() ,\nmust also have  pandas  installed: PyMongo>=4.4 PyArrow>=13,<13.1 PyMongo's optional dependencies are detailed\n here .",
+            "code": [
+                {
+                    "lang": "sh",
+                    "value": "$ python -m pip install pymongoarrow"
+                },
+                {
+                    "lang": "sh",
+                    "value": "$ python -m pip install pymongoarrow==1.0.1"
+                },
+                {
+                    "lang": "sh",
+                    "value": "$ python -m pip install --upgrade pymongoarrow"
+                },
+                {
+                    "lang": "python",
+                    "value": "$ python -m pip install --upgrade pip"
+                },
+                {
+                    "lang": "python",
+                    "value": "$ conda install --channel conda-forge pymongoarrow"
+                },
+                {
+                    "lang": "sh",
+                    "value": "$ python -m pip install 'pymongo[encryption]' pymongoarrow"
+                },
+                {
+                    "lang": "sh",
+                    "value": "$ python -m pip install pandas"
+                }
+            ],
+            "preview": "In this guide, you can learn how to install and upgrade PyMongoArrow.",
+            "tags": "setup, download, update",
+            "facets": {
+                "genre": [
+                    "reference"
+                ]
+            }
+        },
+        {
+            "slug": "data-types",
+            "title": "Data Types",
+            "headings": [
+                "Embedded Array Considerations",
+                "Extension Types",
+                "Null Values and Conversion to Pandas DataFrames",
+                "Nested Extension Types"
+            ],
+            "paragraphs": "PyMongoArrow supports a majority of the BSON types.\nBecause Arrow and Polars provide first-class support for Lists and Structs,\nthis includes embedded arrays and documents. Support for additional types will be added in subsequent releases. Use type identifiers to specify that a field is of a certain type\nduring  pymongoarrow.api.Schema  declaration. For example, if your data\nhas fields  f1  and  f2  bearing types 32-bit integer and UTC datetime, and\nan  _id  that is an  ObjectId , you can define your schema as follows: Unsupported data types in a schema cause a  ValueError  identifying the\nfield and its data type. For more information about BSON types, see the\n BSON specification . BSON Type Type Identifiers String py.str , an instance of  pyarrow.string Embedded document py.dict , and instance of  pyarrow.struct Embedded array An instance of  pyarrow.list_ ObjectId py.bytes ,  bson.ObjectId , an instance of  pymongoarrow.types.ObjectIdType , an instance of  pymongoarrow.pandas_types.PandasObjectId Decimal128 bson.Decimal128 , an instance of  pymongoarrow.types.Decimal128Type , an instance of  pymongoarrow.pandas_types.PandasDecimal128 Boolean An instance of  ~pyarrow.bool_ ,  ~py.bool 64-bit binary floating point py.float , an instance of  pyarrow.float64 32-bit integer An instance of  pyarrow.int32 64-bit integer ~py.int ,  bson.int64.Int64 , an instance of  pyarrow.int64 UTC datetime An instance of  ~pyarrow.timestamp  with  ms  resolution,  py.datetime.datetime Binary data bson.Binary , an instance of  pymongoarrow.types.BinaryType , an instance of  pymongoarrow.pandas_types.PandasBinary . JavaScript code bson.Code , an instance of  pymongoarrow.types.CodeType , an instance of  pymongoarrow.pandas_types.PandasCode PyMongoArrow supports  Decimal128  on only little-endian systems. On\nbig-endian systems, it uses  null  instead. The schema used for an embedded array must use the  pyarrow.list_()  type, to specify\nthe type of the array elements. For example, PyMongoArrow implements the  ObjectId ,  Decimal128 ,  Binary data ,\nand  JavaScript code  types as extension types for PyArrow and Pandas.\nFor arrow tables, values of these types have the appropriate\n pymongoarrow  extension type, such as  pymongoarrow.types.ObjectIdType .\nYou can obtain the appropriate  bson  Python object by using the  .as_py() \nmethod, or by calling  .to_pylist()  on the table. When converting to pandas, the extension type columns have an appropriate\n pymongoarrow  extension type, such as\n pymongoarrow.pandas_types.PandasDecimal128 . The value of the element in the\ndataframe is the appropriate  bson  type. Polars does not support Extension Types. In Arrow and Polars, all Arrays are nullable.\nPandas has experimental nullable data types, such as  Int64 .\nYou can instruct Arrow to create a pandas DataFrame using nullable dtypes\nwith the following  Apache documentation code . Defining a conversion for  pa.string()  also converts Arrow strings to NumPy strings, and not objects. Pending  ARROW-179 , extension\ntypes, such as  ObjectId , that appear in nested documents are not\nconverted to the corresponding PyMongoArrow extension type, but\ninstead have the raw Arrow type,  FixedSizeBinaryType(fixed_size_binary[12]) . These values can be consumed as-is, or converted individually to the\ndesired extension type, such as  _id = out['nested'][0]['_id'].cast(ObjectIdType()) .",
+            "code": [
+                {
+                    "lang": "python",
+                    "value": "schema = Schema({\n  '_id': ObjectId,\n  'f1': pyarrow.int32(),\n  'f2': pyarrow.timestamp('ms')\n})"
+                },
+                {
+                    "lang": "python",
+                    "value": "from pyarrow import list_, float64\nschema = Schema({'_id': ObjectId,\n  'location': {'coordinates': list_(float64())}\n})"
+                },
+                {
+                    "lang": "python",
+                    "value": ">>> from pymongo import MongoClient\n>>> from bson import ObjectId\n>>> from pymongoarrow.api import find_arrow_all\n>>> client = MongoClient()\n>>> coll = client.test.test\n>>> coll.insert_many([{\"_id\": ObjectId(), \"foo\": 100}, {\"_id\": ObjectId(), \"foo\": 200}])\n<pymongo.results.InsertManyResult at 0x1080a72b0>\n>>> table = find_arrow_all(coll, {})\n>>> table\npyarrow.Table\n_id: extension<arrow.py_extension_type<ObjectIdType>>\nfoo: int32\n----\n_id: [[64408B0D5AC9E208AF220142,64408B0D5AC9E208AF220143]]\nfoo: [[100,200]]\n>>> table[\"_id\"][0]\n<pyarrow.ObjectIdScalar: ObjectId('64408b0d5ac9e208af220142')>\n>>> table[\"_id\"][0].as_py()\nObjectId('64408b0d5ac9e208af220142')\n>>> table.to_pylist()\n[{'_id': ObjectId('64408b0d5ac9e208af220142'), 'foo': 100},\n {'_id': ObjectId('64408b0d5ac9e208af220143'), 'foo': 200}]"
+                },
+                {
+                    "lang": "python",
+                    "value": ">>> from pymongo import MongoClient\n>>> from bson import Decimal128\n>>> from pymongoarrow.api import find_pandas_all\n>>> client = MongoClient()\n>>> coll = client.test.test\n>>> coll.insert_many([{\"foo\": Decimal128(\"0.1\")}, {\"foo\": Decimal128(\"0.1\")}])\n<pymongo.results.InsertManyResult at 0x1080a72b0>\n>>> df = find_pandas_all(coll, {})\n>>> df\n                       _id  foo\n0  64408bf65ac9e208af220144  0.1\n1  64408bf65ac9e208af220145  0.1\n>>> df[\"foo\"].dtype\n<pymongoarrow.pandas_types.PandasDecimal128 at 0x11fe0ae90>\n>>> df[\"foo\"][0]\nDecimal128('0.1')\n>>> df[\"_id\"][0]\nObjectId('64408bf65ac9e208af220144')"
+                },
+                {
+                    "lang": "pycon",
+                    "value": ">>> dtype_mapping = {\n...     pa.int8(): pd.Int8Dtype(),\n...     pa.int16(): pd.Int16Dtype(),\n...     pa.int32(): pd.Int32Dtype(),\n...     pa.int64(): pd.Int64Dtype(),\n...     pa.uint8(): pd.UInt8Dtype(),\n...     pa.uint16(): pd.UInt16Dtype(),\n...     pa.uint32(): pd.UInt32Dtype(),\n...     pa.uint64(): pd.UInt64Dtype(),\n...     pa.bool_(): pd.BooleanDtype(),\n...     pa.float32(): pd.Float32Dtype(),\n...     pa.float64(): pd.Float64Dtype(),\n...     pa.string(): pd.StringDtype(),\n... }\n... df = arrow_table.to_pandas(\n...     types_mapper=dtype_mapping.get, split_blocks=True, self_destruct=True\n... )\n... del arrow_table"
+                }
+            ],
+            "preview": "PyMongoArrow supports a majority of the BSON types.\nBecause Arrow and Polars provide first-class support for Lists and Structs,\nthis includes embedded arrays and documents.",
+            "tags": "support, conversions",
+            "facets": {
+                "genre": [
+                    "reference"
+                ]
+            }
+        }
+    ]
+}

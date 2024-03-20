@@ -1,0 +1,639 @@
+{
+    "url": "http://mongodb.com/docs/spark-connector/upcoming",
+    "includeInGlobalSearch": false,
+    "documents": [
+        {
+            "slug": "release-notes",
+            "title": "Release Notes",
+            "headings": [
+                "MongoDB Connector for Spark 10.2.0",
+                "MongoDB Connector for Spark 10.1.1",
+                "MongoDB Connector for Spark 10.1.0",
+                "MongoDB Connector for Spark 10.0.0"
+            ],
+            "paragraphs": "Added the  ignoreNullValues  write configuration property, which enables you\nto control whether the connector ignores null values. In previous versions,\nthe connector always wrote  null  values to MongoDB. Corrected a bug in which aggregations including the  $collStats  pipeline stage\ndid not return a count field for Time Series collections. See  this post \non the MongoDB blog for more information. Support for Scala 2.13. Support for micro-batch mode with Spark Structured Streaming. Support for BSON data types. Improved partitioner support for empty collections. Option to disable automatic upsert on write operations. Improved schema inference for empty arrays. Support for null values in arrays and lists. The Connector now writes these values\nto MongoDB instead of throwing an exception. Support for Spark Structured Streaming.",
+            "code": [],
+            "preview": "See this post\non the MongoDB blog for more information.",
+            "tags": null
+        },
+        {
+            "slug": "faq",
+            "title": "FAQ",
+            "headings": [
+                "How can I achieve data locality?",
+                "How do I resolve Unrecognized pipeline stage name Error?"
+            ],
+            "paragraphs": "For any MongoDB deployment, the Mongo Spark Connector sets the\npreferred location for a DataFrame or Dataset to be where the data is: To promote data locality, For a non sharded system, it sets the preferred location to be the\nhostname(s) of the standalone or the replica set. For a sharded system, it sets the preferred location to be the\nhostname(s) of the shards. Ensure there is a Spark Worker on one of the hosts for non-sharded\nsystem or one per shard for sharded systems. Use a  nearest  read preference to read from the local\n mongod . For a sharded cluster, you should have a  mongos  on the\nsame nodes and use  localThreshold \nconfiguration to connect to the nearest  mongos .\nTo partition the data by shard use the\n ShardedPartitioner  Configuration . In MongoDB deployments with mixed versions of  mongod , it is\npossible to get an  Unrecognized pipeline stage name: '$sample' \nerror. To mitigate this situation, explicitly configure the partitioner\nto use and define the Schema when using DataFrames.",
+            "code": [],
+            "preview": "For any MongoDB deployment, the Mongo Spark Connector sets the\npreferred location for a DataFrame or Dataset to be where the data is:",
+            "tags": null
+        },
+        {
+            "slug": "",
+            "title": "MongoDB Connector for Spark",
+            "headings": [],
+            "paragraphs": "The  MongoDB Connector for Spark  provides\nintegration between MongoDB and Apache Spark. With the connector, you have access to all Spark libraries for use with\nMongoDB datasets: Datasets for analysis with SQL (benefiting from\nautomatic schema inference), streaming, machine learning, and graph\nAPIs. You can also use the connector with the Spark Shell. The MongoDB Connector for Spark is compatible with the following\nversions of Apache Spark and MongoDB: Version 10.x of the MongoDB Connector for Spark is an all-new\nconnector based on the latest Spark API. Install and migrate to\nversion 10.x to take advantage of new capabilities, such as tighter\nintegration with\n Spark Structured Streaming . Version 10.x uses the new namespace\n com.mongodb.spark.sql.connector.MongoTableProvider .\nThis allows you to use old versions of the connector\n(versions 3.x and earlier) in parallel with version 10.x. To learn more about the new connector and its advantages, see the\n MongoDB announcement blog post . MongoDB Connector for Spark Spark Version MongoDB Version 10.2.0 3.1 or later 4.0 or later",
+            "code": [],
+            "preview": "The MongoDB Connector for Spark provides\nintegration between MongoDB and Apache Spark.",
+            "tags": null
+        },
+        {
+            "slug": "write-to-mongodb",
+            "title": "Write to MongoDB",
+            "headings": [],
+            "paragraphs": "The following example creates a DataFrame from a  json  file and\nsaves it to the MongoDB collection specified in  SparkConf : The MongoDB Connector for Spark supports the following save modes: To learn more about save modes, see the  Spark SQL Guide . append overwrite To create a DataFrame, first create a  SparkSession object , then use the object's  createDataFrame()  function.\nIn the following example,  createDataFrame()  takes\na list of tuples containing names and ages, and a list of column names: Write the  people  DataFrame to the MongoDB database and collection\nspecified in the  spark.mongodb.write.connection.uri  option\nby using the  write  method: The above operation writes to the MongoDB database and collection\nspecified in the  spark.mongodb.write.connection.uri  option\nwhen you connect to the  pyspark  shell. To read the contents of the DataFrame, use the  show()  method. In the  pyspark  shell, the operation prints the following output: The  printSchema()  method prints out the DataFrame's schema: In the  pyspark  shell, the operation prints the following output: If you need to write to a different MongoDB collection,\nuse the  .option()  method with  .write() . To write to a collection called  contacts  in a database called\n people , specify the collection and database with  .option() : The following example creates a DataFrame from a  json  file and\nsaves it to the MongoDB collection specified in  SparkConf : The MongoDB Connector for Spark supports the following save modes: To learn more about save modes, see the  Spark SQL Guide . append overwrite If you specify the  overwrite  write mode, the connector drops the target\ncollection and creates a new collection that uses the\ndefault collection options.\nThis behavior can affect collections that don't use the default options,\nsuch as the following collection types: Sharded collections Collections with non-default collations Time-series collections If your write operation includes a field with a  null  value,\nthe connector writes the field name and  null  value to MongoDB. You can\nchange this behavior by setting the write configuration property\n ignoreNullValues . For more information about setting the connector's\nwrite behavior, see  Write Configuration Options .",
+            "code": [
+                {
+                    "lang": "java",
+                    "value": "Dataset<Row> df = spark.read().format(\"json\").load(\"example.json\");\n\ndf.write().format(\"mongodb\").mode(\"overwrite\").save();"
+                },
+                {
+                    "lang": "python",
+                    "value": "people = spark.createDataFrame([(\"Bilbo Baggins\",  50), (\"Gandalf\", 1000), (\"Thorin\", 195), (\"Balin\", 178), (\"Kili\", 77),\n   (\"Dwalin\", 169), (\"Oin\", 167), (\"Gloin\", 158), (\"Fili\", 82), (\"Bombur\", None)], [\"name\", \"age\"])"
+                },
+                {
+                    "lang": "python",
+                    "value": "people.write.format(\"mongodb\").mode(\"append\").save()"
+                },
+                {
+                    "lang": "python",
+                    "value": "people.show()"
+                },
+                {
+                    "lang": "none",
+                    "value": "+-------------+----+\n|         name| age|\n+-------------+----+\n|Bilbo Baggins|  50|\n|      Gandalf|1000|\n|       Thorin| 195|\n|        Balin| 178|\n|         Kili|  77|\n|       Dwalin| 169|\n|          Oin| 167|\n|        Gloin| 158|\n|         Fili|  82|\n|       Bombur|null|\n+-------------+----+"
+                },
+                {
+                    "lang": "python",
+                    "value": "people.printSchema()"
+                },
+                {
+                    "lang": "none",
+                    "value": "root\n |-- _id: struct (nullable = true)\n |    |-- oid: string (nullable = true)\n |-- age: long (nullable = true)\n |-- name: string (nullable = true)"
+                },
+                {
+                    "lang": "python",
+                    "value": "people.write.format(\"mongodb\").mode(\"append\").option(\"database\",\n\"people\").option(\"collection\", \"contacts\").save()"
+                },
+                {
+                    "lang": "scala",
+                    "value": "val df = spark.read.format(\"json\").load(\"example.json\")\n\ndf.write.format(\"mongodb\").mode(\"overwrite\").save()"
+                }
+            ],
+            "preview": null,
+            "tags": null
+        },
+        {
+            "slug": "tutorials",
+            "title": "Tutorials",
+            "headings": [],
+            "paragraphs": "",
+            "code": [],
+            "preview": null,
+            "tags": null
+        },
+        {
+            "slug": "getting-started",
+            "title": "Getting Started",
+            "headings": [
+                "Prerequisites",
+                "Getting Started",
+                "Dependency Management",
+                "Configuration",
+                "Python Spark Shell",
+                "Create a SparkSession Object",
+                "Spark Shell",
+                "Import the MongoDB Connector Package",
+                "Connect to MongoDB",
+                "Self-Contained Scala Application",
+                "Dependency Management",
+                "Configuration",
+                "Troubleshooting",
+                "Tutorials"
+            ],
+            "paragraphs": "Basic working knowledge of MongoDB and Apache Spark. Refer to the\n MongoDB documentation ,  Spark documentation , and this\n MongoDB white paper \nfor more details. Running MongoDB instance (version 4.0 or later). Spark version 3.1 or later. Java 8 or later. In version 10.0.0 and later of the Connector, use the format\n mongodb  to read from and write to MongoDB: df = spark.read.format(\"mongodb\").load() Beginning in version 3.2.0, Apache Spark supports both Scala 2.12 and 2.13.\nSpark 3.1.3 and previous versions support only Scala 2.12.\nTo provide support for both Scala versions, version 10.2.0 of the Spark\nConnector produces two artifacts: The following excerpt from a Maven  pom.xml  file shows how to include dependencies\ncompatible with Scala 2.12: Provide the Spark Core, Spark SQL, and MongoDB Spark Connector\ndependencies to your dependency management tool. org.mongodb.spark:mongo-spark-connector_2.12:10.2.0  is\ncompiled against Scala 2.12, and supports Spark 3.1.x and above. org.mongodb.spark:mongo-spark-connector_2.13:10.2.0  is\ncompiled against Scala 2.13, and supports Spark 3.2.x and above. Use the Spark Connector artifact that's compatible with your\nversions of Scala and Spark. You can use a  SparkSession  object to write data to MongoDB, read\ndata from MongoDB, create Datasets, and perform SQL operations. When specifying the Connector configuration via  SparkSession , you\nmust prefix the settings appropriately. For details and other\navailable MongoDB Spark Connector options, see the\n Configuration Options . The  spark.mongodb.read.connection.uri  specifies the\nMongoDB server  address( 127.0.0.1 ), the database to connect\n( test ), and the collection ( myCollection ) from which to read\ndata, and the read preference. The  spark.mongodb.write.connection.uri  specifies the\nMongoDB server address( 127.0.0.1 ), the database to connect\n( test ), and the collection ( myCollection ) to which to write\ndata. In version 10.0.0 and later of the Connector, use the format\n mongodb  to read from and write to MongoDB: df = spark.read.format(\"mongodb\").load() This tutorial uses the  pyspark  shell, but the code works\nwith self-contained Python applications as well. When starting the  pyspark  shell, you can specify: The following example starts the  pyspark  shell from the command\nline: The examples in this tutorial will use this database and collection. the  --packages  option to download the MongoDB Spark Connector\npackage.  The following package is available: mongo-spark-connector the  --conf  option to configure the MongoDB Spark Connnector.\nThese settings configure the  SparkConf  object. When specifying the Connector configuration via  SparkConf , you\nmust prefix the settings appropriately. For details and other\navailable MongoDB Spark Connector options, see the\n Configuration Options . The  spark.mongodb.read.connection.uri  specifies the\nMongoDB server address ( 127.0.0.1 ), the database to connect\n( test ), and the collection ( myCollection ) from which to read\ndata, and the read preference. The  spark.mongodb.write.connection.uri  specifies the\nMongoDB server address ( 127.0.0.1 ), the database to connect\n( test ), and the collection ( myCollection ) to which to write\ndata. Connects to port  27017  by default. The  packages  option specifies the Spark Connector's\nMaven coordinates, in the format  groupId:artifactId:version . If you specified the  spark.mongodb.read.connection.uri \nand  spark.mongodb.write.connection.uri  configuration options when you\nstarted  pyspark , the default  SparkSession  object uses them.\nIf you'd rather create your own  SparkSession  object from within\n pyspark , you can use  SparkSession.builder  and specify different\nconfiguration options. You can use a  SparkSession  object to write data to MongoDB, read\ndata from MongoDB, create DataFrames, and perform SQL operations. When you start  pyspark  you get a  SparkSession  object called\n spark  by default. In a standalone Python application, you need\nto create your  SparkSession  object explicitly, as show below. In version 10.0.0 and later of the Connector, use the format\n mongodb  to read from and write to MongoDB: df = spark.read.format(\"mongodb\").load() When starting the Spark shell, specify: For example, the  --packages  option to download the MongoDB Spark Connector\npackage.  The following package is available: mongo-spark-connector the  --conf  option to configure the MongoDB Spark Connnector.\nThese settings configure the  SparkConf  object. When specifying the Connector configuration via  SparkConf , you\nmust prefix the settings appropriately. For details and other\navailable MongoDB Spark Connector options, see the\n Configuration Options . The  spark.mongodb.read.connection.uri  specifies the\nMongoDB server address ( 127.0.0.1 ), the database to connect\n( test ), and the collection ( myCollection ) from which to read\ndata, and the read preference. The  spark.mongodb.write.connection.uri  specifies the\nMongoDB server address ( 127.0.0.1 ), the database to connect\n( test ), and the collection ( myCollection ) to which to write\ndata. Connects to port  27017  by default. The  packages  option specifies the Spark Connector's\nMaven coordinates, in the format  groupId:artifactId:version . Enable MongoDB Connector specific functions and implicits for your\n SparkSession  and Datasets by importing the following\npackage in the Spark shell: Connection to MongoDB happens automatically when a Dataset\naction requires a  read  from MongoDB or a\n write  to MongoDB. The following excerpt demonstrates how to include these dependencies in\na  SBT   build.scala  file: Provide the Spark Core, Spark SQL, and MongoDB Spark Connector\ndependencies to your dependency management tool. When specifying the Connector configuration via  SparkSession , you\nmust prefix the settings appropriately. For details and other\navailable MongoDB Spark Connector options, see the\n Configuration Options . If you get a  java.net.BindException: Can't assign requested address , If you have errors running the examples in this tutorial, you may need\nto clear your local ivy cache ( ~/.ivy2/cache/org.mongodb.spark  and\n ~/.ivy2/jars ). Check to ensure that you do not have another Spark shell already\nrunning. Try setting the  SPARK_LOCAL_IP  environment variable; e.g. Try including the following option when starting the Spark shell: Write to MongoDB Read from MongoDB Structured Streaming with MongoDB",
+            "code": [
+                {
+                    "lang": "xml",
+                    "value": "<dependencies>\n  <dependency>\n    <groupId>org.mongodb.spark</groupId>\n    <artifactId>mongo-spark-connector_2.12</artifactId>\n    <version>10.2.0</version>\n  </dependency>\n  <dependency>\n    <groupId>org.apache.spark</groupId>\n    <artifactId>spark-core_2.12</artifactId>\n    <version>3.3.1</version>\n  </dependency>\n  <dependency>\n    <groupId>org.apache.spark</groupId>\n    <artifactId>spark-sql_2.12</artifactId>\n    <version>3.3.1</version>\n  </dependency>\n</dependencies>"
+                },
+                {
+                    "lang": "java",
+                    "value": "package com.mongodb.spark_examples;\n\nimport org.apache.spark.sql.SparkSession;\n\npublic final class GettingStarted {\n\n  public static void main(final String[] args) throws InterruptedException {\n    /* Create the SparkSession.\n     * If config arguments are passed from the command line using --conf,\n     * parse args for the values to set.\n     */\n    SparkSession spark = SparkSession.builder()\n      .master(\"local\")\n      .appName(\"MongoSparkConnectorIntro\")\n      .config(\"spark.mongodb.read.connection.uri\", \"mongodb://127.0.0.1/test.myCollection\")\n      .config(\"spark.mongodb.write.connection.uri\", \"mongodb://127.0.0.1/test.myCollection\")\n      .getOrCreate();\n\n    // Application logic\n\n  }\n}"
+                },
+                {
+                    "lang": "sh",
+                    "value": "./bin/pyspark --conf \"spark.mongodb.read.connection.uri=mongodb://127.0.0.1/test.myCollection?readPreference=primaryPreferred\" \\\n              --conf \"spark.mongodb.write.connection.uri=mongodb://127.0.0.1/test.myCollection\" \\\n              --packages org.mongodb.spark:mongo-spark-connector_2.12:10.2.0"
+                },
+                {
+                    "lang": "python",
+                    "value": "from pyspark.sql import SparkSession\n\nmy_spark = SparkSession \\\n    .builder \\\n    .appName(\"myApp\") \\\n    .config(\"spark.mongodb.read.connection.uri\", \"mongodb://127.0.0.1/test.coll\") \\\n    .config(\"spark.mongodb.write.connection.uri\", \"mongodb://127.0.0.1/test.coll\") \\\n    .getOrCreate()"
+                },
+                {
+                    "lang": "sh",
+                    "value": "./bin/spark-shell --conf \"spark.mongodb.read.connection.uri=mongodb://127.0.0.1/test.myCollection?readPreference=primaryPreferred\" \\\n                  --conf \"spark.mongodb.write.connection.uri=mongodb://127.0.0.1/test.myCollection\" \\\n                  --packages org.mongodb.spark:mongo-spark-connector_2.12:10.2.0"
+                },
+                {
+                    "lang": "scala",
+                    "value": "import com.mongodb.spark._"
+                },
+                {
+                    "lang": "scala",
+                    "value": "scalaVersion := \"2.12\",\nlibraryDependencies ++= Seq(\n  \"org.mongodb.spark\" %% \"mongo-spark-connector_2.12\" % \"10.2.0\",\n  \"org.apache.spark\" %% \"spark-core\" % \"3.3.1\",\n  \"org.apache.spark\" %% \"spark-sql\" % \"3.3.1\"\n)"
+                },
+                {
+                    "lang": "scala",
+                    "value": "package com.mongodb\n\nobject GettingStarted {\n\n  def main(args: Array[String]): Unit = {\n\n    /* Create the SparkSession.\n     * If config arguments are passed from the command line using --conf,\n     * parse args for the values to set.\n     */\n    import org.apache.spark.sql.SparkSession\n\n    val spark = SparkSession.builder()\n      .master(\"local\")\n      .appName(\"MongoSparkConnectorIntro\")\n      .config(\"spark.mongodb.read.connection.uri\", \"mongodb://127.0.0.1/test.myCollection\")\n      .config(\"spark.mongodb.write.connection.uri\", \"mongodb://127.0.0.1/test.myCollection\")\n      .getOrCreate()\n\n  }\n}"
+                },
+                {
+                    "lang": "sh",
+                    "value": "export SPARK_LOCAL_IP=127.0.0.1"
+                },
+                {
+                    "lang": "sh",
+                    "value": "--driver-java-options \"-Djava.net.preferIPv4Stack=true\""
+                }
+            ],
+            "preview": "Beginning in version 3.2.0, Apache Spark supports both Scala 2.12 and 2.13.\nSpark 3.1.3 and previous versions support only Scala 2.12.\nTo provide support for both Scala versions, version 10.2.0 of the Spark\nConnector produces two artifacts:",
+            "tags": null
+        },
+        {
+            "slug": "api-docs",
+            "title": "API Documentation",
+            "headings": [],
+            "paragraphs": "",
+            "code": [],
+            "preview": null,
+            "tags": null
+        },
+        {
+            "slug": "read-from-mongodb",
+            "title": "Read from MongoDB",
+            "headings": [
+                "Overview",
+                "Schema Inference",
+                "Filters",
+                "Schema Inference",
+                "Filters",
+                "SQL Queries"
+            ],
+            "paragraphs": "Use your local SparkSession's  read  method to create a DataFrame\nrepresenting a collection. The following example loads the collection specified in the\n SparkConf : To specify a different collection, database, and other  read\nconfiguration settings , use the  option  method: DataFrame  does not exist as a class in the Java API. Use\n Dataset<Row>  to reference a DataFrame. When you load a Dataset or DataFrame without a schema, Spark samples\nthe records to infer the schema of the collection. Consider a collection named  characters : The following operation loads data from the MongoDB collection\nspecified in  SparkConf  and infers the schema: implicitDS.printSchema()  outputs the following schema to the console: implicitDS.show()  outputs the following to the console: You can create a Spark DataFrame to hold data from the MongoDB\ncollection specified in the\n spark.mongodb.read.connection.uri  option which your\n SparkSession  option is using. Assign the collection to a DataFrame with  spark.read() \nfrom within the  pyspark  shell. Spark samples the records to infer the schema of the collection. The above operation produces the following shell output: If you need to read from a different MongoDB collection,\nuse the  .option  method when reading data into a DataFrame. To read from a collection called  contacts  in a database called\n people , specify  people.contacts  in the input URI option. Consider a collection named  fruit  that contains the\nfollowing documents: Use  filter()  to read a subset of data from your MongoDB collection. First, set up a DataFrame to connect with your default MongoDB data\nsource: The following example includes only\nrecords in which the  qty  field is greater than or equal to  10 . The operation prints the following output: When using filters with DataFrames or Datasets, the\nunderlying MongoDB Connector code constructs an  aggregation\npipeline  to filter the data in\nMongoDB before sending it to Spark. This improves Spark performance\nby retrieving and processing only the data you need. MongoDB Spark Connector turns the following filters into\naggregation pipeline stages: And EqualNullSafe EqualTo GreaterThan GreaterThanOrEqual In IsNull LessThan LessThanOrEqual Not Or StringContains StringEndsWith StringStartsWith Consider a collection named  fruit  that contains the\nfollowing documents: Use your local SparkSession's  read  method to create a DataFrame\nrepresenting a collection. The following example loads the collection specified in the\n SparkConf : To specify a different collection, database, and other  read\nconfiguration settings , use the  option  method: A  DataFrame  is represented by a  Dataset  of\n Rows . It is an alias of  Dataset[Row] . When you load a Dataset or DataFrame without a schema, Spark samples\nthe records to infer the schema of the collection. Consider a collection named  characters : The following operation loads data from the MongoDB collection\nspecified in  SparkConf  and infers the schema: df.printSchema()  outputs the following schema to the console: The following example filters and output the characters with ages under\n100: The operation outputs the following: When using filters with DataFrames or Datasets, the\nunderlying MongoDB Connector code constructs an  aggregation\npipeline  to filter the data in\nMongoDB before sending it to Spark. This improves Spark performance\nby retrieving and processing only the data you need. MongoDB Spark Connector turns the following filters into\naggregation pipeline stages: And EqualNullSafe EqualTo GreaterThan GreaterThanOrEqual In IsNull LessThan LessThanOrEqual Not Or StringContains StringEndsWith StringStartsWith When the Spark Connector infers the schema of a data frame\nread from a change stream, by default,\nit will use the schema of the underlying collection rather than that\nof the change stream. If you set the  change.stream.publish.full.document.only \noption to  true , the connector uses the schema of the\nchange stream instead. For more information on configuring a read operation, see the\n Change Streams  section of the Read Configuration Options guide. centenarians.show()  outputs the following: Before running SQL queries on your dataset, you must register a\ntemporary view for the dataset. The following operation registers a\n characters  table and then queries it to find all characters that\nare 100 or older: Before you can run SQL queries against your DataFrame, you need to\nregister a temporary table. The following example registers a temporary table called  temp ,\nthen uses SQL to query for records in which the  type  field\ncontains the letter  e : In the  pyspark  shell, the operation prints the following output: Before running SQL queries on your dataset, you must register a\ntemporary view for the dataset. The following operation registers a\n characters  table and then queries it to find all characters that\nare 100 or older:",
+            "code": [
+                {
+                    "lang": "java",
+                    "value": "Dataset<Row> df = spark.read().format(\"mongodb\").load(); // Uses the SparkConf for configuration"
+                },
+                {
+                    "lang": "java",
+                    "value": "Dataset<Row> df = spark.read().format(\"mongodb\").option(\"database\", \"<example-database>\").option(\"collection\", \"<example-collection>\").load();"
+                },
+                {
+                    "lang": "java",
+                    "value": "Dataset<Row> implicitDS = spark.read().format(\"mongodb\").load();\nimplicitDS.printSchema();\nimplicitDS.show();"
+                },
+                {
+                    "lang": "sh",
+                    "value": "root\n |-- _id: struct (nullable = true)\n |    |-- oid: string (nullable = true)\n |-- age: integer (nullable = true)\n |-- name: string (nullable = true)"
+                },
+                {
+                    "lang": "sh",
+                    "value": "+--------------------+----+-------------+\n|                 _id| age|         name|\n+--------------------+----+-------------+\n|[585024d558bef808...|  50|Bilbo Baggins|\n|[585024d558bef808...|1000|      Gandalf|\n|[585024d558bef808...| 195|       Thorin|\n|[585024d558bef808...| 178|        Balin|\n|[585024d558bef808...|  77|         K\u00edli|\n|[585024d558bef808...| 169|       Dwalin|\n|[585024d558bef808...| 167|          \u00d3in|\n|[585024d558bef808...| 158|        Gl\u00f3in|\n|[585024d558bef808...|  82|         F\u00edli|\n|[585024d558bef808...|null|       Bombur|\n+--------------------+----+-------------+"
+                },
+                {
+                    "lang": "javascript",
+                    "value": "{ \"_id\" : ObjectId(\"585024d558bef808ed84fc3e\"), \"name\" : \"Bilbo Baggins\", \"age\" : 50 }\n{ \"_id\" : ObjectId(\"585024d558bef808ed84fc3f\"), \"name\" : \"Gandalf\", \"age\" : 1000 }\n{ \"_id\" : ObjectId(\"585024d558bef808ed84fc40\"), \"name\" : \"Thorin\", \"age\" : 195 }\n{ \"_id\" : ObjectId(\"585024d558bef808ed84fc41\"), \"name\" : \"Balin\", \"age\" : 178 }\n{ \"_id\" : ObjectId(\"585024d558bef808ed84fc42\"), \"name\" : \"K\u00edli\", \"age\" : 77 }\n{ \"_id\" : ObjectId(\"585024d558bef808ed84fc43\"), \"name\" : \"Dwalin\", \"age\" : 169 }\n{ \"_id\" : ObjectId(\"585024d558bef808ed84fc44\"), \"name\" : \"\u00d3in\", \"age\" : 167 }\n{ \"_id\" : ObjectId(\"585024d558bef808ed84fc45\"), \"name\" : \"Gl\u00f3in\", \"age\" : 158 }\n{ \"_id\" : ObjectId(\"585024d558bef808ed84fc46\"), \"name\" : \"F\u00edli\", \"age\" : 82 }\n{ \"_id\" : ObjectId(\"585024d558bef808ed84fc47\"), \"name\" : \"Bombur\" }"
+                },
+                {
+                    "lang": "python",
+                    "value": "df = spark.read.format(\"mongodb\").load()"
+                },
+                {
+                    "lang": "python",
+                    "value": "df.printSchema()"
+                },
+                {
+                    "lang": "none",
+                    "value": "root\n |-- _id: double (nullable = true)\n |-- qty: double (nullable = true)\n |-- type: string (nullable = true)"
+                },
+                {
+                    "lang": "python",
+                    "value": "df = spark.read.format(\"mongodb\").option(\"uri\", \"mongodb://127.0.0.1/people.contacts\").load()"
+                },
+                {
+                    "lang": "javascript",
+                    "value": "{ \"_id\" : 1, \"type\" : \"apple\", \"qty\" : 5 }\n{ \"_id\" : 2, \"type\" : \"orange\", \"qty\" : 10 }\n{ \"_id\" : 3, \"type\" : \"banana\", \"qty\" : 15 }"
+                },
+                {
+                    "lang": "python",
+                    "value": "df = spark.read.format(\"mongodb\").load()"
+                },
+                {
+                    "lang": "python",
+                    "value": "df.filter(df['qty'] >= 10).show()"
+                },
+                {
+                    "lang": "none",
+                    "value": "+---+----+------+\n|_id| qty|  type|\n+---+----+------+\n|2.0|10.0|orange|\n|3.0|15.0|banana|\n+---+----+------+"
+                },
+                {
+                    "lang": "javascript",
+                    "value": "{ \"_id\" : 1, \"type\" : \"apple\", \"qty\" : 5 }\n{ \"_id\" : 2, \"type\" : \"orange\", \"qty\" : 10 }\n{ \"_id\" : 3, \"type\" : \"banana\", \"qty\" : 15 }"
+                },
+                {
+                    "lang": "scala",
+                    "value": "val df = spark.read.format(\"mongodb\").load() // Uses the SparkConf for configuration"
+                },
+                {
+                    "lang": "scala",
+                    "value": "val df = spark.read.format(\"mongodb\").option(\"database\", \"<example-database>\").option(\"collection\", \"<example-collection>\").load()"
+                },
+                {
+                    "lang": "scala",
+                    "value": "val df = MongoSpark.load(spark)  // Uses the SparkSession\ndf.printSchema()                 // Prints DataFrame schema"
+                },
+                {
+                    "lang": "sh",
+                    "value": "root\n |-- _id: struct (nullable = true)\n |    |-- oid: string (nullable = true)\n |-- age: integer (nullable = true)\n |-- name: string (nullable = true)"
+                },
+                {
+                    "lang": "javascript",
+                    "value": "{ \"_id\" : ObjectId(\"585024d558bef808ed84fc3e\"), \"name\" : \"Bilbo Baggins\", \"age\" : 50 }\n{ \"_id\" : ObjectId(\"585024d558bef808ed84fc3f\"), \"name\" : \"Gandalf\", \"age\" : 1000 }\n{ \"_id\" : ObjectId(\"585024d558bef808ed84fc40\"), \"name\" : \"Thorin\", \"age\" : 195 }\n{ \"_id\" : ObjectId(\"585024d558bef808ed84fc41\"), \"name\" : \"Balin\", \"age\" : 178 }\n{ \"_id\" : ObjectId(\"585024d558bef808ed84fc42\"), \"name\" : \"K\u00edli\", \"age\" : 77 }\n{ \"_id\" : ObjectId(\"585024d558bef808ed84fc43\"), \"name\" : \"Dwalin\", \"age\" : 169 }\n{ \"_id\" : ObjectId(\"585024d558bef808ed84fc44\"), \"name\" : \"\u00d3in\", \"age\" : 167 }\n{ \"_id\" : ObjectId(\"585024d558bef808ed84fc45\"), \"name\" : \"Gl\u00f3in\", \"age\" : 158 }\n{ \"_id\" : ObjectId(\"585024d558bef808ed84fc46\"), \"name\" : \"F\u00edli\", \"age\" : 82 }\n{ \"_id\" : ObjectId(\"585024d558bef808ed84fc47\"), \"name\" : \"Bombur\" }"
+                },
+                {
+                    "lang": "scala",
+                    "value": "df.filter(df(\"age\") < 100).show()"
+                },
+                {
+                    "lang": "none",
+                    "value": "+--------------------+---+-------------+\n|                 _id|age|         name|\n+--------------------+---+-------------+\n|[5755d7b4566878c9...| 50|Bilbo Baggins|\n|[5755d7b4566878c9...| 82|         F\u00edli|\n|[5755d7b4566878c9...| 77|         K\u00edli|\n+--------------------+---+-------------+"
+                },
+                {
+                    "lang": "java",
+                    "value": "implicitDS.createOrReplaceTempView(\"characters\");\nDataset<Row> centenarians = spark.sql(\"SELECT name, age FROM characters WHERE age >= 100\");\ncentenarians.show();"
+                },
+                {
+                    "lang": "sh",
+                    "value": "+-------+----+\n|   name| age|\n+-------+----+\n|Gandalf|1000|\n| Thorin| 195|\n|  Balin| 178|\n| Dwalin| 169|\n|    \u00d3in| 167|\n|  Gl\u00f3in| 158|\n+-------+----+"
+                },
+                {
+                    "lang": "python",
+                    "value": "df.createOrReplaceTempView(\"temp\")\nsome_fruit = spark.sql(\"SELECT type, qty FROM temp WHERE type LIKE '%e%'\")\nsome_fruit.show()"
+                },
+                {
+                    "lang": "none",
+                    "value": "+------+----+\n|  type| qty|\n+------+----+\n| apple| 5.0|\n|orange|10.0|\n+------+----+"
+                },
+                {
+                    "lang": "scala",
+                    "value": "val characters = spark.read.format(\"mongodb\").as[Character]\ncharacters.createOrReplaceTempView(\"characters\")\n\nval centenarians = spark.sql(\"SELECT name, age FROM characters WHERE age >= 100\")\ncentenarians.show()"
+                }
+            ],
+            "preview": "When you load a Dataset or DataFrame without a schema, Spark samples\nthe records to infer the schema of the collection.",
+            "tags": null
+        },
+        {
+            "slug": "configuration",
+            "title": "Configuration Options",
+            "headings": [
+                "Specify Configuration",
+                "Using SparkConf",
+                "Using an Options Map",
+                "Short-Form Syntax",
+                "Using a System Property",
+                "Cache Configuration",
+                "ConfigExceptions"
+            ],
+            "paragraphs": "Various configuration options are available for the MongoDB Spark\nConnector. To learn more about the options you can set, see\n Write Configuration Options  and  Read Configuration Options . You can specify configuration options with  SparkConf  using any of\nthe following approaches: The MongoDB Spark Connector will use the settings in  SparkConf  as\ndefaults. The  SparkConf  constructor in your application. To learn more, see the  Java SparkConf documentation . The  SparkConf  constructor in your application. To learn more, see the  Python SparkConf documentation . The  SparkConf  constructor in your application. To learn more, see the  Scala SparkConf documentation . The  --conf  flag at runtime. To learn more, see\n Dynamically Loading Spark Properties  in\nthe Spark documentation. The  $SPARK_HOME/conf/spark-default.conf  file. When setting configurations with  SparkConf , you must prefix the\nconfiguration options. Refer to  Write Configuration Options  and\n Read Configuration Options  for the specific prefixes. In the Spark API, the DataFrameReader and DataFrameWriter methods\naccept options in the form of a  Map[String, String] . Options\nspecified this way override any corresponding settings in  SparkConf . To learn more about specifying options with\n DataFrameReader  and\n DataFrameWriter ,\nrefer to the Java Spark documentation for the  .option() \nmethod. To learn more about specifying options with\n DataFrameReader  and\n DataFrameWriter ,\nrefer to the Java Spark documentation for the  .option() \nmethod. To learn more about specifying options with\n DataFrameReader  and\n DataFrameWriter ,\nrefer to the Java Spark documentation for the  .option() \nmethod. Options maps support short-form syntax. You may omit the prefix when\nspecifying an option key string. The following syntaxes are equivalent to one another: dfw.option(\"spark.mongodb.write.collection\", \"myCollection\").save() dfw.option(\"spark.mongodb.collection\", \"myCollection\").save() dfw.option(\"collection\", \"myCollection\").save() The connector provides a cache for  MongoClients  which can only be\nconfigured with a System Property. See  Cache Configuration . The MongoConnector includes a cache for MongoClients, so workers can\nshare the MongoClient across threads. As the cache is setup before the Spark Configuration is available,\nthe cache can only be configured with a System Property. System Property name Description mongodb.keep_alive_ms The length of time to keep a  MongoClient  available for\nsharing. Default:   5000 A configuration error throws a  ConfigException . Confirm that any of\nthe following methods of configuration that you use are configured\nproperly: SparkConf Options maps",
+            "code": [],
+            "preview": "Various configuration options are available for the MongoDB Spark\nConnector. To learn more about the options you can set, see\nWrite Configuration Options and Read Configuration Options.",
+            "tags": null
+        },
+        {
+            "slug": "python/filters",
+            "title": "Filters",
+            "headings": [],
+            "paragraphs": "Use  filter()  to read a subset of data from your MongoDB collection. First, set up a DataFrame to connect with your default MongoDB data\nsource: The following example includes only\nrecords in which the  qty  field is greater than or equal to  10 . The operation prints the following output: When using filters with DataFrames or Datasets, the\nunderlying MongoDB Connector code constructs an  aggregation\npipeline  to filter the data in\nMongoDB before sending it to Spark. This improves Spark performance\nby retrieving and processing only the data you need. MongoDB Spark Connector turns the following filters into\naggregation pipeline stages: And EqualNullSafe EqualTo GreaterThan GreaterThanOrEqual In IsNull LessThan LessThanOrEqual Not Or StringContains StringEndsWith StringStartsWith Consider a collection named  fruit  that contains the\nfollowing documents:",
+            "code": [
+                {
+                    "lang": "python",
+                    "value": "df = spark.read.format(\"mongodb\").load()"
+                },
+                {
+                    "lang": "python",
+                    "value": "df.filter(df['qty'] >= 10).show()"
+                },
+                {
+                    "lang": "none",
+                    "value": "+---+----+------+\n|_id| qty|  type|\n+---+----+------+\n|2.0|10.0|orange|\n|3.0|15.0|banana|\n+---+----+------+"
+                },
+                {
+                    "lang": "javascript",
+                    "value": "{ \"_id\" : 1, \"type\" : \"apple\", \"qty\" : 5 }\n{ \"_id\" : 2, \"type\" : \"orange\", \"qty\" : 10 }\n{ \"_id\" : 3, \"type\" : \"banana\", \"qty\" : 15 }"
+                }
+            ],
+            "preview": "Use filter() to read a subset of data from your MongoDB collection.",
+            "tags": null
+        },
+        {
+            "slug": "python/api",
+            "title": "Python Spark Shell",
+            "headings": [
+                "Create a SparkSession Object"
+            ],
+            "paragraphs": "In version 10.0.0 and later of the Connector, use the format\n mongodb  to read from and write to MongoDB: df = spark.read.format(\"mongodb\").load() This tutorial uses the  pyspark  shell, but the code works\nwith self-contained Python applications as well. When starting the  pyspark  shell, you can specify: The following example starts the  pyspark  shell from the command\nline: The examples in this tutorial will use this database and collection. the  --packages  option to download the MongoDB Spark Connector\npackage.  The following package is available: mongo-spark-connector the  --conf  option to configure the MongoDB Spark Connnector.\nThese settings configure the  SparkConf  object. When specifying the Connector configuration via  SparkConf , you\nmust prefix the settings appropriately. For details and other\navailable MongoDB Spark Connector options, see the\n Configuration Options . The  spark.mongodb.read.connection.uri  specifies the\nMongoDB server address ( 127.0.0.1 ), the database to connect\n( test ), and the collection ( myCollection ) from which to read\ndata, and the read preference. The  spark.mongodb.write.connection.uri  specifies the\nMongoDB server address ( 127.0.0.1 ), the database to connect\n( test ), and the collection ( myCollection ) to which to write\ndata. Connects to port  27017  by default. The  packages  option specifies the Spark Connector's\nMaven coordinates, in the format  groupId:artifactId:version . If you specified the  spark.mongodb.read.connection.uri \nand  spark.mongodb.write.connection.uri  configuration options when you\nstarted  pyspark , the default  SparkSession  object uses them.\nIf you'd rather create your own  SparkSession  object from within\n pyspark , you can use  SparkSession.builder  and specify different\nconfiguration options. You can use a  SparkSession  object to write data to MongoDB, read\ndata from MongoDB, create DataFrames, and perform SQL operations. When you start  pyspark  you get a  SparkSession  object called\n spark  by default. In a standalone Python application, you need\nto create your  SparkSession  object explicitly, as show below.",
+            "code": [
+                {
+                    "lang": "sh",
+                    "value": "./bin/pyspark --conf \"spark.mongodb.read.connection.uri=mongodb://127.0.0.1/test.myCollection?readPreference=primaryPreferred\" \\\n              --conf \"spark.mongodb.write.connection.uri=mongodb://127.0.0.1/test.myCollection\" \\\n              --packages org.mongodb.spark:mongo-spark-connector_2.12:10.2.0"
+                },
+                {
+                    "lang": "python",
+                    "value": "from pyspark.sql import SparkSession\n\nmy_spark = SparkSession \\\n    .builder \\\n    .appName(\"myApp\") \\\n    .config(\"spark.mongodb.read.connection.uri\", \"mongodb://127.0.0.1/test.coll\") \\\n    .config(\"spark.mongodb.write.connection.uri\", \"mongodb://127.0.0.1/test.coll\") \\\n    .getOrCreate()"
+                }
+            ],
+            "preview": "This tutorial uses the pyspark shell, but the code works\nwith self-contained Python applications as well.",
+            "tags": null
+        },
+        {
+            "slug": "configuration/write",
+            "title": "Write Configuration Options",
+            "headings": [
+                "Write Configuration",
+                "connection.uri Configuration Setting"
+            ],
+            "paragraphs": "The following options for writing to MongoDB are available: If you use  SparkConf  to set the connector's write configurations,\nprefix  spark.mongodb.write.  to each property. Property name Description connection.uri database collection comment convertJson idFieldList ignoreNullValues maxBatchSize mongoClientFactory operationType insert : insert the data. replace : replace an existing document that matches the\n idFieldList  value with the new data. If no match exists, the\nvalue of  upsertDocument  indicates whether the connector\ninserts a new document. update : update an existing document that matches the\n idFieldList  value with the new data. If no match exists, the\nvalue of  upsertDocument  indicates whether the connector\ninserts a new document. ordered upsertDocument writeConcern.journal writeConcern.w writeConcern.wTimeoutMS You can set all  Write Configuration  via the write  connection.uri . The configuration corresponds to the following separate configuration\nsettings: If you specify a setting both in the  connection.uri  and in a separate\nconfiguration, the  connection.uri  setting overrides the separate\nsetting. For example, in the following configuration, the\ndatabase for the connection is  foobar : If you use  SparkConf  to set the connector's write configurations,\nprefix  spark.mongodb.write.  to the setting.",
+            "code": [
+                {
+                    "lang": "none",
+                    "value": "\"fieldName1,fieldName2\""
+                },
+                {
+                    "lang": "cfg",
+                    "value": "spark.mongodb.write.connection.uri=mongodb://127.0.0.1/test.myCollection"
+                },
+                {
+                    "lang": "cfg",
+                    "value": "spark.mongodb.write.connection.uri=mongodb://127.0.0.1/\n spark.mongodb.write.database=test\n spark.mongodb.write.collection=myCollection"
+                },
+                {
+                    "lang": "cfg",
+                    "value": "spark.mongodb.write.connection.uri=mongodb://127.0.0.1/foobar\n spark.mongodb.write.database=bar"
+                }
+            ],
+            "preview": "The following options for writing to MongoDB are available:",
+            "tags": null
+        },
+        {
+            "slug": "structured-streaming",
+            "title": "Structured Streaming with MongoDB",
+            "headings": [
+                "Overview",
+                "Configuring a Write Stream to MongoDB",
+                "Configuring a Read Stream from MongoDB",
+                "Examples",
+                "Stream to MongoDB from a CSV File",
+                "Stream to your Console from MongoDB"
+            ],
+            "paragraphs": "Spark Structured Streaming is a data stream processing engine you can\nuse through the Dataset or DataFrame API. The MongoDB Spark Connector\nenables you to stream to and from MongoDB using Spark Structured\nStreaming. To learn more about Structured Streaming, see the\n Spark Programming Guide . Spark Structured Streaming  and  Spark Streaming with DStreams  are different. Specify write stream configuration settings on your streaming\nDataset or streaming DataFrame using  DataStreamWriter . You must specify the following configuration\nsettings to write to MongoDB: The following code snippet shows how to use the preceding\nconfiguration settings to stream data to MongoDB: For a complete list of methods, see the\n Java Structured Streaming reference . Setting Description writeStream.format() The format to use for write stream data. Use\n mongodb . writeStream.option() Use the  option()  method to specify your MongoDB\ndeployment  connection string  with the\n spark.mongodb.connection.uri  option key. You can also use the  option()  method to configure other stream settings,\nincluding the MongoDB database and collection, destination\ndirectory, and  checkpoint directory . writeStream.outputMode() Specifies how data of a streaming DataFrame/Dataset is\nwritten to a streaming sink. To view a list of all\nsupported output modes, see  the Java outputMode documentation . Specify write stream configuration settings on your streaming\nDataFrame using  DataStreamWriter . You\nmust specify the following configuration settings to write\nto MongoDB: The following code snippet shows how to use the preceding\nconfiguration settings to stream data to MongoDB: For a complete list of methods, see the\n pyspark Structured Streaming reference . Setting Description writeStream.format() The format to use for write stream data. Use\n mongodb . writeStream.option() Use the  option  method to specify your MongoDB\ndeployment  connection string  with the\n spark.mongodb.connection.uri  option key. You can also use the  option()  method to configure other stream settings,\nincluding the MongoDB database and collection, destination\ndirectory, and  checkpoint directory . writeStream.outputMode() Specifies how data of a streaming DataFrame is\nwritten to a streaming sink. To view a list of all\nsupported output modes, see  the pyspark outputMode documentation . Specify write stream configuration settings on your streaming\nDataset or streaming DataFrame using  DataStreamWriter . You must specify the following configuration\nsettings to write to MongoDB: The following code snippet shows how to use the preceding\nconfiguration settings to stream data to MongoDB: For a complete list of methods, see the\n Scala Structured Streaming reference . Setting Description writeStream.format() The format to use for write stream data. Use\n mongodb . writeStream.option() Use the  option  method to specify your MongoDB\ndeployment  connection string  with the\n spark.mongodb.connection.uri  option key. You can also use the  option()  method to configure other stream settings,\nincluding the MongoDB database and collection, destination\ndirectory, and  checkpoint directory . writeStream.outputMode() Specifies how data of a streaming DataFrame/Dataset is\nwritten to a streaming sink. To view a list of all\nsupported output modes, see  the Scala outputMode documentation . When reading a stream from a MongoDB database, the MongoDB Spark Connector supports both\n micro-batch processing  and\n continuous processing . Micro-batch processing is the default processing engine, while\ncontinuous processing is an experimental feature introduced in\nSpark version 2.3. To learn\nmore about continuous processing, see the  Spark documentation . The connector reads from your MongoDB\ndeployment's change stream. To generate change events on the change\nstream, perform update operations on your database. To learn more about change streams, see\n Change Streams  in the MongoDB\nmanual. Since Structured Streaming produces a single partition, it ignores\n partitioner configurations . Partitioner\nconfiguration only apply when there are multiple partitions. This is true\nfor both micro-batch processing and continuous processing streams. To read data from MongoDB, specify the following read-stream configuration settings on\n DataStreamReader : The following code snippet shows how to use the preceding\nconfiguration settings to continuously process data streamed from MongoDB.\nThe connector appends all new data to the existing data and asynchronously\nwrites checkpoints to  /tmp/checkpointDir  once per second: For a complete list of methods, see the\n Java Structured Streaming reference . Setting Description readStream.format() The format to use for read stream data. Use  mongodb . writeStream.trigger() Specifies how often results should be\nwritten to the streaming sink. To use continuous processing, pass  Trigger.Continuous(<time value>) \nas an argument, where  <time value>  is how often the Spark Connector\nshould asynchronously checkpoint. If you\npass any other static method of the  Trigger  class, or if you don't\ncall  writeStream.trigger() , the Spark connector will use\nmicro-batch processing instead. To view a list of all supported processing policies, see  the Java\ntrigger documentation . Call the  trigger  method on the  DataStreamWriter  you create\nfrom the  DataStreamReader  you configure. Spark does not begin streaming until you call the\n start()  method on a streaming query. To read data from MongoDB, specify the following read-stream configuration settings on\n DataStreamReader : To use continuous processing with the MongoDB Spark Connector,\ncall the  trigger()  method on the  writeStream  property\nof the streaming DataFrame that you create from\nyour MongoDB read stream. In your  trigger() , specify the\n continuous  parameter. The following code snippet shows how to use the preceding\nconfiguration settings to continuously process data streamed from MongoDB.\nThe connector appends all new data to the existing data and asynchronously\nwrites checkpoints to  /tmp/checkpointDir  once per second: For a complete list of methods, see the\n pyspark Structured Streaming reference . Setting Description readStream.format() The format to use for read stream data. Use  mongodb . writeStream.trigger() Specifies how often results should be\nwritten to the streaming sink. To use continuous processing, pass the method a time value\nusing the  continuous  parameter.\nIf you pass any other named parameter, or if you don't\ncall  writeStream.trigger() , the Spark Connector will use\nmicro-batch processing instead. To view a list of all supported processing policies, see\n the pyspark trigger documentation . Call the  trigger  method on the  DataStreamWriter  you create\nfrom the  DataStreamReader  you configure. Spark does not begin streaming until you call the\n start()  method on a streaming query. To read data from MongoDB, specify the following read-stream configuration settings on\n DataStreamReader : The following code snippet shows how to use the preceding\nconfiguration settings to continuously process data streamed from MongoDB.\nThe connector appends all new data to the existing data and asynchronously\nwrites checkpoints to  /tmp/checkpointDir  once per second: For a complete list of methods, see the\n Scala Structured Streaming reference . Setting Description readStream.format() The format to use for read stream data. Use  mongodb . writeStream.trigger() Specifies how often results should be\nwritten to the streaming sink. To use continuous processing, pass  Trigger.Continuous(<time value>) \nas an argument, where  <time value>  is how often the Spark Connector\nshould asynchronously checkpoint. If you\npass any other static method of the  Trigger  class, or if you don't\ncall  writeStream.trigger() , the Spark connector will use\nmicro-batch processing instead. To view a list of all\nsupported processing policies, see  the Scala trigger documentation . Call the  trigger  method on the  DataStreamWriter  you create\nfrom the  DataStreamReader  you configure. Spark does not begin streaming until you call the\n start()  method on a streaming query. The following examples show Spark Structured Streaming configurations\nfor streaming to and from MongoDB. To stream data from a CSV file to MongoDB: As the connector reads data from the CSV file, it adds that\ndata to MongoDB using the  outputMode \nyou specify. Create a\n DataStreamReader \nthat reads from the CSV file. Create a\n DataStreamWriter \nby calling the  writeStream()  method on the streaming\nDataset or streaming DataFrame that you created with a\n DataStreamReader . Specify the format  mongodb  using\nthe  format()  method. Call the  start()  method on the  DataStreamWriter \ninstance to begin the stream. As the connector reads data from the CSV file, it adds that\ndata to MongoDB using the  outputMode \nyou specify. Create a\n DataStreamReader \nthat reads from the CSV file. Create a\n DataStreamWriter \nby calling the  writeStream()  method on the streaming\nDataFrame that you created with a  DataStreamReader .\nSpecify the format  mongodb  using the  format()  method. Call the  start()  method on the  DataStreamWriter \ninstance to begin the stream. As the connector reads data from the CSV file, it adds that\ndata to MongoDB using the  outputMode \nyou specify. Create a\n DataStreamReader \nthat reads from the CSV file. Create a\n DataStreamWriter \nby calling the  writeStream()  method on the streaming\nDataset or streaming DataFrame that you created with a\n DataStreamReader . Specify the format  mongodb  using\nthe  format()  method. Call the  start()  method on the  DataStreamWriter \ninstance to begin the stream. To stream data from MongoDB to your console: As new data is inserted into MongoDB, MongoDB streams that\ndata out to your console using the  outputMode \nyou specify. Create a\n DataStreamReader \nthat reads from MongoDB. Create a\n DataStreamWriter \nby calling the  writeStream()  method on the streaming\nDataset or streaming DataFrame that you created with a\n DataStreamReader . Specify the format  console  using\nthe  format()  method. Call the  start()  method on the  DataStreamWriter \ninstance to begin the stream. Avoid streaming large datasets to your console. Streaming to your\nconsole is memory intensive and intended only for testing purposes. As new data is inserted into MongoDB, MongoDB streams that\ndata out to your console using the  outputMode \nyou specify. Create a\n DataStreamReader \nthat reads from MongoDB. Create a\n DataStreamWriter \nby calling the  writeStream()  method on the streaming\nDataFrame that you created with a  DataStreamReader .\nSpecify the format  console  using the  format()  method. Call the  start()  method on the  DataStreamWriter \ninstance to begin the stream. Avoid streaming large datasets to your console. Streaming to your\nconsole is memory intensive and intended only for testing purposes. As new data is inserted into MongoDB, MongoDB streams that\ndata out to your console using the  outputMode \nyou specify. Create a\n DataStreamReader \nthat reads from MongoDB. Create a\n DataStreamWriter \nby calling the  writeStream()  method on the streaming\nDataset or streaming DataFrame that you created with a\n DataStreamReader . Specify the format  console  using\nthe  format()  method. Call the  start()  method on the  DataStreamWriter \ninstance to begin the stream. Avoid streaming large datasets to your console. Streaming to your\nconsole is memory intensive and intended only for testing purposes.",
+            "code": [
+                {
+                    "lang": "java",
+                    "value": "<streaming Dataset/DataFrame>.writeStream()\n  .format(\"mongodb\")\n  .option(\"spark.mongodb.connection.uri\", <mongodb-connection-string>)\n  .option(\"spark.mongodb.database\", <database-name>)\n  .option(\"spark.mongodb.collection\", <collection-name>)\n  .outputMode(\"append\");"
+                },
+                {
+                    "lang": "python",
+                    "value": "<streaming DataFrame>.writeStream \\\n  .format(\"mongodb\") \\\n  .option(\"spark.mongodb.connection.uri\", <mongodb-connection-string>) \\\n  .option(\"spark.mongodb.database\", <database-name>) \\\n  .option(\"spark.mongodb.collection\", <collection-name>) \\\n  .outputMode(\"append\")"
+                },
+                {
+                    "lang": "scala",
+                    "value": "<streaming Dataset/DataFrame>.writeStream\n  .format(\"mongodb\")\n  .option(\"spark.mongodb.connection.uri\", <mongodb-connection-string>)\n  .option(\"spark.mongodb.database\", <database-name>)\n  .option(\"spark.mongodb.collection\", <collection-name>)\n  .outputMode(\"append\")"
+                },
+                {
+                    "lang": "java",
+                    "value": "import org.apache.spark.sql.streaming.Trigger;\n\nDataset<Row> streamingDataset = <local SparkSession>.readStream()\n  .format(\"mongodb\")\n  .load();\n\nDataStreamWriter<Row> dataStreamWriter = streamingDataset.writeStream()\n  .trigger(Trigger.Continuous(\"1 second\"))\n  .format(\"memory\")\n  .option(\"checkpointLocation\", \"/tmp/checkpointDir\")\n  .outputMode(\"append\");\n\nStreamingQuery query = dataStreamWriter.start();"
+                },
+                {
+                    "lang": "python",
+                    "value": "streamingDataFrame = (<local SparkSession>.readStream\n  .format(\"mongodb\")\n  .load()\n)\n\ndataStreamWriter = (streamingDataFrame.writeStream\n  .trigger(continuous=\"1 second\")\n  .format(\"memory\")\n  .option(\"checkpointLocation\", \"/tmp/checkpointDir\")\n  .outputMode(\"append\")\n)\n\nquery = dataStreamWriter.start()"
+                },
+                {
+                    "lang": "scala",
+                    "value": "import org.apache.spark.sql.streaming.Trigger\n\nval streamingDataFrame = <local SparkSession>.readStream\n  .format(\"mongodb\")\n  .load()\n\nval dataStreamWriter = streamingDataFrame.writeStream\n  .trigger(Trigger.Continuous(\"1 second\"))\n  .format(\"memory\")\n  .option(\"checkpointLocation\", \"/tmp/checkpointDir\")\n  .outputMode(\"append\")\n\nval query = dataStreamWriter.start()"
+                },
+                {
+                    "lang": "java",
+                    "value": "// create a local SparkSession\nSparkSession spark = SparkSession.builder()\n  .appName(\"writeExample\")\n  .master(\"spark://spark-master:<port>\")\n  .config(\"spark.jars\", \"<mongo-spark-connector-JAR-file-name>\")\n  .getOrCreate();\n\n// define a streaming query\nDataStreamWriter<Row> dataStreamWriter = spark.readStream()\n  .format(\"csv\")\n  .option(\"header\", \"true\")\n  .schema(\"<csv-schema>\")\n  .load(\"<csv-file-name>\")\n  // manipulate your streaming data\n  .writeStream()\n  .format(\"mongodb\")\n  .option(\"checkpointLocation\", \"/tmp/\")\n  .option(\"forceDeleteTempCheckpointLocation\", \"true\")\n  .option(\"spark.mongodb.connection.uri\", \"<mongodb-connection-string>\")\n  .option(\"spark.mongodb.database\", \"<database-name>\")\n  .option(\"spark.mongodb.collection\", \"<collection-name>\")\n  .outputMode(\"append\");\n\n// run the query\nStreamingQuery query = dataStreamWriter.start();"
+                },
+                {
+                    "lang": "python",
+                    "value": "# create a local SparkSession\nspark = SparkSession.builder \\\n  .appName(\"writeExample\") \\\n  .master(\"spark://spark-master:<port>\") \\\n  .config(\"spark.jars\", \"<mongo-spark-connector-JAR-file-name>\") \\\n  .getOrCreate()\n\n# define a streaming query\ndataStreamWriter = (spark.readStream\n  .format(\"csv\")\n  .option(\"header\", \"true\")\n  .schema(<csv-schema>)\n  .load(<csv-file-name>)\n  # manipulate your streaming data\n  .writeStream\n  .format(\"mongodb\")\n  .option(\"checkpointLocation\", \"/tmp/pyspark/\")\n  .option(\"forceDeleteTempCheckpointLocation\", \"true\")\n  .option(\"spark.mongodb.connection.uri\", <mongodb-connection-string>)\n  .option(\"spark.mongodb.database\", <database-name>)\n  .option(\"spark.mongodb.collection\", <collection-name>)\n  .outputMode(\"append\")\n)\n\n# run the query\nquery = dataStreamWriter.start()"
+                },
+                {
+                    "lang": "scala",
+                    "value": "// create a local SparkSession\nval spark = SparkSession.builder\n  .appName(\"writeExample\")\n  .master(\"spark://spark-master:<port>\")\n  .config(\"spark.jars\", \"<mongo-spark-connector-JAR-file-name>\")\n  .getOrCreate()\n\n// define a streaming query\nval dataStreamWriter = spark.readStream\n  .format(\"csv\")\n  .option(\"header\", \"true\")\n  .schema(<csv-schema>)\n  .load(<csv-file-name>)\n  // manipulate your streaming data\n  .writeStream\n  .format(\"mongodb\")\n  .option(\"checkpointLocation\", \"/tmp/\")\n  .option(\"forceDeleteTempCheckpointLocation\", \"true\")\n  .option(\"spark.mongodb.connection.uri\", <mongodb-connection-string>)\n  .option(\"spark.mongodb.database\", <database-name>)\n  .option(\"spark.mongodb.collection\", <collection-name>)\n  .outputMode(\"append\")\n\n// run the query\nval query = dataStreamWriter.start()"
+                },
+                {
+                    "lang": "java",
+                    "value": "// create a local SparkSession\nSparkSession spark = SparkSession.builder()\n  .appName(\"readExample\")\n  .master(\"spark://spark-master:<port>\")\n  .config(\"spark.jars\", \"<mongo-spark-connector-JAR-file-name>\")\n  .getOrCreate();\n\n// define the schema of the source collection\nStructType readSchema = new StructType()\n  .add(\"company_symbol\", DataTypes.StringType)\n  .add(\"company_name\", DataTypes.StringType)\n  .add(\"price\", DataTypes.DoubleType)\n  .add(\"tx_time\", DataTypes.TimestampType);\n\n// define a streaming query\nDataStreamWriter<Row> dataStreamWriter = spark.readStream()\n  .format(\"mongodb\")\n  .option(\"spark.mongodb.connection.uri\", \"<mongodb-connection-string>\")\n  .option(\"spark.mongodb.database\", \"<database-name>\")\n  .option(\"spark.mongodb.collection\", \"<collection-name>\")\n  .schema(readSchema)\n  .load()\n  // manipulate your streaming data\n  .writeStream()\n  .format(\"console\")\n  .trigger(Trigger.Continuous(\"1 second\"))\n  .outputMode(\"append\");\n\n// run the query\nStreamingQuery query = dataStreamWriter.start();"
+                },
+                {
+                    "lang": "python",
+                    "value": "# create a local SparkSession\nspark = SparkSession.builder \\\n  .appName(\"readExample\") \\\n  .master(\"spark://spark-master:<port>\") \\\n  .config(\"spark.jars\", \"<mongo-spark-connector-JAR-file-name>\") \\\n  .getOrCreate()\n\n# define the schema of the source collection\nreadSchema = (StructType()\n  .add('company_symbol', StringType())\n  .add('company_name', StringType())\n  .add('price', DoubleType())\n  .add('tx_time', TimestampType())\n)\n\n# define a streaming query\ndataStreamWriter = (spark.readStream\n  .format(\"mongodb\")\n  .option(\"spark.mongodb.connection.uri\", <mongodb-connection-string>)\n  .option('spark.mongodb.database', <database-name>)\n  .option('spark.mongodb.collection', <collection-name>)\n  .schema(readSchema)\n  .load()\n  # manipulate your streaming data\n  .writeStream\n  .format(\"console\")\n  .trigger(continuous=\"1 second\")\n  .outputMode(\"append\")\n)\n\n# run the query\nquery = dataStreamWriter.start()"
+                },
+                {
+                    "lang": "scala",
+                    "value": "// create a local SparkSession\nval spark = SparkSession.builder\n  .appName(\"readExample\")\n  .master(\"spark://spark-master:<port>\")\n  .config(\"spark.jars\", \"<mongo-spark-connector-JAR-file-name>\")\n  .getOrCreate()\n\n// define the schema of the source collection\nval readSchema = StructType()\n  .add(\"company_symbol\", StringType())\n  .add(\"company_name\", StringType())\n  .add(\"price\", DoubleType())\n  .add(\"tx_time\", TimestampType())\n\n// define a streaming query\nval dataStreamWriter = spark.readStream\n  .format(\"mongodb\")\n  .option(\"spark.mongodb.connection.uri\", <mongodb-connection-string>)\n  .option(\"spark.mongodb.database\", <database-name>)\n  .option(\"spark.mongodb.collection\", <collection-name>)\n  .schema(readSchema)\n  .load()\n  // manipulate your streaming data\n  .writeStream\n  .format(\"console\")\n  .trigger(Trigger.Continuous(\"1 second\"))\n  .outputMode(\"append\")\n\n// run the query\nval query = dataStreamWriter.start()"
+                }
+            ],
+            "preview": "Spark Structured Streaming is a data stream processing engine you can\nuse through the Dataset or DataFrame API. The MongoDB Spark Connector\nenables you to stream to and from MongoDB using Spark Structured\nStreaming.",
+            "tags": null
+        },
+        {
+            "slug": "java/api",
+            "title": "Dependency Management",
+            "headings": [
+                "Configuration"
+            ],
+            "paragraphs": "In version 10.0.0 and later of the Connector, use the format\n mongodb  to read from and write to MongoDB: df = spark.read.format(\"mongodb\").load() Beginning in version 3.2.0, Apache Spark supports both Scala 2.12 and 2.13.\nSpark 3.1.3 and previous versions support only Scala 2.12.\nTo provide support for both Scala versions, version 10.2.0 of the Spark\nConnector produces two artifacts: The following excerpt from a Maven  pom.xml  file shows how to include dependencies\ncompatible with Scala 2.12: Provide the Spark Core, Spark SQL, and MongoDB Spark Connector\ndependencies to your dependency management tool. org.mongodb.spark:mongo-spark-connector_2.12:10.2.0  is\ncompiled against Scala 2.12, and supports Spark 3.1.x and above. org.mongodb.spark:mongo-spark-connector_2.13:10.2.0  is\ncompiled against Scala 2.13, and supports Spark 3.2.x and above. Use the Spark Connector artifact that's compatible with your\nversions of Scala and Spark. You can use a  SparkSession  object to write data to MongoDB, read\ndata from MongoDB, create Datasets, and perform SQL operations. When specifying the Connector configuration via  SparkSession , you\nmust prefix the settings appropriately. For details and other\navailable MongoDB Spark Connector options, see the\n Configuration Options . The  spark.mongodb.read.connection.uri  specifies the\nMongoDB server  address( 127.0.0.1 ), the database to connect\n( test ), and the collection ( myCollection ) from which to read\ndata, and the read preference. The  spark.mongodb.write.connection.uri  specifies the\nMongoDB server address( 127.0.0.1 ), the database to connect\n( test ), and the collection ( myCollection ) to which to write\ndata.",
+            "code": [
+                {
+                    "lang": "xml",
+                    "value": "<dependencies>\n  <dependency>\n    <groupId>org.mongodb.spark</groupId>\n    <artifactId>mongo-spark-connector_2.12</artifactId>\n    <version>10.2.0</version>\n  </dependency>\n  <dependency>\n    <groupId>org.apache.spark</groupId>\n    <artifactId>spark-core_2.12</artifactId>\n    <version>3.3.1</version>\n  </dependency>\n  <dependency>\n    <groupId>org.apache.spark</groupId>\n    <artifactId>spark-sql_2.12</artifactId>\n    <version>3.3.1</version>\n  </dependency>\n</dependencies>"
+                },
+                {
+                    "lang": "java",
+                    "value": "package com.mongodb.spark_examples;\n\nimport org.apache.spark.sql.SparkSession;\n\npublic final class GettingStarted {\n\n  public static void main(final String[] args) throws InterruptedException {\n    /* Create the SparkSession.\n     * If config arguments are passed from the command line using --conf,\n     * parse args for the values to set.\n     */\n    SparkSession spark = SparkSession.builder()\n      .master(\"local\")\n      .appName(\"MongoSparkConnectorIntro\")\n      .config(\"spark.mongodb.read.connection.uri\", \"mongodb://127.0.0.1/test.myCollection\")\n      .config(\"spark.mongodb.write.connection.uri\", \"mongodb://127.0.0.1/test.myCollection\")\n      .getOrCreate();\n\n    // Application logic\n\n  }\n}"
+                }
+            ],
+            "preview": "Beginning in version 3.2.0, Apache Spark supports both Scala 2.12 and 2.13.\nSpark 3.1.3 and previous versions support only Scala 2.12.\nTo provide support for both Scala versions, version 10.2.0 of the Spark\nConnector produces two artifacts:",
+            "tags": null
+        },
+        {
+            "slug": "java/read-from-mongodb",
+            "title": "Schema Inference",
+            "headings": [],
+            "paragraphs": "Use your local SparkSession's  read  method to create a DataFrame\nrepresenting a collection. The following example loads the collection specified in the\n SparkConf : To specify a different collection, database, and other  read\nconfiguration settings , use the  option  method: DataFrame  does not exist as a class in the Java API. Use\n Dataset<Row>  to reference a DataFrame. When you load a Dataset or DataFrame without a schema, Spark samples\nthe records to infer the schema of the collection. Consider a collection named  characters : The following operation loads data from the MongoDB collection\nspecified in  SparkConf  and infers the schema: implicitDS.printSchema()  outputs the following schema to the console: implicitDS.show()  outputs the following to the console:",
+            "code": [
+                {
+                    "lang": "java",
+                    "value": "Dataset<Row> df = spark.read().format(\"mongodb\").load(); // Uses the SparkConf for configuration"
+                },
+                {
+                    "lang": "java",
+                    "value": "Dataset<Row> df = spark.read().format(\"mongodb\").option(\"database\", \"<example-database>\").option(\"collection\", \"<example-collection>\").load();"
+                },
+                {
+                    "lang": "java",
+                    "value": "Dataset<Row> implicitDS = spark.read().format(\"mongodb\").load();\nimplicitDS.printSchema();\nimplicitDS.show();"
+                },
+                {
+                    "lang": "sh",
+                    "value": "root\n |-- _id: struct (nullable = true)\n |    |-- oid: string (nullable = true)\n |-- age: integer (nullable = true)\n |-- name: string (nullable = true)"
+                },
+                {
+                    "lang": "sh",
+                    "value": "+--------------------+----+-------------+\n|                 _id| age|         name|\n+--------------------+----+-------------+\n|[585024d558bef808...|  50|Bilbo Baggins|\n|[585024d558bef808...|1000|      Gandalf|\n|[585024d558bef808...| 195|       Thorin|\n|[585024d558bef808...| 178|        Balin|\n|[585024d558bef808...|  77|         K\u00edli|\n|[585024d558bef808...| 169|       Dwalin|\n|[585024d558bef808...| 167|          \u00d3in|\n|[585024d558bef808...| 158|        Gl\u00f3in|\n|[585024d558bef808...|  82|         F\u00edli|\n|[585024d558bef808...|null|       Bombur|\n+--------------------+----+-------------+"
+                },
+                {
+                    "lang": "javascript",
+                    "value": "{ \"_id\" : ObjectId(\"585024d558bef808ed84fc3e\"), \"name\" : \"Bilbo Baggins\", \"age\" : 50 }\n{ \"_id\" : ObjectId(\"585024d558bef808ed84fc3f\"), \"name\" : \"Gandalf\", \"age\" : 1000 }\n{ \"_id\" : ObjectId(\"585024d558bef808ed84fc40\"), \"name\" : \"Thorin\", \"age\" : 195 }\n{ \"_id\" : ObjectId(\"585024d558bef808ed84fc41\"), \"name\" : \"Balin\", \"age\" : 178 }\n{ \"_id\" : ObjectId(\"585024d558bef808ed84fc42\"), \"name\" : \"K\u00edli\", \"age\" : 77 }\n{ \"_id\" : ObjectId(\"585024d558bef808ed84fc43\"), \"name\" : \"Dwalin\", \"age\" : 169 }\n{ \"_id\" : ObjectId(\"585024d558bef808ed84fc44\"), \"name\" : \"\u00d3in\", \"age\" : 167 }\n{ \"_id\" : ObjectId(\"585024d558bef808ed84fc45\"), \"name\" : \"Gl\u00f3in\", \"age\" : 158 }\n{ \"_id\" : ObjectId(\"585024d558bef808ed84fc46\"), \"name\" : \"F\u00edli\", \"age\" : 82 }\n{ \"_id\" : ObjectId(\"585024d558bef808ed84fc47\"), \"name\" : \"Bombur\" }"
+                }
+            ],
+            "preview": "When you load a Dataset or DataFrame without a schema, Spark samples\nthe records to infer the schema of the collection.",
+            "tags": null
+        },
+        {
+            "slug": "scala/filters",
+            "title": "Filters",
+            "headings": [],
+            "paragraphs": "The following example filters and output the characters with ages under\n100: The operation outputs the following: When using filters with DataFrames or Datasets, the\nunderlying MongoDB Connector code constructs an  aggregation\npipeline  to filter the data in\nMongoDB before sending it to Spark. This improves Spark performance\nby retrieving and processing only the data you need. MongoDB Spark Connector turns the following filters into\naggregation pipeline stages: And EqualNullSafe EqualTo GreaterThan GreaterThanOrEqual In IsNull LessThan LessThanOrEqual Not Or StringContains StringEndsWith StringStartsWith",
+            "code": [
+                {
+                    "lang": "scala",
+                    "value": "df.filter(df(\"age\") < 100).show()"
+                },
+                {
+                    "lang": "none",
+                    "value": "+--------------------+---+-------------+\n|                 _id|age|         name|\n+--------------------+---+-------------+\n|[5755d7b4566878c9...| 50|Bilbo Baggins|\n|[5755d7b4566878c9...| 82|         F\u00edli|\n|[5755d7b4566878c9...| 77|         K\u00edli|\n+--------------------+---+-------------+"
+                }
+            ],
+            "preview": "The following example filters and output the characters with ages under\n100:",
+            "tags": null
+        },
+        {
+            "slug": "scala/api",
+            "title": "Spark Shell",
+            "headings": [
+                "Import the MongoDB Connector Package",
+                "Connect to MongoDB",
+                "Self-Contained Scala Application",
+                "Dependency Management",
+                "Configuration",
+                "Troubleshooting"
+            ],
+            "paragraphs": "In version 10.0.0 and later of the Connector, use the format\n mongodb  to read from and write to MongoDB: df = spark.read.format(\"mongodb\").load() When starting the Spark shell, specify: For example, the  --packages  option to download the MongoDB Spark Connector\npackage.  The following package is available: mongo-spark-connector the  --conf  option to configure the MongoDB Spark Connnector.\nThese settings configure the  SparkConf  object. When specifying the Connector configuration via  SparkConf , you\nmust prefix the settings appropriately. For details and other\navailable MongoDB Spark Connector options, see the\n Configuration Options . The  spark.mongodb.read.connection.uri  specifies the\nMongoDB server address ( 127.0.0.1 ), the database to connect\n( test ), and the collection ( myCollection ) from which to read\ndata, and the read preference. The  spark.mongodb.write.connection.uri  specifies the\nMongoDB server address ( 127.0.0.1 ), the database to connect\n( test ), and the collection ( myCollection ) to which to write\ndata. Connects to port  27017  by default. The  packages  option specifies the Spark Connector's\nMaven coordinates, in the format  groupId:artifactId:version . Enable MongoDB Connector specific functions and implicits for your\n SparkSession  and Datasets by importing the following\npackage in the Spark shell: Connection to MongoDB happens automatically when a Dataset\naction requires a  read  from MongoDB or a\n write  to MongoDB. The following excerpt demonstrates how to include these dependencies in\na  SBT   build.scala  file: Provide the Spark Core, Spark SQL, and MongoDB Spark Connector\ndependencies to your dependency management tool. When specifying the Connector configuration via  SparkSession , you\nmust prefix the settings appropriately. For details and other\navailable MongoDB Spark Connector options, see the\n Configuration Options . If you get a  java.net.BindException: Can't assign requested address , If you have errors running the examples in this tutorial, you may need\nto clear your local ivy cache ( ~/.ivy2/cache/org.mongodb.spark  and\n ~/.ivy2/jars ). Check to ensure that you do not have another Spark shell already\nrunning. Try setting the  SPARK_LOCAL_IP  environment variable; e.g. Try including the following option when starting the Spark shell:",
+            "code": [
+                {
+                    "lang": "sh",
+                    "value": "./bin/spark-shell --conf \"spark.mongodb.read.connection.uri=mongodb://127.0.0.1/test.myCollection?readPreference=primaryPreferred\" \\\n                  --conf \"spark.mongodb.write.connection.uri=mongodb://127.0.0.1/test.myCollection\" \\\n                  --packages org.mongodb.spark:mongo-spark-connector_2.12:10.2.0"
+                },
+                {
+                    "lang": "scala",
+                    "value": "import com.mongodb.spark._"
+                },
+                {
+                    "lang": "scala",
+                    "value": "scalaVersion := \"2.12\",\nlibraryDependencies ++= Seq(\n  \"org.mongodb.spark\" %% \"mongo-spark-connector_2.12\" % \"10.2.0\",\n  \"org.apache.spark\" %% \"spark-core\" % \"3.3.1\",\n  \"org.apache.spark\" %% \"spark-sql\" % \"3.3.1\"\n)"
+                },
+                {
+                    "lang": "scala",
+                    "value": "package com.mongodb\n\nobject GettingStarted {\n\n  def main(args: Array[String]): Unit = {\n\n    /* Create the SparkSession.\n     * If config arguments are passed from the command line using --conf,\n     * parse args for the values to set.\n     */\n    import org.apache.spark.sql.SparkSession\n\n    val spark = SparkSession.builder()\n      .master(\"local\")\n      .appName(\"MongoSparkConnectorIntro\")\n      .config(\"spark.mongodb.read.connection.uri\", \"mongodb://127.0.0.1/test.myCollection\")\n      .config(\"spark.mongodb.write.connection.uri\", \"mongodb://127.0.0.1/test.myCollection\")\n      .getOrCreate()\n\n  }\n}"
+                },
+                {
+                    "lang": "sh",
+                    "value": "export SPARK_LOCAL_IP=127.0.0.1"
+                },
+                {
+                    "lang": "sh",
+                    "value": "--driver-java-options \"-Djava.net.preferIPv4Stack=true\""
+                }
+            ],
+            "preview": "When starting the Spark shell, specify:",
+            "tags": null
+        },
+        {
+            "slug": "scala/read-from-mongodb",
+            "title": "Schema Inference",
+            "headings": [],
+            "paragraphs": "Use your local SparkSession's  read  method to create a DataFrame\nrepresenting a collection. The following example loads the collection specified in the\n SparkConf : To specify a different collection, database, and other  read\nconfiguration settings , use the  option  method: A  DataFrame  is represented by a  Dataset  of\n Rows . It is an alias of  Dataset[Row] . When you load a Dataset or DataFrame without a schema, Spark samples\nthe records to infer the schema of the collection. Consider a collection named  characters : The following operation loads data from the MongoDB collection\nspecified in  SparkConf  and infers the schema: df.printSchema()  outputs the following schema to the console:",
+            "code": [
+                {
+                    "lang": "scala",
+                    "value": "val df = spark.read.format(\"mongodb\").load() // Uses the SparkConf for configuration"
+                },
+                {
+                    "lang": "scala",
+                    "value": "val df = spark.read.format(\"mongodb\").option(\"database\", \"<example-database>\").option(\"collection\", \"<example-collection>\").load()"
+                },
+                {
+                    "lang": "scala",
+                    "value": "val df = MongoSpark.load(spark)  // Uses the SparkSession\ndf.printSchema()                 // Prints DataFrame schema"
+                },
+                {
+                    "lang": "sh",
+                    "value": "root\n |-- _id: struct (nullable = true)\n |    |-- oid: string (nullable = true)\n |-- age: integer (nullable = true)\n |-- name: string (nullable = true)"
+                },
+                {
+                    "lang": "javascript",
+                    "value": "{ \"_id\" : ObjectId(\"585024d558bef808ed84fc3e\"), \"name\" : \"Bilbo Baggins\", \"age\" : 50 }\n{ \"_id\" : ObjectId(\"585024d558bef808ed84fc3f\"), \"name\" : \"Gandalf\", \"age\" : 1000 }\n{ \"_id\" : ObjectId(\"585024d558bef808ed84fc40\"), \"name\" : \"Thorin\", \"age\" : 195 }\n{ \"_id\" : ObjectId(\"585024d558bef808ed84fc41\"), \"name\" : \"Balin\", \"age\" : 178 }\n{ \"_id\" : ObjectId(\"585024d558bef808ed84fc42\"), \"name\" : \"K\u00edli\", \"age\" : 77 }\n{ \"_id\" : ObjectId(\"585024d558bef808ed84fc43\"), \"name\" : \"Dwalin\", \"age\" : 169 }\n{ \"_id\" : ObjectId(\"585024d558bef808ed84fc44\"), \"name\" : \"\u00d3in\", \"age\" : 167 }\n{ \"_id\" : ObjectId(\"585024d558bef808ed84fc45\"), \"name\" : \"Gl\u00f3in\", \"age\" : 158 }\n{ \"_id\" : ObjectId(\"585024d558bef808ed84fc46\"), \"name\" : \"F\u00edli\", \"age\" : 82 }\n{ \"_id\" : ObjectId(\"585024d558bef808ed84fc47\"), \"name\" : \"Bombur\" }"
+                }
+            ],
+            "preview": "When you load a Dataset or DataFrame without a schema, Spark samples\nthe records to infer the schema of the collection.",
+            "tags": null
+        },
+        {
+            "slug": "configuration/read",
+            "title": "Read Configuration Options",
+            "headings": [
+                "Read Configuration",
+                "Partitioner Configurations",
+                "SamplePartitioner Configuration",
+                "ShardedPartitioner Configuration",
+                "PaginateBySizePartitioner Configuration",
+                "PaginateIntoPartitionsPartitioner Configuration",
+                "SinglePartitionPartitioner Configuration",
+                "Change Streams",
+                "connection.uri Configuration Setting"
+            ],
+            "paragraphs": "You can configure the following properties to read from MongoDB: If you use  SparkConf  to set the connector's read configurations,\nprefix  spark.mongodb.read.  to each property. Property name Description connection.uri database collection comment mongoClientFactory partitioner partioner.options. sampleSize sql.inferSchema.mapTypes.enabled sql.inferSchema.mapTypes.minimum.key.size aggregation.pipeline Custom aggregation pipelines must be compatible with the\npartitioner strategy. For example, aggregation stages such as\n $group  do not work with any partitioner that creates more than\none partition. aggregation.allowDiskUse outputExtendedJson Partitioners change the read behavior for batch reads with the Spark Connector.\nThey do not affect Structured Streaming because the data stream processing\nengine produces a single stream with Structured Streaming. This section contains configuration information for the following\npartitioners: SamplePartitioner ShardedPartitioner PaginateBySizePartitioner PaginateIntoPartitionsPartitioner SinglePartitionPartitioner You must specify this partitioner using the full classname:\n com.mongodb.spark.sql.connector.read.partitioner.SamplePartitioner . If you use  SparkConf  to set the connector's read configurations, prefix\neach property with  spark.mongodb.read.partitioner.options.  instead of\n partitioner.options. . Property name Description partitioner.options.partition.field The field to use for partitioning, which must be a unique field. Default:   _id partitioner.options.partition.size The size (in MB) for each partition. Smaller partition sizes\ncreate more partitions containing fewer documents. Default:   64 partitioner.options.samples.per.partition The number of samples to take per partition. The total number of\nsamples taken is: Default:   10 For a collection with 640 documents with an average document\nsize of 0.5 MB, the default SamplePartitioner configuration values creates\n5 partitions with 128 documents per partition. The MongoDB Spark Connector samples 50 documents (the default 10\nper intended partition) and defines 5 partitions by selecting\npartition field ranges from the sampled documents. The  ShardedPartitioner  automatically determines the partitions to use\nbased on your shard configuration. You must specify this partitioner using the full classname:\n com.mongodb.spark.sql.connector.read.partitioner.ShardedPartitioner . This partitioner is not compatible with hashed shard keys. You must specify this partitioner using the full classname:\n com.mongodb.spark.sql.connector.read.partitioner.PaginateBySizePartitioner . If you use  SparkConf  to set the connector's read configurations, prefix\neach property with  spark.mongodb.read.partitioner.options.  instead of\n partitioner.options. . Property name Description partitioner.options.partition.field The field to use for partitioning, which must be a unique field. Default:   _id partitioner.options.partition.size The size (in MB) for each partition. Smaller partition sizes create more partitions containing fewer documents. Default:   64 You must specify this partitioner using the full classname:\n com.mongodb.spark.sql.connector.read.partitioner.PaginateIntoPartitionsPartitioner . If you use  SparkConf  to set the connector's read configurations, prefix\neach property with  spark.mongodb.read.partitioner.options.  instead of\n partitioner.options. . Property name Description partitioner.options.partition.field The field to use for partitioning, which must be a unique field. Default:   _id partitioner.options.maxNumberOfPartitions The number of partitions to create. Default:   64 You must specify this partitioner using the full classname:\n com.mongodb.spark.sql.connector.read.partitioner.SinglePartitionPartitioner . This partitioner creates a single partition. If you use  SparkConf  to set the connector's read configurations, prefix\neach property with  spark.mongodb.read.partitioner.options.  instead of\n partitioner.options. . If you use  SparkConf  to set the connector's change stream\nconfigurations, prefix  spark.mongodb.  to each property. Property name Description change.stream.lookup.full.document Determines what values your change stream returns on update\noperations. The default setting returns the differences between the original\ndocument and the updated document. The  updateLookup  setting returns the differences between the\noriginal document and updated document as well as a copy of the\nentire updated document. Default:  \"default\" For more information on how this change stream option works,\nsee the MongoDB server manual guide\n Lookup Full Document for Update Operation . change.stream.publish.full.document.only The connector filters out messages that\nomit the  fullDocument  field and only publishes the value of the\nfield. If you don't specify a schema, the connector infers the schema\nfrom the change stream document rather than from the underlying collection. Default :  false This setting overrides the  change.stream.lookup.full.document \nsetting. change.stream.micro.batch.max.partition.count Specifying a value larger than  1  can alter the order in which\nthe Spark Connector processes change events. Avoid this setting\nif out-of-order processing could create data inconsistencies downstream. You can set all  Read Configuration  via the read  connection.uri  setting. For example, consider the following example which sets the read\n connection.uri  setting: The configuration corresponds to the following separate configuration\nsettings: If you specify a setting both in the  connection.uri  and in a separate\nconfiguration, the  connection.uri  setting overrides the separate\nsetting. For example, given the following configuration, the\ndatabase for the connection is  foobar : If you use  SparkConf  to set the connector's read configurations,\nprefix  spark.mongodb.read.  to the setting.",
+            "code": [
+                {
+                    "lang": "json",
+                    "value": "{\"$match\": {\"closed\": false}}"
+                },
+                {
+                    "lang": "json",
+                    "value": "[{\"$match\": {\"closed\": false}}, {\"$project\": {\"status\": 1, \"name\": 1, \"description\": 1}}]"
+                },
+                {
+                    "lang": "none",
+                    "value": "samples per partition * ( count / number of documents per partition)"
+                },
+                {
+                    "lang": "cfg",
+                    "value": "spark.mongodb.read.connection.uri=mongodb://127.0.0.1/databaseName.collectionName?readPreference=primaryPreferred"
+                },
+                {
+                    "lang": "cfg",
+                    "value": "spark.mongodb.read.connection.uri=mongodb://127.0.0.1/\nspark.mongodb.read.database=databaseName\nspark.mongodb.read.collection=collectionName\nspark.mongodb.read.readPreference.name=primaryPreferred"
+                },
+                {
+                    "lang": "cfg",
+                    "value": "spark.mongodb.read.connection.uri=mongodb://127.0.0.1/foobar\nspark.mongodb.read.database=bar"
+                }
+            ],
+            "preview": "You can configure the following properties to read from MongoDB:",
+            "tags": null
+        }
+    ]
+}

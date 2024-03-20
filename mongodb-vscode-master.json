@@ -1,0 +1,681 @@
+{
+    "url": "http://mongodb.com/docs/mongodb-vscode",
+    "includeInGlobalSearch": true,
+    "documents": [
+        {
+            "slug": "export-to-language",
+            "title": "Export a Query or Pipeline to Language",
+            "headings": [
+                "Prerequisites",
+                "Open the Visual Studio Code Command Palette.",
+                "Find and run the \"Create MongoDB Playground\" command.",
+                "Export a Query Document",
+                "Highlight the code you want to export.",
+                "Export your selection.",
+                "Configure Export Options",
+                "Export an Aggregation Pipeline",
+                "Highlight the code you want to export.",
+                "Export your selection.",
+                "Configure Export Options"
+            ],
+            "paragraphs": "You can export and translate query documents and aggregation pipelines\nfrom a  playground  into a programming language.\nYou can export queries and pipelines to the following languages: C# Go Java Node.js PHP Python Ruby Rust You must open a playground that contains a query document or pipeline\nyou want to export. The tutorials on this page use the default playground template. To open a new playground containing the default template: In Visual Studio Code, press one of the following key combinations: The  Command Palette  provides quick access to commands\nand keyboard shortcuts. Control + Shift + P  on Windows or Linux. Command + Shift + P  on macOS. Use the  Command Palette  search bar to search for\ncommands. All commands related to  MongoDB for VS Code  are prefaced with\n MongoDB: . When you run the  MongoDB: Create MongoDB Playground \ncommand,  MongoDB for VS Code  opens a default playground template pre-configured\nwith a few commands. To load new Playgrounds without the template, disable the\n Use Default Template For Playground  setting. To learn\nmore about  MongoDB for VS Code  settings, see  MongoDB for VS Code  Settings . To export a query document: Highlight the query document from the playground template: For example, exporting the query document from Step 1 to Java results\nin the following code: When you highlighted your code, a light bulb icon appeared. Click\nthe icon. In the context menu, choose the language you want to export to.\n MongoDB for VS Code  opens a new VS Code window containing the highlighted code\nin your chosen language. Including both import statements and driver syntax\nfor the preceding Java code results in this output: You can choose whether to include import statements, driver syntax,\nor both in your exported code. At the top of the newly opened VS Code window containing your\nexported code, use the  Import Statements  and\n Driver Syntax  toggles to control these options. Export options vary by the selected export language. To export an aggregation pipeline: Highlight the aggregation pipeline from the playground template: For example, exporting the pipeline from Step 1 to Java results in\nthe following code: When you highlighted your code, a light bulb icon appeared. Click\nthe icon. In the context menu, choose the language you want to export to.\n MongoDB for VS Code  opens a new VS Code window containing the highlighted code\nin your chosen language. Including both import statements and driver syntax for the preceding\nJava code results in this output: You can choose whether to include import statements, driver syntax,\nor both in your exported code. At the top of the newly opened VS Code window containing your\nexported code, use the  Import Statements  and\n Driver Syntax  toggles to control these options. Export options vary by the selected export language.",
+            "code": [
+                {
+                    "lang": "json",
+                    "value": "{ date: { $gte: new Date('2014-04-04'), $lt: new Date('2014-04-05') } }"
+                },
+                {
+                    "lang": "java",
+                    "value": "new Document(\"date\", new Document(\"$gte\", new java.util.Date(1396569600000L))\n        .append(\"$lt\", new java.util.Date(1396656000000L)))"
+                },
+                {
+                    "lang": "java",
+                    "value": "import org.bson.Document;\nimport com.mongodb.MongoClient;\nimport com.mongodb.MongoClientURI;\nimport com.mongodb.client.FindIterable;\nimport com.mongodb.client.MongoCollection;\nimport com.mongodb.client.MongoDatabase;\nimport org.bson.conversions.Bson;\nimport java.util.concurrent.TimeUnit;\nimport org.bson.Document;\n\n/*\n* Requires the MongoDB Java Driver.\n* https://mongodb.github.io/mongo-java-driver\n*/\n\nMongoClient mongoClient = new MongoClient(\n    new MongoClientURI(\n        \"mongodb://localhost:27017/?readPreference=primary&appname=mongodb-vscode+0.7.0&directConnection=true&ssl=false\"\n    )\n);\nMongoDatabase database = mongoClient.getDatabase(\"mongodbVSCodePlaygroundDB\");\nMongoCollection<Document> collection = database.getCollection(\"sales\");\n\nFindIterable<Document> result = collection.aggregate(new Document(\"date\", new Document(\"$gte\", new java.util.Date(1396569600000L))\n        .append(\"$lt\", new java.util.Date(1396656000000L))));"
+                },
+                {
+                    "lang": "javascript",
+                    "value": "[\n    { $match: { date: { $gte: new Date('2014-01-01'), $lt: new Date('2015-01-01') } } },\n    { $group: { _id: '$item', totalSaleAmount: { $sum: { $multiply: [ '$price', '$quantity' ] } } } }\n]"
+                },
+                {
+                    "lang": "java",
+                    "value": "Arrays.asList(new Document(\"$match\",\n    new Document(\"date\",\n    new Document(\"$gte\",\n    new java.util.Date(1388534400000L))\n                .append(\"$lt\",\n    new java.util.Date(1420070400000L)))),\n    new Document(\"$group\",\n    new Document(\"_id\", \"$item\")\n            .append(\"totalSaleAmount\",\n    new Document(\"$sum\",\n    new Document(\"$multiply\", Arrays.asList(\"$price\", \"$quantity\"))))))"
+                },
+                {
+                    "lang": "java",
+                    "value": "import java.util.Arrays;\nimport org.bson.Document;\nimport com.mongodb.MongoClient;\nimport com.mongodb.MongoClientURI;\nimport com.mongodb.client.FindIterable;\nimport com.mongodb.client.MongoCollection;\nimport com.mongodb.client.MongoDatabase;\nimport org.bson.conversions.Bson;\nimport java.util.concurrent.TimeUnit;\nimport org.bson.Document;\n\n/*\n * Requires the MongoDB Java Driver.\n * https://mongodb.github.io/mongo-java-driver\n */\n\nMongoClient mongoClient = new MongoClient(\n    new MongoClientURI(\n        \"mongodb://localhost:27017/?readPreference=primary&appname=mongodb-vscode+0.7.0&directConnection=true&ssl=false\"\n    )\n);\nMongoDatabase database = mongoClient.getDatabase(\"mongodbVSCodePlaygroundDB\");\nMongoCollection<Document> collection = database.getCollection(\"sales\");\n\nFindIterable<Document> result = collection.aggregate(Arrays.asList(new Document(\"$match\",\n    new Document(\"date\",\n    new Document(\"$gte\",\n    new java.util.Date(1388534400000L))\n                .append(\"$lt\",\n    new java.util.Date(1420070400000L)))),\n    new Document(\"$group\",\n    new Document(\"_id\", \"$item\")\n            .append(\"totalSaleAmount\",\n    new Document(\"$sum\",\n    new Document(\"$multiply\", Arrays.asList(\"$price\", \"$quantity\")))))));"
+                }
+            ],
+            "preview": "You can export and translate query documents and aggregation pipelines\nfrom a playground into a programming language.\nYou can export queries and pipelines to the following languages:",
+            "tags": null,
+            "facets": {
+                "target_product": [
+                    "visual-studio-extension"
+                ]
+            }
+        },
+        {
+            "slug": "create-cluster-terraform",
+            "title": "Create an Atlas Cluster from a Template using Terraform",
+            "headings": [
+                "Prerequisites",
+                "Procedures",
+                "Create an Atlas Terraform File using the Template",
+                "In Visual Studio Code, create a new file.",
+                "Save the file. Name it main.tf.",
+                "In the main.tf file, type atlas, then press the Enter or Return key.",
+                "Update the Atlas Terraform configuration to configure your cluster.",
+                "Update the local variables.",
+                "Add optional configuration options to the main.tf file.",
+                "Save the main.tf file.",
+                "Create the Atlas Cluster using Terraform",
+                "Navigate to the directory in which you saved your main.tf file.",
+                "Run the terraform init command to install the required providers.",
+                "Run the terraform plan command to view what happens when you apply the configuration.",
+                "Run the terraform apply command to create an Atlas cluster from the Terraform configuration.",
+                "Delete the Atlas Cluster using Terraform",
+                "Navigate to the directory in which you saved your main.tf file.",
+                "Run the terraform destroy command to install the required providers."
+            ],
+            "paragraphs": "This page outlines how to use the  Atlas  template for Terraform files\nincluded with the MongoDB Extension for  Visual Studio Code  to create\nShared Tier  Atlas  clusters. After loading the template, you configure the cluster and provide\ndetails about your  Atlas  account. You then use Terraform\ncommands to plan, apply, and destroy your  Atlas  cluster. Before you use the  Atlas  template for Terraform files\nincluded with the MongoDB Extension for  Visual Studio Code , you must: Install MongoDB for VS Code Install Terraform Have an  Atlas account . Have an  Atlas organization . Have an  API key in an organization  with the\n Organization Owner  or  Organization Project Creator \n role . Use the  Atlas  template for Terraform files included with the  MongoDB for VS Code \nto configure an  Atlas  cluster: Operating System Method Actions Any Visual Studio Code  Menu File  >  New File MacOS Keyboard Shortcut Press  Command  +  N Windows and Linux Keyboard Shortcut Press  Control  +  N main.tf  is the recommended filename for the entry point to a\nTerraform module. The MongoDB Extension for VSCode populates the file with an example\nconfiguration using the  MongoDB Atlas \nTerraform provider to create a Shared Tier  Atlas  cluster. The cursor moves to select the value of the  name  argument of the\n mongodbatlas_project  resource. Provide values for the following arguments to configure your cluster: Press the  Tab  key to select to the next argument in\nthe template that you should update. Attribute Value Name of the  Atlas  project that this configuration creates. Name of the  Atlas  cluster that this configuration creates. Provider on which the  Atlas  cluster that this configuration\ncreates is hosted. Choose one of the following accepted values: AWS AZURE GCP Region to which the  Atlas  cluster that this configuration\ncreates is deployed. Ensure that the region you chose supports\n Atlas  clusters of the instance size you want to deploy. By default the template provisions Shared Tier clusters:\n M2  and  M5 . For details about the instance sizes that each provider and\nregion supports, see the following sections in the  Atlas \ndocumentation: Amazon Web Services Google Cloud Platform Microsoft Azure Instance size of the  Atlas  cluster that this configuration\ncreates. Either: For details about the instance sizes that each provider and\nregion supports, see the following sections in the  Atlas \ndocumentation: Choose one of the Shared Tier instance sizes included in the\ntemplate:  M2  or  M5 . Enter another instance size that  Atlas  supports for your\nchosen provider and region. Amazon Web Services Google Cloud Platform Microsoft Azure Disk size of the  Atlas  cluster that this configuration\ncreates. Ensure that you provide a value that is equal to or\nless than the maximum disk size for the instance size you\nchose. For details about the disk sizes that each provider supports\nfor each instance size, see the following sections in the\n Atlas  documentation: For  M2  clusters, enter  2 . For  M5  clusters, enter  5 . Amazon Web Services Google Cloud Platform Microsoft Azure Provide values for the following  local  variables: The  local  variables contain sensitive information.  Do not \ncheck these values in to a repository that is available publicly. Variable Value mongodb_atlas_api_pub_key Atlas  public API key. mongodb_atlas_api_pri_key Atlas  private API key. mongodb_atlas_org_id Atlas  organization ID in which you want to create a\nproject. mongodb_atlas_database_username Username of the MongoDB database user that  Atlas  creates\nfor your cluster. mongodb_atlas_database_user_password Password for the MongoDB database user named in\n mongodb_atlas_database_username . mongodb_atlas_whitelistip IP address or CIDR block from which your  Atlas  cluster is\naccessible. To maximize security, consider taking the following steps: Define the  local  variables in an  input variables \nfile. Exclude the input variables file from your repository. For\nexample, add the filename to the  .gitignore  file for your\nrepository. Reference variables from the input variables file in the\n main.tf  file by prefacing them with  vars. . For a complete list of supported configuration options, see the\n MongoDB Atlas Terraform Provider documentation . Shared Tier  Atlas  clusters don't support all configurations\navailable with the MongoDB Atlas Terraform provider. For a list of\nunsupported configurations, see the  Atlas documentation . After you create a Terraform file using the template, create the\n Atlas  cluster: The following output indicates that the MongoDB Atlas\nTerraform Provider is installed and ready for use: The following output shows what happens when you apply the Terraform configuration: Proceed to the next step if the information is correct. Type  yes  when prompted to confirm that you want to apply the\nconfiguration. The following output indicates that your  Atlas  cluster is created.\nYou can  create a connection  to this\ndeployment using the  MongoDB for VS Code  with the displayed connection strings: The  terraform apply  command might take several minutes to\ncomplete. To delete the  Atlas  cluster: Deleting a cluster destroys databases, collections, and documents\nstored on it  and  all other resources defined in the Terraform\nconfiguration in which you configured the cluster. Proceed with caution. Type  yes  when prompted to confirm that you want to destroy the\nresources defined in the configuration. The following output indicates that the  Atlas  cluster and all\nassociated resources are deleted: The  terraform destroy  command might take several minutes to\ncomplete.",
+            "code": [
+                {
+                    "lang": "none",
+                    "value": "variable \"mongodb_atlas_api_pub_key\" {\n  default = \"my-public-key\"\n}\n\nvariable \"mongodb_atlas_api_pri_key\" {\n  default = \"my-private-key\"\n}"
+                },
+                {
+                    "lang": "none",
+                    "value": "provider \"mongodbatlas\" {\n  public_key  = vars.mongodb_atlas_api_pub_key\n  private_key = vars.mongodb_atlas_api_pri_key\n}"
+                },
+                {
+                    "lang": "sh",
+                    "value": "terraform init"
+                },
+                {
+                    "lang": "sh",
+                    "value": "Initializing the backend...\n \nInitializing provider plugins...\n- Checking for available provider plugins...\n- Downloading plugin for provider \"mongodbatlas\" (terraform-providers/mongodbatlas) 0.5.1...\n \nThe following providers do not have any version constraints in configuration,\nso the latest version was installed.\n \nTo prevent automatic upgrades to new major versions that may contain breaking\nchanges, it is recommended to add version = \"...\" constraints to the\ncorresponding provider blocks in configuration, with the constraint strings\nsuggested below.\n \n* provider.mongodbatlas: version = \"~> 0.5\"\n \nTerraform has been successfully initialized!"
+                },
+                {
+                    "lang": "sh",
+                    "value": "terraform plan"
+                },
+                {
+                    "lang": "sh",
+                    "value": "Refreshing Terraform state in-memory prior to plan...\nThe refreshed state will be used to calculate this plan, but will not be\npersisted to local or remote state storage.\n \n \n------------------------------------------------------------------------\n \nAn execution plan has been generated and is shown below.\nResource actions are indicated with the following symbols:\n  + create\n \nTerraform will perform the following actions:\n \n  # mongodbatlas_cluster.my_cluster will be created\n  + resource \"mongodbatlas_cluster\" \"my_cluster\" {\n      + advanced_configuration       = (known after apply)\n      + auto_scaling_disk_gb_enabled = false\n      + backing_provider_name        = \"AWS\"\n      + backup_enabled               = false\n      + bi_connector                 = (known after apply)\n      + cluster_id                   = (known after apply)\n      + cluster_type                 = (known after apply)\n      + connection_strings           = (known after apply)\n      + disk_size_gb                 = 2\n      + encryption_at_rest_provider  = (known after apply)\n      + id                           = (known after apply)\n      + mongo_db_major_version       = \"4.2\"\n      + mongo_db_version             = (known after apply)\n      + mongo_uri                    = (known after apply)\n      + mongo_uri_updated            = (known after apply)\n      + mongo_uri_with_options       = (known after apply)\n      + name                         = \"atlasClusterName\"\n      + num_shards                   = 1\n      + paused                       = (known after apply)\n      + pit_enabled                  = (known after apply)\n      + project_id                   = (known after apply)\n      + provider_backup_enabled      = false\n      + provider_disk_iops           = (known after apply)\n      + provider_disk_type_name      = (known after apply)\n      + provider_encrypt_ebs_volume  = (known after apply)\n      + provider_instance_size_name  = \"M2\"\n      + provider_name                = \"TENANT\"\n      + provider_region_name         = \"providerRegionName\"\n      + provider_volume_type         = (known after apply)\n      + replication_factor           = (known after apply)\n      + snapshot_backup_policy       = (known after apply)\n      + srv_address                  = (known after apply)\n      + state_name                   = (known after apply)\n \n      + labels {\n          + key   = (known after apply)\n          + value = (known after apply)\n        }\n \n      + replication_specs {\n          + id         = (known after apply)\n          + num_shards = (known after apply)\n          + zone_name  = (known after apply)\n \n          + regions_config {\n              + analytics_nodes = (known after apply)\n              + electable_nodes = (known after apply)\n              + priority        = (known after apply)\n              + read_only_nodes = (known after apply)\n              + region_name     = (known after apply)\n            }\n        }\n    }\n \n  # mongodbatlas_database_user.my_user will be created\n  + resource \"mongodbatlas_database_user\" \"my_user\" {\n      + auth_database_name = \"admin\"\n      + id                 = (known after apply)\n      + password           = (sensitive value)\n      + project_id         = (known after apply)\n      + username           = \"jww\"\n      + x509_type          = \"NONE\"\n \n      + labels {\n          + key   = (known after apply)\n          + value = (known after apply)\n        }\n \n      + roles {\n          + collection_name = (known after apply)\n          + database_name   = \"admin\"\n          + role_name       = \"atlasAdmin\"\n        }\n    }\n \n  # mongodbatlas_project.my_project will be created\n  + resource \"mongodbatlas_project\" \"my_project\" {\n      + cluster_count = (known after apply)\n      + created       = (known after apply)\n      + id            = (known after apply)\n      + name          = \"atlasProjectName\"\n      + org_id        = \"5d3716bfcf09a21576d7983e\"\n    }\n \n  # mongodbatlas_project_ip_whitelist.my_ipaddress will be created\n  + resource \"mongodbatlas_project_ip_whitelist\" \"my_ipaddress\" {\n      + aws_security_group = (known after apply)\n      + cidr_block         = (known after apply)\n      + comment            = \"My IP Address\"\n      + id                 = (known after apply)\n      + ip_address         = \"204.210.139.18\"\n      + project_id         = (known after apply)\n    }\n \nPlan: 4 to add, 0 to change, 0 to destroy.\n \n------------------------------------------------------------------------\n \nNote: You didn't specify an \"-out\" parameter to save this plan, so Terraform\ncan't guarantee that exactly these actions will be performed if\n\"terraform apply\" is subsequently run."
+                },
+                {
+                    "lang": "sh",
+                    "value": "terraform apply"
+                },
+                {
+                    "lang": "sh",
+                    "value": "Apply complete! Resources: 4 added, 0 changed, 0 destroyed.\n \nOutputs:\n \nconnection_strings = [\n  [\n    {\n      \"aws_private_link\" = {}\n      \"aws_private_link_srv\" = {}\n      \"private\" = \"\"\n      \"private_srv\" = \"\"\n      \"standard\" = \"mongodb://myCluster-shard-00-00-xxxxx.mongodb.net:27017,myCluster-shard-00-01-xxxxx.mongodb.net:27017,myCluster-shard-00-02-xxxxx.mongodb.net:27017/?ssl=true&authSource=admin&replicaSet=myCluster-shard-0\"\n      \"standard_srv\" = \"mongodb+srv://myCluster-xxxxx.mongodb.net\"\n    },\n  ],\n]"
+                },
+                {
+                    "lang": "sh",
+                    "value": "terraform destroy"
+                },
+                {
+                    "lang": "sh",
+                    "value": "Destroy complete! Resources: 4 destroyed."
+                }
+            ],
+            "preview": "This page outlines how to use the Atlas template for Terraform files\nincluded with the MongoDB Extension for Visual Studio Code to create\nShared Tier Atlas clusters.",
+            "tags": null,
+            "facets": {
+                "target_product": [
+                    "visual-studio-extension"
+                ]
+            }
+        },
+        {
+            "slug": "run-agg-pipelines",
+            "title": "Run Aggregation Pipelines",
+            "headings": [
+                "Open a Playground to Run Aggregation Pipelines",
+                "Open the Visual Studio Code Command Palette.",
+                "Find and run the \"Create MongoDB Playground\" command.",
+                "Create and Run an Aggregation Pipeline",
+                "Example"
+            ],
+            "paragraphs": "You can run  aggregation pipelines  on your\ncollections in  MongoDB for VS Code . Aggregation pipelines consist of\n stages  that\nprocess your data and return computed results. Common uses for aggregation include: When you run an aggregation,  MongoDB for VS Code  conveniently outputs the\nresults directly within Visual Studio Code. Grouping data by a given expression. Calculating results based on multiple fields and storing those results\nin a new field. Filtering data to return a subset that matches a given criteria. Sorting data. You can run aggregation pipelines in a MongoDB Playground. MongoDB\nPlaygrounds are JavaScript environments where you can prototype queries,\naggregations, and MongoDB commands with helpful syntax highlighting. To open a new MongoDB Playground: In Visual Studio Code, press one of the following key combinations: The  Command Palette  provides quick access to commands\nand keyboard shortcuts. Control + Shift + P  on Windows or Linux. Command + Shift + P  on macOS. Use the  Command Palette  search bar to search for\ncommands. All commands related to  MongoDB for VS Code  are prefaced with\n MongoDB: . When you run the  MongoDB: Create MongoDB Playground \ncommand,  MongoDB for VS Code  opens a default playground template pre-configured\nwith a few commands. To load new Playgrounds without the template, disable the\n Use Default Template For Playground  setting. To learn\nmore about  MongoDB for VS Code  settings, see  MongoDB for VS Code  Settings . To create an aggregation pipeline, use the following syntax in your\nPlayground: To run your Playground, press the  Play Button  at the top\nright of the Playground View.  MongoDB for VS Code  splits your Playground and outputs\nthe results of your Playground in the  Playground\nResults.json  pane. If you disabled split-view,  MongoDB for VS Code  outputs the\nresults of your Playground in a new tab. Consider the following playground which inserts sample data into a\ncollection and aggregates that data: This pipeline: When you press the  Play Button ,  MongoDB for VS Code  splits your\nplayground and outputs the following document in the\n Playground Results.json  pane. If you disabled split-view,\n MongoDB for VS Code  outputs the following document in a new tab: To run this example,  start with a blank MongoDB Playground  by\nclearing the template Playground if it is loaded. Switches to the  test  database. Inserts eight documents into the  test.sales  collection. Performs an aggregation in two stages: The  $match  stage filters the data such that\nonly sales from the year 2014 are passed to the next stage. The  $group  stage groups the data by item. The\nstage adds a new field to the output called  totalSaleAmount ,\nwhich is the culmination of the item's  price  and  quantity . To learn more about the available aggregation stages, see\n Aggregation Pipeline Stages . To learn more about the available aggregation operators you\ncan use within stages, see\n Aggregation Pipeline Operators .",
+            "code": [
+                {
+                    "lang": null,
+                    "value": "db.<collection>.aggregate([\n  {\n    <$stage1>\n  },\n  {\n    <$stage2>\n  }\n  ...\n])"
+                },
+                {
+                    "lang": "javascript",
+                    "value": "use(\"test\");\n\ndb.sales.insertMany([\n  { \"_id\" : 1, \"item\" : \"abc\", \"price\" : 10, \"quantity\" : 2, \"date\" : new Date(\"2014-03-01T08:00:00Z\") },\n  { \"_id\" : 2, \"item\" : \"jkl\", \"price\" : 20, \"quantity\" : 1, \"date\" : new Date(\"2014-03-01T09:00:00Z\") },\n  { \"_id\" : 3, \"item\" : \"xyz\", \"price\" : 5, \"quantity\" :  10, \"date\" : new Date(\"2014-03-15T09:00:00Z\") },\n  { \"_id\" : 4, \"item\" : \"xyz\", \"price\" : 5, \"quantity\" :  20, \"date\" : new Date(\"2014-04-04T11:21:39.736Z\") },\n  { \"_id\" : 5, \"item\" : \"abc\", \"price\" : 10, \"quantity\" : 10, \"date\" : new Date(\"2014-04-04T21:23:13.331Z\") },\n  { \"_id\" : 6, \"item\" : \"def\", \"price\" : 7.5, \"quantity\": 5, \"date\" : new Date(\"2015-06-04T05:08:13Z\") },\n  { \"_id\" : 7, \"item\" : \"def\", \"price\" : 7.5, \"quantity\": 10, \"date\" : new Date(\"2015-09-10T08:43:00Z\") },\n  { \"_id\" : 8, \"item\" : \"abc\", \"price\" : 10, \"quantity\" : 5, \"date\" : new Date(\"2016-02-06T20:20:13Z\") }\n])\n\ndb.sales.aggregate([\n  { $match: { date: { $gte: new Date(\"2014-01-01\"), $lt: new Date(\"2015-01-01\") } } },\n  { $group: { _id: \"$item\", totalSaleAmount: { $sum: { $multiply: [ \"$price\", \"$quantity\" ] } } } }\n])"
+                },
+                {
+                    "lang": "javascript",
+                    "value": "[\n  {\n    _id: 'abc',\n    totalSaleAmount: 120\n  },\n  {\n    _id: 'jkl',\n    totalSaleAmount: 20\n  },\n  {\n    _id: 'xyz',\n    totalSaleAmount: 150\n  }\n]"
+                }
+            ],
+            "preview": "You can run aggregation pipelines on your\ncollections in MongoDB for VS Code. Aggregation pipelines consist of\nstages that\nprocess your data and return computed results.",
+            "tags": null,
+            "facets": {
+                "target_product": [
+                    "visual-studio-extension"
+                ]
+            }
+        },
+        {
+            "slug": "playground-databases",
+            "title": "Create Databases and Collections",
+            "headings": [
+                "Prerequisites",
+                "Create a Database and Collection",
+                "Example"
+            ],
+            "paragraphs": "You can create\n databases and collections \nusing a MongoDB Playground. If you have not done so already, you must complete the following\nprerequisites before you can create a database or collection with a\nMongoDB Playground: Create a connection to a MongoDB deployment . Activate the connection to the MongoDB deployment . Once you connect to your deployment using MongoDB for VS code, use the left\nnavigation to: After running the playground, the left navigation updates with new database\nlisted under the active connection it was created. You can find the newly\ncreated collection by expanding the new database. Select an active connection and click the   icon that\nappears. A MongoDB playground automatically opens with a template form to create\na database and a regular collection or a\n time series collection . Fill in  const database  and  const collection  with names of your\ndatabase and collection. Uncomment the form of the collection you wish to create. Fill in the collection fields according to your collection's specifications. To run the playground, click the  Play Button  at the top right\nof the VS code navigation bar. To add documents to the collection, see\n Create Documents . To learn more about creating time series collections using MongoDB\nplaygrounds, see  Create Time Series Collections This example creates a database named  grades  and a regular collection\nnamed  testscores . To use this example, start with a template from your MongoDB\nPlaygrounds: In the example: When you press the  Play Button , MongoDB for VS Code shows the\nfollowing results in the  Playground Results.json   pane to confirm the\ncreation of the database and collection. The  grades  database and  testscores  collection also appear in your\nleft navigation: const database  declares the name  grades  for the database. const collection  declares the name  testscores  for the collection. use(database)  creates the new  grades  database. db.createCollection(collection)  creates the collection  testscores \ninside of the  grades  database.",
+            "code": [
+                {
+                    "lang": "javascript",
+                    "value": "const database = 'grades';\nconst collection = 'testscores';\n\nuse(database);\n\ndb.createCollection(collection);"
+                },
+                {
+                    "lang": "javascript",
+                    "value": "{\n   \"ok\": 1\n}"
+                }
+            ],
+            "preview": "You can create\ndatabases and collections\nusing a MongoDB Playground.",
+            "tags": null,
+            "facets": {
+                "target_product": [
+                    "visual-studio-extension"
+                ]
+            }
+        },
+        {
+            "slug": "time-series-collections",
+            "title": "Create Time Series Collections",
+            "headings": [
+                "Prerequisites",
+                "Create a Time Series Collection",
+                "Example"
+            ],
+            "paragraphs": "You can create\n time series collections  using\na MongoDB Playground. If you have not done so already, you must complete the following\nprerequisites before you can create a time series collection with a\nMongoDB Playground: Create a connection to a MongoDB deployment . Activate the connection to the MongoDB deployment . Once you connect to your deployment using MongoDB for VS code, use the left\nnavigation to: After running the playground with the time series collection, the left\nnavigation will update the collection icon to identify it is a\ntime series collection. Expand an active connection and hover over the database where you want\nyour collection to exist. Click the   icon that appears. A MongoDB playground automatically opens with a template form to create\nboth regular collections and time series collections. Delete the regular collection form and uncomment the time series form. Fill in the provided fields with details for your time series collection. To run the playground, click the  Play Button  at the top right\nof the VS code navigation bar. To learn more about time series collections, see\n Time Series Collections To add documents to the collection, see\n Create Documents . This example creates a time series collection named  weather  in the  test \ndatabase. To use this example, start with a collection template from your MongoDB\nPlaygrounds. Delete the template form for regular collections and keep the\ntemplate for time series collections found below the regular collection\ntemplate. In the example: When you press the  Play Button , MongoDB for VS Code splits your\nPlayground and outputs the following result in the Playground Results.json\npane to confirm the creation of the time series collection. The  weather  collection also appears in your collection list, and is\nmarked with the time series icon. use('test')  selects the database where the collection is added to. timeseries  specifies fields to create a time series collection. timeField: \"timestamp\"  names the field that contains the dates in\nthe time series documents. In this case, it is  timestamp . granularity: \"hours\"  defines the time scale by which the documents\nare stored. bucketMaxSpanSeconds  defines a maximum time span of 60 seconds\nfor each bucket. bucketRoundingSeconds  specifies the time interval that\ndetermines the starting timestamp for a new bucket.",
+            "code": [
+                {
+                    "lang": "javascript",
+                    "value": " use('test');\n\n db.createCollection(\n  \"weather\",\n  {\n     timeseries: {\n        timeField: \"timestamp\",\n        granularity: \"hours\",\n        bucketMaxSpanSeconds: 60,\n        bucketRoundingSeconds: 60\n     }\n  }\n)"
+                },
+                {
+                    "lang": "javascript",
+                    "value": "{\n   \"ok\": 1\n}"
+                }
+            ],
+            "preview": "You can create\ntime series collections using\na MongoDB Playground.",
+            "tags": null,
+            "facets": {
+                "target_product": [
+                    "visual-studio-extension"
+                ]
+            }
+        },
+        {
+            "slug": "",
+            "title": "MongoDB for VS Code",
+            "headings": [
+                "Features",
+                "Get Started"
+            ],
+            "paragraphs": "MongoDB provides an extension for  Microsoft Visual Studio Code  which lets you work with\nMongoDB and your data directly within your coding environment. You can use MongoDB for  Visual Studio Code  to: Explore your MongoDB Data. Prototype queries and run MongoDB commands. Create a Shared Tier  Atlas  cluster using a Terraform template. Install  MongoDB for VS Code  from the VS Code Marketplace. Connect to your deployment using  MongoDB for VS Code . Explore your databases, collections, and documents. Use JavaScript environments to interact your data. Prototype queries,\nrun aggregations, and more. Create a Shared Tier  Atlas  cluster using a Terraform template included with  MongoDB for VS Code .",
+            "code": [],
+            "preview": "MongoDB provides an extension for Microsoft Visual Studio Code which lets you work with\nMongoDB and your data directly within your coding environment.",
+            "tags": null,
+            "facets": {
+                "target_product": [
+                    "visual-studio-extension"
+                ]
+            }
+        },
+        {
+            "slug": "databases-collections",
+            "title": "Navigate Your Data",
+            "headings": [
+                "View Databases and Collections",
+                "View Collection Documents and Schema",
+                "Documents",
+                "Schema",
+                "Manage Indexes",
+                "Create a New Database",
+                "Create a New Collection",
+                "Drop a Database or Collection",
+                "Refresh Data"
+            ],
+            "paragraphs": "Once you  connect to your deployment  using  MongoDB for VS Code ,\nuse the left navigation to: Explore your databases, collections, read-only views, and documents. Create new databases and collections. Drop databases and collections. If your deployment requires authentication, your\n database user privileges  may\naffect the actions you can perform using  MongoDB for VS Code . When you expand an active connection,  MongoDB for VS Code  shows the databases in\nthat deployment. Click the name of a database to view the collections it contains. Click the name of a collection to view its documents, schema, and\nindexes. MongoDB for VS Code  closes all documents when you close  Visual Studio Code . When you expand a collection,  MongoDB for VS Code  displays the number of documents\nnext to the  Documents  label in the navigation panel. When you expand a collection's documents,  MongoDB for VS Code  lists the  _id  of\neach document in the collection. Click an  _id  value to open that\ndocument in  Visual Studio Code  and view its contents. To open a document in the collection , you can also do the following: To edit this single document : To view all of the collection's documents  in an array, you can: To copy a document in the collection , you can: To clone a document in the collection , you can: To remove a document from the collection , you can: To insert a document , you can: Right-click the ID of the document that you want to open. Click  Open Document . At the top of this document, click  Edit Document .\n MongoDB for VS Code  opens it as an editable  EJSON (Extended Javascript Object Notation)  document titled  <database>.<collection>:\"<_id>\".json . Make any edits you require. Press  Ctrl + S  (Windows/Linux) or  Cmd + S  to save the\nedited document to the MongoDB database. If the update succeeds,  MongoDB for VS Code  confirms that the database has\nstored the change. If the update results in an error,  MongoDB for VS Code  displays it. Users must have the  listCollections  permission in\norder to view a collection's documents. Right-click a collection. Click  View Documents . Right-click the ID of the document you want to copy. Click  Copy Document . MongoDB for VS Code  copies the document to your clipboard. Right-click the ID of the document you want to clone. Click  Clone Document . MongoDB for VS Code  opens the Playground where it displays the command to insert\none new document in the collection. Remove or replace the  _id  field and make any other changes to the\ncloned document. Click the  Play Button  in VS Code's top navigation bar to\ninsert this document in the collection. Click  Yes  to confirm. The  Playground Result  window displays the inserted ID of\nthe new document. Right-click the ID of the document you want to remove. Click  Delete Document . Click  Yes  to confirm. Right-click the collection where you want to insert a document. Click  Insert Document . MongoDB for VS Code  opens the Playground with a template for adding a document to\nthe collection. Paste the document to add inside the\n db.collection.insertOne()  method and click the\n Play Button . Click  Yes  to confirm. The  MongoDB for VS Code   Playground Result  panel displays the ID of the\ninserted document. You can open a  JavaScript Playground \npre-configured to search a collection by hovering over the\n Documents  label in the navigation panel and clicking the\n  icon that appears. Your collection's schema defines the fields and data types within the\ncollection. Due to MongoDB's flexible schema model, different documents\nin a collection may contain different fields, and data types may vary\nwithin a field. MongoDB can enforce\n schema validation  to ensure your\ncollection documents have the same shape. When you expand a collection's schema,  MongoDB for VS Code  lists the fields which\nappear in that collection's documents. If a field exists in all\ndocuments and its type is consistent throughout the collection,  MongoDB for VS Code \ndisplays an icon indicating that field's data type. Hover over the\nfield name for a text description of the field's data type. Your collections's indexes are listed under the  Indexes \nheading. When you expand an index, each index key appears with an icon\ndesignating its type. Index key types include: Ascending Descending Geospatial (2d, 2dsphere, geoHaystack) Text Hashed You can open a  MongoDB Playground  pre-configured\nto create an index by hovering over the  Indexes  label\nin the navigation panel and clicking the   icon that\nappears. To learn more about MongoDB indexes, see the\n server manual . When you create a new database, you must populate it with an\ninitial collection. Hover over the connection for the deployment where you want your\ndatabase to exist. Click the   icon or right-click and select\n Add Database .  MongoDB for VS Code  opens a new tab with  const \nvariables for database and\ncollection names. Update the  database  and  collection  variables with\nthe names for your database and collection. Click the   button located at the top right of the\ntab to execute the script. If the database and collection do not\nalready exist, they are created. Hover over the database name where you want your collection to exist. Right-click the database name and select  Add Collection .\n MongoDB for VS Code  opens a new tab with  const  variables for database and\ncollection names. Update the  collection  variable with your new collection name. Click the   button located at the top right of the\ntab to execute the script. The collection is created in the specified database. To drop a database or collection: Dropping data from MongoDB is an irreversible process. Take caution\nto only drop data you are sure you want to delete, and backup your\ndata as necessary. Dropping a database also drops all collections and documents within\nthat database. Right-click the target database or collection. Click  Drop Database  or  Drop Collection . In the prompt, type the name of the target database or collection. Press the enter key. You can refresh a deployment, database, or collection at any time to\nre-query your deployment and populate  MongoDB for VS Code  with the most up-to-date\ndata. To refresh: Right-click the target deployment, database, or collection. Click  Refresh .",
+            "code": [
+                {
+                    "lang": "json",
+                    "value": "// MongoDB Playground\n// Use Ctrl+Space inside a snippet or a string literal to trigger completions.\n\n// The current database to use.\nuse('<database-name>');\n\n// Create a new document in the collection.\ndb.getCollection('<collection-name>').insertOne({\n\n});"
+                }
+            ],
+            "preview": "Once you connect to your deployment using MongoDB for VS Code,\nuse the left navigation to:",
+            "tags": null,
+            "facets": {
+                "target_product": [
+                    "visual-studio-extension"
+                ]
+            }
+        },
+        {
+            "slug": "crud-ops",
+            "title": "Perform CRUD Operations",
+            "headings": [
+                "Open a Playground to Perform CRUD Operations",
+                "Open the Visual Studio Code Command Palette.",
+                "Find and run the \"Create MongoDB Playground\" command."
+            ],
+            "paragraphs": "Documents are individual records in a MongoDB collection and are the\nbasic unit of data in MongoDB. You can use a MongoDB Playground to perform CRUD (create, read, update,\nand delete) operations on documents in a collection on a\n connected deployment . Use the  MongoDB CRUD Operators  and\n shell methods  to interact with your\ndatabases in MongoDB Playgrounds. You can also use your application to perform CRUD operations on\ndocuments using the appropriate  driver . Playgrounds are\nmeant to help you prototype database operations as you develop your\napplication. Before you can create, read, update, and delete documents using a\nMongoDB Playground, you must open one. In Visual Studio Code, press one of the following key combinations: The  Command Palette  provides quick access to commands\nand keyboard shortcuts. Control + Shift + P  on Windows or Linux. Command + Shift + P  on macOS. Use the  Command Palette  search bar to search for\ncommands. All commands related to  MongoDB for VS Code  are prefaced with\n MongoDB: . When you run the  MongoDB: Create MongoDB Playground \ncommand,  MongoDB for VS Code  opens a default playground template pre-configured\nwith a few commands. To load new Playgrounds without the template, disable the\n Use Default Template For Playground  setting. To learn\nmore about  MongoDB for VS Code  settings, see  MongoDB for VS Code  Settings .",
+            "code": [],
+            "preview": "Documents are individual records in a MongoDB collection and are the\nbasic unit of data in MongoDB.",
+            "tags": null,
+            "facets": {
+                "target_product": [
+                    "visual-studio-extension"
+                ]
+            }
+        },
+        {
+            "slug": "read-document-playground",
+            "title": "Read Documents",
+            "headings": [
+                "Prerequisites",
+                "Read One Document",
+                "Example",
+                "Read Many Documents",
+                "Example"
+            ],
+            "paragraphs": "You can read documents in a collection using the\n MongoDB CRUD Operators  in a MongoDB Playground: Use the  findOne()  method to read one document. Use the  find()  method to read more than one document. You can open a  JavaScript Playground \npre-configured to search a collection by hovering over the\n Documents  label in the navigation panel and clicking the\n  icon that appears. If you have not done so already, you must complete the following\nprerequisites before you can read documents with a MongoDB Playground: Create a connection to a MongoDB deployment . Activate the connection to the MongoDB deployment . Open a MongoDB Playground . Create Documents  or create documents in a collection\nusing a different method. To read one document, use the following syntax in your Playground: If multiple documents satisfy the query, this method returns the first\ndocument according to the\n natural order  which\nreflects the order of documents on the disk. To learn more about this method's parameters, see  findOne()  in the\nMongoDB Manual. You may edit any  JSON (Javascript Object Notation)  document returned from a  findOne()  or  find() \noperation. To run your Playground, press the  Play Button  at the top\nright of the Playground View.  MongoDB for VS Code  splits your Playground and outputs\nthe results of your Playground in the  Playground\nResults.json  pane. If you disabled split-view,  MongoDB for VS Code  outputs the\nresults of your Playground in a new tab. At the top of this document, click  Edit Document .\n MongoDB for VS Code  opens it as an editable  EJSON (Extended Javascript Object Notation)  document titled  <database>.<collection>:\"<_id>\".json . Make any edits you require. Press  Ctrl + S  (Windows/Linux) or  Cmd + S  to save the\nedited document to the MongoDB database. If the update succeeds,  MongoDB for VS Code  confirms that the database has\nstored the change. If the update results in an error,  MongoDB for VS Code  displays it. The following example: To run this example,  start with a blank MongoDB Playground  by\nclearing the template Playground if it is loaded. Switches to the  test  database. Reads one document in the  test.sales  collection that matches the\nquery. When you press the  Play Button ,  MongoDB for VS Code  splits your\nPlayground and outputs the following document in the\n Playground Results.json  pane. If you disabled split-view,\n MongoDB for VS Code  outputs the following document in a new tab. If you manually\nmove your playground results,  MongoDB for VS Code  displays the results in that tab. To read many documents, use the following syntax in your Playground: For a detailed description of this method's parameters,\nsee  find() \nin the MongoDB Manual. To run your Playground, press the  Play Button  at the top\nright of the Playground View.  MongoDB for VS Code  splits your Playground and outputs\nthe results of your Playground in the  Playground\nResults.json  pane. If you disabled split-view,  MongoDB for VS Code  outputs the\nresults of your Playground in a new tab. The following example: To run this example,  start with a blank MongoDB Playground  by\nclearing the template Playground if it is loaded. Switches to the  test  database. Reads all documents in the  test.sales  collection that match\nthe query. When you press the  Play Button ,  MongoDB for VS Code  splits your\nPlayground and outputs the following document in the\n Playground Results.json  pane. If you disabled split-view,\n MongoDB for VS Code  outputs the following document in a new tab. If you manually\nmove your playground results,  MongoDB for VS Code  displays the results in that tab.",
+            "code": [
+                {
+                    "lang": "javascript",
+                    "value": "db.collection.findOne(\n   { <query> },\n   { <projection> }\n)"
+                },
+                {
+                    "lang": "javascript",
+                    "value": "use(\"test\");\n\ndb.sales.findOne(\n  { \"_id\" : 1 },\n  { \"_id\" : 0 }\n);"
+                },
+                {
+                    "lang": "javascript",
+                    "value": "{\n  item: 'abc',\n  price: 10,\n  quantity: 2,\n  date: 2014-03-01T08:00:00.000Z\n}"
+                },
+                {
+                    "lang": "javascript",
+                    "value": "db.collection.find(\n   { <query> },\n   { <projection> }\n)"
+                },
+                {
+                    "lang": "javascript",
+                    "value": "use(\"test\");\n\ndb.sales.find(\n  { \"item\" : \"abc\" },\n  { \"price\" : 1 }\n);"
+                },
+                {
+                    "lang": "javascript",
+                    "value": "[\n  {\n    _id: 2,\n    price: 10\n  },\n  {\n    _id: 6,\n    price: 10\n  },\n  {\n    _id: 9,\n    price: 10\n  },\n  {\n    _id: 1,\n    price: 10\n  }\n]"
+                }
+            ],
+            "preview": "You can read documents in a collection using the\nMongoDB CRUD Operators in a MongoDB Playground:",
+            "tags": null,
+            "facets": {
+                "target_product": [
+                    "visual-studio-extension"
+                ]
+            }
+        },
+        {
+            "slug": "create-document-playground",
+            "title": "Create Documents",
+            "headings": [
+                "Prerequisites",
+                "Create One Document",
+                "Example",
+                "Create Many Documents",
+                "Example"
+            ],
+            "paragraphs": "You can create documents in a collection using the\n MongoDB CRUD Operators  in a MongoDB Playground: Use the  insertOne()  method to insert one\ndocument. Use the  insertMany()  method to insert more\nthan one document. If you have not done so already, you must complete the following\nprerequisites before you can create documents with a MongoDB Playground: Create a connection to a MongoDB deployment . Activate the connection to the MongoDB deployment . Open a MongoDB Playground . To create one document, use the following syntax in your Playground: For a detailed description of this method's parameters,\nsee  insertOne() \nin the MongoDB Manual. If the database doesn't exist, insert operations will create it. To run your Playground, press the  Play Button  at the top\nright of the Playground View.  MongoDB for VS Code  splits your Playground and outputs\nthe results of your Playground in the  Playground\nResults.json  pane. If you disabled split-view,  MongoDB for VS Code  outputs the\nresults of your Playground in a new tab. The following example: To run this example,  start with a blank MongoDB Playground  by\nclearing the template Playground if it is loaded. Switches to the  test  database. Inserts eight documents into the  test.sales  collection. When you press the  Play Button ,  MongoDB for VS Code  splits your\nPlayground and outputs the following document in the\n Playground Results.json  pane. If you disabled split-view,\n MongoDB for VS Code  outputs the following document in a new tab. If you manually\nmove your playground results,  MongoDB for VS Code  displays the results in that tab. To create many documents, use the following syntax in your Playground: For a detailed description of this method's parameters,\nsee  insertMany() \nin the MongoDB Manual. If the database doesn't exist, insert operations will create it. To run your Playground, press the  Play Button  at the top\nright of the Playground View.  MongoDB for VS Code  splits your Playground and outputs\nthe results of your Playground in the  Playground\nResults.json  pane. If you disabled split-view,  MongoDB for VS Code  outputs the\nresults of your Playground in a new tab. The following example: To run this example,  start with a blank MongoDB Playground  by\nclearing the template Playground if it is loaded. Switches to the  test  database. Inserts eight documents into the  test.sales  collection. When you press the  Play Button ,  MongoDB for VS Code  splits your\nPlayground and outputs the following document in the\n Playground Results.json  pane. If you disabled split-view,\n MongoDB for VS Code  outputs the following document in a new tab. If you manually\nmove your playground results,  MongoDB for VS Code  displays the results in that tab.",
+            "code": [
+                {
+                    "lang": "javascript",
+                    "value": "db.collection.insertOne(\n   <document>,\n   {\n      writeConcern: <document>\n   }\n)"
+                },
+                {
+                    "lang": "javascript",
+                    "value": "use(\"test\");\n\ndb.sales.insertOne(\n  { \"_id\" : 1, \"item\" : \"abc\", \"price\" : 10, \"quantity\" : 2, \"date\" : new Date(\"2014-03-01T08:00:00Z\")}\n);"
+                },
+                {
+                    "lang": "javascript",
+                    "value": "{\n  acknowleged: 1,\n  insertedId: 1\n}"
+                },
+                {
+                    "lang": "javascript",
+                    "value": "db.collection.insertMany(\n   [ <document 1> , <document 2>, ... ],\n   {\n      writeConcern: <document>,\n      ordered: <boolean>\n   }\n)"
+                },
+                {
+                    "lang": "javascript",
+                    "value": "use(\"test\");\n\ndb.sales.insertMany([\n  { \"_id\" : 2, \"item\" : \"abc\", \"price\" : 10, \"quantity\" : 2, \"date\" : new Date(\"2014-03-01T08:00:00Z\") },\n  { \"_id\" : 3, \"item\" : \"jkl\", \"price\" : 20, \"quantity\" : 1, \"date\" : new Date(\"2014-03-01T09:00:00Z\") },\n  { \"_id\" : 4, \"item\" : \"xyz\", \"price\" : 5, \"quantity\" : 10, \"date\" : new Date(\"2014-03-15T09:00:00Z\") },\n  { \"_id\" : 5, \"item\" : \"xyz\", \"price\" : 5, \"quantity\" :  20, \"date\" : new Date(\"2014-04-04T11:21:39.736Z\") },\n  { \"_id\" : 6, \"item\" : \"abc\", \"price\" : 10, \"quantity\" : 10, \"date\" : new Date(\"2014-04-04T21:23:13.331Z\") },\n  { \"_id\" : 7, \"item\" : \"def\", \"price\" : 7.5, \"quantity\": 5, \"date\" : new Date(\"2015-06-04T05:08:13Z\") },\n  { \"_id\" : 8, \"item\" : \"def\", \"price\" : 7.5, \"quantity\": 10, \"date\" : new Date(\"2015-09-10T08:43:00Z\") },\n  { \"_id\" : 9, \"item\" : \"abc\", \"price\" : 10, \"quantity\" : 5, \"date\" : new Date(\"2016-02-06T20:20:13Z\") },\n]);"
+                },
+                {
+                    "lang": "javascript",
+                    "value": "{\n  acknowleged: 1,\n  insertedIds: {\n    '0': 2,\n    '1': 3,\n    '2': 4,\n    '3': 5,\n    '4': 6,\n    '5': 7,\n    '6': 8,\n    '7': 9\n  }\n}"
+                }
+            ],
+            "preview": "You can create documents in a collection using the\nMongoDB CRUD Operators in a MongoDB Playground:",
+            "tags": null,
+            "facets": {
+                "target_product": [
+                    "visual-studio-extension"
+                ]
+            }
+        },
+        {
+            "slug": "settings",
+            "title": "MongoDB for VS Code Settings",
+            "headings": [
+                "Configure Settings",
+                "Open the Settings View.",
+                "Search \"MongoDB\" in the Settings search bar.",
+                "Settings"
+            ],
+            "paragraphs": "This document lists the configurable settings for  MongoDB for VS Code . To configure  MongoDB for VS Code  settings: Operating System Method Actions Any Visual Studio Code Menu File  /  Code  >\n Preferences  >\n Settings MacOS Keyboard Shortcut Press  Command  +  , Windows and Linux Keyboard Shortcut Press  Ctrl  +  , MongoDB for VS Code  extension settings are displayed. Changes you\nmake are saved automatically. The following table lists the available settings for\n MongoDB for VS Code : Setting Description Default Shell MongoDB shell to use. Choose either: mongo  (the legacy MongoDB shell), or mongosh  (the new MongoDB shell) To launch your selected MongoDB shell, you must: If you install a new version of your MongoDB shell, you will need to\nupdate your  PATH  variable to reference the new version. Install the shell you want to use, and Configure your machine's  PATH  environment variable to include\nthe filepath to your shell binary. To install the legacy  mongo \nshell, see  The mongo Shell . To install the  mongosh  shell and for instructions on\nconfiguring your  PATH  variable, see  Install the MongoDB Shell . mongosh Show If enabled, shows the MongoDB view in the Visual Studio Code\nleft navigation panel. Enabled Max Number of Problems The maximum number of problems  MongoDB for VS Code  will generate\nin the Visual Studio Code  Problems  view. 100 Trace: Server MongoDB language server logging settings. Edit this setting through the\n mongodbLanguageServer.trace.server  property in your project's\n settings.json  file. Within the  mongodbLanguageServer.trace.server  object, you\ncan specify: Output logs are viewable by selecting\n MongoDB Language Server  from the dropdown in the\n Output  view, or with the\n Language Server Protocol Inspector . format , and verbosity Confirm Run All If enabled, shows a confirmation message before running\ncommands in a playground. Enabled Default Connection Saving Location Sets if and where new connections are saved. You can select: Setting Description Global Save your connection globally in VS Code, so it can be accessed\nfrom any workspace. Workspace Save your connection in your workspace. You cannot\naccess the connection from a different workspace. Session Save the connection for only this VS Code session. The connection\nis lost when you close VS Code. Global Hide Option To Choose Where To Save New Connections If disabled, you are prompted to choose where to save each new\nconnection. If enabled, new connections are automatically saved to the\n Default Connection Saving Location  without prompt. Enabled Default Limit Number of documents to fetch when viewing documents from a\ncollection. Does not affect playground operations. 10 Send Telemetry If enabled, allows the collection of anonymous diagnostic and\nusage telemetry data to help improve  MongoDB for VS Code . Enabled Use Default Template For Playground If enabled, playground files load with a template containing\nsample commands. If disabled, playground files load with an empty playground\neditor. Enabled",
+            "code": [
+                {
+                    "lang": "json",
+                    "value": "{\n  \"format\": \"json\",\n  \"verbosity\": \"verbose\"\n}"
+                }
+            ],
+            "preview": "This document lists the configurable settings for MongoDB for VS Code.",
+            "tags": null,
+            "facets": {
+                "target_product": [
+                    "visual-studio-extension"
+                ]
+            }
+        },
+        {
+            "slug": "commands",
+            "title": "MongoDB for VS Code Commands",
+            "headings": [
+                "Connection Commands",
+                "Shell Commands",
+                "Playground Commands",
+                "MongoDB for VS Code View Commands"
+            ],
+            "paragraphs": "This document lists the VS Code commands available for\n MongoDB for VS Code . To open the Command Palette and execute these commands: Operating System Method Actions Any Visual Studio Code  Menu View  >  Command Palette MacOS Keyboard Shortcut Press  Command  +  Shift  +  P Windows and Linux Keyboard Shortcut Press  Control  +  Shift  +  P Enter  mongodb  in the Command Palette to display all of the\n MongoDB for VS Code  commands you can use. Run these commands from the Command Palette to create new connections or\nmanage existing connections to your MongoDB deployments. Configuring a new connection adds a new entry to your\n Connections  list in the  MongoDB for VS Code  view. Select a connection\nfrom the list to activate that connection. To learn more about connecting to a deployment, see  Connect to Your MongoDB Deployment . You can configure multiple connections, but only have one  active \nconnection open at a time. Command Description Connect Connect to your MongoDB deployment by filling in your connection\ninformation in the connection dialog. Connect with Connection String Connect to your MongoDB deployment by pasting your\n connection string URI \ndirectly into the command palette. Connecting to a deployment\nadds a new entry to your  Connections  list in the\n MongoDB for VS Code  view. Atlas  provides a connection string for your clusters which\nyou can pass into this command. Disconnect Disconnect from your active deployment connection. Remove Connection Select and remove a connection from your list of connections\nin  MongoDB for VS Code . Removing your current active connection also closes that\nconnection. Run this command from the Command Palette to open a MongoDB Shell\nconnected to your deployment. Command Description Launch MongoDB Shell Open the VS Code  Terminal  and automatically connect a\nMongoDB shell to the deployment specified in your active\nconnection. Specify the MongoDB shell to use in the  mdb.shell \n setting .  MongoDB for VS Code  supports the following\nshells: This command is not supported on Windows. Legacy  mongo  shell mongosh  shell. To launch your selected MongoDB shell, you must: If you install a new version of your MongoDB shell, you will need to\nupdate your  PATH  variable to reference the new version. Install the shell you want to use, and Configure your machine's  PATH  environment variable to include\nthe filepath to your shell binary. To install the legacy  mongo \nshell, see  The mongo Shell . To install the  mongosh  shell and for instructions on\nconfiguring your  PATH  variable, see  Install the MongoDB Shell . Run these commands from the Command Palette to create and run\n playgrounds . Command Description Create MongoDB Playground Create a new playground to run against your MongoDB deployment. By default, playgrounds load with a template containing\nsample commands. You can disable this template from your\n extension settings . Run All From Playground Run file you are currently viewing in VS Code as a playground.\nYour playground runs against the deployment specified in your\nactive connection. MongoDB for VS Code  splits your playground window to display the results in\na pane titled  Playground Results.json  to the right\nof your playground. If you disabled split-view for your VS Code\nEditor window,  MongoDB for VS Code  displays the playground results in a new\ntab to the right of your playground. If you manually move your\nplayground results,  MongoDB for VS Code  displays the results in that tab. Run these commands from the Command Palette to manage the  MongoDB for VS Code  view in\nthe left navigation panel. Command Description Focus on MongoDB View Open and focus on the  MongoDB for VS Code  view. Show MongoDB If  MongoDB for VS Code  is hidden from your extension view, show it.",
+            "code": [],
+            "preview": "This document lists the VS Code commands available for\nMongoDB for VS Code. To open the Command Palette and execute these commands:",
+            "tags": null,
+            "facets": {
+                "target_product": [
+                    "visual-studio-extension"
+                ]
+            }
+        },
+        {
+            "slug": "playgrounds",
+            "title": "Explore Your Data with Playgrounds",
+            "headings": [
+                "Prerequisite",
+                "Open a Playground",
+                "Create a New Playground",
+                "Open the Visual Studio Code Command Palette.",
+                "Find and run the \"Create MongoDB Playground\" command.",
+                "Open a Saved Playground",
+                "Run a Playground",
+                "Connect to a Deployment from a Playground",
+                "Select Click here to add connection",
+                "Click Add new connection",
+                "Enter your connection string",
+                "Press Enter",
+                "Run your playground",
+                "Run Selected Lines of a Playground",
+                "Code Formatting and Linting Tools",
+                "Log to Console from a Playground",
+                "Tutorials",
+                "Consideration for Authentication"
+            ],
+            "paragraphs": "MongoDB Playgrounds are JavaScript environments where you can prototype\nqueries, aggregations, and MongoDB commands with helpful syntax\nhighlighting. MongoDB Playgrounds provide intelligent autocomplete for: You can save playgrounds in your workspace and use them to\ndocument how your application interacts with MongoDB.  MongoDB for VS Code  interprets\nfiles with the  .mongodb.js  extension as playgrounds. Starting in version  0.11.0  the default file extension\nfor MongoDB Playgrounds files is  .mongodb.js . Previous versions\nof MongoDB Playgrounds use the default file extension\n .mongodb . MongoDB Playgrounds support both file extensions. MongoDB for VS Code  splits your Playground window to display your\n Playground Result  in the right-side pane. You can perform\none of two actions on the result depending on the query you ran in\nthe Playground. The Mongo Shell  API (Application Programming Interface) MongoDB keywords, operators, aggregation stages, database, collection,\nand field names. Any JavaScript variables or keywords. You can also use your application to perform CRUD operations on\ndocuments using the appropriate  driver . Playgrounds are\nmeant to help you prototype database operations as you develop your\napplication. You may save  any   Playground Result  to a file. You may edit any  JSON (Javascript Object Notation)  document that  MongoDB for VS Code  returns in the\n Playground Result  from a\n findOne or find query . MongoDB for VS Code  returns these results in  JSON (Javascript Object Notation)  format with  JSON (Javascript Object Notation)  syntax\nhighlighting. Each  JSON (Javascript Object Notation)  document has an  Edit Document \nlink at its top. Click  Edit Document  at the top of the document you\nwant to edit. MongoDB for VS Code  opens this one  JSON (Javascript Object Notation)  document in a new window as an\neditable document. Make any changes you need. Press  Ctrl+S  ( Cmd+S  on macOS) to save those changes\nin the database. To run a playground, you must connect to a MongoDB deployment using\n MongoDB for VS Code . To learn how to connect to a deployment, see either: Connect to Your MongoDB Deployment Connect to a Deployment from a Playground You can create a new playground from the  Playgrounds \npanel, the  MongoDB for VS Code   Overview  page, or the  Microsoft Visual Studio Code  Command Pallette. If you have no saved playgrounds in your  Visual Studio Code  workspace,\nin the  Playgrounds  panel of  MongoDB for VS Code , click\n Create New Playground . If you have saved playgrounds in your  Microsoft Visual Studio Code  workspace, click\nthe  ...  menu icon of the  Playgrounds  panel\nand select  Create MongoDB Playground . In  Visual Studio Code , press one of the following key combinations: The  Command Palette  provides quick access to\ncommands and keyboard shortcuts. Control + Shift + P  on Windows or Linux. Command + Shift + P  on macOS. Find and run the  MongoDB: Open Overview Page \ncommand. Enter  mongodb  in the Command Palette to display all of the\n MongoDB for VS Code  commands you can use. Click  Create Playground  to open a  MongoDB for VS Code \nplayground pre-configured with a few commands. In Visual Studio Code, press one of the following key combinations: The  Command Palette  provides quick access to commands\nand keyboard shortcuts. Control + Shift + P  on Windows or Linux. Command + Shift + P  on macOS. Use the  Command Palette  search bar to search for\ncommands. All commands related to  MongoDB for VS Code  are prefaced with\n MongoDB: . When you run the  MongoDB: Create MongoDB Playground \ncommand,  MongoDB for VS Code  opens a default playground template pre-configured\nwith a few commands. To load new Playgrounds without the template, disable the\n Use Default Template For Playground  setting. To learn\nmore about  MongoDB for VS Code  settings, see  MongoDB for VS Code  Settings . If you have files in your  Visual Studio Code  workspace with the  .mongodb.js \nor  .mongodb  extension,  MongoDB for VS Code  displays these files in the\n Playgrounds  panel. Double click a file to open that playground. To run a playground, click the  Play Button  in VS Code's top\nnavigation bar. Your playground runs against the deployment specified in\nyour  active connection . If  MongoDB for VS Code  is not connected to a MongoDB deployment, you can\nspecify a connection string for the deployment you want to run your\nplayground against. If you have a playground file open in  Visual Studio Code  and do not have\nan active connection,  MongoDB for VS Code  displays\n Click here to add connection  at the top of your playground. After you click  Click here to add connection ,  MongoDB for VS Code  displays\nthe connection string drop-down menu. In the connection string drop-down menu, select\n Add new connection  to enter a new connection string. If you\nhave previously connected to the playground with another deployment, the\nconnection string will appear as an option under the drop-down menu. Enter the  connection string  to\nconnect to your deployment. If the connection string specifies a database the playground runs\nagainst that database by default. To switch databases,\ncall  use('<database_name>') . If you are connected to a default database, the playground\nautocompletes only for collection names available on that\ndatabase. After you enter your connection string, a  CodeLens \nreplaces the  Click here to add connection  link. The\nCodeLens includes information on the connected deployment and, if\napplicable, the current database. When you connect to a deployment through the playground connection\ndialog, that connection is added to your  MongoDB for VS Code \n Connections  list. If you select a section of your playground, you may optionally run only\nthe selected portion. You may run either a single line or multiple lines\nof your playground. MongoDB for VS Code  shows the  Run Selected Lines from Playground  link\nimmediately above your selected section. Click this link to test and\ntroubleshoot specific lines or sections of your playground. MongoDB Playgrounds are JavaScript files and can work with popular\n Visual Studio Code  formatting and linting extensions like\n Prettier \nand  ESLint . If you use a code formatting extension, MongoDB Playgrounds\nsuggest autocompletion and linting hints for: For a full list of autocompletion and linting improvements, see the\n v0.11.1 release notes . System variables such as  $$ROOT  and  $$NOW use  and  db  commands Collection names, in bracketed notation such as  db[\"collection\"].find({}) Alternative commands for shell commands not supported in MongoDB Playgrounds\nsuch as  show users MongoDB for VS Code  supports the following methods to log messages to the console.\nLogged messages appear in the  Output  panel in VSCode. Logging to the console can be useful to track the output of certain\ncommands in your playground, such as results after a particular query or\naggregation. console.log() print() printjson() To learn how to use MongoDB Playgrounds for CRUD operations, see\n Perform CRUD Operations . To learn how to use MongoDB Playgrounds to run aggregation\npipelines, see  Run Aggregation Pipelines . If your deployment requires authentication, your\n database user privileges  may\naffect the actions you can perform using  MongoDB for VS Code .",
+            "code": [],
+            "preview": "MongoDB Playgrounds are JavaScript environments where you can prototype\nqueries, aggregations, and MongoDB commands with helpful syntax\nhighlighting.",
+            "tags": null,
+            "facets": {
+                "target_product": [
+                    "visual-studio-extension"
+                ]
+            }
+        },
+        {
+            "slug": "connect",
+            "title": "Connect to Your MongoDB Deployment",
+            "headings": [
+                "Considerations",
+                "Create a Connection",
+                "Obtain your connection string.",
+                "Open the Visual Studio Code Command Palette.",
+                "Paste your connection string into the Command Palette",
+                "Press the Enter or Return key",
+                "In Visual Studio Code, click the MongoDB icon in the Activity Bar",
+                "Open the MongoDB for VS Code Overview page",
+                "Open the Advanced Connection Settings Form",
+                "Enter your connection information",
+                "Optional: Specify additional options in the Advanced tab",
+                "Click Connect",
+                "Connect to Atlas Stream Processing",
+                "Open the connections pane",
+                "Paste in an SPI connection string",
+                "Open a new MongoDB for VS Code playground",
+                "Activate a Connection",
+                "In Visual Studio Code, click the MongoDB icon in the Activity Bar",
+                "Right-click the connection you want to activate, then click Connect",
+                "Launch MongoDB Shell",
+                "Considerations",
+                "Procedure",
+                "Edit a Connection",
+                "In Visual Studio Code, click the MongoDB icon in the Activity Bar",
+                "Expand the Connections pane",
+                "Select a connection",
+                "Make changes and save",
+                "Copy a Connection",
+                "In Visual Studio Code, click the MongoDB icon in the Activity Bar",
+                "Expand the Connections pane",
+                "Select a connection",
+                "Rename a Connection",
+                "In Visual Studio Code, click the MongoDB icon in the Activity Bar",
+                "Right-click the connection you want to activate, then click Rename Connection.",
+                "Rename the connection.",
+                "Disconnect from a Deployment",
+                "In Visual Studio Code, click the MongoDB icon in the Activity Bar",
+                "Right-click the deployment from which you want to disconnect, then click Disconnect.",
+                "Open the Command Palette",
+                "Disconnect",
+                "Remove a Connection",
+                "In Visual Studio Code, click the MongoDB icon in the Activity Bar",
+                "Right-click the connection you want to remove, then click Remove Connection.",
+                "Click Yes to remove the connection.",
+                "Open the Command Palette",
+                "From the Command Palette, select MongoDB: Remove Connection....",
+                "Click Yes to remove the connection."
+            ],
+            "paragraphs": "This page outlines how to use  MongoDB for VS Code  to connect to a\nMongoDB host. You can connect to a standalone, replica set,\nor sharded cluster host. If you need to install  MongoDB for VS Code , see  Install MongoDB for VS Code  for instructions. If you need to create a MongoDB host, consider using\n MongoDB Atlas .\n Atlas  is a cloud-hosted database-as-a-service which requires no\ninstallation, offers a free tier to get started, and provides a\ncopyable URI to easily connect  MongoDB for VS Code  to your deployment. To create a cluster on the  Atlas  free tier, run the command\n MongoDB: Open Overview Page  in the  Visual Studio Code  Command\nPalette and then click  Create free cluster . To create an  Atlas  cluster using a Terraform template included\nwith  MongoDB for VS Code , see  Create an  Atlas  Cluster from a Template using Terraform . When connecting  MongoDB for VS Code  to a replica set, use either the\nreplica set  SRV record  or  Replica Set Name \nwhen filling in your connection information. It is not recommended to\nconnect directly to an individual replica set member. If the member to which you are connected switches from a\n primary  member to a\n secondary  or vice versa as\nthe result of an election,  MongoDB for VS Code  may either forcibly close\nthe connection or display stale data. You can't connect  MongoDB for VS Code  directly to an  analytics node . MongoDB for VS Code  appends the  appName  connection string option with a value\nof  mongodb-vscode <version>  for all deployment connections. MongoDB for VS Code  provides two options to connect to your deployment: Connection Method Description Connect with Connection String This method is faster and easier than\nusing the advanced connection settings. Use this option\nif your deployment is hosted on  Atlas  or you already have a\nconnection string for a deployment available. Advanced Connection Settings This method lets you build a connection string with a form.\nUse this option if you need to customize the connection\nstring and want to see available connection options. To specify where  MongoDB for VS Code  connections are saved, use\nthe  Default Connection Saving Location \n setting . When you provide a connection string,  MongoDB for VS Code  supports\nmost  Connection String Options \nsupported by MongoDB. You can use either the  Standard Connection String Format \nor the  DNS Seedlist Connection Format . To obtain the connection string for an  Atlas  cluster: Navigate to your  Atlas   Clusters  view. Click  Connect  for your desired cluster. Click  Connect with MongoDB Compass . Copy the provided connection string. To learn how to format the connection string for a deployment\nwhich is not hosted on  Atlas , see\n Connection String URI Format . Open the  Visual Studio Code  Command Palette to paste your connection\nstring and connect to your cluster. You can open the Command\nPalette in one of the following ways: Select the MongoDB icon from the left side menu bar\nin VSCode. Expand the  Connections  pane in the left\nnavigation if it is collapsed. Click the  More Actions  menu ( ... )\nand select  Add MongoDB Connection with Connection\nString... . Perform the action described in the following table for your\noperating system and method: Operating System Method Actions Any Visual Studio Code  Menu View  >  Command Palette MacOS Keyboard Shortcut Press  Command  +  Shift  +  P Windows and Linux Keyboard Shortcut Press  Control  +  Shift  +  P From the Command Palette, select  MongoDB: Open\nOverview Page . Enter  mongodb  in the Command Palette to display all of the\n MongoDB for VS Code  commands you can use. In the  Overview  page, click  Connect  under the\n Connect with Connection String . Perform the action described in the following table for your\noperating system and method: Operating System Method Actions Any Visual Studio Code  Menu View  >  Command Palette MacOS Keyboard Shortcut Press  Command  +  Shift  +  P Windows and Linux Keyboard Shortcut Press  Control  +  Shift  +  P From the Command Palette, select  MongoDB: Connect\nwith Connection String... . Enter  mongodb  in the Command Palette to display all of the\n MongoDB for VS Code  commands you can use. If your deployment requires authentication, ensure that you update\nthe connection string with credentials of a database user for your\ndeployment. The connection might succeed without these credentials,\nbut you won't be able to interact with data in your deployment. You can use the the MongoDB view or the Command Palette to open the\noverview page: Expand the  Connections  pane in the left\nnavigation if it's collapsed. Click the  More Actions  menu ( ... ),\nthen click  Add MongoDB Connection  to open the\n MongoDB for VS Code   Overview  page. Perform the action described in the following table for your\noperating system and method: Operating System Method Actions Any Visual Studio Code  Menu View  >  Command Palette MacOS Keyboard Shortcut Press  Command  +  Shift  +  P Windows and Linux Keyboard Shortcut Press  Control  +  Shift  +  P From the Command Palette, select  MongoDB: Open\nOverview Page . Enter  mongodb  in the Command Palette to display all of the\n MongoDB for VS Code  commands you can use. On the  Overview  page, click  Open form  under\n Advanced Connection Settings . The  General  tab contains the following options: If you are connecting to your deployment using TLS/SSL or an SSH\ntunnel, refer to the following tabs for specific instructions: MongoDB for VS Code   does not  support the following connection options: CSFLE In-Use Encryption Kerberos Authentication Option Description Connection Type Type of connection. Select your connection type from the tabs\nfor specific instructions for defining that connection\ntype: For a  Standalone ,\nspecify the following: Click   to specify additional hostnames\nand associated ports. Hostname  of the machine where the\ndeployment is running. If you are running your deployment locally, this value\nis  localhost . If you are connecting to an\n Atlas  cluster, you can get your hostname from your\ncluster detail view in  Atlas . If you are not sure of your hostname, contact your\nDatabase Administrator for information. Port  on which the deployment is running. By default, a standalone deployment operates on port\n 27017 . For more information on the default ports\nMongoDB operates on, see  Default MongoDB Port . If you are not sure of the port where your deployment\noperates, contact your Database Administrator for\ninformation. For a  replica set ,\nspecify the following: Click   to specify additional hostnames\nand associated ports. Hostname  of the machine where the\ndeployment is running. If you are running your deployment locally, this value\nis  localhost . If you are connecting to an\n Atlas  cluster, you can get your hostname from your\ncluster detail view in  Atlas . If you are not sure of your hostname, contact your\nDatabase Administrator for information. Port  on which the deployment is running. For information on the default ports MongoDB operates\non, see  Default MongoDB Port . If you are not sure of the port where your deployment\noperates, contact your Database Administrator for\ninformation. Optional .  Replica Set Name  as specified\nin the  replica set configuration . For an  SRV Record ,\nspecify the  Hostname . You do not need to\nspecify a port. SRV connection strings have a prefix of\n mongodb+srv: . If you are using an SRV connection\nstring, you do not need to include  mongodb+srv  in\nyour  Hostname . You can only use SRV connection strings to connect to\ndeployments running MongoDB 3.6 and later. If the following is your SRV connection string for\nyour MongoDB deployment: Then, in  MongoDB for VS Code , you would specify your\n Hostname  as: Authentication Authentication to use if the deployment requires\nauthentication.  Atlas  clusters use  Username\n/ Password  authentication. Select your authentication method for\nspecific instructions: Select  Username / Password  if the\ndeployment uses MongoDB-CR,\n SCRAM-SHA-1 , or\n SCRAM-SHA-256  as its\nauthentication mechanism. Provide the  Username ,  Password ,\nand  Authentication Database \nto authenticate the user. Select  OIDC  if the deployment uses  OpenID Connect \nas its authentication mechanism. Provide the following information: This is a less secure authentication flow that can be used as a\nfallback when browser-based authentication is unavailable. Field Description Username Optional. OpenID Connect username. Auth Code Flow Redirect URI Optional. Specify a URI where the identity provider redirects you after authentication.\nThe URI must match the configuration of the Identity Provider.\nThe default is  http://localhost:27097/redirect . Consider Target Endpoint Trusted Optional. Allows connecting to a target endpoint that is not in the\nlist of endpoints that are considered trusted by default. Only use\nthis option when connecting to servers that you trust. Enable Device Authentication Flow Optional. When the  Show Device Auth Flow Checkbox \nsetting is enabled,  Visual Studio Code  can provide you with a URL and code\nto finish authentication. Select  X.509  if the deployment uses\n X.509  as its\nauthentication mechanism. If selected, you must\nprovide the   Username  to authenticate\nthe user. If you are using\n Atlas-managed certificates \n, your username must be prefaced by \"CN=\"\nper  RFC 2253 .\nFor example, the username \"X509User\" must be\nprovided as \"CN=X509User\". Select  LDAP  if the deployment\nuses  LDAP \nas its authentication mechanism. If selected, you\nmust provide the  Username  and\n Password  to authenticate\nthe user. Select AWS IAM if the deployment uses\n AWS IAM \nas its authentication mechanism. Field Necessity Description AWS Access Key Id Required Unique identifier associated with your AWS\naccount. AWS Secret Access Key Optional Long-term credential associated with the access\nkey ID. AWS Session Token Optional A temporary security credential that is\nreturned by the AWS Security Token Service (STS). This option directs  MongoDB for VS Code  to connect to your\nMongoDB deployment via TLS/SSL. You can select one of the\nfollowing SSL options: Option Description System CA/Atlas Deployment Connect to\n MongoDB Atlas . Server Validation MongoDB for VS Code  validates the identity of the deployment. If\nselected, you must provide: Certificate Authority One or more certificate files from trusted\nCertificate Authorities to validate the\ncertificate provided by the deployment. Server and Client Validation The deployment performs certificate validation from its\nclients and  MongoDB for VS Code  validates the identity of the\ndeployment. If selected, you must provide: Certificate Authority File One or more certificate files from trusted\nCertificate Authorities to validate the\ncertificate provided by the deployment. Client Certificate A TLS/SSL certificate to present to\nthe deployment to verify the identity of\nthe connecting client. Typical file extensions\nfor the certificate are  .crt  or  .pem . Client Private Key A TLS/SSL key file to the deployment to\nverify the identity of the connecting client.\nTypical file extensions for the private key are\n .key  or  .pem . Client Key Password If the  Client Private Key  is protected with a\npassword/passphrase, you must provide the\npassword/passphrase. Unvalidated (Insecure) Use TLS/SSL without any identity validation. For production use, your MongoDB deployment should use valid\ncertificates generated and signed by a single certificate\nauthority. You or your organization can generate and\nmaintain an independent certificate authority, or use\ncertificates generated by a third-party TLS/SSL vendor. This option directs  MongoDB for VS Code  to connect to your\nMongoDB deployment via an SSH tunnel. The tunnel automatically\nstarts when you connect to MongoDB and stops when you\ndisconnect. In the  SSH Tunnel  dropdown, choose either a\npassword or an identity file to provide authentication. Once\nyou select your identification method, specify the following\noptions: To use an SSH tunnel through a bastion host, the SSH\nconfiguration on the bastion host must allow TCP port\nforwarding; i.e., the  AllowTcpForwarding  directive in\nthe  /etc/ssh/sshd_config  file is set to  yes . If\n AllowTcpForwarding  is not set to  yes , set to  yes \nand restart the SSH daemon ( sudo service sshd restart ). Instead of creating the SSH tunnel using  MongoDB for VS Code , you can also\ncreate the tunnel manually from the command line: SSH Hostname Enter the bastion (jumpbox) hostname. This is the\nunique identifier (Fully Qualified Domain Name, or\nFQDN) for the machine to be accessed. SSH Tunnel Port Provide the port used for the SSH connection. This\ndefaults to 22, the standard port for SSH. SSH Username The username of the profile to log into on the remote\nsystem. This will be the user for which you want to\nestablish the SSH connection. SSH Identity File Select the file from which the identity (private key)\nfor SSH public key authentication is read. Unix or OS X: If using OpenSSH, identity files are\nfound in the  ~/.ssh  directory. By default,\nthe private key files have one of the following file\nnames: On Windows, the location of the identify files\ndepends on your choice of SSH client, such as PuTTY. id_dsa id_ecdsa id_ed25519 id_rsa SSH Passphrase If your private key is encrypted, provide the\npassphrase used to decrypt your private key (stored\nin the specified identity file). A passphrase\nprovides an extra layer of security for an SSH\nconnection. SSH Password The password used to secure the SSH connection.\nThis is required if you are not using an identity file. If you have a deployment running on\n hostname-a.com  on port 27017, and the\nbastion host is  hostname-b.com  with user name\n ec2-user , you can build the tunnel via Using this SSH tunnel, you can now connect  MongoDB for VS Code  (or\nthe  mongo  shell) to\n localhost:27000  to connect to the deployment running on\n hostname-a.com . You cannot connect to a  replica set  via an SSH\ntunnel.  MongoDB for VS Code  cannot establish a connection\nto multiple servers across the same SSH tunnel. You can select the  Read Preference , which specifies how\n MongoDB for VS Code  directs read operations: If omitted, defaults to  Primary . To learn more about read\npreferences, see  Read Preference . You can specify additional MongoDB connection behavior with the\nfollowing options: Read Preference Mode Description Primary Default mode. All operations read from the current replica set\nprimary. Primary Preferred In most situations, operations read from the primary but if it\nis unavailable, operations read from secondary members. Secondary All operations read from the secondary members of the replica\nset. Secondary Preferred In most situations, operations read from secondary members but\nif no secondary members are available, operations read from\nthe primary. Nearest Operations read from member of the replica set with the least\nnetwork latency, irrespective of the member's type. Field Description Replica Set Name (Optional) Name of replica set. Default Authentication Database (Optional) Authentication database used when authSource is not specified.\nFor more information, see  Authentication Options . URI Options Additional options to customize your connection. You\nspecify these options as key-value pairs, and  Visual Studio Code \nautomatically adds the key-value pairs to the connection string.\nFor more information, see  Connection String Options . You can use  MongoDB for VS Code  to connect to  Atlas Stream Processing \nby providing a Stream Processing Interface (SPI) connection string. For details on how to configure Atlas Stream Processing, see\n Configure a Stream Processing Instance . Expand the  Connections  pane in the left navigation\nif it is collapsed. Click the More Actions menu (...) and select\n Add MongoDB Connection with Connection String... To obtain an SPI connection string login to your\n Atlas  account.\nClick  Stream Processing  from the left-hand navigation\nand then select a Stream Processing Instance. Click\n Connect  and choose  MongoDB for VSCode  from\nthe  Choose a Connection Method  page of the connect\ndialog. The following code block is an example of SPI connection string: Once you are connected, the stream connection displays under\nthe  Connections  pane: For full details on using and configuring\nAtlas Stream Processing, see  Atlas Stream Processing Overview . After successfully connecting to your Atlas Stream, click\n Create New Playground  on the  Playgrounds \npane. A stream processing playground template displays with\npre-populated code that allows you to list stream connections\nand process stream data: You can connect  MongoDB for VS Code  to only one deployment at a time. To change the\nactive connection to a different deployment, or to connect to a\ndeployment from which you were disconnected: You can connect the  MongoDB Shell  or legacy\n mongo  shell to your active deployment. The shell that  MongoDB for VS Code  uses to connect to your deployment is\ndetermined by the  Shell  setting in your\n extension settings . You can choose either\nthe  MongoDB Shell  or the legacy  mongo  shell. The path to your selected shell must exist in your system's  PATH .\nIf it does not exist in your  PATH , the operation errors. To connect the shell to your active deployment: MongoDB for VS Code  opens the  Terminal  window in VS Code and launches\nthe shell connected to your selected deployment. In the  MongoDB for VS Code   Connections  list, right-click your active\ndeployment. Select  Launch MongoDB Shell . Perform CRUD Operations in the MongoDB Shell Expand the  Connections  pane in the left\nnavigation if it's collapsed. From the  Connections  menu, right-click the\nconnection and select  Edit Connection... Click  \n Advanced Connection Options  to display\nthe advanced connection form. Once you are done editing the connection options click\n Save & Connect . You can also click the  Edit Connection String \ntoggle in the top-right of the form to edit the connection\nstring URI directly. You can copy a connection string from an existing  Visual Studio Code \nconnection. Expand the  Connections  pane in the left\nnavigation if it's collapsed. From the  Connections  menu, right-click the\nconnection and select  Copy Connection String . The connection string is copied to your clipboard. To rename a connection to a deployment in  MongoDB for VS Code : In the Command Palette, type a new name for the connection. Press the  Enter  or  Return  key to rename the connection. MongoDB for VS Code  provides two methods to disconnect from a deployment. You can: Disconnecting from a MongoDB instance closes the  MongoDB for VS Code  connection to\nthe active instance. You must  reconnect  to\ninteract with data in your deployment again. Disconnect with the Command Palette. Disconnect from the  MongoDB  view in the\n Activity Bar . Operating System Method Actions Any Visual Studio Code  Menu View  >  Command Palette MacOS Keyboard Shortcut Press  Command  +  Shift  +  P Windows and Linux Keyboard Shortcut Press  Control  +  Shift  +  P From the Command Palette, select\n MongoDB: Disconnect . Enter  mongodb  in the Command Palette to display all of the\n MongoDB for VS Code  commands you can use. Press  Enter . MongoDB for VS Code  provides two methods to remove a connection to a deployment from\n Visual Studio Code . You can: Remove a connection from the  MongoDB  view in the\n Activity Bar . Remove a connection with the Command Palette. Removing a connection from  Visual Studio Code  removes it both from the\ncurrent workspace and from  Visual Studio Code  globally. Operating System Method Actions Any Visual Studio Code  Menu View  >  Command Palette MacOS Keyboard Shortcut Press  Command  +  Shift  +  P Windows and Linux Keyboard Shortcut Press  Control  +  Shift  +  P If you have more than one connection, select the connection you want\nto remove from the Command Palette. Enter  mongodb  in the Command Palette to display all of the\n MongoDB for VS Code  commands you can use. Connect to a Deployment from a Playground",
+            "code": [
+                {
+                    "lang": "shell",
+                    "value": "mongodb+srv://<username>:<password>@gettingstarted-7q2cs.mongodb.net/test"
+                },
+                {
+                    "lang": "shell",
+                    "value": "gettingstarted-7q2cs.mongodb.net"
+                },
+                {
+                    "lang": "sh",
+                    "value": "ssh -L <local_port>:<mongodb_hostname>:<mongodb_port> \\\n   <user>@<bastion_hostname> -fN"
+                },
+                {
+                    "lang": "sh",
+                    "value": "ssh -L 27000:hostname-a.com:27017 ec2-user@hostname-b.com -fN"
+                },
+                {
+                    "lang": null,
+                    "value": "mongodb://user1:password1@atlas-stream-xxxxxxxxxxxxxxxxxxxxxxxx-yyyyy.virginia-usa.a.query.mongodb.net/?authSource=admin&readPreference=primary&ssl=true&directConnection=true"
+                }
+            ],
+            "preview": "This page outlines how to use MongoDB for VS Code to connect to a\nMongoDB host. You can connect to a standalone, replica set,\nor sharded cluster host.",
+            "tags": null,
+            "facets": {
+                "target_product": [
+                    "visual-studio-extension"
+                ]
+            }
+        },
+        {
+            "slug": "update-document-playground",
+            "title": "Update Documents",
+            "headings": [
+                "Prerequisites",
+                "Update One Document",
+                "Example",
+                "Update Many Documents",
+                "Example"
+            ],
+            "paragraphs": "You can update documents in a collection using the\n MongoDB CRUD Operators  in a MongoDB Playground: Use the  updateOne()  method to update one\ndocument. Use the  updateMany()  method to update more\nthan one document. If you have not done so already, you must complete the following\nprerequisites before you can update documents with a MongoDB Playground: Create a connection to a MongoDB deployment . Activate the connection to the MongoDB deployment . Open a MongoDB Playground . Create Documents  or create documents in a collection\nusing a different method. To update one document, use the following syntax in your Playground: For a detailed description of this method's parameters,\nsee  updateOne() \nin the MongoDB Manual. To run your Playground, press the  Play Button  at the top\nright of the Playground View.  MongoDB for VS Code  splits your Playground and outputs\nthe results of your Playground in the  Playground\nResults.json  pane. If you disabled split-view,  MongoDB for VS Code  outputs the\nresults of your Playground in a new tab. The following example: Switches to the  test  database. Updates one document in the  test.sales  collection that matches\nthe filter. When you press the  Play Button ,  MongoDB for VS Code  splits your\nPlayground and outputs the following document in the\n Playground Results.json  pane. If you disabled split-view,\n MongoDB for VS Code  outputs the following document in a new tab. If you manually\nmove your playground results,  MongoDB for VS Code  displays the results in that tab. To update many documents, use the following syntax in your Playground: For a detailed description of this method's parameters,\nsee  updateMany() \nin the MongoDB Manual. To run your Playground, press the  Play Button  at the top\nright of the Playground View.  MongoDB for VS Code  splits your Playground and outputs\nthe results of your Playground in the  Playground\nResults.json  pane. If you disabled split-view,  MongoDB for VS Code  outputs the\nresults of your Playground in a new tab. The following example: Switches to the  test  database. Updates all documents in the  test.sales  collection that match\nthe filter. When you press the  Play Button ,  MongoDB for VS Code  splits your\nPlayground and outputs the following document in the\n Playground Results.json  pane. If you disabled split-view,\n MongoDB for VS Code  outputs the following document in a new tab. If you manually\nmove your playground results,  MongoDB for VS Code  displays the results in that tab.",
+            "code": [
+                {
+                    "lang": "javascript",
+                    "value": "db.collection.updateOne(\n   <filter>,\n   <update>,\n   {\n     upsert: <boolean>,\n     writeConcern: <document>,\n     collation: <document>,\n     arrayFilters: [ <filterdocument1>, ... ],\n     hint:  <document|string>\n   }\n)"
+                },
+                {
+                    "lang": "javascript\n :copyable: false",
+                    "value": " use(\"test\");\n\ndb.sales.updateOne(\n  { \"_id\" : 1},\n  { $inc: { \"quantity\" : 1 }}\n);"
+                },
+                {
+                    "lang": "javascript",
+                    "value": "{\n  acknowleged: 1,\n  matchedCount: 1,\n  modifiedCount: 1,\n  upsertedCount: 0,\n  insertedId: null\n}"
+                },
+                {
+                    "lang": "javascript",
+                    "value": "db.collection.updateMany(\n   <filter>,\n   <update>,\n   {\n     upsert: <boolean>,\n     writeConcern: <document>,\n     collation: <document>,\n     arrayFilters: [ <filterdocument1>, ... ],\n     hint:  <document|string>\n   }\n)"
+                },
+                {
+                    "lang": "javascript",
+                    "value": "use(\"test\");\n\ndb.sales.updateMany(\n  { \"item\" : \"abc\" },\n  { $set: { \"price\": 9 }}\n);"
+                },
+                {
+                    "lang": "javascript",
+                    "value": "{\n  acknowleged: 1,\n  matchedCount: 3,\n  modifiedCount: 3,\n  upsertedCount: 0,\n  insertedId: null\n}"
+                }
+            ],
+            "preview": "You can update documents in a collection using the\nMongoDB CRUD Operators in a MongoDB Playground:",
+            "tags": null,
+            "facets": {
+                "target_product": [
+                    "visual-studio-extension"
+                ]
+            }
+        },
+        {
+            "slug": "require-modules",
+            "title": "Use require() to Include External Modules",
+            "headings": [
+                "Require Native Modules",
+                "Require Non-Native Modules"
+            ],
+            "paragraphs": "You can use the\n require() \nfunction in your MongoDB Playgrounds to\ninclude modules which exist in separate files. A complete description of Node.js, modules, and the\n require() \nfunction is out of scope for this tutorial. To learn more, refer to\nthe  Node.js Documentation . You can  require()  native Node modules (such as\n fs ) in your\nPlayground without any additional setup or configuration. The following Playground uses the  fs  module to write a document\nfrom the  test.employees  collection to a file named\n employee.txt : fs.writeFileSync require() To  require()  non-native Node modules (such as those downloaded from\n npm ) you must install the module in one of\nthe following folders based on your operating system: Once you install or copy your desired package to one of the module\ndirectories, you can  require()  that package. Operating System Module Location macOS and Linux One of either: $HOME/.node_modules $HOME/node_modules $HOME/.vscode/extensions/node_modules $HOME/.vscode/extensions/mongodb.mongodb-vs-code-<version>\\node_modules Windows One of either: C:\\Users\\.node_modules C:\\Users\\node_modules C:\\Users\\<user>\\node_modules C:\\Users\\<user>\\.vscode\\extensions\\node_modules C:\\Users\\<user>\\.vscode\\extensions\\mongodb.mongodb-vscode-<version>\\node_modules The following Playground uses the\n moment  package to write\nthe current date to a file called  date.txt : fs.writeFileSync require()",
+            "code": [
+                {
+                    "lang": "javascript",
+                    "value": "const fs = require('fs');\n\nuse(\"test\");\n\nconst document = db.employees.findOne();\n\nfs.writeFileSync('employee.txt', JSON.stringify(document));"
+                },
+                {
+                    "lang": "javascript",
+                    "value": "const moment = require('moment');\nconst fs = require('fs');\n\nconst currentDate = moment().format(\"MMMM DD YYYY\");\n\nfs.writeFileSync('date.txt', currentDate);"
+                }
+            ],
+            "preview": "You can use the\nrequire()\nfunction in your MongoDB Playgrounds to\ninclude modules which exist in separate files.",
+            "tags": null,
+            "facets": {
+                "target_product": [
+                    "visual-studio-extension"
+                ]
+            }
+        },
+        {
+            "slug": "reference",
+            "title": "Reference",
+            "headings": [],
+            "paragraphs": "",
+            "code": [],
+            "preview": null,
+            "tags": null,
+            "facets": {
+                "target_product": [
+                    "visual-studio-extension"
+                ]
+            }
+        },
+        {
+            "slug": "install",
+            "title": "Install MongoDB for VS Code",
+            "headings": [
+                "Prerequisites",
+                "Procedure",
+                "Open the Extensions View.",
+                "Search \"MongoDB for VS Code\" in the extension marketplace.",
+                "Click Install on the \"MongoDB for VS Code\" extension."
+            ],
+            "paragraphs": "Before you can install  MongoDB for VS Code , you must install Visual Studio Code. You\ncan download Visual Studio Code from  https://code.visualstudio.com/ . Once you install  MongoDB for VS Code , you can  view data in your deployment  and  create Playgrounds to interact\nwith your data . To configure  MongoDB for VS Code  settings, see  MongoDB for VS Code  Settings . In Visual Studio Code, click the  Extensions  icon\nin the left navigation. Alternatively, you can open the  Extensions  view by\npressing: Control + Shift + X  or Command + Shift + X . Once the installation is complete, the  Install  button\nchanges to the  Manage  gear button.",
+            "code": [],
+            "preview": "Before you can install MongoDB for VS Code, you must install Visual Studio Code. You\ncan download Visual Studio Code from https://code.visualstudio.com/.",
+            "tags": null,
+            "facets": {
+                "target_product": [
+                    "visual-studio-extension"
+                ]
+            }
+        },
+        {
+            "slug": "delete-document-playground",
+            "title": "Delete Documents",
+            "headings": [
+                "Prerequisites",
+                "Delete One Document",
+                "Example",
+                "Delete Many Documents",
+                "Example"
+            ],
+            "paragraphs": "You delete documents in a collection using the\n MongoDB CRUD Operators  in a MongoDB Playground: Use the  deleteOne()  method to delete one\ndocument. Use the  deleteMany()  method to delete more\nthan one document. If you have not done so already, you must complete the following\nprerequisites before you can delete documents with a MongoDB Playground: Create a connection to a MongoDB deployment . Activate the connection to the MongoDB deployment . Open a MongoDB Playground . Create Documents  or create documents in a collection\nusing a different method.. To delete one document, use the following syntax in your Playground: For a detailed description of this method's parameters,\nsee  deleteOne() \nin the MongoDB Manual. To run your Playground, press the  Play Button  at the top\nright of the Playground View.  MongoDB for VS Code  splits your Playground and outputs\nthe results of your Playground in the  Playground\nResults.json  pane. If you disabled split-view,  MongoDB for VS Code  outputs the\nresults of your Playground in a new tab. The following example: To run this example,  start with a blank MongoDB Playground  by\nclearing the template Playground if it is loaded. Switches to the  test  database. Deletes one document in the  test.sales  collection that matches\nthe query. When you press the  Play Button ,  MongoDB for VS Code  splits your\nPlayground and outputs the following document in the\n Playground Results.json  pane. If you disabled split-view,\n MongoDB for VS Code  outputs the following document in a new tab. If you manually\nmove your playground results,  MongoDB for VS Code  displays the results in that tab. To delete many documents, use the following syntax in your Playground: For a detailed description of this method's parameters,\nsee  deleteMany() \nin the MongoDB Manual. To run your Playground, press the  Play Button  at the top\nright of the Playground View.  MongoDB for VS Code  splits your Playground and outputs\nthe results of your Playground in the  Playground\nResults.json  pane. If you disabled split-view,  MongoDB for VS Code  outputs the\nresults of your Playground in a new tab. The following example: To run this example,  start with a blank MongoDB Playground  by\nclearing the template Playground if it is loaded. Switches to the  test  database. Deletes all documents in the  test.sales  collection that match\nthe query. When you press the  Play Button ,  MongoDB for VS Code  splits your\nPlayground and outputs the following document in the\n Playground Results.json  pane. If you disabled split-view,\n MongoDB for VS Code  outputs the following document in a new tab. If you manually\nmove your playground results,  MongoDB for VS Code  displays the results in that tab.",
+            "code": [
+                {
+                    "lang": "javascript",
+                    "value": "db.collection.deleteOne(\n   <filter>,\n   {\n      writeConcern: <document>,\n      collation: <document>\n   }\n)"
+                },
+                {
+                    "lang": "javascript",
+                    "value": "use(\"test\");\n\ndb.sales.deleteOne(\n  { \"_id\" : 1 }\n);"
+                },
+                {
+                    "lang": "javascript",
+                    "value": "{\n  acknowleged: 1,\n  deletedCount: 1\n}"
+                },
+                {
+                    "lang": "javascript",
+                    "value": "db.collection.deleteMany(\n   <filter>,\n   {\n      writeConcern: <document>,\n      collation: <document>\n   }\n)"
+                },
+                {
+                    "lang": "javascript",
+                    "value": "use(\"test\");\n\ndb.sales.deleteMany(\n  { \"item\" : \"abc\" }\n);"
+                },
+                {
+                    "lang": "javascript",
+                    "value": "{\n  acknowleged: 1,\n  deletedCount: 3\n}"
+                }
+            ],
+            "preview": "You delete documents in a collection using the\nMongoDB CRUD Operators in a MongoDB Playground:",
+            "tags": null,
+            "facets": {
+                "target_product": [
+                    "visual-studio-extension"
+                ]
+            }
+        }
+    ]
+}
