@@ -1,0 +1,652 @@
+{
+    "url": "http://mongodb.com/docs/drivers",
+    "includeInGlobalSearch": true,
+    "documents": [
+        {
+            "slug": "typescript",
+            "title": "TypeScript",
+            "headings": [
+                "Introduction"
+            ],
+            "paragraphs": "Welcome to the documentation site for official MongoDB TypeScript support.\nSince TypeScript compiles to JavaScript, you can use the\n MongoDB Node.js Driver \nto create TypeScript applications that communicate with MongoDB. You must use version 4.0 or later of the Node.js Driver to use\nTypeScript types with MongoDB. To learn more about the features and limitations of using TypeScript with the\nNode.js Driver, see\n TypeScript Fundamentals \nin the Node.js Driver documentation.",
+            "code": [],
+            "preview": "Welcome to the documentation site for official MongoDB TypeScript support.\nSince TypeScript compiles to JavaScript, you can use the\nMongoDB Node.js Driver\nto create TypeScript applications that communicate with MongoDB.",
+            "tags": null,
+            "facets": {
+                "target_product": [
+                    "drivers"
+                ]
+            }
+        },
+        {
+            "slug": "csharp-drivers",
+            "title": "MongoDB .NET/C# Driver",
+            "headings": [
+                "Introduction",
+                ".NET/C# Driver",
+                "Entity Framework Provider"
+            ],
+            "paragraphs": "Welcome to the documentation site for the official MongoDB .NET/C#\ndriver and Entity Framework provider. You can add the driver to your application to work with MongoDB in .NET or C#. See\nthe  .NET/C# driver documentation \nto learn how to install and begin using the driver. You can add the MongoDB Entity Framework provider to your .NET application as an\nobject-relational mapper (ORM) to work with data in MongoDB. See the\n Entity Framework provider documentation \nto learn how to begin using the provider.",
+            "code": [],
+            "preview": "Use the .NET/C# driver to connect your application to MongoDB Atlas, Enterprise, and Community database deployments.",
+            "tags": "application",
+            "facets": {
+                "programming_language": [
+                    "csharp"
+                ],
+                "genre": [
+                    "reference"
+                ],
+                "target_product": [
+                    "drivers"
+                ]
+            }
+        },
+        {
+            "slug": "java-drivers",
+            "title": "MongoDB Java Drivers",
+            "headings": [
+                "Introduction",
+                "Compatibility",
+                "Take the free online course taught by MongoDB"
+            ],
+            "paragraphs": "Welcome to the documentation site for the official MongoDB Java\ndrivers. You can add one of the following drivers to your application\nto work with MongoDB in Java: Use the\n Java Driver \nfor synchronous Java applications. Use the  Reactive Streams Driver  to use the\nReactive Streams API for asynchronous stream processing. You can use the Java drivers to connect to deployments hosted in the\nfollowing environments: MongoDB Atlas : The fully\nmanaged service for MongoDB deployments in the cloud MongoDB Enterprise : The\nsubscription-based, self-managed version of MongoDB MongoDB Community : The\nsource-available, free-to-use, and self-managed version of MongoDB Using MongoDB with Java Learn the essentials of Java application development with MongoDB.",
+            "code": [],
+            "preview": "Use the Java Sync and Reactive Streams drivers to connect your application to work with MongoDB in Java.",
+            "tags": "java sync, java async, reactive streams",
+            "facets": {
+                "programming_language": [
+                    "java"
+                ],
+                "genre": [
+                    "reference"
+                ],
+                "target_product": [
+                    "drivers"
+                ]
+            }
+        },
+        {
+            "slug": "scala",
+            "title": "MongoDB Scala Driver",
+            "headings": [
+                "Introduction",
+                "Installation",
+                "Connect to MongoDB Atlas",
+                "Connect to MongoDB Atlas Without the Stable API",
+                "Connect to a MongoDB Server on Your Local Machine",
+                "Compatibility",
+                "MongoDB Compatibility",
+                "Compatibility Table Legend",
+                "Language Compatibility",
+                "How to get help"
+            ],
+            "paragraphs": "Welcome to the documentation site for the official MongoDB Scala\ndriver. You can add the driver to your application to work\nasynchronously with MongoDB in Scala. Download it using\n sbt  or\n Apache Maven , or set up a runnable\nproject by following our tutorials. Reference Documentation Tutorials API Documentation What's New Source Code The recommended way to get started using the driver in your project is\nwith a dependency management system like  sbt  or  maven . See the\n Installation Guide \nfor more information. You can use the following connection snippet to test your connection to\nyour MongoDB deployment on Atlas: This connection snippet uses the Stable API feature, which you can\nenable when using the Scala driver v4.3 and later to connect to MongoDB Server\nv5.0 and later. When you use this feature, you can update your driver or server without\nworrying about backward compatibility issues with any commands covered by the\nStable API. To learn more about the Stable API feature, see\n Stable API  in the Server manual. Starting from February 2022, the  Versioned API  is known as the  Stable API .\nAll concepts and features remain the same with this naming change. If you are using a version of MongoDB or the driver that doesn't support the\nStable API feature, you can use the following code snippet to test your connection\nto your MongoDB deployment on Atlas: To test whether you can connect to your server, replace the connection\nstring in the  Connect to MongoDB Atlas  code\nexample and run it. If you need to run a MongoDB server on your local machine for development\npurposes instead of using an Atlas cluster, you need to complete the following: After you successfully start your MongoDB server, specify your connection\nstring in your driver connection code. If your MongoDB Server is running locally, you can use the connection string\n \"mongodb://localhost:<port>\"  where  <port>  is the port number you\nconfigured your server to listen for incoming connections. If you need to specify a different hostname or IP address, see our Server\nManual entry on  Connection Strings . Download the  Community \nor  Enterprise  version\nof MongoDB Server. Install and configure \nMongoDB Server. Start the server. Always secure your MongoDB server from malicious attacks. See our\n Security Checklist  for a\nlist of security recommendations. The following compatibility table specifies the recommended version or versions\nof the Mongo Scala driver for use with a specific version of MongoDB. The first column lists the driver version. MongoDB ensures compatibility between the MongoDB Server and the drivers\nfor three years after the server version's end of life (EOL) date. To learn\nmore about the MongoDB release and EOL dates, see\n MongoDB Software Lifecycle Schedules . Icon Explanation \u2713 All features are supported. \u229b The Driver version will work with the MongoDB version, but not all\nnew MongoDB features are supported. No mark The Driver version is not tested with the MongoDB version. Scala Driver Version MongoDB 7.0 MongoDB 6.1 MongoDB 6.0 MongoDB 5.0 MongoDB 4.4 MongoDB 4.2 MongoDB 4.0 MongoDB 3.6 MongoDB 3.4 MongoDB 3.2 MongoDB 3.0 MongoDB 2.6 4.11 \u2713 \u2713 \u2713 \u2713 \u2713 \u2713 \u2713 \u2713 4.10 \u2713 \u2713 \u2713 \u2713 \u2713 \u2713 \u2713 \u2713 4.9 \u229b \u2713 \u2713 \u2713 \u2713 \u2713 \u2713 \u2713 4.8 \u229b \u2713 \u2713 \u2713 \u2713 \u2713 \u2713 \u2713 4.7 \u229b \u229b \u2713 \u2713 \u2713 \u2713 \u2713 \u2713 \u2713 \u2713 \u2713 \u2713 4.6 \u229b \u229b \u229b \u2713 \u2713 \u2713 \u2713 \u2713 \u2713 \u2713 \u2713 \u2713 4.5 \u229b \u229b \u229b \u2713 \u2713 \u2713 \u2713 \u2713 \u2713 \u2713 \u2713 \u2713 4.4 \u229b \u229b \u229b \u2713 \u2713 \u2713 \u2713 \u2713 \u2713 \u2713 \u2713 \u2713 4.3 \u229b \u229b \u229b \u2713 \u2713 \u2713 \u2713 \u2713 \u2713 \u2713 \u2713 \u2713 4.2 \u229b \u229b \u229b \u229b \u2713 \u2713 \u2713 \u2713 \u2713 \u2713 \u2713 \u2713 4.1 \u229b \u229b \u229b \u229b \u2713 \u2713 \u2713 \u2713 \u2713 \u2713 \u2713 \u2713 4.0 \u229b \u229b \u229b \u229b \u229b \u2713 \u2713 \u2713 \u2713 \u2713 \u2713 \u2713 2.9 \u229b \u229b \u229b \u229b \u229b \u2713 \u2713 \u2713 \u2713 \u2713 \u2713 \u2713 2.8 \u229b \u229b \u229b \u229b \u229b \u2713 \u2713 \u2713 \u2713 \u2713 \u2713 \u2713 2.7 \u229b \u229b \u229b \u229b \u229b \u2713 \u2713 \u2713 \u2713 \u2713 \u2713 \u2713 2.6 \u229b \u229b \u229b \u229b \u229b \u229b \u2713 \u2713 \u2713 \u2713 \u2713 \u2713 2.5 \u229b \u229b \u229b \u229b \u229b \u229b \u2713 \u2713 \u2713 \u2713 \u2713 \u2713 2.4 \u229b \u229b \u229b \u229b \u229b \u229b \u2713 \u2713 \u2713 \u2713 \u2713 \u2713 2.3 \u2713 \u2713 \u2713 \u2713 \u2713 2.2 \u2713 \u2713 \u2713 \u2713 \u2713 2.1 \u2713 \u2713 \u2713 \u2713 2.0 \u2713 \u2713 \u2713 \u2713 1.2 \u2713 \u2713 \u2713 \u2713 1.1 \u2713 \u2713 \u2713 1.0 \u2713 \u2713 The driver does not support older versions of MongoDB. The following compatibility table specifies the recommended version or versions\nof the Mongo Scala driver for use with a specific version of Scala. The first column lists the driver version. Scala Driver Version Scala 2.13 Scala 2.12 Scala 2.11 4.11 \u2713 \u2713 \u2713 4.10 \u2713 \u2713 \u2713 4.9 \u2713 \u2713 \u2713 4.8 \u2713 \u2713 \u2713 4.7 \u2713 \u2713 \u2713 4.6 \u2713 \u2713 \u2713 4.5 \u2713 \u2713 \u2713 4.4 \u2713 \u2713 \u2713 4.3 \u2713 \u2713 \u2713 4.2 \u2713 \u2713 \u2713 4.1 \u2713 \u2713 \u2713 2.9 \u2713 \u2713 \u2713 2.8 \u2713 \u2713 \u2713 2.7 \u2713 \u2713 \u2713 2.6 \u2713 \u2713 2.5 \u2713 \u2713 2.4 \u2713 \u2713 2.3 \u2713 \u2713 2.2 \u2713 \u2713 2.1 \u2713 \u2713 2.0 \u2713 \u2713 1.2 \u2713 \u2713 1.1 \u2713 1.0 \u2713 For more information on how to read the compatibility tables, see our guide on\n MongoDB Compatibility Tables . Ask questions on our  MongoDB Community Forums . Visit our  Support Channels . See  Issues & Help .",
+            "code": [
+                {
+                    "lang": "scala",
+                    "value": "import com.mongodb.{ServerApi, ServerApiVersion}\nimport org.mongodb.scala.{ConnectionString, MongoClient, MongoClientSettings}\nimport org.mongodb.scala.bson.Document\n\nimport scala.concurrent.Await\nimport scala.concurrent.duration.DurationInt\nimport scala.util.Using\n\nobject MongoClientConnectionExample {\n\n  def main(args: Array[String]): Unit = {\n\n    // Replace the placeholder with your Atlas connection string\n    val connectionString = \"<connection string>\";\n\n    // Construct a ServerApi instance using the ServerApi.builder() method\n    val serverApi = ServerApi.builder.version(ServerApiVersion.V1).build()\n\n    val settings = MongoClientSettings\n      .builder()\n      .applyConnectionString(ConnectionString(connectionString))\n      .serverApi(serverApi)\n      .build()\n    \n    // Create a new client and connect to the server\n    Using(MongoClient(settings)) { mongoClient =>\n      // Send a ping to confirm a successful connection\n      val database = mongoClient.getDatabase(\"admin\")\n      val ping = database.runCommand(Document(\"ping\" -> 1)).head()\n\n      Await.result(ping, 10.seconds)\n      System.out.println(\"Pinged your deployment. You successfully connected to MongoDB!\")\n    }\n  }\n}"
+                },
+                {
+                    "lang": "scala",
+                    "value": "import org.mongodb.scala.MongoClient\nimport org.mongodb.scala.bson.Document\n\nimport scala.concurrent.Await\nimport scala.concurrent.duration.DurationInt\nimport scala.util.Using\n\nobject MongoClientConnectionExample {\n\n  def main(args: Array[String]): Unit = {\n\n    // Replace the placeholder with your Atlas connection string\n    val connectionString = \"<connection string>\";\n\n    // Create a new client and connect to the server\n    Using(MongoClient(connectionString)) { mongoClient =>\n      // Send a ping to confirm a successful connection\n      val database = mongoClient.getDatabase(\"admin\")\n      val ping = database.runCommand(Document(\"ping\" -> 1)).head()\n\n      Await.result(ping, 10.seconds)\n      System.out.println(\"Pinged your deployment. You successfully connected to MongoDB!\")\n    }\n  }\n}"
+                }
+            ],
+            "preview": "Welcome to the documentation site for the official MongoDB Scala\ndriver. You can add the driver to your application to work\nasynchronously with MongoDB in Scala. Download it using\nsbt or\nApache Maven, or set up a runnable\nproject by following our tutorials.",
+            "tags": null,
+            "facets": {
+                "target_product": [
+                    "drivers"
+                ]
+            }
+        },
+        {
+            "slug": "php-drivers",
+            "title": "MongoDB PHP Driver",
+            "headings": [
+                "Introduction",
+                "Driver Architecture",
+                "Connect to a Compatible MongoDB Deployment",
+                "Installation",
+                "Connect to MongoDB Atlas",
+                "Connect to MongoDB Atlas Without the Stable API",
+                "Connect to a MongoDB Server on Your Local Machine",
+                "Compatibility",
+                "MongoDB Compatibility",
+                "Compatibility Table Legend",
+                "Language Compatibility",
+                "How to get help",
+                "See Also"
+            ],
+            "paragraphs": "Welcome to the documentation site for the official MongoDB PHP driver.\nYou can add the driver to your application to work with MongoDB in PHP.\nThe MongoDB PHP Driver consists of the following components: While it is possible to use the extension alone, MongoDB recommends\nusing both the extension and the library together. To learn more about\nthe components of the PHP driver, see the  Driver Architecture  section of this page. Navigate through the following links to learn more about the driver and access\ntutorial content on setting up a runnable project: The  extension , which\nprovides a low-level API and mainly serves to integrate\n libmongoc and libbson  with\nPHP. The  library , which\nprovides a high-level API for working with MongoDB\ndatabases consistent with other MongoDB language drivers. Tutorials Extension Architecture and Internals Documentation Library Extension Changelog Library Extension Source Code Library Extension This section describes how the components of the PHP driver work together.\nThese components fit into the following general categories: The following diagram illustrates the architecture of the PHP driver\ncomponents: The PHP library provides an API that is consistent with the other\nMongoDB drivers. The library is continually updated to meet cross-driver\nspecifications. You must add the library as a dependency to access\nMongoDB in most PHP applications. The extension is distributed by using  PECL , and\nconnects PHP to the system libraries. The extension's public API\nprovides the following functionality: To learn more about the system libraries, see the  C Driver  documentation. High-Level API, which includes the library and other integrations Extension, which includes the extension that integrates the system libraries System, which includes the C Driver, BSON library, and encryption library Connection management BSON encoding and decoding Object document serialization Command execution Cursor management You can use the PHP driver to connect to deployments hosted in the\nfollowing environments: MongoDB Atlas : The fully\nmanaged service for MongoDB deployments in the cloud MongoDB Enterprise : The\nsubscription-based, self-managed version of MongoDB MongoDB Community : The\nsource-available, free-to-use, and self-managed version of MongoDB First, make sure you have a recent version of PHP installed on your\nsystem. See the\n official PHP manual \nfor download and installation instructions. Install the PHP MongoDB Extension before installing the PHP Library for\nMongoDB. You can install the extension using\n PECL  on\nthe command line: Finally, add the following line to your  php.ini  file: The preferred method of installing the PHP library is with\n Composer  by running the following from your project root: Once you have installed the library, ensure that your application includes\nComposer's autoloader as in the following example: Additional installation instructions may be found in the\n library documentation . On some systems, there may be multiple INI files for individual SAPIs (e.g.\nCLI, FPM). Make sure to enable the extension in all SAPIs that you need. You can use the following connection snippet to test your connection to\nyour MongoDB deployment on Atlas: This connection snippet uses the Stable API feature, which you can\nenable when using the PHP driver v1.9 and later to connect to MongoDB Server\nv5.0 and later. When you use this feature, you can update your driver or server without\nworrying about backward compatibility issues with any commands covered by the\nStable API. To learn more about the Stable API feature, see\n Stable API  in the Server manual. Starting from February 2022, the  Versioned API  is known as the  Stable API .\nAll concepts and features remain the same with this naming change. If you are using a version of MongoDB or the driver that doesn't support the\nStable API feature, you can use the following code snippet to test your connection\nto your MongoDB deployment on Atlas: To test whether you can connect to your server, replace the connection\nstring in the  Connect to MongoDB Atlas  code\nexample and run it. If you need to run a MongoDB server on your local machine for development\npurposes instead of using an Atlas cluster, you need to complete the following: After you successfully start your MongoDB server, specify your connection\nstring in your driver connection code. If your MongoDB Server is running locally, you can use the connection string\n \"mongodb://localhost:<port>\"  where  <port>  is the port number you\nconfigured your server to listen for incoming connections. If you need to specify a different hostname or IP address, see our Server\nManual entry on  Connection Strings . Download the  Community \nor  Enterprise  version\nof MongoDB Server. Install and configure \nMongoDB Server. Start the server. Always secure your MongoDB server from malicious attacks. See our\n Security Checklist  for a\nlist of security recommendations. Due to potential problems representing 64-bit integers on 32-bit platforms,\nusers are advised to use 64-bit environments. When using a 32-bit platform, be\naware that any 64-bit integer read from the database will be returned as a\n MongoDB\\BSON\\Int64 \ninstance instead of a PHP integer type. The following compatibility table specifies the recommended version or versions\nof the PHP driver for use with a specific version of MongoDB. The first column lists the driver version. MongoDB ensures compatibility between the MongoDB Server and the drivers\nfor three years after the server version's end of life (EOL) date. To learn\nmore about the MongoDB release and EOL dates, see\n MongoDB Software Lifecycle Schedules . Icon Explanation \u2713 All features are supported. \u229b The Driver version will work with the MongoDB version, but not all\nnew MongoDB features are supported. No mark The Driver version is not tested with the MongoDB version. PHP Driver Versions MongoDB 7.0 MongoDB 6.0 MongoDB 5.0 MongoDB 4.4 MongoDB 4.2 MongoDB 4.0 MongoDB 3.6 MongoDB 3.4 MongoDB 3.2 MongoDB 3.0 MongoDB 2.6 ext + lib 1.16 to 1.17 \u2713 \u2713 \u2713 \u2713 \u2713 \u2713 \u2713 ext + lib 1.15  \u229b \u2713 \u2713 \u2713 \u2713 \u2713 \u2713 ext 1.14 + lib 1.13 \u229b \u2713 \u2713 \u2713 \u2713 \u2713 \u2713 ext 1.13 + lib 1.12 \u229b \u229b \u2713 \u2713 \u2713 \u2713 \u2713 ext 1.12 + lib 1.11 \u229b \u229b \u2713 \u2713 \u2713 \u2713 \u2713 \u2713 \u2713 \u2713 ext 1.11 + lib 1.10 \u229b \u229b \u2713 \u2713 \u2713 \u2713 \u2713 \u2713 \u2713 \u2713 ext 1.10 + lib 1.9 \u229b \u229b \u2713  \u2713 \u2713 \u2713 \u2713 \u2713 \u2713 \u2713 ext 1.9 + lib 1.8 \u229b \u229b \u229b \u2713 \u2713 \u2713 \u2713 \u2713 \u2713 \u2713 ext 1.8 + lib 1.7 \u229b \u229b \u229b \u2713 \u2713 \u2713 \u2713 \u2713 \u2713 \u2713 ext 1.7 + lib 1.6 \u229b \u229b \u229b \u229b \u2713 \u2713 \u2713 \u2713 \u2713 \u2713 ext 1.6 + lib 1.5 \u229b \u229b \u229b \u229b \u2713 \u2713 \u2713 \u2713 \u2713 \u2713 ext 1.5 + lib 1.4 \u229b \u229b \u229b \u229b \u229b \u2713 \u2713 \u2713 \u2713 \u2713 ext 1.4 + lib 1.3 \u2713 \u2713 \u2713 \u2713 \u2713 ext 1.3 + lib 1.2 \u2713 \u2713 \u2713 \u2713 ext 1.2 + lib 1.1 \u2713 \u2713 \u2713 \u2713 ext 1.1 + lib 1.0 \u2713 \u2713 \u2713 ext 1.0 \u2713 \u2713 Version 1.14 of the MongoDB PHP library has been\nskipped to restore version parity between the library and extension. The extension 1.10 + library 1.9\ndriver does not support snapshot reads on secondaries. For more\ninformation, see the\n MongoDB Server version 5.0 release notes . The following compatibility table specifies the recommended version or versions\nof the PHP driver for use with a specific version of PHP. The first column lists the driver versions. PHP Driver Versions PHP 8.3 PHP 8.2 PHP 8.1 PHP 8.0 PHP 7.4 PHP 7.3 PHP 7.2 PHP 7.1 PHP 7.0 PHP 5.6 PHP 5.5 ext + lib 1.17 \u2713 \u2713 \u2713 \u2713 \u2713 ext + lib 1.16 \u2713 \u2713 \u2713 \u2713 \u2713 \u2713 ext + lib 1.15  \u2713 \u2713 \u2713 \u2713 \u2713 \u2713 ext 1.14 + lib 1.13 \u2713 \u2713 \u2713 \u2713 \u2713 ext 1.13 + lib 1.12 \u2713 \u2713 \u2713 \u2713 \u2713 ext 1.12 + lib 1.11 \u2713 \u2713 \u2713 \u2713 \u2713 ext 1.11 + lib 1.10 \u2713 \u2713 \u2713 \u2713 \u2713 ext 1.10 + lib 1.9 \u2713 \u2713 \u2713 \u2713 \u2713 ext 1.9 + lib 1.8 \u2713 \u2713 \u2713 \u2713 \u2713 \u2713 ext 1.8 + lib 1.7 \u2713 \u2713 \u2713 \u2713 \u2713 ext 1.7 + lib 1.6 \u2713 \u2713 \u2713 \u2713 \u2713 \u2713 ext 1.6 + lib 1.5 \u2713 \u2713 \u2713 \u2713 \u2713 \u2713 ext 1.5 + lib 1.4 \u2713 \u2713 \u2713 \u2713 \u2713 \u2713 ext 1.4 + lib 1.3 \u2713 \u2713 \u2713 \u2713 \u2713 ext 1.3 + lib 1.2 \u2713 \u2713 \u2713 \u2713 \u2713 For more information on how to read the compatibility tables, see our guide on\n MongoDB Compatibility Tables . Ask questions on our  MongoDB Community Forums . Visit our  Support Channels . File an issue or feature request in JIRA under one of the following:\n-  Extension \n-  Library PHP Libraries, Frameworks, and Tools",
+            "code": [
+                {
+                    "lang": "sh",
+                    "value": "$ sudo pecl install mongodb"
+                },
+                {
+                    "lang": "text",
+                    "value": "extension=mongodb.so"
+                },
+                {
+                    "lang": "sh",
+                    "value": "$ composer require mongodb/mongodb"
+                },
+                {
+                    "lang": "php",
+                    "value": "<?php\n\nrequire_once __DIR__ . '/vendor/autoload.php';"
+                },
+                {
+                    "lang": "php",
+                    "value": "<?php\n\nuse Exception;\nuse MongoDB\\Client;\nuse MongoDB\\Driver\\ServerApi;\n\n// Replace the placeholder with your Atlas connection string\n$uri = '<connection string>';\n\n// Specify Stable API version 1\n$apiVersion = new ServerApi(ServerApi::V1);\n\n// Create a new client and connect to the server\n$client = new MongoDB\\Client($uri, [], ['serverApi' => $apiVersion]);\n\ntry {\n    // Send a ping to confirm a successful connection\n    $client->selectDatabase('admin')->command(['ping' => 1]);\n    echo \"Pinged your deployment. You successfully connected to MongoDB!\\n\";\n} catch (Exception $e) {\n    printf($e->getMessage());\n}"
+                },
+                {
+                    "lang": "php",
+                    "value": "<?php\n\nuse Exception;\nuse MongoDB\\Client;\n\n// Replace the placeholder with your Atlas connection string\n$uri = '<connection string>';\n\n// Create a new client and connect to the server\n$client = new MongoDB\\Client($uri);\n\ntry {\n    // Send a ping to confirm a successful connection\n    $client->selectDatabase('admin')->command(['ping' => 1]);\n    echo \"Pinged your deployment. You successfully connected to MongoDB!\\n\";\n} catch (Exception $e) {\n    printf($e->getMessage());\n}"
+                }
+            ],
+            "preview": "Use the PHP driver and libraries to connect to MongoDB Atlas, Enterprise, and Community database deployments.",
+            "tags": "code example",
+            "facets": {
+                "programming_language": [
+                    "php"
+                ],
+                "genre": [
+                    "tutorial"
+                ],
+                "target_product": [
+                    "drivers"
+                ]
+            }
+        },
+        {
+            "slug": "cpp",
+            "title": "MongoDB C++ Driver",
+            "headings": [
+                "Introduction",
+                "Connect to MongoDB Atlas",
+                "Connect to MongoDB Atlas Without the Stable API",
+                "Connect to a MongoDB Server on Your Local Machine",
+                "Compatibility",
+                "MongoDB Compatibility",
+                "Compatibility Table Legend",
+                "Language Compatibility",
+                "How to get help"
+            ],
+            "paragraphs": "Welcome to the documentation site for the official MongoDB C++ driver.\nYou can add the driver to your application to work with MongoDB by using\nthe C++11 or later standard. Installation Tutorial Usage Guide MongoDB Developer Center API Reference Changelog Source Code Examples You can use the following connection snippet to test your connection to your\nMongoDB deployment on Atlas: This connection snippet uses the Stable API feature which you can use when\nconnecting to MongoDB Server v5.0 and later and the C++ driver v3.7 and later. When you use this feature, you can update your driver or server without\nworrying about backward compatibility issues with any commands covered by the\nStable API. Starting from February 2022, the  Versioned API  is known as the  Stable API .\nAll concepts and features remain the same with this naming change. If you are using a version of MongoDB or the driver that lacks support for the\nStable API, you can use the following code snippet to test your connection\nto your MongoDB deployment on Atlas: To test whether you can connect to your server, replace the connection\nstring in the  Connect to MongoDB Atlas  code\nexample and run it. If you need to run a MongoDB server on your local machine for development\npurposes instead of using an Atlas cluster, you need to complete the following: After you successfully start your MongoDB server, specify your connection\nstring in your driver connection code. If your MongoDB Server is running locally, you can use the connection string\n \"mongodb://localhost:<port>\"  where  <port>  is the port number you\nconfigured your server to listen for incoming connections. If you need to specify a different hostname or IP address, see our Server\nManual entry on  Connection Strings . Download the  Community \nor  Enterprise  version\nof MongoDB Server. Install and configure \nMongoDB Server. Start the server. Always secure your MongoDB server from malicious attacks. See our\n Security Checklist  for a\nlist of security recommendations. The following compatibility table specifies the recommended version or versions\nof the MongoDB C++ driver for use with a specific version of MongoDB. The first column lists the driver version. MongoDB ensures compatibility between the MongoDB Server and the drivers\nfor three years after the server version's end of life (EOL) date. To learn\nmore about the MongoDB release and EOL dates, see\n MongoDB Software Lifecycle Schedules . Icon Explanation \u2713 All features are supported. \u229b The Driver version will work with the MongoDB version, but not all\nnew MongoDB features are supported. No mark The Driver version is not tested with the MongoDB version. C++ Driver Version MongoDB 7.0 MongoDB 6.0 MongoDB 5.0 MongoDB 4.4 MongoDB 4.2 MongoDB 4.0 MongoDB 3.6 MongoDB 3.4 MongoDB 3.2 MongoDB 3.0 MongoDB 2.6 MongoDB 2.4 3.8+ \u2713 \u2713 \u2713 \u2713 \u2713 \u2713 \u2713 3.7 \u229b \u229b \u2713 \u2713 \u2713 \u2713 \u2713 3.6 \u229b \u229b \u229b \u2713 \u2713 \u2713 \u2713 \u2713 \u2713 \u2713 3.5 \u229b \u229b \u229b \u229b \u229b \u2713 \u2713 \u2713 \u2713 \u2713 3.4 \u229b \u229b \u229b \u229b \u229b \u2713 \u2713 \u2713 \u2713 \u2713 3.3 \u2713 \u2713 \u2713 \u2713 3.2 \u2713 \u2713 \u2713 \u2713 \u2713 3.1 \u2713 \u2713 \u2713 \u2713 \u2713 3.0 \u2713 \u2713 \u2713 \u2713 The driver does not support older versions of MongoDB. The following compatibility table specifies the recommended version or versions\nof the MongoDB C++ driver for use with a specific version of C++. The first column lists the driver version. C++ Driver Version C++20 C++17 C++14 C++11 C++03 3.8+ \u2713 \u2713 \u2713 \u2713 <= 3.7 \u2713 \u2713 \u2713 1.x \u2713 \u2713 \u2713 For more information on how to read the compatibility tables, see our guide on\n MongoDB Compatibility Tables . Ask questions on our  MongoDB Community Forums . Visit our  Support Channels . See how to  report a bug .",
+            "code": [
+                {
+                    "lang": "cpp",
+                    "value": "#include <bsoncxx/json.hpp>\n#include <mongocxx/client.hpp>\n#include <mongocxx/instance.hpp>\n\nint main()\n{ \n  try\n  {\n    // Create an instance.\n    mongocxx::instance inst{};\n  \n    // Replace the connection string with your MongoDB deployment's connection string.\n    const auto uri = mongocxx::uri{\"<connection string>\"};\n  \n    // Set the version of the Stable API on the client.\n    mongocxx::options::client client_options;\n    const auto api = mongocxx::options::server_api{ mongocxx::options::server_api::version::k_version_1 };\n    client_options.server_api_opts(api);\n  \n    // Setup the connection and get a handle on the \"admin\" database.\n    mongocxx::client conn{ uri, client_options };\n    mongocxx::database db = conn[\"admin\"];\n    \n    // Ping the database.\n    const auto ping_cmd = bsoncxx::builder::basic::make_document(bsoncxx::builder::basic::kvp(\"ping\", 1));\n    db.run_command(ping_cmd.view());\n    std::cout << \"Pinged your deployment. You successfully connected to MongoDB!\" << std::endl;\n  }\n  catch (const std::exception& e) \n  {\n    // Handle errors.\n    std::cout<< \"Exception: \" << e.what() << std::endl;\n  }\n\n  return 0;\n}\n"
+                },
+                {
+                    "lang": "cpp",
+                    "value": "#include <bsoncxx/json.hpp>\n#include <mongocxx/client.hpp>\n#include <mongocxx/instance.hpp>\n\nint main()\n{ \n  try\n  {\n    // Create an instance.\n    mongocxx::instance inst{};\n  \n    // Replace the connection string with your MongoDB deployment's connection string.\n    const auto uri = mongocxx::uri{\"<connection string>\"};\n  \n    // Setup the connection and get a handle on the \"admin\" database.\n    mongocxx::client conn{ uri };\n    mongocxx::database db = conn[\"admin\"];\n    \n    // Ping the database.\n    const auto ping_cmd = bsoncxx::builder::basic::make_document(bsoncxx::builder::basic::kvp(\"ping\", 1));\n    db.run_command(ping_cmd.view());\n    std::cout << \"Pinged your deployment. You successfully connected to MongoDB!\" << std::endl;   \n  }\n  catch (const std::exception& e) \n  {\n    // Handle errors.\n    std::cout<< \"Exception: \" << e.what() << std::endl;\n  }\n\n  return 0;\n}\n"
+                }
+            ],
+            "preview": "Welcome to the documentation site for the official MongoDB C++ driver.\nYou can add the driver to your application to work with MongoDB by using\nthe C++11 or later standard.",
+            "tags": "tutorial, connection string, backward compatibility",
+            "facets": {
+                "genre": [
+                    "tutorial"
+                ],
+                "programming_language": [
+                    "cpp"
+                ],
+                "target_product": [
+                    "drivers"
+                ]
+            }
+        },
+        {
+            "slug": "kotlin-drivers",
+            "title": "MongoDB Kotlin Drivers",
+            "headings": [
+                "Introduction"
+            ],
+            "paragraphs": "Welcome to the documentation site for the official MongoDB Kotlin\ndrivers. You can add one of the following drivers to your application\nto work with MongoDB in Kotlin: You can use the  MongoDB Atlas Device Kotlin SDK \nin Android or Kotlin Multiplatform (KMP) applications to access Atlas App\nServices and to manage your Realm data. Use the  Kotlin Coroutine Driver \nfor Kotlin applications using coroutines. Use the  Kotlin Sync Driver  for synchronous Kotlin\napplications.",
+            "code": [],
+            "preview": "Welcome to the documentation site for the official MongoDB Kotlin\ndrivers. You can add one of the following drivers to your application\nto work with MongoDB in Kotlin:",
+            "tags": null,
+            "facets": {
+                "target_product": [
+                    "drivers"
+                ]
+            }
+        },
+        {
+            "slug": "pymongo",
+            "title": "PyMongo",
+            "headings": [
+                "Introduction",
+                "Take the Free Online Course Taught by MongoDB",
+                "Installation",
+                "Connect to MongoDB Atlas",
+                "Connect to MongoDB Atlas Without the Stable API",
+                "Connect to MongoDB Atlas from AWS Lambda",
+                "Connect to a MongoDB Server on Your Local Machine",
+                "Compatibility",
+                "MongoDB Compatibility",
+                "Compatibility Table Legend",
+                "Language Compatibility",
+                "Python 3 Compatibility",
+                "Python 2 Compatibility",
+                "How to get help"
+            ],
+            "paragraphs": "Welcome to the documentation site for PyMongo, the official MongoDB\ndriver for synchronous Python applications. Download it using\n pip \nor set up a runnable project by following our tutorial. You can use the PyMongo driver to connect to deployments hosted in the\nfollowing environments: If you need to access MongoDB in a non-blocking manner or from\nco-routines, we recommend that you use the  Motor \ndriver instead. Tutorial \non how to connect to MongoDB and run common operations. API Reference Changelog Source Code MongoDB Atlas : The fully\nmanaged service for MongoDB deployments in the cloud MongoDB Enterprise : The\nsubscription-based, self-managed version of MongoDB MongoDB Community : The\nsource-available, free-to-use, and self-managed version of MongoDB Using MongoDB with Python Learn the essentials of Python application development with MongoDB. You must install the PyMongo driver module to make it available to your\nPython application. We recommend using\n pip  to install PyMongo. PyMongo requires  dnspython   to support\n mongodb+srv://  connection strings and  MongoDB Atlas .  dnspython  is automatically installed\nwhen installing or upgrading to the latest PyMongo version. The following command demonstrates how you can install the latest\nversion of the module using the command line: If you need to install a specific version of PyMongo, specify the\nversion in your command. The following command shows how you can use\n pip  to install PyMongo version  3.11 : If you already have PyMongo installed and need to upgrade to the latest\nversion, use the following  pip  command: See  Installation \nfor more ways to install PyMongo. You can use the following connection snippet to test your connection to\nyour MongoDB deployment on Atlas: This connection snippet uses the Stable API feature, which you can\nenable when using the PyMongo driver v3.12 and later to connect to MongoDB Server\nv5.0 and later. When you use this feature, you can update your driver or server without\nworrying about backward compatibility issues with any commands covered by the\nStable API. To learn more about the Stable API feature, see\n Stable API  in the Server manual. Starting from February 2022, the  Versioned API  is known as the  Stable API .\nAll concepts and features remain the same with this naming change. If you are using a version of MongoDB or the driver that doesn't support the\nStable API feature, you can use the following code snippet to test your connection\nto your MongoDB deployment on Atlas: To learn how to connect to Atlas from AWS Lambda, see the\n Manage Connections with AWS Lambda \ndocumentation. To test whether you can connect to your server, replace the connection\nstring in the  Connect to MongoDB Atlas \ncode example and run it. If you need to run a MongoDB server on your local machine for development\npurposes instead of using an Atlas cluster, you need to complete the following: After you successfully start your MongoDB server, specify your connection\nstring in your driver connection code. If your MongoDB Server is running locally, you can use the connection string\n \"mongodb://localhost:<port>\"  where  <port>  is the port number you\nconfigured your server to listen for incoming connections. If you need to specify a different hostname or IP address, see our Server\nManual entry on  Connection Strings . Download the  Community \nor  Enterprise  version\nof MongoDB Server. Install and configure \nMongoDB Server. Start the server. Always secure your MongoDB server from malicious attacks. See our\n Security Checklist  for a\nlist of security recommendations. MongoDB does not support any Python driver versions earlier than v4.0\nor any Python versions earlier than v3.6. The following compatibility table specifies the recommended version or versions\nof the MongoDB Python driver for use with a specific version of MongoDB. The first column lists the driver version. MongoDB ensures compatibility between the MongoDB Server and the drivers\nfor three years after the server version's end of life (EOL) date. To learn\nmore about the MongoDB release and EOL dates, see\n MongoDB Software Lifecycle Schedules . Icon Explanation \u2713 All features are supported. \u229b The Driver version will work with the MongoDB version, but not all\nnew MongoDB features are supported. No mark The Driver version is not tested with the MongoDB version. PyMongo Driver Version MongoDB 7.0 MongoDB 6.0 MongoDB 5.0 MongoDB 4.4 MongoDB 4.2 MongoDB 4.0 MongoDB 3.6 MongoDB 3.4 MongoDB 3.2 MongoDB 3.0 MongoDB 2.6 4.6 \u2713 \u2713 \u2713 \u2713 \u2713 \u2713 \u2713 4.5 \u2713 \u2713 \u2713 \u2713 \u2713 \u2713 \u2713 4.4 \u2713 \u2713 \u2713 \u2713 \u2713 \u2713 \u2713 4.3 \u229b \u2713 \u2713 \u2713 \u2713 \u2713 \u2713 4.2 \u229b \u2713 \u2713 \u2713 \u2713 \u2713 \u2713 4.1 \u229b \u229b \u2713 \u2713 \u2713 \u2713 \u2713 4.0 \u229b \u229b \u2713 \u2713 \u2713 \u2713 \u2713 3.13 \u229b \u229b \u2713 \u2713 \u2713 \u2713 \u2713 \u2713 \u2713 \u2713 \u2713 3.12 \u229b \u229b \u2713 \u2713 \u2713 \u2713 \u2713 \u2713 \u2713 \u2713 \u2713 3.11 \u229b \u229b \u229b \u2713 \u2713 \u2713 \u2713 \u2713 \u2713 \u2713 \u2713 3.10 \u229b \u229b \u229b \u229b \u2713 \u2713 \u2713 \u2713 \u2713 \u2713 \u2713 3.9 \u229b \u229b \u229b \u229b \u2713 \u2713 \u2713 \u2713 \u2713 \u2713 \u2713 3.8 \u229b \u229b \u229b \u229b \u229b \u2713 \u2713 \u2713 \u2713 \u2713 \u2713 3.7 \u229b \u229b \u229b \u229b \u229b \u2713 \u2713 \u2713 \u2713 \u2713 \u2713 3.6 \u2713 \u2713 \u2713 \u2713 \u2713 3.5 \u2713 \u2713 \u2713 \u2713 3.4 \u2713 \u2713 \u2713 \u2713 3.3 \u2713 \u2713 \u2713 3.2 \u2713 \u2713 \u2713 3.1 \u2713 \u2713 3.0 \u2713 \u2713 2.9 \u2713 \u2713 2.8 \u2713 \u2713 2.7 \u2713 The driver does not support older versions of MongoDB. The following compatibility table specifies the recommended version(s) of the\nMongoDB Python driver for use with a specific version of Python. The first column lists the driver version(s). PyMongo Driver Version Python 3.12 Python 3.11 Python 3.10  Python 3.9 Python 3.8 Python 3.7 Python 3.6 Python 3.5 Python 3.4 Python 3.3 PyPy3 Python 3.2 Python 3.1 4.6 \u2713 \u2713 \u2713 \u2713 \u2713 \u2713 4.5 \u2713 \u2713 \u2713 \u2713 \u2713 \u2713 4.4 \u2713 \u2713 \u2713 \u2713 \u2713 4.3 \u2713 \u2713 \u2713 \u2713 \u2713 4.2 \u2713 \u2713 \u2713 \u2713 4.1 \u2713 \u2713 \u2713 \u2713 \u2713  4.0 \u2713 \u2713 \u2713 \u2713 \u2713 3.13 \u2713 \u2713 \u2713 \u2713 \u2713 \u2713 \u2713 \u2713 \u2713 3.12 \u2713 \u2713 \u2713 \u2713 \u2713 \u2713 \u2713 \u2713 3.11 \u2713 \u2713 \u2713 \u2713 \u2713 \u2713 \u2713 3.10 \u2713 \u2713 \u2713 \u2713 \u2713 \u2713 3.9 \u2713 \u2713 \u2713 \u2713 \u2713 3.8 \u2713 \u2713 \u2713 \u2713 \u2713 3.7 \u2713 \u2713 \u2713 \u2713 \u2713 3.6 \u2713 \u2713 \u2713 \u2713 3.5 \u2713 \u2713 \u2713 \u2713 \u2713 3.4 \u2713 \u2713 \u2713 \u2713 3.3 \u2713 \u2713 \u2713 \u2713 3.2 \u2713 \u2713 \u2713 \u2713 \u2713 3.1 \u2713 \u2713 \u2713 \u2713 \u2713 3.0 \u2713 \u2713 \u2713 \u2713 2.9 \u2713 \u2713 \u2713 \u2713 \u2713 \u2713 \u2713 2.8 \u2713 \u2713 \u2713 \u2713 \u2713 2.7 \u2713 \u2713 \u2713 \u2713 \u2713 Versions of Python 3.10 and later are not compatible with\nTLS/SSL for versions of MongoDB 4.0 and earlier. See the  PyMongo documentation \nfor more information. Pymongo 4.1 requires Python 3.6.2 or later. PyPy3 is a Python 3.2-compatible alternative interpreter. PyMongo Driver Version Python 2.7, PyPy Python 2.6 Python 2.5, Jython 2.5 Python 2.4 4.0  3.12 \u2713 3.11 \u2713 3.10 \u2713 3.9 \u2713 3.8 \u2713 3.7 \u2713 \u2713 3.6 \u2713 \u2713 3.5 \u2713 \u2713 3.4 \u2713 \u2713 3.3 \u2713 \u2713 3.2 \u2713 \u2713 3.1 \u2713 \u2713 3.0 \u2713 \u2713 2.9 \u2713 \u2713 \u2713 \u2713 2.8 \u2713 \u2713 \u2713 \u2713 2.7 \u2713 \u2713 \u2713 \u2713 Versions of PyMongo 4.0 and later are not compatible\nwith Python 2 Jython 2.5 is a Python 2.5-compatible alternative interpreter. PyPy is a Python 2.7-compatible alternative interpreter. For more information on how to read the compatibility tables, see our guide on\n MongoDB Compatibility Tables . Ask questions on our  MongoDB Community Forums . Visit our  Support Channels . See  JIRA  to raise issues or request features.",
+            "code": [
+                {
+                    "lang": "sh",
+                    "value": "$ python -m pip install pymongo"
+                },
+                {
+                    "lang": "sh",
+                    "value": "$ python -m pip install pymongo==3.11"
+                },
+                {
+                    "lang": "sh",
+                    "value": "$ python -m pip install --upgrade pymongo"
+                },
+                {
+                    "lang": "python",
+                    "value": "from pymongo.mongo_client import MongoClient\nfrom pymongo.server_api import ServerApi\n\n# Replace the placeholder with your Atlas connection string\nuri = \"<connection string>\"\n\n# Set the Stable API version when creating a new client\nclient = MongoClient(uri, server_api=ServerApi('1'))\n                          \n# Send a ping to confirm a successful connection\ntry:\n    client.admin.command('ping')\n    print(\"Pinged your deployment. You successfully connected to MongoDB!\")\nexcept Exception as e:\n    print(e)"
+                },
+                {
+                    "lang": "python",
+                    "value": "from pymongo.mongo_client import MongoClient\n\n# Replace the placeholder with your Atlas connection string\nuri = \"<connection string>\"\n\n# Create a new client and connect to the server\nclient = MongoClient(uri)\n\n# Send a ping to confirm a successful connection\ntry:\n    client.admin.command('ping')\n    print(\"Pinged your deployment. You successfully connected to MongoDB!\")\nexcept Exception as e:\n    print(e)"
+                }
+            ],
+            "preview": "Use the PyMongo driver to connect to MongoDB Atlas, Enterprise, and Community database deployments.",
+            "tags": "pymongo, code example",
+            "facets": {
+                "programming_language": [
+                    "python"
+                ],
+                "genre": [
+                    "tutorial"
+                ],
+                "target_product": [
+                    "drivers"
+                ]
+            }
+        },
+        {
+            "slug": "other-document-dbs",
+            "title": "Other Document Database Compatibility",
+            "headings": [],
+            "paragraphs": "See the following pages for information about other document databases' compatibility\nwith MongoDB: Amazon DocumentDB Compatibility Azure Cosmos DB Compatibility",
+            "code": [],
+            "preview": "See the following pages for information about other document databases' compatibility\nwith MongoDB:",
+            "tags": null,
+            "facets": {
+                "target_product": [
+                    "drivers"
+                ]
+            }
+        },
+        {
+            "slug": "python-drivers",
+            "title": "MongoDB Python Drivers",
+            "headings": [
+                "Introduction",
+                "Take the Free Online Course Taught by MongoDB",
+                "Compatibility",
+                "Tools and Projects"
+            ],
+            "paragraphs": "Welcome to the documentation site for the official MongoDB Python\ndrivers. Add one of the following drivers to your application to work with\nMongoDB in Python: PyMongo  for synchronous Python applications PyMongoArrow , a\nPyMongo extension for loading MongoDB query result sets as Apache Arrow tables Motor  for asynchronous Python applications Using MongoDB with Python Learn the essentials of Python application development with MongoDB. You can connect your application to deployments hosted in the following\nenvironments: To learn more about connecting your application to deployments hosted in MongoDB\nAtlas, see  Connect from Your Application . MongoDB Atlas : The fully\nmanaged service for MongoDB deployments in the cloud MongoDB Enterprise : The\nsubscription-based, self-managed version of MongoDB MongoDB Community : The\nsource-available, free-to-use, and self-managed version of MongoDB The  Full Stack FastAPI App Generator \nsimplifies setup of web applications that use the FastAPI, React, and MongoDB\n(FARM) stack. You can learn more about this tool on the\n MongoDB blog. The MongoDB Full Stack FastAPI App Generator is an experimental project\nand is not yet supported by MongoDB.",
+            "code": [],
+            "preview": "Use the PyMongo or Motor drivers to connect your application to work with MongoDB in Python.",
+            "tags": null,
+            "facets": {
+                "programming_language": [
+                    "python"
+                ],
+                "target_product": [
+                    "drivers"
+                ]
+            }
+        },
+        {
+            "slug": "java",
+            "title": "MongoDB Java Drivers",
+            "headings": [
+                "Introduction",
+                "Take the free online course taught by MongoDB"
+            ],
+            "paragraphs": "Java Driver  is the recommended MongoDB Java Driver. For asynchronous stream processing and reactive streams interoperability,\nthe  Reactive Streams Driver  is the\nrecommended MongoDB Java Driver. Using MongoDB with Java \nLearn the essentials of Java application development with MongoDB.",
+            "code": [],
+            "preview": "Java Driver is the recommended MongoDB Java Driver.",
+            "tags": null,
+            "facets": {
+                "target_product": [
+                    "drivers"
+                ]
+            }
+        },
+        {
+            "slug": "",
+            "title": "Start Developing with MongoDB",
+            "headings": [
+                "Featured Community-Supported Libraries",
+                "Compatibility with Other Document Databases"
+            ],
+            "paragraphs": "You can connect your application to your MongoDB Atlas deployment or a\nself-hosted MongoDB cluster by using one of the official MongoDB\nlibraries. To learn more about Atlas, see  What is MongoDB Atlas? . To learn how to download and install a self-hosted\nMongoDB cluster, see  Install MongoDB . The following libraries are officially supported by MongoDB. MongoDB actively\ndevelops new features, adds performance enhancements, fixes bugs, and applies\nsecurity patches to them. Don't see your desired language? Browse more  community-supported libraries . See the following pages for information about other document databases' compatibility\nwith MongoDB: Amazon DocumentDB Compatibility Azure Cosmos DB Compatibility",
+            "code": [],
+            "preview": "Connect your application to your MongoDB Atlas deployment or a self-hosted MongoDB cluster by using one of the official MongoDB client libraries.",
+            "tags": "r, elixir, prisma, mongoose",
+            "facets": {
+                "target_product": [
+                    "drivers"
+                ]
+            }
+        },
+        {
+            "slug": "documentdb-support",
+            "title": "Amazon DocumentDB Compatibility",
+            "headings": [
+                "Version Information",
+                "Compatibility",
+                "Support"
+            ],
+            "paragraphs": "Amazon DocumentDB (with MongoDB compatibility) \nis a fast, reliable, and fully managed database service. Amazon DocumentDB makes it easy\nto set up, operate, and scale MongoDB-compatible databases in the cloud.\nWith Amazon DocumentDB, you can run the same application code and use the same drivers\nand tools that you use with MongoDB. Amazon DocumentDB supports MongoDB v4.0 and MongoDB v5.0. These versions don't\nsupport all the newer features and functionality in the versions of MongoDB available\non  MongoDB Atlas. To learn more about the features available in each version of MongoDB, see\n MongoDB Evolved - Version History. As of November 2023, Amazon DocumentDB is about 34 percent compatible with the\nMongoDB API. On Amazon DocumentDB, the following MongoDB features are\navailable in a limited capacity or are not supported at all: In addition, Amazon DocumentDB does not leverage indexes when you perform\nqueries that contain any of the following operators: To learn more about Amazon DocumentDB's compatibility with MongoDB v4.0 and MongoDB v5.0,\nsee the following AWS documentation: For the most current compatibility status between Amazon DocumentDB and MongoDB, see the\n Is Amazon DocumentDB Compatible with MongoDB Atlas? \nwebsite. Features :  Capped collections ,\n map-reduce operations ,\n GridFS ,\n text indexes ,\n partial indexes ,\n case-insensitive indexes Commands :  collMod ,  createView ,  filemd5 ,  reIndex ,  connPoolStats ,\n dbHash ,  features , sharding commands (aside from  enableSharding  and\n shardCollection ) Query Operators :  $expr ,  $text ,  $where ,  $meta ,  $box ,  $center ,\n $centerSphere ,  $polygon ,  $near Aggregation Operators :  $accumulator ,  $count ,  $ceil ,  $exp ,  $floor ,\n $ln ,  $log ,  $log10 ,  $pow ,  $sqrt ,  $trunc ,  $round ,  $first ,\n $last ,  $switch ,  $binarySize ,  $bsonSize ,  $dateFromParts ,\n $dateToParts ,  $dateTrunc ,  $dateDiff ,  $setDifference ,  $anyElementTrue ,\n $allElementsTrue ,  $ltrim ,  $rtrim ,  $trim ,  $regexFind ,\n $regexFindAll ,  $regexMatch ,  $replaceOne ,  $replaceAll ,  $convert ,\n $toBool ,  $toDate ,  $toDecimal ,  $toDouble ,  $toInt ,  $toLong ,\n $toObjectId ,  $toString ,  $isNumber ,  $rand ,  $sampleRate ,  $getField Aggregation Stages :  $collStats ,  $facet ,  $bucket ,  $bucketAuto ,\n $sortByCount ,  $listLocalSessions ,  $listSessions ,  $graphLookup $ne $nin $nor $not $exists $elemMatch MongoDB Compatibility Functional Differences: Amazon DocumentDB and MongoDB Supported MongoDB APIs, Operations, and Data Types MongoDB doesn't offer commercial support for Amazon DocumentDB. For help with this product,\ncontact  AWS Support.",
+            "code": [],
+            "preview": "Amazon DocumentDB (with MongoDB compatibility)\nis a fast, reliable, and fully managed database service. Amazon DocumentDB makes it easy\nto set up, operate, and scale MongoDB-compatible databases in the cloud.\nWith Amazon DocumentDB, you can run the same application code and use the same drivers\nand tools that you use with MongoDB.",
+            "tags": "AWS, support",
+            "facets": {
+                "genre": [
+                    "reference"
+                ],
+                "target_product": [
+                    "drivers"
+                ]
+            }
+        },
+        {
+            "slug": "ruby-drivers",
+            "title": "MongoDB Ruby Driver",
+            "headings": [
+                "Introduction",
+                "Ruby Driver",
+                "Object Document Mapper"
+            ],
+            "paragraphs": "Welcome to the documentation site for the official MongoDB Ruby\ndriver and the Mongoid Object Document Mapper (ODM). You can add the driver to your application to work with MongoDB in\nRuby. See the  official Ruby reference documentation  to\nlearn how to install and begin using the driver. You can use Mongoid, the official MongoDB Ruby ODM, to streamline\nvalidation, associations, and high-level data modeling functions in your\napplication. See the  Mongoid reference documentation  to learn how to begin\nusing Mongoid.",
+            "code": [],
+            "preview": "Welcome to the documentation site for the official MongoDB Ruby\ndriver and the Mongoid Object Document Mapper (ODM).",
+            "tags": null,
+            "facets": {
+                "target_product": [
+                    "drivers"
+                ]
+            }
+        },
+        {
+            "slug": "cosmosdb-support",
+            "title": "Azure Cosmos DB Compatibility",
+            "headings": [
+                "Version Information",
+                "Compatibility",
+                "Support"
+            ],
+            "paragraphs": "Azure Cosmos DB for MongoDB \nmakes it easy to use Azure Cosmos DB as if it were a MongoDB database.\nWith Azure Cosmos DB, you can run the same application code and use the same drivers\nand tools that you use with MongoDB. Azure Cosmos DB for MongoDB implements MongoDB's\n Wire Protocol \nto allow MongoDB  drivers  to connect and\ninteract with Cosmos DB as though it were a MongoDB host. However, this\nimplementation has limitations, as outlined in the  Compatibility  section\nof this page. Azure Cosmos DB supports MongoDB v4.2, or MongoDB v5.0 for vCore clusters.\nThese versions don't support all the newer features and functionality in the versions of\nMongoDB available on  MongoDB Atlas. To learn more about the features available in each version of MongoDB, see\n MongoDB Evolved - Version History. As of October 2023, Azure Cosmos DB is about 32 percent compatible with the\nMongoDB API. On Azure Cosmos DB for MongoDB v4.2, the following MongoDB v4.2 features are\navailable in a limited capacity or are not supported at all: To learn more about Azure Cosmos DB's compatibility with MongoDB v4.2,\nsee Microsoft's  Azure Cosmos DB for MongoDB (4.2 server version): Supported features and syntax \ndocumentation. For the most current compatibility status between Azure Cosmos DB and MongoDB, see the\n Is Cosmos DB Compatible with MongoDB Atlas? \nwebsite. Features :  Text indexes ,\n 2d indexes ,\n hashed indexes ,\n case-insensitive indexes ,\n sparse indexes Aggregation Stages :  $collStats ,  $bucket ,  $bucketAuto ,  $currentOp ,\n $indexStats ,  $listLocalSessions ,  $listSessions ,  $lookup MongoDB doesn't offer commercial support for Azure Cosmos DB. For help with this product,\ncontact  Azure Support.",
+            "code": [],
+            "preview": "Azure Cosmos DB for MongoDB\nmakes it easy to use Azure Cosmos DB as if it were a MongoDB database.\nWith Azure Cosmos DB, you can run the same application code and use the same drivers\nand tools that you use with MongoDB.",
+            "tags": "microsoft, support",
+            "facets": {
+                "genre": [
+                    "reference"
+                ],
+                "target_product": [
+                    "drivers"
+                ]
+            }
+        },
+        {
+            "slug": "kotlin-sync",
+            "title": "Kotlin Sync Driver",
+            "headings": [
+                "Introduction",
+                "Installation",
+                "Connect to MongoDB Atlas",
+                "Stable API",
+                "Connect to a MongoDB Server on Your Local Machine",
+                "Compatibility",
+                "MongoDB Compatibility",
+                "Compatibility Table Legend",
+                "Language Compatibility",
+                "How to get help"
+            ],
+            "paragraphs": "Welcome to the documentation site for the Kotlin Sync Driver, the\nofficial MongoDB driver for synchronous Kotlin applications. API Documentation Source Code If your Kotlin application requires asynchronous processing and uses\ncoroutines, you can use the official  Kotlin Coroutine Driver  instead of the Sync Driver. If you are developing an Android or Kotlin Multiplatform (KMP)\napplication, you can use the  MongoDB Atlas Device Kotlin SDK \nto access Atlas App Services and to manage your Realm data. The recommended way to get started using the driver in your project is with\na dependency management system. If you are using  Gradle , add the following to your\n build.gradle.kts  dependencies list: If you are using  Maven , add the following to\nyour  pom.xml  dependencies list: To connect to a  MongoDB Atlas  cluster, use the\n Atlas connection string  for your cluster: For information about connecting to Atlas Serverless, see the\n Serverless Instance Limitations page \nfor the minimum driver version you need. You can use the Stable API feature starting with MongoDB Server version\n5.0 and Kotlin Sync Driver. When you use the\nStable API feature, you can update your driver or server without worrying\nabout backward compatibility issues with any commands covered by the\nStable API. To use this feature, construct a MongoDB client instance, specifying a version\nof the Stable API: Starting from February 2022, the  Versioned API  is known as the  Stable API .\nAll concepts and features remain the same with this naming change. To test whether you can connect to your server, replace the connection\nstring in the  Connect to MongoDB Atlas \ncode example and run it. If you need to run a MongoDB server on your local machine for development\npurposes instead of using an Atlas cluster, you need to complete the following: After you successfully start your MongoDB server, specify your connection\nstring in your driver connection code. If your MongoDB Server is running locally, you can use the connection string\n \"mongodb://localhost:<port>\"  where  <port>  is the port number you\nconfigured your server to listen for incoming connections. If you need to specify a different hostname or IP address, see our Server\nManual entry on  Connection Strings . Download the  Community \nor  Enterprise  version\nof MongoDB Server. Install and configure \nMongoDB Server. Start the server. Always secure your MongoDB server from malicious attacks. See our\n Security Checklist  for a\nlist of security recommendations. The following compatibility table specifies the recommended version(s) of\nthe MongoDB Kotlin Sync driver for use with a specific version of MongoDB. The first column lists the driver version. MongoDB ensures compatibility between the MongoDB Server and the drivers\nfor three years after the server version's end of life (EOL) date. To learn\nmore about the MongoDB release and EOL dates, see\n MongoDB Software Lifecycle Schedules . Icon Explanation \u2713 All features are supported. \u229b The Driver version will work with the MongoDB version, but not all\nnew MongoDB features are supported. No mark The Driver version is not tested with the MongoDB version. Kotlin Sync Driver Version MongoDB 7.0 MongoDB 6.1 MongoDB 6.0 MongoDB 5.0 MongoDB 4.4 MongoDB 4.2 MongoDB 4.0 MongoDB 3.6 MongoDB 3.4 MongoDB 3.2 MongoDB 3.0 MongoDB 2.6 5.0 \u2713 \u2713 \u2713 \u2713 \u2713 \u2713 \u2713 \u2713 4.11 \u2713 \u2713 \u2713 \u2713 \u2713 \u2713 \u2713 \u2713 4.10 \u2713 \u2713 \u2713 \u2713 \u2713 \u2713 \u2713 \u2713 The driver does not support older versions of MongoDB. The MongoDB Kotlin Sync driver requires Kotlin 1.8 or later. For more information on how to read the compatibility tables, see our guide on\n MongoDB Compatibility Tables . Ask questions on our  MongoDB Community Forums . Visit our  Support Channels . See  Issues & Help .",
+            "code": [
+                {
+                    "lang": "xml",
+                    "value": "dependencies {\n implementation(\"org.mongodb:mongodb-driver-kotlin-sync:5.0.0\")\n}"
+                },
+                {
+                    "lang": "xml",
+                    "value": "<dependencies>\n   <dependency>\n      <groupId>org.mongodb</groupId>\n      <artifactId>mongodb-driver-kotlin-sync</artifactId>\n      <version>5.0.0</version>\n   </dependency>\n</dependencies>"
+                },
+                {
+                    "lang": "kotlin",
+                    "value": "import com.mongodb.ConnectionString\nimport com.mongodb.kotlin.client.sync.MongoClient\nimport com.mongodb.kotlin.client.sync.MongoDatabase\nimport com.mongodb.MongoClientSettings\n\n// Replace the placeholder with your Atlas connection string\nval uri = \"<connection string>\"\n\nval settings = MongoClientSettings.builder()\n   .applyConnectionString(ConnectionString(uri))\n   .retryWrites(true)\n   .build()\n\n// Create a new client and connect to the server\nval mongoClient = MongoClient.create(settings)\nval database = mongoClient.getDatabase(\"test\")"
+                },
+                {
+                    "lang": "kotlin",
+                    "value": "import com.mongodb.ConnectionString\nimport com.mongodb.MongoClientSettings\nimport com.mongodb.ServerApi\nimport com.mongodb.ServerApiVersion\nimport com.mongodb.kotlin.client.sync.MongoClient\nimport com.mongodb.kotlin.client.sync.MongoDatabase\n\n// Replace the placeholder with your MongoDB deployment's connection string\nval uri = \"<connection string>\"\n\n// Set the Stable API version on the client\nval serverApi = ServerApi.builder()\n    .version(ServerApiVersion.V1)\n    .build()\nval settings = MongoClientSettings.builder()\n    .applyConnectionString(ConnectionString(uri))\n    .serverApi(serverApi)\n    .build()\n\n// Create a new client and connect to the server\nval mongoClient = MongoClient.create(settings)\nval database = mongoClient.getDatabase(\"test\")\n"
+                }
+            ],
+            "preview": "Welcome to the documentation site for the Kotlin Sync Driver, the\nofficial MongoDB driver for synchronous Kotlin applications.",
+            "tags": null,
+            "facets": {
+                "programming_language": [
+                    "kotlin"
+                ],
+                "genre": [
+                    "reference"
+                ],
+                "target_product": [
+                    "drivers"
+                ]
+            }
+        },
+        {
+            "slug": "about-compatibility",
+            "title": "MongoDB Compatibility Tables",
+            "headings": [
+                "MongoDB Compatibility Tables",
+                "Language Compatibility Tables",
+                "Component Compatibility Tables"
+            ],
+            "paragraphs": "We include compatibility tables for each version of the driver to guide\nyour decisions on what versions you need to ensure your environment\nremains fully operational. We maintain the following tables for each driver: Read the following sections for explanations of these tables. MongoDB compatibility Language compatibility In the  MongoDB Compatibility  tables, the columns are labeled with\nversions of MongoDB server and the rows are labeled with major release\nversions of the driver. The check marks (\u2713) indicate that the driver can access  all the\nfeatures  of that specific version of MongoDB server unless those features\nhave been deprecated or removed. The circled asterisks (\u229b) indicate that the driver version works with\nthat specific version of MongoDB server, but may not be able to access all\nthe features. If you are  upgrading your server version , check whether your current driver\nversion is compatible. We recommend using the newest compatible driver when\nupgrading your server version. If you are  upgrading your driver version , you can use the table to\nidentify which version you need to access all the newest features included\nin a specific version of the server. Also note that any of the minor\nor patch versions share the same compatibility as the major version\nrelease. We recommend that you avoid using older versions of the drivers that do not\nappear on the chart because they are unsupported. MongoDB ensures compatibility between the MongoDB Server and the drivers\nfor three years after the server version's end of life (EOL) date. To learn\nmore about the MongoDB release and EOL dates, see\n MongoDB Software Lifecycle Schedules . In the  Language Compatibility  tables, the columns are labeled with\nversions of the language (e.g. Node.js, Python, etc.) and the rows are\nlabeled with major release versions of the driver. The check marks (\u2713) indicate that the code in the driver is fully\ncompatible with the version of the language. In the  Component Compatibility  tables, the columns indicate versions of\nthe driver, and the rows indicate the component package names. The table cells indicate which versions of the component packages are\ncompatible with the driver version specified in that column. If the table cell value is blank, the component package is incompatible with\nthe version of the driver version specified in that column.",
+            "code": [],
+            "preview": "We include compatibility tables for each version of the driver to guide\nyour decisions on what versions you need to ensure your environment\nremains fully operational.",
+            "tags": null,
+            "facets": {
+                "genre": [
+                    "reference"
+                ],
+                "target_product": [
+                    "drivers"
+                ]
+            }
+        },
+        {
+            "slug": "c",
+            "title": "MongoDB C Driver",
+            "headings": [
+                "Introduction",
+                "Installation",
+                "Connect to MongoDB Atlas",
+                "Connect to MongoDB Atlas Without the Stable API",
+                "Connect to a MongoDB Server on Your Local Machine",
+                "Compatibility",
+                "MongoDB Compatibility",
+                "Compatibility Table Legend",
+                "Language Compatibility",
+                "How to get help"
+            ],
+            "paragraphs": "Welcome to the documentation site for the official MongoDB C driver.\nYou can add the driver to your application to work with MongoDB in C.\nDownload the required libraries,  libmongoc  and  libbson ,  from\n mongoc.org \nor set up a runnable project by following our tutorial. Tutorial Usage Guide MongoDB Developer Center API Reference Changelog Source Code Examples Additional BSON Examples See  Installing the MongoDB C Driver (libmongoc) and BSON library (libbson) . You can use the following connection snippet to test your connection to your\nMongoDB deployment on Atlas: This connection snippet uses the Stable API feature which you can use when\nconnecting to MongoDB Server v5.0 and later and the C driver v1.18 and later. When you use this feature, you can update your driver or server without\nworrying about backward compatibility issues with any commands covered by the\nStable API. Starting from February 2022, the  Versioned API  is known as the  Stable API .\nAll concepts and features remain the same with this naming change. If you are using a version of MongoDB or the driver that lacks support for the\nStable API, you can use the following code snippet to test your connection\nto your MongoDB deployment on Atlas: To test whether you can connect to your server, replace the connection\nstring in the  Connect to MongoDB Atlas  code\nexample and run it. See  Advanced Connections \nfor more ways to connect. If you need to run a MongoDB server on your local machine for development\npurposes instead of using an Atlas cluster, you need to complete the following: After you successfully start your MongoDB server, specify your connection\nstring in your driver connection code. If your MongoDB Server is running locally, you can use the connection string\n \"mongodb://localhost:<port>\"  where  <port>  is the port number you\nconfigured your server to listen for incoming connections. If you need to specify a different hostname or IP address, see our Server\nManual entry on  Connection Strings . Download the  Community \nor  Enterprise  version\nof MongoDB Server. Install and configure \nMongoDB Server. Start the server. Always secure your MongoDB server from malicious attacks. See our\n Security Checklist  for a\nlist of security recommendations. For information about connecting to Atlas Serverless, see the\n Serverless Instance Limitations page \nfor the minimum driver version you need. The compatibility table in this section specifies the recommended version or\nversions of the MongoDB C driver for use with a specific version of MongoDB. The first column lists the driver version. MongoDB ensures compatibility between the MongoDB Server and the drivers\nfor three years after the server version's end of life (EOL) date. To learn\nmore about the MongoDB release and EOL dates, see\n MongoDB Software Lifecycle Schedules . Icon Explanation \u2713 All features are supported. \u229b The Driver version will work with the MongoDB version, but not all\nnew MongoDB features are supported. No mark The Driver version is not tested with the MongoDB version. C Driver Version MongoDB 7.0 MongoDB 6.0 MongoDB 5.0 MongoDB 4.4 MongoDB 4.2 MongoDB 4.0 MongoDB 3.6 MongoDB 3.4 MongoDB 3.2 MongoDB 3.0 MongoDB 2.6 1.26 \u2713 \u2713 \u2713 \u2713 \u2713 \u2713 \u2713 1.25 \u2713 \u2713 \u2713 \u2713 \u2713 \u2713 \u2713 1.24 \u2713 \u2713 \u2713 \u2713 \u2713 \u2713 \u2713 1.23 \u229b \u2713 \u2713 \u2713 \u2713 \u2713 \u2713 1.22 \u229b \u2713 \u2713 \u2713 \u2713 \u2713 \u2713 1.21 \u229b \u229b \u2713 \u2713 \u2713 \u2713 \u2713 1.20 \u229b \u229b \u2713 \u2713 \u2713 \u2713 \u2713 \u2713 \u2713 \u2713 1.19 \u229b \u229b \u2713 \u2713 \u2713 \u2713 \u2713 \u2713 \u2713 \u2713 1.18 \u229b \u229b \u2713  \u2713 \u2713 \u2713 \u2713 \u2713 \u2713 \u2713 1.17 \u229b \u229b \u229b \u2713 \u2713 \u2713 \u2713 \u2713 \u2713 \u2713 1.16 \u229b \u229b \u229b \u229b \u2713 \u2713 \u2713 \u2713 \u2713 \u2713 1.15 \u229b \u229b \u229b \u229b \u2713 \u2713 \u2713 \u2713 \u2713 \u2713 1.14 \u229b \u229b \u229b \u229b \u229b \u2713 \u2713 \u2713 \u2713 \u2713 1.13 \u229b \u229b \u229b \u229b \u229b \u2713 \u2713 \u2713 \u2713 \u2713 1.12 \u229b \u229b \u229b \u229b \u229b \u2713 \u2713 \u2713 \u2713 \u2713 1.11 \u229b \u229b \u229b \u229b \u229b \u2713 \u2713 \u2713 \u2713 \u2713 1.10 \u2713 \u2713 \u2713 \u2713 1.9 \u2713 \u2713 \u2713 \u2713 \u2713 1.8 \u2713 \u2713 \u2713 \u2713 1.7 \u2713 \u2713 \u2713 \u2713 1.6 \u2713 \u2713 \u2713 \u2713 1.5 \u2713 \u2713 \u2713 \u2713 1.4 \u2713 \u2713 \u2713 1.3 \u2713 \u2713 \u2713 1.2 \u2713 \u2713 1.1 \u2713 \u2713 1.0 \u2713 \u2713 The 1.18 driver does not support snapshot reads\non secondaries. For more information, see the\n MongoDB Server version 5.0 release notes . The driver does not support older versions of MongoDB. The following compatibility table specifies the recommended version(s) of the\nMongoDB C driver for use with a specific version of C. The first column lists the driver version(s). C Driver Version C17/C18 C11 C99 C89 1.26 \u2713 \u2713 \u2713 1.25 \u2713 \u2713 \u2713 1.24 \u2713 \u2713 \u2713 <= 1.23 \u2713 \u2713 \u2713 For more information on how to read the compatibility tables, see our guide on\n MongoDB Compatibility Tables . Ask questions on our  MongoDB Community Forums . Visit our  Support Channels . File a bug or feature request on  JIRA .",
+            "code": [
+                {
+                    "lang": "c",
+                    "value": "#include <mongoc/mongoc.h>\n\nint main(void) {\n    mongoc_client_t *client = NULL;\n    bson_error_t error = {0};\n    mongoc_server_api_t *api = NULL;\n    mongoc_database_t *database = NULL;\n    bson_t *command = NULL;\n    bson_t reply = BSON_INITIALIZER;\n    int rc = 0;\n    bool ok = true;\n\n    // Initialize the MongoDB C Driver.\n    mongoc_init();\n\n    client = mongoc_client_new(\"<connection string>\");\n    if (!client) {\n        fprintf(stderr, \"Failed to create a MongoDB client.\\n\");\n        rc = 1;\n        goto cleanup;\n    }\n\n    // Set the version of the Stable API on the client.\n    api = mongoc_server_api_new(MONGOC_SERVER_API_V1);\n    if (!api) {\n        fprintf(stderr, \"Failed to create a MongoDB server API.\\n\");\n        rc = 1;\n        goto cleanup;\n    }\n\n    ok = mongoc_client_set_server_api(client, api, &error);\n    if (!ok) {\n        fprintf(stderr, \"error: %s\\n\", error.message);\n        rc = 1;\n        goto cleanup;\n    }\n\n    // Get a handle on the \"admin\" database.\n    database = mongoc_client_get_database(client, \"admin\");\n    if (!database) {\n        fprintf(stderr, \"Failed to get a MongoDB database handle.\\n\");\n        rc = 1;\n        goto cleanup;\n    }\n\n    // Ping the database.\n    command = BCON_NEW(\"ping\", BCON_INT32(1));\n    ok = mongoc_database_command_simple(\n        database, command, NULL, &reply, &error\n    );\n    if (!ok) {\n        fprintf(stderr, \"error: %s\\n\", error.message);\n        rc = 1;\n        goto cleanup;\n    }\n    bson_destroy(&reply);\n\n    printf(\"Pinged your deployment. You successfully connected to MongoDB!\\n\");\n\n// Perform cleanup.\ncleanup:\n    bson_destroy(command);\n    mongoc_database_destroy(database);\n    mongoc_server_api_destroy(api);\n    mongoc_client_destroy(client);\n    mongoc_cleanup();\n\n    return rc;\n}"
+                },
+                {
+                    "lang": "c",
+                    "value": "#include <mongoc/mongoc.h>\n\nint main(void) {\n    mongoc_client_t *client = NULL;\n    bson_error_t error = {0};\n    mongoc_database_t *database = NULL;\n    bson_t *command = NULL;\n    bson_t reply = BSON_INITIALIZER;\n    int rc = 0;\n    bool ok = true;\n\n    // Initialize the MongoDB C Driver.\n    mongoc_init();\n\n    client = mongoc_client_new(\"<connection string>\");\n    if (!client) {\n        fprintf(stderr, \"Failed to create a MongoDB client.\\n\");\n        rc = 1;\n        goto cleanup;\n    }\n\n    // Get a handle on the \"admin\" database.\n    database = mongoc_client_get_database(client, \"admin\");\n    if (!database) {\n        fprintf(stderr, \"Failed to get a MongoDB database handle.\\n\");\n        rc = 1;\n        goto cleanup;\n    }\n\n    // Ping the database.\n    command = BCON_NEW(\"ping\", BCON_INT32(1));\n    ok = mongoc_database_command_simple(\n        database, command, NULL, &reply, &error\n    );\n    if (!ok) {\n        fprintf(stderr, \"error: %s\\n\", error.message);\n        rc = 1;\n        goto cleanup;\n    }\n    bson_destroy(&reply);\n\n    printf(\"Pinged your deployment. You successfully connected to MongoDB!\\n\");\n\n// Perform cleanup.\ncleanup:\n    bson_destroy(command);\n    mongoc_database_destroy(database);\n    mongoc_client_destroy(client);\n    mongoc_cleanup();\n\n    return rc;\n}"
+                }
+            ],
+            "preview": "Welcome to the documentation site for the official MongoDB C driver.\nYou can add the driver to your application to work with MongoDB in C.\nDownload the required libraries, libmongoc and libbson,  from\nmongoc.org\nor set up a runnable project by following our tutorial.",
+            "tags": "code example, get started, sample app",
+            "facets": {
+                "programming_language": [
+                    "c"
+                ],
+                "genre": [
+                    "reference"
+                ],
+                "target_product": [
+                    "drivers"
+                ]
+            }
+        },
+        {
+            "slug": "php-libraries",
+            "title": "PHP Libraries, Frameworks, and Tools",
+            "headings": [
+                "Standalone Libraries",
+                "Framework Integrations",
+                "Tools and Projects"
+            ],
+            "paragraphs": "Doctrine MongoDB ODM  (Object\nDocument Mapper) is a library that provides object-mapping functionality for\nMongoDB.  You can use the standalone library or use one of the following\nframework integrations: Symfony Laminas  (formerly Zend Framework) Mongo PHP Adapter  is a\nlibrary designed to act as an adapter between applications that rely\non the legacy  mongo  extension and the new  mongodb  extension. It\noffers the API of the legacy driver for the new driver and library. Mongolid  is a performant\nODM for PHP and MongoDB. It implements both ActiveRecord and DataMapper\ndesign patterns and supports embedded and referenced documents. You can use\nthis standalone library or use the  Laravel \nintegration. Xenus  is a MongoDB ODM\nthat supports events, relationships, embedded documents, and more. You can\nuse this standalone library or use the  Laravel \nintegration, which adds support for failed jobs, migrations, and events. Drupal MongoDB integration for Drupal .\nThis is a collection of several modules that allow sites to store different\ntypes of Drupal data in MongoDB. The  mongodb  extension supports\nDrupal 8 and later. Laravel Laravel MongoDB \nis MongoDB's official Eloquent model and query builder that supports\nMongoDB by using the original Laravel API. This package extends the PHP\nLaravel classes to work with MongoDB as a datastore in your Laravel\napplication. Symfony You can configure the  Lock \nand the  Session \nto use MongoDB as a data store. MongoDB Bundle  is a\nbundle service integration for the official  PHP library .\nYou can use it to configure connections to different databases or clusters.\nThis integration includes a query profiler. DoctrineMongoDBBundle Symfony \nThis bundle integrates the Doctrine MongoDB ODM into Symfony so that you\ncan store and retrieve objects from MongoDB. Yii2 MongoDB Extension for Yii 2 \nis a MongoDB integration for the Yii 2 framework. PHP Cache  is a PSR-6 cache\nimplementation that uses MongoDB as a cache pool. This project is part of\nthe PHP Cache organization. PHPfastcache  is a\nhigh-performance backend cache system for MongoDB. Enqueue  is a production-ready\nmessaging solution that uses MongoDB as the message queue broker. It provides\na common way for programs to create, send, and read messages. XHGui  is a web interface for the\nXHProf profiler, which stores profiling data in MongoDB.",
+            "code": [],
+            "preview": null,
+            "tags": "plugins, document mapper, tools, third party",
+            "facets": {
+                "programming_language": [
+                    "php"
+                ],
+                "genre": [
+                    "reference"
+                ],
+                "target_product": [
+                    "drivers"
+                ]
+            }
+        },
+        {
+            "slug": "reactive-streams",
+            "title": "MongoDB Java Reactive Streams",
+            "headings": [
+                "Introduction",
+                "Installation",
+                "Connect to MongoDB Atlas",
+                "Stable API",
+                "Connect to a MongoDB Server on Your Local Machine",
+                "Compatibility",
+                "MongoDB Compatibility",
+                "Compatibility Table Legend",
+                "Language Compatibility",
+                "How to get help"
+            ],
+            "paragraphs": "Welcome to the documentation site for the Reactive Streams Driver, the\nofficial MongoDB driver for asynchronous Java applications. Download\nit by following the\n Installation Guide \nor set up a runnable project by following our tutorials. If you need to make synchronous calls between your application and MongoDB, use\nthe  MongoDB Java Driver  instead of the Reactive\nStreams Driver. Reference Documentation Tutorials API Documentation What's New Source Code The recommended way to get started using the driver in your project is with\na dependency management system.\nSee the  Installation Guide \nfor more information. See  Connect to MongoDB \nfor more ways to connect. To connect to a  MongoDB Atlas  cluster, use the\n Atlas connection string  for your cluster: For information about connecting to Atlas Serverless, see the\n Serverless Instance Limitations page \nfor the minimum driver version you need. You can use the Stable API feature starting with MongoDB Server version\n5.0 and Java Reactive Streams Driver version 4.3. When you use the\nStable API feature, you can update your driver or server without worrying\nabout backward compatibility issues with any commands covered by the\nStable API. To use this feature, construct a MongoDB client instance, specifying a version\nof the Stable API: Starting from February 2022, the  Versioned API  is known as the  Stable API .\nAll concepts and features remain the same with this naming change. To test whether you can connect to your server, replace the connection\nstring in the  Connect to MongoDB Atlas \ncode example and run it. If you need to run a MongoDB server on your local machine for development\npurposes instead of using an Atlas cluster, you need to complete the following: After you successfully start your MongoDB server, specify your connection\nstring in your driver connection code. If your MongoDB Server is running locally, you can use the connection string\n \"mongodb://localhost:<port>\"  where  <port>  is the port number you\nconfigured your server to listen for incoming connections. If you need to specify a different hostname or IP address, see our Server\nManual entry on  Connection Strings . Download the  Community \nor  Enterprise  version\nof MongoDB Server. Install and configure \nMongoDB Server. Start the server. Always secure your MongoDB server from malicious attacks. See our\n Security Checklist  for a\nlist of security recommendations. The following compatibility table specifies the recommended version or versions\nof the MongoDB Reactive Streams driver for use with a specific version of MongoDB. The first column lists the driver version. MongoDB ensures compatibility between the MongoDB Server and the drivers\nfor three years after the server version's end of life (EOL) date. To learn\nmore about the MongoDB release and EOL dates, see\n MongoDB Software Lifecycle Schedules . Icon Explanation \u2713 All features are supported. \u229b The Driver version will work with the MongoDB version, but not all\nnew MongoDB features are supported. No mark The Driver version is not tested with the MongoDB version. Java Reactive Streams Driver Version MongoDB 7.0 MongoDB 6.1 MongoDB 6.0 MongoDB 5.0 MongoDB 4.4 MongoDB 4.2 MongoDB 4.0 MongoDB 3.6 MongoDB 3.4 MongoDB 3.2 MongoDB 3.0 MongoDB 2.6 5.0 \u2713 \u2713 \u2713 \u2713 \u2713 \u2713 \u2713 \u2713 4.11 \u2713 \u2713 \u2713 \u2713 \u2713 \u2713 \u2713 \u2713 4.10 \u2713 \u2713 \u2713 \u2713 \u2713 \u2713 \u2713 \u2713 4.9 \u229b \u2713 \u2713 \u2713 \u2713 \u2713 \u2713 \u2713 4.8 \u229b \u2713 \u2713 \u2713 \u2713 \u2713 \u2713 \u2713 4.7 \u229b \u229b \u2713 \u2713 \u2713 \u2713 \u2713 \u2713 \u2713 \u2713 \u2713 \u2713 4.6 \u229b \u229b \u229b \u2713 \u2713 \u2713 \u2713 \u2713 \u2713 \u2713 \u2713 \u2713 4.5 \u229b \u229b \u229b \u2713 \u2713 \u2713 \u2713 \u2713 \u2713 \u2713 \u2713 \u2713 4.4 \u229b \u229b \u229b \u2713 \u2713 \u2713 \u2713 \u2713 \u2713 \u2713 \u2713 \u2713 4.3 \u229b \u229b \u229b \u2713 \u2713 \u2713 \u2713 \u2713 \u2713 \u2713 \u2713 \u2713 4.2 \u229b \u229b \u229b \u229b \u2713 \u2713 \u2713 \u2713 \u2713 \u2713 \u2713 \u2713 4.1 \u229b \u229b \u229b \u229b \u2713 \u2713 \u2713 \u2713 \u2713 \u2713 \u2713 \u2713 4.0 \u229b \u229b \u229b \u229b \u229b \u2713 \u2713 \u2713 \u2713 \u2713 \u2713 \u2713 1.13 \u229b \u229b \u229b \u229b \u229b \u2713 \u2713 \u2713 \u2713 \u2713 \u2713 \u2713 1.12 \u229b \u229b \u229b \u229b \u229b \u2713 \u2713 \u2713 \u2713 \u2713 \u2713 \u2713 1.11 \u229b \u229b \u229b \u229b \u229b \u229b \u2713 \u2713 \u2713 \u2713 \u2713 \u2713 1.10 \u229b \u229b \u229b \u229b \u229b \u229b \u2713 \u2713 \u2713 \u2713 \u2713 \u2713 1.9 \u229b \u229b \u229b \u229b \u229b \u229b \u2713 \u2713 \u2713 \u2713 \u2713 \u2713 1.7 \u2713 \u2713 \u2713 \u2713 \u2713 1.6 \u2713 \u2713 \u2713 \u2713 1.5 \u2713 \u2713 \u2713 \u2713 1.3 \u2713 \u2713 \u2713 \u2713 1.2 \u2713 \u2713 \u2713 1.1 \u2713 \u2713 1.0 \u2713 \u2713 The driver does not support older versions of MongoDB. The following compatibility table specifies the recommended version or versions\nof the MongoDB Reactive Streams driver for use with a specific version of Java. The first column lists the driver version. Java Reactive Streams Driver Version Java 17 Java 11  Java 8 Java 7 Java 6 5.0 \u2713 \u2713 \u2713 4.11 \u2713 \u2713 \u2713 4.10 \u2713 \u2713 \u2713 4.9 \u2713 \u2713 \u2713 4.8 \u2713 \u2713 \u2713 4.7 \u2713 \u2713 \u2713 4.6 \u2713 \u2713 \u2713 4.5 \u2713 \u2713 \u2713 4.4 \u2713 \u2713 \u2713 4.3 \u2713 \u2713 \u2713 \u2713 4.2 \u2713 \u2713 \u2713 \u2713 4.1 \u2713 \u2713 \u2713 \u2713 1.13 \u2713 \u2713 \u2713 \u2713 1.12 \u2713 \u2713 \u2713 \u2713 1.11 \u2713 \u2713 \u2713 \u2713 1.10 \u2713 \u2713 \u2713 \u2713 1.9 \u2713 \u2713 \u2713 \u2713 1.7 \u2713 \u2713 \u2713 \u2713 1.6 \u2713 \u2713 \u2713 \u2713 1.5 \u2713 \u2713 \u2713 \u2713 1.3 \u2713 \u2713 \u2713 \u2713 1.2 \u2713 \u2713 \u2713 \u2713 1.1 \u2713 \u2713 \u2713 \u2713 1.0 \u2713 \u2713 \u2713 \u2713 Java versions 8 and above are all supported thanks to the JVM backwards compatibility promise. Only LTS versions will be explicitly listed in future. For more information on how to read the compatibility tables, see our guide on\n MongoDB Compatibility Tables . Ask questions on our  MongoDB Community Forums . Visit our  Support Channels . See  Issues & Help .",
+            "code": [
+                {
+                    "lang": "java",
+                    "value": "import com.mongodb.ConnectionString;\nimport com.mongodb.reactivestreams.client.MongoClients;\nimport com.mongodb.reactivestreams.client.MongoClient;\nimport com.mongodb.reactivestreams.client.MongoDatabase;\nimport com.mongodb.MongoClientSettings;\n\n// ...\n\n// Replace the uri string with your MongoDB deployment's connection string.\nConnectionString connString = new ConnectionString(\n    \"mongodb+srv://<username>:<password>@<cluster-address>/test?w=majority\"\n);\nMongoClientSettings settings = MongoClientSettings.builder()\n    .applyConnectionString(connString)\n    .retryWrites(true)\n    .build();\nMongoClient mongoClient = MongoClients.create(settings);\nMongoDatabase database = mongoClient.getDatabase(\"test\");"
+                },
+                {
+                    "lang": "java",
+                    "value": "import com.mongodb.ConnectionString;\nimport com.mongodb.MongoClientSettings;\nimport com.mongodb.ServerApi;\nimport com.mongodb.ServerApiVersion;\nimport com.mongodb.reactivestreams.client.MongoClient;\nimport com.mongodb.reactivestreams.client.MongoClients;\n\n// ...\n\n// Replace <connection string> with your MongoDB deployment's connection string.\nConnectionString connString = new ConnectionString(\"<connection string>\");\n\n// Set the Stable API version on the client.\nServerApi serverApi = ServerApi.builder()\n        .version(ServerApiVersion.V1)\n         .build();\n\nMongoClientSettings settings = MongoClientSettings.builder()\n         .applyConnectionString(connString)\n         .serverApi(serverApi)\n         .build();\nMongoClient mongoClient = MongoClients.create(settings);\n"
+                }
+            ],
+            "preview": "Welcome to the documentation site for the Reactive Streams Driver, the\nofficial MongoDB driver for asynchronous Java applications. Download\nit by following the\nInstallation Guide\nor set up a runnable project by following our tutorials.",
+            "tags": null,
+            "facets": {
+                "target_product": [
+                    "drivers"
+                ]
+            }
+        },
+        {
+            "slug": "swift",
+            "title": "MongoDB Swift Driver",
+            "headings": [
+                "Introduction",
+                "Installation",
+                "Connect to MongoDB Atlas",
+                "Connect to a MongoDB Server on Your Local Machine",
+                "Compatibility",
+                "MongoDB Compatibility",
+                "Compatibility Table Legend",
+                "Language Compatibility",
+                "How to get help"
+            ],
+            "paragraphs": "Welcome to the documentation site for the official MongoDB Swift\ndriver. You can add the driver to your application to work with MongoDB\nin Swift. Download it with the\n Swift Package Manager  or\nset up a runnable project with examples from our Usage Guide. The Swift driver is no longer under active development as of 2022. If you are looking for information about using Swift with MongoDB Realm,\nsee the  MongoDB Realm iOS SDK documentation . Usage Guide API Reference Changelog Source Code See  Installation To connect to a  MongoDB Atlas  cluster, use the\n Atlas connection string  for your cluster: For information about connecting to Atlas Serverless, see the\n Serverless Instance Limitations page \nfor the minimum driver version you need. To test whether you can connect to your server, replace the connection\nstring in the  Connect to MongoDB Atlas  code\nexample and run it. If you need to run a MongoDB server on your local machine for development\npurposes instead of using an Atlas cluster, you need to complete the following: After you successfully start your MongoDB server, specify your connection\nstring in your driver connection code. If your MongoDB Server is running locally, you can use the connection string\n \"mongodb://localhost:<port>\"  where  <port>  is the port number you\nconfigured your server to listen for incoming connections. If you need to specify a different hostname or IP address, see our Server\nManual entry on  Connection Strings . Download the  Community \nor  Enterprise  version\nof MongoDB Server. Install and configure \nMongoDB Server. Start the server. Always secure your MongoDB server from malicious attacks. See our\n Security Checklist  for a\nlist of security recommendations. The compatibility table in this section specifies the recommended version or\nversions of the MongoDB Swift driver for use with a specific version of MongoDB. The first column lists the driver version. MongoDB ensures compatibility between the MongoDB Server and the drivers\nfor three years after the server version's end of life (EOL) date. To learn\nmore about the MongoDB release and EOL dates, see\n MongoDB Software Lifecycle Schedules . Because the Swift driver is not under active development, it has not\nbeen tested with MongoDB Server versions 7.0 or later. The Swift driver is not compatible with MongoDB server versions older than 3.6. Icon Explanation \u2713 All features are supported. \u229b The Driver version will work with the MongoDB version, but not all\nnew MongoDB features are supported. No mark The Driver version is not tested with the MongoDB version. Swift Driver Version MongoDB 7.0 MongoDB 6.0 MongoDB 5.0 MongoDB 4.4 MongoDB 4.2 MongoDB 4.0 MongoDB 3.6 1.3.0  \u229b \u2713 \u2713 \u2713 \u2713 \u2713 1.2.0  \u229b \u2713 \u2713 \u2713 \u2713 \u2713 1.1.0  \u229b \u229b \u2713 \u2713 \u2713 \u2713 1.0.0  \u229b \u229b \u2713 \u2713 \u2713 \u2713 Versions 1.2 and 1.3 do not include support for\n Client-Side Field Level Encryption ,\n GridFS , and authentication using AWS IAM roles. Versions 1.0 and 1.1 do not include support for\n OCSP ,\n Client-Side Field Level Encryption ,\n GridFS , and authentication using AWS IAM roles. The MongoDB Swift driver requires  Swift 5.1  or later. For more information on how to read the compatibility tables, see our guide on\n MongoDB Compatibility Tables . Ask questions on our  MongoDB Community Forums . Visit our  Support Channels . See our  SWIFT  JIRA project to raise issues or request\nfeatures.",
+            "code": [
+                {
+                    "lang": "swift",
+                    "value": "import MongoSwiftSync\n\ndefer {\n    // free driver resources\n    cleanupMongoSwift()\n}\n\n// replace the following string with your connection uri\nlet uri = \"mongodb+srv://<username>:<password>@<cluster-address>/test?w=majority\"\nlet client = try MongoClient(uri)\n\n// print a list of database names\nprint (try client.listDatabaseNames())\n\n// your application logic"
+                },
+                {
+                    "lang": "swift",
+                    "value": "import MongoSwift\nimport NIO\n\nlet elg = MultiThreadedEventLoopGroup(numberOfThreads: 4)\n\n// replace the following string with your connection uri\nlet uri = \"mongodb+srv://<username>:<password>@<cluster-address>/test?w=majority\"\n\nlet client = try MongoClient(\n    uri,\n    using: elg\n)\n\ndefer {\n    // clean up driver resources\n    try? client.syncClose()\n    cleanupMongoSwift()\n\n    // shut down EventLoopGroup\n    try? elg.syncShutdownGracefully()\n}\n\n// print a list of database names\nprint(try client.listDatabaseNames().wait())\n\n// your application logic"
+                }
+            ],
+            "preview": "Welcome to the documentation site for the official MongoDB Swift\ndriver. You can add the driver to your application to work with MongoDB\nin Swift. Download it with the\nSwift Package Manager or\nset up a runnable project with examples from our Usage Guide.",
+            "tags": null,
+            "facets": {
+                "target_product": [
+                    "drivers"
+                ]
+            }
+        },
+        {
+            "slug": "motor",
+            "title": "Motor (Async Driver)",
+            "headings": [
+                "Introduction",
+                "Installation",
+                "Connect to MongoDB Atlas",
+                "Connect to MongoDB Atlas Without the Stable API",
+                "Connect to a MongoDB Server on Your Local Machine",
+                "Compatibility",
+                "MongoDB Compatibility",
+                "Compatibility Table Legend",
+                "Language Compatibility",
+                "How to get help"
+            ],
+            "paragraphs": "Welcome to the documentation site for Motor, the official MongoDB\ndriver for asynchronous Python applications. Download it using\n pip \nor set up a runnable project by following our tutorials. Follow the links below to read blog posts that describe specific use cases\nfor the Motor driver: If you do not need to access MongoDB in a non-blocking manner or from\nco-routines, we recommend that you use the  PyMongo \ndriver instead. Tutorial on using Motor with Tornado Tutorial on using Motor with asyncio Motor Documentation Changelog Source Code Porting From PyMongo To Motor Refactoring Tornado Coroutines All Motor articles on A. Jesse Jiryu Davis's blog You must install the Motor driver module to make it available to your Python\napplication. We recommend using  pip \nto install Motor. The following command demonstrates how you can install the latest version of\nthe module using the command line: For more information on requirements and other methods of installation,\nsee the  Motor Installation \ndocumentation. You can use the following connection snippet to test your connection to\nyour MongoDB deployment on Atlas using the  asyncio  asynchronous framework: This connection snippet uses the Stable API feature, which you can\nenable when using the Motor driver v2.5 and later to connect to MongoDB Server\nv5.0 and later. When you use this feature, you can update your driver or server without\nworrying about backward compatibility issues with any commands covered by the\nStable API. To learn more about the Stable API feature, see\n Stable API  in the Server manual. Starting from February 2022, the  Versioned API  is known as the  Stable API .\nAll concepts and features remain the same with this naming change. If you are using a version of MongoDB or the driver that doesn't support the\nStable API feature, you can use the following code snippet to test your connection\nto your MongoDB deployment on Atlas: If you are using the  tornado  asynchronous library, you can use the\nfollowing code to connect to your MongoDB deployment: To test whether you can connect to your server, replace the connection\nstring in the  Connect to MongoDB Atlas  code\nexample and run it. If you need to run a MongoDB server on your local machine for development\npurposes instead of using an Atlas cluster, you need to complete the following: After you successfully start your MongoDB server, specify your connection\nstring in your driver connection code. If your MongoDB Server is running locally, you can use the connection string\n \"mongodb://localhost:<port>\"  where  <port>  is the port number you\nconfigured your server to listen for incoming connections. If you need to specify a different hostname or IP address, see our Server\nManual entry on  Connection Strings . Download the  Community \nor  Enterprise  version\nof MongoDB Server. Install and configure \nMongoDB Server. Start the server. Always secure your MongoDB server from malicious attacks. See our\n Security Checklist  for a\nlist of security recommendations. The following compatibility table specifies the recommended version or versions\nof the Motor (Python async) driver for use with a specific version of MongoDB. The first column lists the driver version. MongoDB ensures compatibility between the MongoDB Server and the drivers\nfor three years after the server version's end of life (EOL) date. To learn\nmore about the MongoDB release and EOL dates, see\n MongoDB Software Lifecycle Schedules . Icon Explanation \u2713 All features are supported. \u229b The Driver version will work with the MongoDB version, but not all\nnew MongoDB features are supported. No mark The Driver version is not tested with the MongoDB version. Motor (Python async) Driver Version MongoDB 7.0 MongoDB 6.0 MongoDB 5.0 MongoDB 4.4 MongoDB 4.2 MongoDB 4.0 MongoDB 3.6 MongoDB 3.4 MongoDB 3.2 MongoDB 3.0 MongoDB 2.6 3.3 \u2713 \u2713 \u2713 \u2713 \u2713 \u2713 \u2713 3.2 \u2713 \u2713 \u2713 \u2713 \u2713 \u2713 \u2713 3.1 \u229b \u2713 \u2713 \u2713 \u2713 \u2713 \u2713 3.0 \u229b \u229b \u2713 \u2713 \u2713 \u2713 \u2713 The driver does not support older versions of MongoDB. The following compatibility table specifies the recommended version(s) of the\nMotor (Python async) driver for use with a specific version of Python. The first column lists the driver version(s). Motor (Python async) Driver Version Python 3.12 Python 3.11 Python 3.10 Python 3.9 Python 3.8 Python 3.7 3.3 \u2713 \u2713 \u2713 \u2713 \u2713 \u2713 3.2 \u2713 \u2713 \u2713 \u2713 \u2713 3.1 \u2713 \u2713 \u2713 \u2713 \u2713 3.0 \u2713 \u2713 \u2713 \u2713 Motor 3.3 wraps PyMongo 4.5 Motor 3.2 wraps PyMongo 4.4+ Motor 3.1 wraps PyMongo 4.2+ Motor 3.0 wraps PyMongo 4.1+ For asyncio support, Motor requires Python 3.4+, or\nPython 3.3 with the  asyncio package from PyPI . Motor 2.3+ supports Windows. For more information on how to read the compatibility tables, see our guide on\n MongoDB Compatibility Tables . Ask questions on our  MongoDB Community Forums . Visit our  Support Channels . See  JIRA  to raise issues or request features.",
+            "code": [
+                {
+                    "lang": "sh",
+                    "value": "$ python -m pip install motor"
+                },
+                {
+                    "lang": "python",
+                    "value": "import asyncio\nfrom motor.motor_asyncio import AsyncIOMotorClient\nfrom pymongo.server_api import ServerApi\n\nasync def ping_server():\n  # Replace the placeholder with your Atlas connection string\n  uri = \"<connection string>\"\n\n  # Set the Stable API version when creating a new client\n  client = AsyncIOMotorClient(uri, server_api=ServerApi('1'))\n\n  # Send a ping to confirm a successful connection\n  try:\n      await client.admin.command('ping')\n      print(\"Pinged your deployment. You successfully connected to MongoDB!\")\n  except Exception as e:\n      print(e)\n      \nasyncio.run(ping_server())"
+                },
+                {
+                    "lang": "python",
+                    "value": "import asyncio\nfrom motor.motor_asyncio import AsyncIOMotorClient\n\nasync def ping_server():\n  # Replace the placeholder with your Atlas connection string\n  uri = \"<connection string>\"\n\n  # Create a new client and connect to the server\n  client = AsyncIOMotorClient(uri)\n\n  # Send a ping to confirm a successful connection\n  try:\n      await client.admin.command('ping')\n      print(\"Pinged your deployment. You successfully connected to MongoDB!\")\n  except Exception as e:\n      print(e)\n      \nasyncio.run(ping_server())"
+                },
+                {
+                    "lang": "python",
+                    "value": "import tornado\nimport motor\n\nasync def ping_server():\n    # Replace the placeholder with your Atlas connection string\n    uri = \"<connection string>\"\n\n    # Set a 5-second connection timeout when creating a new client\n    client = motor.motor_tornado.MotorClient(uri, serverSelectionTimeoutMS=5000)\n\n    # Send a ping to confirm a successful connection\n    try:\n      await client.admin.command('ping')\n      print(\"Pinged your deployment. You successfully connected to MongoDB!\")\n    except Exception as e:\n      print(e)\n\ntornado.ioloop.IOLoop.current().run_sync(ping_server)"
+                }
+            ],
+            "preview": "Welcome to the documentation site for Motor, the official MongoDB\ndriver for asynchronous Python applications. Download it using\npip\nor set up a runnable project by following our tutorials.",
+            "tags": "Python async, Stable API, local connection, atlas, code example",
+            "facets": {
+                "genre": [
+                    "reference"
+                ],
+                "programming_language": [
+                    "python"
+                ],
+                "target_product": [
+                    "drivers"
+                ]
+            }
+        }
+    ]
+}

@@ -1,0 +1,1062 @@
+{
+    "url": "http://mongodb.com/docs/languages/cpp/drivers/current",
+    "includeInGlobalSearch": true,
+    "documents": [
+        {
+            "slug": "getting-help",
+            "title": "Getting Help",
+            "headings": [],
+            "paragraphs": "Often, the quickest way to get support for general questions is through the\n MongoDB Community Forums \nor through\n Stack Overflow . Please also refer to MongoDB's\n support channels  documentation.",
+            "code": [],
+            "preview": "Often, the quickest way to get support for general questions is through the\nMongoDB Community Forums\nor through\nStack Overflow.",
+            "tags": "community, forum, support",
+            "facets": {
+                "genre": [
+                    "reference"
+                ],
+                "target_product": [
+                    "drivers"
+                ],
+                "programming_language": [
+                    "cpp"
+                ]
+            }
+        },
+        {
+            "slug": "reporting-bugs",
+            "title": "Reporting Bugs",
+            "headings": [],
+            "paragraphs": "If you think you have found a bug or want to see a new feature in the\nC++ driver, please open an issue in  JIRA : Be aware that bug reports in JIRA for the C++ driver are public. If you identify a security vulnerability in a driver or any other\nMongoDB project, please report it according to the instructions found in\n Create a Vulnerability Report . Create a Jira account and login . Navigate to the  CXX project . Click  Create Issue . Provide as much information as possible about\nthe issue and the steps to reproduce it.",
+            "code": [],
+            "preview": "If you think you have found a bug or want to see a new feature in the\nC++ driver, please open an issue in JIRA:",
+            "tags": "errors, requests",
+            "facets": {
+                "genre": [
+                    "reference"
+                ],
+                "target_product": [
+                    "drivers"
+                ],
+                "programming_language": [
+                    "cpp"
+                ]
+            }
+        },
+        {
+            "slug": "connection-pools",
+            "title": "Connection Pools",
+            "headings": [
+                "mongocxx::client vs mongocxx::pool",
+                "Connection Pools and Thread Safety",
+                "Configuring a Connection Pool",
+                "Using a Connection Pool"
+            ],
+            "paragraphs": "A standalone  mongocxx::client  uses a single-threaded algorithm to\nmonitor the state of the cluster it's connected to. When connected to a\nreplica set, the thread \"stops the world\" every 60 seconds to check the\nstatus of the cluster. A  mongocxx::pool , on the other hand, uses a\nseparate background thread for each server in the cluster, each of which\nchecks the status of the server it monitors every 10 seconds. Because of\nthe performance advantages of monitoring the cluster in the background\nrather than \"stopping the world\", it's highly recommended to use a\n mongocxx::pool  rather than a set of standalone clients if your\napplication has access to multiple threads, even if your application only\nuses one thread. A  mongocxx::pool  can be shared across multiple threads and used to create\nclients. However, each  mongocxx::client  can only be used in a single\nthread. See the  thread safety documentation  for\ndetails on how to use a  mongocxx::client  in a thread-safe manner. The number of clients in a connection pool is determined by the URI\nparameters  minPoolSize  and  maxPoolSize . The  minPoolSize  and\n maxPoolSize  options set resource usage targets for when the driver is\nidle or fully-utilized.  When fully utilized, up to maxPoolSize clients\nare available. When clients are returned to the pool, they are destroyed\nuntil the pool has shrunk again to the minPoolSize. maxPoolSize The maximum number of clients created by a mongocxx::pool (both in the\npool and checked out). The default value is 100. Once it is reached,\nmongocxx::pool::acquire blocks until another thread returns a client to\nthe pool. minPoolSize Sets a target size for the pool when idle.  Once this many clients have\nbeen created, there will never be fewer than this many clients in the\npool. If additional  clients above minPoolSize are created, they will be\ndestroyed when returned to the pool. The default value is \"0\", which\ndisables this feature. When disabled, clients are never destroyed. To use a connection pool, first create a  mongocxx::pool , passing the URI\nas an argument. Then, call  mongocxx::pool::acquire  to receive a client\nfrom the pool. The client will automatically be returned to the pool when\nit goes out of scope. See the  connection pool example \nfor more details.",
+            "code": [],
+            "preview": "A standalone mongocxx::client uses a single-threaded algorithm to\nmonitor the state of the cluster it's connected to. When connected to a\nreplica set, the thread \"stops the world\" every 60 seconds to check the\nstatus of the cluster. A mongocxx::pool, on the other hand, uses a\nseparate background thread for each server in the cluster, each of which\nchecks the status of the server it monitors every 10 seconds. Because of\nthe performance advantages of monitoring the cluster in the background\nrather than \"stopping the world\", it's highly recommended to use a\nmongocxx::pool rather than a set of standalone clients if your\napplication has access to multiple threads, even if your application only\nuses one thread.",
+            "tags": null,
+            "facets": {
+                "genre": [
+                    "reference"
+                ],
+                "target_product": [
+                    "drivers"
+                ],
+                "programming_language": [
+                    "cpp"
+                ]
+            }
+        },
+        {
+            "slug": "installation",
+            "title": "Installation",
+            "headings": [
+                "Prerequisites",
+                "Installing",
+                "Advanced Options",
+                "Package Managers",
+                "Vcpkg Install Instructions",
+                "Conan Install Instructions",
+                "Homebrew",
+                "For an Apple Silicon Mac",
+                "For an Intel Mac",
+                "Docker Image"
+            ],
+            "paragraphs": "If you encounter build failures or other problems with a platform configuration\nthat meets the above prerequisites, please file a bug report via\n JIRA . Any standard Unix platform, or Windows 7 SP1+ A compiler that supports C++11 (gcc, clang, or Visual Studio) CMake  3.15 or later boost  headers (optional) To configure and install the driver, follow the instructions for your platform: Configuring and installing on Windows Configuring and installing on macOS Configuring and installing on Linux Advanced Configuration and Installation Options The Mongo C++ driver is available in the following package managers. Vcpkg  (search for mongo-cxx-driver) Conan Homebrew If you do not already have Vcpkg installed, install it with the following command: Optionally, to install with Visual Studio integration: Install the driver. You may need to  git pull  to get the latest version of\nthe driver. You can use the toolchain file,  vcpkg.cmake , to instruct CMake where to find\nthe development files, for example: You can find the header files in: The library files are in: Package Specifier:  mongo-cxx-driver/3.8.0 If you do not already have Conan installed, then install it and run the Conan\ninitalization command below: Add the following to your  conanfile.txt : Install the driver via Conan, and build your project: For MacOS users, homebrew is a convenient way to install the C++ driver. Headers can be found in: Library files can be found in: Headers can be found in: Library files can be found in: You can find a pre-built docker image for the C++ driver in\n Docker Hub .",
+            "code": [
+                {
+                    "lang": "bash",
+                    "value": "$ git clone https://github.com/Microsoft/vcpkg.git\n$ cd vcpkg\n$ ./bootstrap-vcpkg.sh"
+                },
+                {
+                    "lang": "bash",
+                    "value": "vcpkg integrate install"
+                },
+                {
+                    "lang": "bash",
+                    "value": "$ ./vcpkg install mongo-cxx-driver"
+                },
+                {
+                    "lang": "bash",
+                    "value": "-DCMAKE_TOOLCHAIN_FILE=/<path to vcpkg repo>/vcpkg/scripts/buildsystems/vcpkg.cmake"
+                },
+                {
+                    "lang": "none",
+                    "value": "vcpkg/installed/<CPU ARCHITECTURE>-<OPERATING SYSTEM>/include/"
+                },
+                {
+                    "lang": "none",
+                    "value": "vcpkg/installed/<CPU ARCHITECTURE>-<OPERATING SYSTEM>/lib/"
+                },
+                {
+                    "lang": "bash",
+                    "value": "$ pip install conan\n$ conan profile detect --force"
+                },
+                {
+                    "lang": "none",
+                    "value": "[requires]\nmongo-cxx-driver/3.8.0\n[generators]\nCMakeDeps\nCMakeToolchain"
+                },
+                {
+                    "lang": "bash",
+                    "value": "$ conan install conanfile.txt --output-folder=build --build=missing\n$ cmake \\\n  -B build \\\n  -DCMAKE_TOOLCHAIN_FILE=conan_toolchain.cmake \\\n  -DCMAKE_BUILD_TYPE=Release\n$ cmake --build build"
+                },
+                {
+                    "lang": "bash",
+                    "value": "brew install mongo-cxx-driver"
+                },
+                {
+                    "lang": "none",
+                    "value": "/opt/homebrew/include/mongocxx/v_noabi/\n/opt/homebrew/include/bsoncxx/v_noabi/"
+                },
+                {
+                    "lang": "none",
+                    "value": "/opt/homebrew/lib/"
+                },
+                {
+                    "lang": "none",
+                    "value": "/usr/local/include/mongocxx/v_noabi/\n/usr/local/include/bsoncxx/v_noabi/"
+                },
+                {
+                    "lang": "none",
+                    "value": "/usr/local/lib/"
+                }
+            ],
+            "preview": "If you encounter build failures or other problems with a platform configuration\nthat meets the above prerequisites, please file a bug report via\nJIRA.",
+            "tags": "running",
+            "facets": {
+                "genre": [
+                    "reference"
+                ],
+                "target_product": [
+                    "drivers"
+                ],
+                "programming_language": [
+                    "cpp"
+                ]
+            }
+        },
+        {
+            "slug": "thread-safety",
+            "title": "Thread and Fork Safety",
+            "headings": [
+                "Incorrect Threading Example",
+                "Acceptable Threading Example",
+                "Ideal Threading Example",
+                "Fork Safety"
+            ],
+            "paragraphs": "You should always give each thread its own  mongocxx::client . In general each  mongocxx::client  object AND all of its child objects,\nincluding  mongocxx::client_session ,  mongocxx::database ,  mongocxx::collection ,\nand  mongocxx::cursor ,  should be used by a single thread at a time . This\nis true even for clients acquired from a  mongocxx::pool . Even if you create multiple child objects from a single  client , and\nsynchronize them individually, that is unsafe as they will concurrently\nmodify internal structures of the  client . The same is true if you copy a\nchild object. In the above example, even though the two databases are individually\nsynchronized, they are derived from the same client. There is shared state\ninside the library that is now being modified without synchronization. The\nsame problem occurs if  db2  is a copy of  db1 . In most programs, clients will be long lived for convenience and performance. In this contrived example,\nthere's quite a bit of overhead because we're doing so little work with each\nclient, but typically this is the best solution. Neither a  mongocxx::client  or a  mongocxx::pool  can be safely copied\nwhen forking. Because of this, any client or pool must be created  after \nforking, not before.",
+            "code": [
+                {
+                    "lang": "cpp",
+                    "value": "mongocxx::instance instance{};\nmongocxx::uri uri{};\nmongocxx::client c{uri};\nauto db1 = c[\"db1\"];\nauto db2 = c[\"db2\"];\nstd::mutex db1_mtx{};\nstd::mutex db2_mtx{};\n\nauto threadfunc = [](mongocxx::database& db, std::mutex& mtx) {\n  mtx.lock();\n  db[\"col\"].insert_one({});\n  mtx.unlock();\n};\n\n// BAD! These two databases are individually synchronized, but they are derived from the same\n// client, so they can only be accessed by one thread at a time\nstd::thread t1([&]() { threadfunc(db1, db1_mtx); threadfunc(db2, db2_mtx); });\nstd::thread t2([&]() { threadfunc(db2, db2_mtx); threadfunc(db1, db1_mtx); });\n\nt1.join();\nt2.join();"
+                },
+                {
+                    "lang": "cpp",
+                    "value": "mongocxx::instance instance{};\nmongocxx::uri uri{};\nmongocxx::client c1{uri};\nmongocxx::client c2{uri};\nstd::mutex c1_mtx{};\nstd::mutex c2_mtx{};\n\nauto threadfunc = [](std::string dbname, mongocxx::client& client, std::mutex& mtx) {\n  mtx.lock();\n  client[dbname][\"col\"].insert_one({});\n  mtx.unlock();\n};\n\n// These two clients are individually synchronized, so it is safe to share them between\n// threads.\nstd::thread t1([&]() { threadfunc(\"db1\", c1, c1_mtx); threadfunc(\"db2\", c2, c2_mtx); });\nstd::thread t2([&]() { threadfunc(\"db2\", c2, c2_mtx); threadfunc(\"db1\", c1, c1_mtx); });\n\nt1.join();\nt2.join();"
+                },
+                {
+                    "lang": "cpp",
+                    "value": "mongocxx::instance instance{};\nmongocxx::pool pool{mongocxx::uri{}};\n\nauto threadfunc = [](mongocxx::client& client, std::string dbname) {\n  auto col = client[dbname][\"col\"].insert_one({});\n};\n\n// Great! Using the pool allows the clients to be synchronized while sharing only one\n// background monitoring thread.\nstd::thread t1 ([&]() {\n  auto c = pool.acquire();\n  threadfunc(*c, \"db1\");\n  threadfunc(*c, \"db2\");\n});\n\nstd::thread t2 ([&]() {\n  auto c = pool.acquire();\n  threadfunc(*c, \"db2\");\n  threadfunc(*c, \"db1\");\n});\n\nt1.join();\nt2.join();"
+                }
+            ],
+            "preview": "You should always give each thread its own mongocxx::client.",
+            "tags": null,
+            "facets": {
+                "genre": [
+                    "reference"
+                ],
+                "target_product": [
+                    "drivers"
+                ],
+                "programming_language": [
+                    "cpp"
+                ]
+            }
+        },
+        {
+            "slug": "api-abi-versioning",
+            "title": "API and ABI Versioning",
+            "headings": [
+                "API Versioning",
+                "ABI Versioning",
+                "Parallel Header Installation",
+                "Sonames and Symlinks",
+                "Windows (MSVC only)",
+                "Other Platforms (Linux, MacOS)",
+                "Inline Namespaces",
+                "Deprecation"
+            ],
+            "paragraphs": "We use  semantic versioning . bsoncxx and mongocxx both define corresponding CMake variables for MAJOR, MINOR, and PATCH. Both bsoncxx and mongocxx both have a single scalar ABI version. Only bump ABI version on  incompatible  ABI change (not for ABI additions). We stay on ABI version _noabi (without bumping for incompatible changes) until ABI is stable. For mongocxx, install all headers to  $PREFIX/mongocxx/v$ABI/ . For bsoncxx, install all headers to  $PREFIX/bsoncxx/v$ABI/ . We install a pkg-config file to shield consumers from this complexity. Below examples are given for libmongocxx, but also apply to libbsoncxx DSO refers to Dynamic Shared Object, to use Ulrich Drepper\u2019s terminology Since version 3.10.0, the physical filename for CXX Driver libraries is different\nfrom other platforms when built with the MSVC toolchain on Windows\n(even when the CMake generator is not Visual Studio).\nTo restore prior behavior, which is similar to other platforms, set  ENABLE_ABI_TAG_IN_LIBRARY_FILENAMES=OFF . Where  $TAG  is a triplet of letters indicating: This is followed by a suffix describing the toolset and runtime library used to build the library. Some examples of common DSO filenames expected to be generated include: This allows libraries built with different build configurations (and different runtime library requirements) to be built and installed without conflicting with each other. See references to  ENABLE_ABI_TAG_IN_LIBRARY_FILENAMES  and related code in the CMake configuration for more details. Physical filename for a DSO is  mongocxx-$ABI-$TAG.dll Physical filename for a static library is  mongocxx-static-$TAG.lib Build Type mongoc Link Type Polyfill Library mongocxx-v_noabi-rhs-x64-v142-md.dll  (release build configuration) mongocxx-v_noabi-dhs-x64-v142-mdd.dll  (debug build configuration) mongocxx-v_noabi-rts-x64-v142-md.dll  (link with mongoc statically) mongocxx-v_noabi-rhi-x64-v142-md.dll  (bsoncxx polyfill library) mongocxx-v_noabi-rhm-x64-v142-md.dll  (mnmlstc/core polyfill library) mongocxx-v_noabi-rhb-x64-v142-md.dll  (Boost polyfill library) We provide a soname symlink that links to the physical DSO.  We also\nprovide a dev symlink that links to the soname symlink of the highest ABI\nversion of the library installed. Physical filename for a DSO is  libmongocxx.so.$MAJOR.$MINOR.$PATCH The physical filename is disconnected from ABI version/soname. This looks a bit strange, but allows multiple versions of the library with the same ABI version to be installed on the same system. soname for a DSO is  libmongocxx.$ABI We provide inline namespace macros for both mongocxx and bsoncxx. This allows multiple, ABI incompatible versions of the library to be linked into the same application. The name of the namespace is  v$ABI . We create them from ABI version to maintain forwards compatibibility. Occasionally we will phase features out of use in the driver.\nIn the release that marks a feature as deprecated we offer several transition options: In the following release, the original feature marked with  MONGOCXX_DEPRECATED  and its\nsuffixed  _deprecated  equivalent will be removed. In the case of a feature rename we do not offer a suffixed  _deprecated  variant,\nas one can simply switch to using the new name with the same amount of effort. The original method, marked with  MONGOCXX_DEPRECATED . This will raise deprecation warnings when compiled. A variant of the feature suffixed with  _deprecated . This will require\nonly small code changes and will not raise deprecation warnings. A new feature that provides alternate functionality. The new feature may not\nbe a drop-in replacement for the deprecated feature and switching to it may\nrequire code changes. In the rare case where we remove a feature without replacing it, this third option will not be available.",
+            "code": [
+                {
+                    "lang": "cpp",
+                    "value": "// release 1 with a supported feature\nvoid do_thing();\n\n// release 2 where the feature is deprecated in favor of a new feature\nMONGOCXX_DEPRECATED void do_thing();\nvoid do_thing_deprecated();\nvoid do_new_thing();\n\n// release 3 where the original feature is removed\nvoid do_new_thing();"
+                },
+                {
+                    "lang": "cpp",
+                    "value": "// release 1 with a supported feature\nvoid do_thing();\n\n// release 2 where the feature name is renamed\nMONGOCXX_DEPRECATED void do_thing();\nvoid do_stuff();\n\n// release 3 where the original feature name is removed\nvoid do_stuff();"
+                }
+            ],
+            "preview": "Occasionally we will phase features out of use in the driver.\nIn the release that marks a feature as deprecated we offer several transition options:",
+            "tags": null,
+            "facets": {
+                "genre": [
+                    "reference"
+                ],
+                "target_product": [
+                    "drivers"
+                ],
+                "programming_language": [
+                    "cpp"
+                ]
+            }
+        },
+        {
+            "slug": "client-side-encryption",
+            "title": "Client-Side Field Level Encryption",
+            "headings": [
+                "Client-Side Field Level Encryption",
+                "Installation",
+                "libmongocrypt",
+                "mongocryptd",
+                "Examples",
+                "Automatic Client-Side Field Level Encryption",
+                "Providing Local Automatic Encryption Rules",
+                "Server-Side Field Level Encryption Enforcement",
+                "Explicit Encryption",
+                "Explicit Encryption with Automatic Decryption"
+            ],
+            "paragraphs": "New in MongoDB 4.2  Client-Side Field Level Encryption (CSFLE)  allows administrators and developers to encrypt specific data fields in addition to other MongoDB encryption features. With CSFLE, developers can encrypt fields client side without any server-side configuration or directives. Client-Side Field Level Encryption supports workloads where applications must guarantee that unauthorized parties, including server administrators, cannot read the encrypted data. For an overview of CSFLE, please read  the official MongoDB documentation in the manual . Client-Side Field Level Encryption relies on a C library called  libmongocrypt  to do the heavy lifting encryption work. This dependency is managed by the C driver.  As long as the C driver installation is 1.16.0 or higher, and has been compiled with Client-Side Field Level Encryption support, this dependency should be managed internally.  See the C driver's  Using Client-Side Field Level Encryption  for more information. Automatic CSFLE relies upon a new binary called  mongocryptd  running as a daemon while the driver operates.  This binary is only available with MongoDB Enterprise. mongocryptd  can either be started separately from the driver, or left to spawn automatically when encryption is used. To run mongocryptd separately, pass the  mongocryptdBypassSpawn  flag to the client's auto encryption options: If the mongocryptd binary is on the current path, the driver will be able to spawn it without any custom flags.  However, if the mongocryptd binary is on a different path, set the path with the  mongocryptdSpawnPath  option: Automatic Client-Side Field Level Encryption is enabled by creating a  mongocxx::client  with the  auto_encryption_opts  option set to an instance of  mongocxx::options::auto_encryption . The following examples show how to set up automatic client-side field level encryption using the  mongocxx::client_encryption  class to create a new encryption data key. Automatic client-side field level encryption requires MongoDB 4.2 enterprise or a MongoDB 4.2 Atlas cluster. The community version of the server supports automatic decryption as well as explicit client-side field level encryption. The following example shows how to specify automatic encryption rules via the\nschema_map option. The automatic encryption rules are expressed using a  strict\nsubset of the JSON Schema syntax . Supplying a  schema_map  provides more security than relying on JSON Schemas obtained from the server. It protects against a malicious server advertising a false JSON Schema, which could trick the client into sending unencrypted data that should be encrypted. JSON Schemas supplied in the  schema_map  only apply to configuring automatic client-side field level encryption. Other validation rules in the JSON schema will not be enforced by the driver and will result in an error. Please see  examples/mongocxx/automatic_client_side_field_level_encryption.cpp  for a full example of how to set a json schema for automatic encryption. The MongoDB 4.2 server supports using schema validation to enforce encryption of specific fields in a collection. This schema validation will prevent an application from inserting unencrypted values for any fields marked with the  \"encrypt\"  JSON schema keyword. It is possible to set up automatic client-side field level encryption using the  mongocxx::client_encryption  to create a new encryption data key and create a collection with the  Automatic Encryption JSON Schema Syntax . Please see  examples/mongocxx/server_side_field_level_encryption_enforcement.cpp  for a full example of setting encryption enforcement on the server. Explicit encryption is a MongoDB community feature and does not use the  mongocryptd  process. Explicit encryption is provided by the  mongocxx::client_encryption  class. Please see  examples/mongocxx/explicit_encryption.cpp  for a full example of using explicit encryption and decryption. Although automatic encryption requires MongoDB 4.2 enterprise or a MongoDB 4.2 Atlas cluster, automatic decryption is supported for all users. To configure automatic decryption without automatic encryption, set  bypass_auto_encryption=True  in the  options::auto_encryption  class. Please see   examples/mongocxx/explicit_encryption_auto_decryption.cpp  for an example of using explicit encryption with automatic decryption.",
+            "code": [
+                {
+                    "lang": "cpp",
+                    "value": "auto mongocryptd_options = make_document(kvp(\"mongocryptdBypassSpawn\", true));\n\noptions::auto_encryption auto_encrypt_opts{};\nauto_encrypt_opts.extra_options({mongocryptd_options.view()});"
+                },
+                {
+                    "lang": "cpp",
+                    "value": "auto mongocryptd_options = make_document(kvp(\"mongocryptdSpawnPath\", \"path/to/mongocryptd\"));\n\noptions::auto_encryption auto_encrypt_opts{};\nauto_encrypt_opts.extra_options({mongocryptd_options.view()});"
+                },
+                {
+                    "lang": "cpp",
+                    "value": "//\n// The schema map has the following form:\n//\n//   {\n//      \"test.coll\" : {\n//         \"bsonType\" : \"object\",\n//         \"properties\" : {\n//            \"encryptedFieldName\" : {\n//               \"encrypt\" : {\n//                  \"keyId\" : [ <datakey as UUID> ],\n//                  \"bsonType\" : \"string\",\n//                  \"algorithm\" : <algorithm>\n//               }\n//            }\n//         }\n//      }\n//   }\n//"
+                },
+                {
+                    "lang": "cpp",
+                    "value": "// Please see the linked example below for full json_schema construction.\nbsoncxx::document::value json_schema{};\n\n// Create the collection with the encryption JSON Schema.\nauto cmd = document{} << \"create\"\n                      << \"coll\"\n                      << \"validator\" << open_document\n                      << \"$jsonSchema\" << json_schema.view()\n                      << close_document << finalize;\n\ndb.run_command(cmd.view());"
+                },
+                {
+                    "lang": "cpp",
+                    "value": "// Explicitly encrypt a BSON value.\nauto to_encrypt = bsoncxx::types::bson_value::make_value(\"secret message\");\nauto encrypted_message = client_encryption.encrypt(to_encrypt, encrypt_opts);\n\n// Explicitly decrypt a BSON value.\nauto decrypted_message = client_encryption.decrypt(encrypted_message);"
+                },
+                {
+                    "lang": "cpp",
+                    "value": "options::auto_encryption auto_encrypt_opts{};\nauto_encrypt_opts.bypass_auto_encryption(true);\n// Please see full example for complete options construction.\n\n// Create a client with automatic decryption enabled, but automatic encryption bypassed.\noptions::client client_opts{};\nclient_opts.auto_encryption_opts(std::move(auto_encrypt_opts));\nclass client client_encrypted {uri{}, std::move(client_opts)};"
+                }
+            ],
+            "preview": "New in MongoDB 4.2 Client-Side Field Level Encryption (CSFLE) allows administrators and developers to encrypt specific data fields in addition to other MongoDB encryption features.",
+            "tags": null,
+            "facets": {
+                "genre": [
+                    "reference"
+                ],
+                "target_product": [
+                    "drivers"
+                ],
+                "programming_language": [
+                    "cpp"
+                ]
+            }
+        },
+        {
+            "slug": "polyfill-selection",
+            "title": "Choosing a C++17 Polyfill",
+            "headings": [],
+            "paragraphs": "The mongocxx driver uses C++17 features  std::optional  and  std::string_view .\nTo use the C++17 standard library implementations for these features, set\nthe CMake configuration variable  CMAKE_CXX_STANDARD  to 17 or higher.\nOtherwise, to compile the mongocxx driver for pre-C++17 configurations, a\npolyfill library implementation must be selected from the following options: Most users should use default behavior with  -DENABLE_BSONCXX_POLY_USE_IMPLS=ON .\nHowever, if you have a preference for one of the external polyfill libraries\n(e.g. already a dependency being used by your application), you may prefer to\nexplicitly select that external polyfill library rather than rely on default\nselection behavior. bsoncxx ( default only when -DENABLE_BSONCXX_POLY_USE_IMPLS=ON ) Select with  -DBSONCXX_POLY_USE_IMPLS=ON . This option is most recommended, as\nit does not require additional external library dependencies. To enable\nselecting this option by default for pre-C++17 configurations when no other\noptions are specified, set  ENABLE_BSONCXX_POLY_USE_IMPLS=ON  (this option\nwill be set to ON by default in an upcoming major release). MNMLSTC/core ( default for non-Windows platforms ) This option is deprecated and will be removed in an upcoming major release. \nSelect with  -DBSONCXX_POLY_USE_MNMLSTC=1 . This option vendors a header-only installation of MNMLSTC/core into the bsoncxx library installation and will therefore download MLNMLSTC from GitHub during the configuration process. If you already have an available version of MNMLSTC on your system, you can avoid the download step by using  -DBSONCXX_POLY_USE_SYSTEM_MNMLSTC . Boost ( default for Windows platforms ) This option is deprecated and will be removed in an upcoming major release. \nSelect with  -DBSONCXX_POLY_USE_BOOST=1 . This is currently the only\nnon-bsoncxx option if you are using a version of MSVC that does not support\nC++17. \"default\" refers to  pre-C++17  configurations when no polyfill library is explicitly selected. C++ standard conformance and supported behavior of polyfill features may vary depending on the selected polyfill library. The purpose of these polyfills is to support pre-C++17 configurations by providing stand-ins for their C++17 equivalents. Therefore we recommend using the C++17 standard library whenever possible by setting  -DCMAKE_CXX_STANDARD=17  or newer. The choice of polyfill library has a direct impact on the public API and ABI for the mongocxx library. Changing the polyfill can lead to both source-breaking changes (during compilation) and binary-breaking changes (during linking or execution). To limit reliance on polyfill-specific configuration or behavior, avoid using  stdx::string_view  and  stdx::optional<T>  with non-mongocxx library interfaces.",
+            "code": [],
+            "preview": "The mongocxx driver uses C++17 features std::optional and std::string_view.\nTo use the C++17 standard library implementations for these features, set\nthe CMake configuration variable CMAKE_CXX_STANDARD to 17 or higher.\nOtherwise, to compile the mongocxx driver for pre-C++17 configurations, a\npolyfill library implementation must be selected from the following options:",
+            "tags": null,
+            "facets": {
+                "genre": [
+                    "reference"
+                ],
+                "target_product": [
+                    "drivers"
+                ],
+                "programming_language": [
+                    "cpp"
+                ]
+            }
+        },
+        {
+            "slug": "configuration",
+            "title": "Configuration",
+            "headings": [
+                "Configuring TLS/SSL",
+                "Configuring Authentication",
+                "Default Authentication Mechanism",
+                "SCRAM-SHA-1",
+                "MONGODB-CR",
+                "X.509",
+                "Kerberos (GSSAPI)",
+                "LDAP",
+                "Configuring a connection pool",
+                "Compressing data to and from MongoDB"
+            ],
+            "paragraphs": "In the mongocxx driver, most configuration is done via the  connection URI .  Some\nadditional connection options are possible via the\n mongocxx::options::client  class. To enable TLS (SSL), set  tls=true  in the URI: By default, mongocxx will verify server certificates against the local\nsystem CA list.  You can override that either by specifying different settings in\nthe connection string, or by creating a\n mongocxx::options::tls \nobject and passing it to  tls_opts  on  mongocxx::options::client . For example, to use a custom CA or to disable certificate validation,\nsee the following example: MongoDB 3.0 changed the default authentication mechanism from  MONGODB-CR \nto  SCRAM-SHA-1 . To create a credential that will authenticate properly\nregardless of server version, use a connection string with the user and\npassword directly in the URI and with a parameter specifying the database\nto authenticate from: To explicitly create a credential of type  SCRAM-SHA-1  use a connection\nstring as above but with a parameter specifying the authentication\nmechanism as  \"SCRAM-SHA-1\" : The  MONGODB-CR  authMechanism is deprecated and will no longer function in MongoDB 4.0. Instead, specify no authMechanism and the driver\nwill use an authentication mechanism compatible with your server. The  X.509 \nmechanism authenticates a user whose name is derived from the distinguished\nsubject name of the X.509 certificate presented by the driver during TLS\nnegotiation. This authentication method requires the use of TLS\nconnections with certificate validation and is available in MongoDB 2.6\nand newer. To create a credential of this type, use a connection string with a\nparameter that specifies the authentication mechanism as  \"MONGODB-X509\" ,\nthat specifies the path to the PEM file containing the client private key\nand certificate, and that has TLS enabled: See the MongoDB server  X.509 tutorial \nfor more information about determining the subject name from the certificate. The PEM file can also be specified using the  mongocxx::options::tls  class, see the\n default TLS/SSL configuration  example above. MongoDB Enterprise \nsupports proxy authentication through Kerberos service. To create a\ncredential of type  Kerberos (GSSAPI) \nuse a connection string with the username and realm in the URI as well as\na parameter specifying the authentication mechanism as  \"GSSAPI\" : The  @  symbol in the URI string must be escaped to  %40  as shown in the example above. MongoDB Enterprise \nsupports proxy authentication through a Lightweight Directory Access\nProtocol (LDAP) service. To create a credential of type LDAP use a\nconnection string specifying the user as well as parameters specifying\nthe authentication source as  \"$external\"  and the authentication mechanishm\nas  \"PLAIN\" : To configure a connection pool, first create a  mongocxx::pool , passing\nthe URI as an argument. The size of the pool can be configured in the URI.\nThen, call  mongocxx::pool::acquire  to receive a client from the pool.\nThe client will automatically be returned to the pool when it goes out of\nscope. See  connection pool documentation  for more details. MongoDB 3.4 added Snappy compression support, while zlib compression was added\nin 3.6, and zstd compression in 4.2. Data compression can be enabled with the appropriate URI options, as documented\nin the  C driver manual .",
+            "code": [
+                {
+                    "lang": "cpp",
+                    "value": "mongodb://mongodb.example.com/?tls=true"
+                },
+                {
+                    "lang": "cpp",
+                    "value": "// 1) Using tls_options\nmongocxx::options::client client_options;\nmongocxx::options::tls tls_options;\n\n// If the server certificate is not signed by a well-known CA,\n// you can set a custom CA file with the `ca_file` option.\ntls_options.ca_file(\"/path/to/custom/cert.pem\");\n\n// If you want to disable certificate verification, you\n// can set the `allow_invalid_certificates` option.\ntls_options.allow_invalid_certificates(true);\n\nclient_options.tls_opts(tls_options);\nauto client1 = mongocxx::client{uri{\"mongodb://host1/?tls=true\"}, client_options};\n\n// 2) Using the URI\nauto client2 = mongocxx::client{uri{\"mongodb://host1/?tls=true&tlsAllowInvalidCertificates=true&tlsCAFile=/path/to/custom/cert.pem\"}};"
+                },
+                {
+                    "lang": "cpp",
+                    "value": "#include <mongocxx/client.hpp>\n#include <mongocxx/uri.hpp>\n\nauto client = mongocxx::client{uri{\"mongodb://user1:pwd1@host1/?authSource=db1\"}};"
+                },
+                {
+                    "lang": "cpp",
+                    "value": "#include <mongocxx/client.hpp>\n#include <mongocxx/uri.hpp>\n\nauto client = mongocxx::client{\n    uri{\"mongodb://user1:pwd1@host1/?authSource=db1&authMechanism=SCRAM-SHA-1\"}\n    };"
+                },
+                {
+                    "lang": "cpp",
+                    "value": "#include <mongocxx/client.hpp>\n#include <mongocxx/uri.hpp>\n\nauto client = mongocxx::client{\n    uri{\"mongodb://host1/?authMechanism=MONGODB-X509&tlsCertificateFile=client.pem&tls=true\"}\n    };"
+                },
+                {
+                    "lang": "cpp",
+                    "value": "#include <mongocxx/client.hpp>\n#include <mongocxx/uri.hpp>\n\nauto client = mongocxx::client{\n    uri{\"mongodb://username%40REALM.COM@host1/?authMechanism=GSSAPI\"}\n    };"
+                },
+                {
+                    "lang": "cpp",
+                    "value": "#include <mongocxx/client.hpp>\n#include <mongocxx/uri.hpp>\n\nauto client = mongocxx::client{\n    uri{\"mongodb://user1:pwd1@host1/?authSource=$external&authMechanism=PLAIN\"}\n    };"
+                },
+                {
+                    "lang": "cpp",
+                    "value": "#include <mongocxx/pool.hpp>\n#include <mongocxx/uri.hpp>\n\nauto pool = mongocxx::pool{uri{\"mongodb://host1/?minPoolSize=3&maxPoolSize=5\"}};\n\n{\n    // To get a client from the pool, call `acquire()`.\n    auto client = pool.acquire();\n\n    // The client is returned to the pool when it goes out of scope.\n}"
+                }
+            ],
+            "preview": "In the mongocxx driver, most configuration is done via the connection URI.  Some\nadditional connection options are possible via the\nmongocxx::options::client class.",
+            "tags": "setup, set up, config",
+            "facets": {
+                "genre": [
+                    "reference"
+                ],
+                "target_product": [
+                    "drivers"
+                ],
+                "programming_language": [
+                    "cpp"
+                ]
+            }
+        },
+        {
+            "slug": "contributing",
+            "title": "Contribution Guidelines",
+            "headings": [
+                "Code Style",
+                "Commit Messages",
+                "Lifecycle Methods",
+                "Headers",
+                "Class Declarations",
+                "Inlines",
+                "Relational Operators"
+            ],
+            "paragraphs": "When contributing code, in addition to following the  C++ Core Guidelines , please follow the same  design\nguidelines \nand  style guidelines  as  mongodb/mongo . Additions and exceptions are listed\nbelow. For anything that isn't explicitly covered here, default to the  Google\nC++ Style Guide .\nRunning  clang-format  with our\nconfiguration file,  mongo-cxx-driver/.clang-format , will\nhelp ensure your code conforms to the above standards. If a pull-request addresses a JIRA ticket, for a single-commit PR, prefix\nthe subject line with the ticket ID.  (For a multi-commit PR, we will add\nthe ID later when we squash or merge it.) Capitalize subject lines and don't use a trailing period.  Keep the subject\nat most 70 characters long.  Use active voice!  Imagine this preamble to get\nyour phrasing right: See Chris Beams'\n How to write a git commit message \nfor more good guidelines to follow. default-or-argument-bearing 'user' constructors declaration-or-deletion-of-copy-constructor declaration-or-deletion-of-move-constructor declaration-or-deletion-of-copy-assignment-operator declaration-or-deletion-of-move-assignment-operator declaration-of-dtor Public headers must have a \".hpp\" suffix. Private headers must have a \".hh\"\nsuffix. General structure: Example: License Include Guard ( #pragma once ) Header Prelude System Headers  <vector>  (alphabetical order) Driver Headers  <path/to/header.hpp>  (alphabetical order) Open Namespace mongocxx inline namespace v_noabi { Code }  // namespace v_noabi Close Namespace mongocxx Header Postlude Guidelines: Example: Blank line at beginning and end of class declaration Public section up top / private at bottom Lifecycle methods first (see rules above) Private Member Ordering Friendships Private Constructors Private Methods Private Variables Define outside of class declaration Specify inline keyword in declaration and definition (for clarity) Prefer to use free functions",
+            "code": [
+                {
+                    "lang": "none",
+                    "value": "CXX-883 Add commit message conventions to CONTRIBUTING.md"
+                },
+                {
+                    "lang": "none",
+                    "value": "If applied, this commit will... [your subject line]"
+                },
+                {
+                    "lang": "cpp",
+                    "value": "// Copyright 2018-present MongoDB Inc.\n//\n// Licensed under the Apache License, Version 2.0 (the \"License\");\n// you may not use this file except in compliance with the License.\n// You may obtain a copy of the License at\n//\n// http://www.apache.org/licenses/LICENSE-2.0\n//\n// Unless required by applicable law or agreed to in writing, software\n// distributed under the License is distributed on an \"AS IS\" BASIS,\n// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n// See the License for the specific language governing permissions and\n// limitations under the License.\n\n#pragma once\n\n#include <driver/config/prelude.hpp>\n\n#include <vector>\n\n#include <driver/blah.hpp>\n\nnamespace mongocxx {\ninline namespace v_noabi {\n\n   // Declarations\n\n   // Inline Implementations\n\n}  // namespace v_noabi\n}  // namespace mongocxx\n\n#include <driver/config/postlude.hpp>"
+                },
+                {
+                    "lang": "cpp",
+                    "value": "class foo {\n\n    public:\n      foo();\n\n      foo(foo&& other) noexcept;\n      foo& operator=(foo&& other) noexcept;\n\n      ~foo();\n\n    private:\n      friend baz;\n\n      class MONGOCXX_PRIVATE impl;\n      std::unique_ptr<impl> _impl;\n\n};"
+                }
+            ],
+            "preview": "When contributing code, in addition to following the C++ Core Guidelines, please follow the same design\nguidelines\nand style guidelines as mongodb/mongo. Additions and exceptions are listed\nbelow. For anything that isn't explicitly covered here, default to the Google\nC++ Style Guide.\nRunning clang-format with our\nconfiguration file, mongo-cxx-driver/.clang-format, will\nhelp ensure your code conforms to the above standards.",
+            "tags": null,
+            "facets": {
+                "genre": [
+                    "reference"
+                ],
+                "target_product": [
+                    "drivers"
+                ],
+                "programming_language": [
+                    "cpp"
+                ]
+            }
+        },
+        {
+            "slug": "testing",
+            "title": "Testing",
+            "headings": [
+                "Running the Existing Tests",
+                "Running Integration Tests",
+                "Writing New Tests"
+            ],
+            "paragraphs": "Tests for the C++11 driver use\n Catch , a testing framework for C++. Each class in the driver has a corresponding file in  src/mongocxx/test .\nBecause the new driver wraps\n libmongoc , we prefer to mock\nand test the behavior of individual classes rather than test end-to-end\nbehavior of operations against a running mongod.  In other words, these are\nunit tests rather than integration tests. We also have integration tests for this driver in  test/collection.cpp . Build the tests with: This will generate test binaries.  You can either run all the tests with: or, for more detailed output with Catch, run the generated binary: or you can run the ctest command and make use of ctest's various flags.\nFor example: can be used to run the tests with verbose output, or could be used to run only the bson tests. Some of the tests require a running mongod instance.  For this, first download\nthe  Mongodb server . Then deploy a mongod on the default port with the command: if it is installed, otherwise navigate to the directory holding the mongod\nexecutable, and run: following either command with any flags you wish to use, excluding\n --port .  While the mongod is running, run the tests as normal. If you'd like to add a feature to the driver, please write a test for it as\nwell.  Additions to existing classes should have new sections added to the\nexisting test cases: If you are adding a new class, please add a new test file for it to the\n test  directory.  The test file's name should match the new class's file's\nname.  You will need to add your file as a source for the driver's test\ntarget, in  src/mongocxx/test/CMakeLists.txt :",
+            "code": [
+                {
+                    "lang": "bash",
+                    "value": "make"
+                },
+                {
+                    "lang": "bash",
+                    "value": "make test"
+                },
+                {
+                    "lang": "bash",
+                    "value": "./build/src/mongocxx/test/test_driver"
+                },
+                {
+                    "lang": "bash",
+                    "value": "ctest -V"
+                },
+                {
+                    "lang": "bash",
+                    "value": "ctest -R bson"
+                },
+                {
+                    "lang": "bash",
+                    "value": "mongod --setParameter enableTestCommands=1"
+                },
+                {
+                    "lang": "bash",
+                    "value": "./mongod --setParameter enableTestCommands=1"
+                },
+                {
+                    "lang": "bash",
+                    "value": "TEST_CASE(\"existing_class\", \"[existing_class]\") {\n   SECTION(\"Can do some new thing\") {\n      ...\n      REQUIRE(new_thing_works);\n   }\n}"
+                },
+                {
+                    "lang": "bash",
+                    "value": "set(mongocxx_test_sources\n   ...\n   some_new_class.cpp\n   ...\n)"
+                }
+            ],
+            "preview": "Tests for the C++11 driver use\nCatch, a testing framework for C++.",
+            "tags": null,
+            "facets": {
+                "genre": [
+                    "reference"
+                ],
+                "target_product": [
+                    "drivers"
+                ],
+                "programming_language": [
+                    "cpp"
+                ]
+            }
+        },
+        {
+            "slug": "tutorial",
+            "title": "Tutorial",
+            "headings": [
+                "Prerequisites",
+                "Compiling",
+                "Make a Connection",
+                "Access a Database",
+                "Access a Collection",
+                "Create a Document",
+                "Insert Documents",
+                "Insert One Document",
+                "Insert Multiple Documents",
+                "Query the Collection",
+                "Find a Single Document in a Collection",
+                "Find All Documents in a Collection",
+                "Print All Documents in a Collection",
+                "Specify a Query Filter",
+                "Get A Single Document That Matches a Filter",
+                "Get All Documents That Match a Filter",
+                "Update Documents",
+                "Update a Single Document",
+                "Update Multiple Documents",
+                "Delete Documents",
+                "Delete a Single Document",
+                "Delete All Documents That Match a Filter",
+                "Create Indexes"
+            ],
+            "paragraphs": "See the full code for this tutorial in\n tutorial.cpp . A  mongod \ninstance running on localhost on port 27017. The mongocxx Driver. See  Installation . The following statements at the top of your source file: The mongocxx driver's installation process will install a\n libmongocxx.pc  file for use\nwith  pkg-config . To compile a program, run the following command: If you don't have pkg-config available, you will need to set include and\nlibrary flags manually on the command line or in your IDE.  For example, if\nlibmongoc and mongocxx are installed in  /usr/local , then the compilation\nline in above expands to this: To connect to a running MongoDB instance, use the\n mongocxx::instance \nclass. You must specify the host to connect to using a\n mongocxx::uri  instance containing a\n MongoDB URI ,\nand pass that into the  mongocxx::client  constructor.  For details regarding\nsupported URI options see the documentation for the version of libmongoc used\nto build the C++ driver or for the  latest libmongoc release . The default  mongocxx::uri  constructor will connect to a\nserver running on localhost on port  27017 : This is equivalent to the following: Before making any connections, you need to create one and only one instance of  mongocxx::instance . This instance must exist for the entirety of your program. Once you have a  mongocxx::instance \ninstance connected to a MongoDB deployment, use either the\n database()  method or  operator[]  to obtain a\n mongocxx::database \ninstance. If the database you request does not exist, MongoDB creates it when you\nfirst store data. The following example accesses the  mydb  database: Once you have a\n mongocxx::database \ninstance, use either the  collection()  method or  operator[]  to obtain a\n mongocxx::collection \ninstance. If the collection you request does not exist, MongoDB creates it when\nyou first store data. For example, using the  db  instance created in the previous section,\nthe following statement accesses the collection named  test  in the\n mydb  database: To create a  document  using the C++ driver, use one of the two\navailable builder interfaces: This guide only briefly describes the basic builder. For example, consider the following JSON document: Using the basic builder interface, you can construct this document\nas follows: This  bsoncxx::document::value  type is a read-only object owning its own\nmemory. To use it, you must obtain a  bsoncxx::document::view  using\nthe  view()  method: You can access fields within this document view using  operator[] ,\nwhich will return a\n bsoncxx::document::element \ninstance. For example, the following will extract the  name  field whose\nvalue is a string: If the value in the name field is not a string and you do not\ninclude a type guard as seen in the preceding example, this code will\nthrow an instance of  bsoncxx::exception . A document builder using the streaming operators that works well for literal document construction. A more conventional document builder that involves calling methods ona builder instance. To insert a single document into the collection, use a\n mongocxx::collection \ninstance's  insert_one()  method to insert  { \"i\": 0 } : insert_one_result  is an optional  mongocxx::result::insert_one . In this\nexample,  insert_one_result  is expected to be set. The default behavior for\nwrite operations is to wait for a reply from the server. This may be overridden by setting an unacknowledged\n mongocxx::write_concern . If you do not specify a top-level  _id  field in the document,\nMongoDB automatically adds an  _id  field to the inserted document. You can obtain this value using the  inserted_id()  method of the returned\n mongocxx::result::insert_one  instance. To insert multiple documents to the collection, use a\n mongocxx::collection  instance's\n insert_many()  method, which takes a list of documents to insert. The following example inserts the documents  { \"i\": 1 }  and  { \"i\": 2 } .\nCreate the documents and add to the documents list: To insert these documents to the collection, pass the list of documents to the  insert_many()  method. If you do not specify a top-level  _id  field in each document,\nMongoDB automatically adds a  _id  field to the inserted documents. You can obtain this value using the  inserted_ids()  method of the\nreturned  mongocxx::result::insert_many \ninstance. To query the collection, use the collection's  find()  and  find_one()  methods. find()  will return an instance of\n mongocxx::cursor ,\nwhile  find_one()  will return an instance of\n std::optional< bsoncxx::document::value > . For more information, see\n bsoncxx::document::value . You can call either method with an empty document to query all documents\nin a collection, or pass a filter to query for documents that match the\nfilter criteria. To return a single document in the collection, use the  find_one() \nmethod without any parameters. The  bsoncxx::to_json  function converts a BSON document to a JSON string. The above example prints output resembling the following: The  _id  element has been added automatically by MongoDB to your\ndocument and your value will differ from that shown. MongoDB reserves\nfield names that start with an underscore ( _ ) and the dollar sign\n( $ ) for internal use. To find the first document where the field  i  has the value  0 ,\npass the document  {\"i\": 0}  to specify the equality condition: The following example gets all documents where  0 < \"i\" <= 2 : To update documents in a collection, you can use the collection's\n update_one()  and  update_many()  methods. The update methods return an instance of  std::optional<\nmongocxx::result::update > , which provides information about the operation\nincluding the number of documents modified by the update. For more information,\nsee  mongocxx::result::update . To update at most one document, use the  update_one()  method. The following example updates the first document that matches the filter\n { \"i\": 0 }  and sets the value of  foo  to  bar : To update all documents matching a filter, use the  update_many() \nmethod. The following example sets the value of  foo  to  buzz  where\n i  is greater than  0 : To delete documents from a collection, you can use a collection's\n delete_one()  and  delete_many()  methods. The delete methods return an instance of  std::optional<\nmongocxx::result::delete > , which contains the number of documents deleted.\nFor more information, see  mongocxx::result::delete . To delete at most a single document that matches a filter, use the\n delete_one()  method. For example, to delete a document that matches the filter\n { \"i\": 0 } : To delete all documents matching a filter, use a collection's\n delete_many()  method. The following example deletes all documents where  i  is greater than  0 : To create an  index  on a\nfield or set of fields, pass an index specification document to the\n create_index()  method of a\n mongocxx::collection  instance. An\nindex key specification document contains the fields to index and the\nindex type for each field: The following example creates an ascending index on the  i  field: For an ascending index type, specify 1 for  <type> . For a descending index type, specify -1 for  <type> .",
+            "code": [
+                {
+                    "lang": "cpp",
+                    "value": "#include <cstdint>\n#include <iostream>\n#include <vector>\n\n#include <bsoncxx/builder/basic/document.hpp>\n#include <bsoncxx/json.hpp>\n#include <mongocxx/client.hpp>\n#include <mongocxx/instance.hpp>\n#include <mongocxx/stdx.hpp>\n#include <mongocxx/uri.hpp>\n\nusing bsoncxx::builder::basic::kvp;\nusing bsoncxx::builder::basic::make_array;\nusing bsoncxx::builder::basic::make_document;"
+                },
+                {
+                    "lang": "bash",
+                    "value": "c++ --std=c++11 <input>.cpp $(pkg-config --cflags --libs libmongocxx)"
+                },
+                {
+                    "lang": "bash",
+                    "value": "c++ --std=c++11 <input>.cpp\n-I/usr/local/include/mongocxx/v_noabi \\\n-I/usr/local/include/bsoncxx/v_noabi \\\n-L/usr/local/lib -lmongocxx -lbsoncxx"
+                },
+                {
+                    "lang": "cpp",
+                    "value": "mongocxx::instance instance{}; // This should be done only once.\nmongocxx::client client{mongocxx::uri{}};"
+                },
+                {
+                    "lang": "cpp",
+                    "value": "mongocxx::instance instance{}; // This should be done only once.\nmongocxx::uri uri(\"mongodb://localhost:27017\");\nmongocxx::client client(uri);"
+                },
+                {
+                    "lang": "cpp",
+                    "value": "auto db = client[\"mydb\"];"
+                },
+                {
+                    "lang": "cpp",
+                    "value": "auto collection = db[\"test\"];"
+                },
+                {
+                    "lang": "json",
+                    "value": "{\n  \"name\" : \"MongoDB\",\n  \"type\" : \"database\",\n  \"count\" : 1,\n  \"versions\": [ \"v6.0\", \"v5.0\", \"v4.4\", \"v4.2\", \"v4.0\", \"v3.6\" ],\n  \"info\" : {\n             \"x\" : 203,\n             \"y\" : 102\n           }\n}"
+                },
+                {
+                    "lang": "cpp",
+                    "value": "auto doc_value = make_document(\n     kvp(\"name\", \"MongoDB\"),\n     kvp(\"type\", \"database\"),\n     kvp(\"count\", 1),\n     kvp(\"versions\", make_array(\"v6.0\", \"v5.0\", \"v4.4\", \"v4.2\", \"v4.0\", \"v3.6\")),\n     kvp(\"info\", make_document(kvp(\"x\", 203), kvp(\"y\", 102)))\n );"
+                },
+                {
+                    "lang": "cpp",
+                    "value": "auto doc_view = doc_value.view();"
+                },
+                {
+                    "lang": "cpp",
+                    "value": "auto element = doc_view[\"name\"];\nassert(element.type() == bsoncxx::type::k_string);\nauto name = element.get_string().value; // For C++ driver version < 3.7.0, use get_utf8()\nassert(0 == name.compare(\"MongoDB\"));"
+                },
+                {
+                    "lang": "cpp",
+                    "value": "auto insert_one_result = collection.insert_one(make_document(kvp(\"i\", 0)));"
+                },
+                {
+                    "lang": "cpp",
+                    "value": "assert(insert_one_result);  // Acknowledged writes return results."
+                },
+                {
+                    "lang": "cpp",
+                    "value": "auto doc_id = insert_one_result->inserted_id();\nassert(doc_id.type() == bsoncxx::type::k_oid);"
+                },
+                {
+                    "lang": "cpp",
+                    "value": "std::vector<bsoncxx::document::value> documents;\ndocuments.push_back(make_document(kvp(\"i\", 1)));\ndocuments.push_back(make_document(kvp(\"i\", 2)));"
+                },
+                {
+                    "lang": "cpp",
+                    "value": "auto insert_many_result = collection.insert_many(documents);\nassert(insert_many_result);  // Acknowledged writes return results."
+                },
+                {
+                    "lang": "cpp",
+                    "value": "auto doc0_id = insert_many_result->inserted_ids().at(0);\nauto doc1_id = insert_many_result->inserted_ids().at(1);\nassert(doc0_id.type() == bsoncxx::type::k_oid);\nassert(doc1_id.type() == bsoncxx::type::k_oid);"
+                },
+                {
+                    "lang": "cpp",
+                    "value": "auto find_one_result = collection.find_one({});\nif (find_one_result) {\n    // Do something with *find_one_result\n}\nassert(find_one_result);"
+                },
+                {
+                    "lang": "cpp",
+                    "value": "auto cursor_all = collection.find({});\nfor (auto doc : cursor_all) {\n    // Do something with doc\n    assert(doc[\"_id\"].type() == bsoncxx::type::k_oid);\n}"
+                },
+                {
+                    "lang": "cpp",
+                    "value": "auto cursor_all = collection.find({});\nstd::cout << \"collection \" << collection.name()\n          << \" contains these documents:\" << std::endl;\nfor (auto doc : cursor_all) {\n    std::cout << bsoncxx::to_json(doc, bsoncxx::ExtendedJsonMode::k_relaxed) << std::endl;\n}\nstd::cout << std::endl;"
+                },
+                {
+                    "lang": "none",
+                    "value": "collection test contains these documents:\n{ \"_id\" : { \"$oid\" : \"6409edb48c37f371c70f03a1\" }, \"i\" : 0 }\n{ \"_id\" : { \"$oid\" : \"6409edb48c37f371c70f03a2\" }, \"i\" : 1 }\n{ \"_id\" : { \"$oid\" : \"6409edb48c37f371c70f03a3\" }, \"i\" : 2 }"
+                },
+                {
+                    "lang": "cpp",
+                    "value": "auto find_one_filtered_result = collection.find_one(make_document(kvp(\"i\", 0)));\nif (find_one_filtered_result) {\n    // Do something with *find_one_filtered_result\n}"
+                },
+                {
+                    "lang": "cpp",
+                    "value": "auto cursor_filtered =\n    collection.find(make_document(kvp(\"i\", make_document(kvp(\"$gt\", 0), kvp(\"$lte\", 2)))));\nfor (auto doc : cursor_filtered) {\n    // Do something with doc\n    assert(doc[\"_id\"].type() == bsoncxx::type::k_oid);\n}"
+                },
+                {
+                    "lang": "cpp",
+                    "value": "auto update_one_result =\n    collection.update_one(make_document(kvp(\"i\", 0)),\n                          make_document(kvp(\"$set\", make_document(kvp(\"foo\", \"bar\")))));\nassert(update_one_result);  // Acknowledged writes return results.\nassert(update_one_result->modified_count() == 1);"
+                },
+                {
+                    "lang": "cpp",
+                    "value": "auto update_many_result =\n    collection.update_many(make_document(kvp(\"i\", make_document(kvp(\"$gt\", 0)))),\n                            make_document(kvp(\"$set\", make_document(kvp(\"foo\", \"buzz\")))));\nassert(update_many_result);  // Acknowledged writes return results.\nassert(update_many_result->modified_count() == 2);"
+                },
+                {
+                    "lang": "cpp",
+                    "value": "auto delete_one_result = collection.delete_one(make_document(kvp(\"i\", 0)));\nassert(delete_one_result);  // Acknowledged writes return results.\nassert(delete_one_result->deleted_count() == 1);"
+                },
+                {
+                    "lang": "cpp",
+                    "value": "auto delete_many_result =\n    collection.delete_many(make_document(kvp(\"i\", make_document(kvp(\"$gt\", 0)))));\nassert(delete_many_result);  // Acknowledged writes return results.\nassert(delete_many_result->deleted_count() == 2);"
+                },
+                {
+                    "lang": "json",
+                    "value": "{ \"index1\": \"<type>\", \"index2\": \"<type>\" }"
+                },
+                {
+                    "lang": "cpp",
+                    "value": "auto index_specification = make_document(kvp(\"i\", 1));\ncollection.create_index(std::move(index_specification));"
+                }
+            ],
+            "preview": "See the full code for this tutorial in\ntutorial.cpp.",
+            "tags": "tutorial, getting starting, hello world",
+            "facets": {
+                "genre": [
+                    "tutorial"
+                ],
+                "target_product": [
+                    "drivers"
+                ],
+                "programming_language": [
+                    "cpp"
+                ]
+            }
+        },
+        {
+            "slug": "working-with-bson",
+            "title": "Working with BSON",
+            "headings": [
+                "Document Builders",
+                "List Builder",
+                "\"One-off\" Builder Functions",
+                "Basic Builder",
+                "Building Arrays in Loops",
+                "Owning BSON Documents",
+                "Non-owning BSON Documents (views)",
+                "Optionally-owning BSON Documents (view_or_value)",
+                "BSON Document Lifetime",
+                "Printing BSON Documents",
+                "Getting Fields out of BSON Documents",
+                "BSON Types",
+                "Decimal128"
+            ],
+            "paragraphs": "The mongocxx driver ships with a new library, bsoncxx.  This article will\ngo over some of the different types in this library, and how and when to\nuse each.  For more information and example code, see our\n examples . Document Builders Owning BSON Documents (values) Non-owning BSON Documents (views) Optionally-owning BSON Documents(view_or_value) BSON Document Lifetime Printing BSON Documents Getting Fields out of BSON Documents BSON Types The bsoncxx library offers four interfaces for building BSON: one-off\nfunctions, a basic builder, a list builder and a stream-based builder. bsoncxx::builder::basic::document \n bsoncxx::builder::stream::document The various methods of creating BSON documents and arrays are all\nequivalent. All interfaces will provide the same results, the choice of\nwhich to use is entirely aesthetic. The simplest way to create a BSON document or array is to use the JSON-like\nlist builder: More advanced uses of the list builder are shown in  this\nexample . The \"One-off\" builder creates documents and arrays in a single call.\nThese can be used when no additional logic (such as conditionals or loops)\nneeds to be used to create the object: More advanced uses of the basic builder are shown in  this\nexample . More advanced uses of the stream builder are shown in  this\nexample . In order to properly append each new value, a stream builder\nneeds to keep track of the state of the current document, including the nesting\nlevel and the type of the most recent value appended to the builder. The initial\nstream builder must  not  be reused after this state changes, which means that\nintermediate values must be stored in new variables if a document is being built\nwith the stream builder across multiple statements. Because doing this properly\nis difficult and the compiler error messages can be confusing, using the stream\nbuilder is discouraged. We recommend instead using the basic builder or the\n one-off builder functions . Sometimes it's necessary to build an array using a loop. With the basic\nbuilder, a top-level array can be built by simply calling  append  inside\na loop: To build a subarray in a loop, pass a lambda to  append  (or as the second\nargument of  kvp  if the subarray is contained by a document rather than\nan array): When building an array with the stream builder, it's important to be aware\nthat the return type of using the  <<  operator on a stream builder is not\nuniform. To build an array in a loop properly, intermediate values\nreturned by the stream builder should be stored in variables when the type\nchanges. One attempt to build an array from a stream builder using a loop\nmight look like the following: The result of any stream operation should be captured, so if you want\nto split the single statement within the for loop above into multiple\nstatements, you must capture each intermediate result. Additionally, the last\nstatement within the loop body should assign its result back to the in_array\nobject, so that the loop restarts in a consistent state: bsoncxx::document::value This type represents an actual BSON document, one that owns its buffer of\ndata.  These documents can be constructed from a builder by calling\n extract() : After calling  extract()  the builder is in a moved-from state,\nand should not be used. It's possible to create a  bsoncxx::document::value  in a single line using\nthe stream builder interface and the  finalize  token.  finalize  returns a\n document::value  from a temporary stream builder: bsoncxx::document::view This type is a view into an owning  bsoncxx::document::value . A  document::value  also implicitly converts to a  document::view : In performance-critical code, passing views around is preferable to using\nvalues because we can avoid excess copying. Also, passing a view of a\ndocument allows us to use the document multiple times: Many driver methods take a  document::view_or_value  parameter, for example,\n run_command : Such methods can take either a  document::view  or a  document::value . If\na  document::value  is passed in, it must be passed by r-value reference, so\nownership of the document is transferred to the method. You shouldn't need to create  view_or_value  types directly in order to use\nthe driver.  They are offered as a convenience method to allow driver\nmethods to take documents in either an owning or non-owning way.  The\n view_or_value  type also helps mitigate some of the lifetime issues\ndiscussed in the next section. It is imperative that  document::value  types outlive any  document::view  types that\nuse them. If the underlying value gets cleaned up, the view will be left\nwith a dangling pointer.  Consider a method that returns a view of a\nnewly-created document: This method returns a dangling view that should not be used: Attempting to create a view off of a builder will similarly create a\ndangerous view object, because the temporary value returned from\n extract()  isn't captured: bsoncxx::to_json() The bsoncxx library comes with a convenience method to convert BSON\ndocuments to strings for easy inspection: There is an analogous method,  from_json() , to build document::values out of existing JSON strings. The [ ] operator reaches into a BSON document to retrieve values: This returns a  bsoncxx::document::element , which holds the actual desired value: This feature is shown in more detail in  this example \nand  this example . The  BSON specification  provides a list\nof supported types.  These are represented in C++ using the\n b_xxx \ntype wrappers. Some BSON types don't necessarily have a native representation to wrap and\nare implemented via special classes. The  bsoncxx::decimal128  class represents a 128-bit IEEE 754-2008 decimal\nfloating point value.  We expect users to convert these to and from\nstrings, but provide access to the low and high 64-bit values if users need\nto convert to a native decimal128 type. You can see how to work with  bsoncxx::decimal128  in  this example .",
+            "code": [
+                {
+                    "lang": "cpp",
+                    "value": "// { \"hello\": \"world\" }\nbsoncxx::builder::list list_builder = {\"hello\", \"world\"};\nbsoncxx::document::view document = list_builder.view().get_document();"
+                },
+                {
+                    "lang": "cpp",
+                    "value": "using bsoncxx::builder::basic::kvp;\n\n// { \"hello\": \"world\" }\nbsoncxx::document::value document = bsoncxx::builder::basic::make_document(kvp(\"hello\", \"world\"));"
+                },
+                {
+                    "lang": "cpp",
+                    "value": "using bsoncxx::builder::basic::kvp;\n\n// { \"hello\" : \"world\" }\nbsoncxx::builder::basic::document basic_builder{};\nbasic_builder.append(kvp(\"hello\", \"world\"));\nbsoncxx::document::value document = basic_builder.extract();"
+                },
+                {
+                    "lang": "cpp",
+                    "value": "// { \"hello\" : \"world\" }\n\nusing bsoncxx::builder::stream;\nbsoncxx::document::value document = stream::document{} << \"hello\" << \"world\" << stream::finalize;"
+                },
+                {
+                    "lang": "cpp",
+                    "value": "// [ 1, 2, 3 ]\n\nconst auto elements = {1, 2, 3};\nauto array_builder = bsoncxx::builder::basic::array{};\n\nfor (const auto& element : elements) {\n    array_builder.append(element);\n}"
+                },
+                {
+                    "lang": "cpp",
+                    "value": "// { \"foo\" : [ 1, 2, 3 ] }\n\nusing bsoncxx::builder::basic::kvp;\nusing bsoncxx::builder::basic::sub_array;\n\nconst auto elements = {1, 2, 3};\nauto doc = bsoncxx::builder::basic::document{};\ndoc.append(kvp(\"foo\", [&elements](sub_array child) {\n    for (const auto& element : elements) {\n        child.append(element);\n    }\n}));"
+                },
+                {
+                    "lang": "cpp",
+                    "value": "// { \"subdocs\" : [ { \"key\" : 1 }, { \"key\" : 2 }, { \"key\" : 3 } ], \"another_key\" : 42 }\nusing namespace bsoncxx;\n\nbuilder::stream::document builder{};\n\nauto in_array = builder << \"subdocs\" << builder::stream::open_array;\nfor (auto&& e : {1, 2, 3}) {\n    in_array = in_array << builder::stream::open_document << \"key\" << e\n                        << builder::stream::close_document;\n}\nauto after_array = in_array << builder::stream::close_array;\n\nafter_array << \"another_key\" << 42;\n\ndocument::value doc = after_array << builder::stream::finalize;\n\nstd::cout << to_json(doc) << std::endl;"
+                },
+                {
+                    "lang": "cpp",
+                    "value": "for (auto && e : {1, 2, 3}) {\n   auto open_state = in_array << builder::stream::open_document;\n   auto temp_state = open_state << \"key\" << e;\n   in_array = temp_state << builder::stream::close_document;\n}"
+                },
+                {
+                    "lang": "cpp",
+                    "value": "bsoncxx::document::value basic_doc{basic_builder.extract()};\nbsoncxx::document::value stream_doc{stream_builder.extract()};"
+                },
+                {
+                    "lang": "cpp",
+                    "value": "// { \"finalize\" : \"is nifty\" }\nbsoncxx::document::value one_line = bsoncxx::builder::stream::document{} << \"finalize\" << \"is nifty\" << bsoncxx::builder::stream::finalize;"
+                },
+                {
+                    "lang": "cpp",
+                    "value": "bsoncxx::document::view document_view{document_value.view()};"
+                },
+                {
+                    "lang": "cpp",
+                    "value": "bsoncxx::document::view document_view{document_value};"
+                },
+                {
+                    "lang": "cpp",
+                    "value": "// { \"copies\" : { \"$gt\" : 100 } }\nauto query_value = document{} << \"copies\" << open_document << \"$gt\" << 100 << close_document << finalize;\n\n// Run the same query across different collections\nauto collection1 = db[\"science_fiction\"];\nauto cursor1 = collection1.find(query_value.view());\n\nauto collection2 = db[\"cookbooks\"];\nauto cursor2 = collection2.find(query_value.view());"
+                },
+                {
+                    "lang": "cpp",
+                    "value": "bsoncxx::document::value run_command(bsoncxx::document::view_or_value command);"
+                },
+                {
+                    "lang": "cpp",
+                    "value": "document::value ping = document{} << \"ping\" << 1 << finalize;\n\n// You can pass a document::view into run_command()\ndb.run_command(ping.view());\n\n// Or you can move in a document::value\ndb.run_command(std::move(ping));"
+                },
+                {
+                    "lang": "cpp",
+                    "value": "bsoncxx::document::view make_a_dangling_view() {\n   bsoncxx::builder::basic::document builder{};\n   builder.append(kvp(\"hello\", \"world\"));\n\n   // This creates a document::value on the stack that will disappear when we return.\n   bsoncxx::document::value stack_value{builder.extract()};\n\n   // We're returning a view of the local value\n   return stack_value.view(); // Bad!!\n}"
+                },
+                {
+                    "lang": "cpp",
+                    "value": "// This view contains a dangling pointer\nbsoncxx::document::view dangling_view = make_a_dangling_view(); // Warning!!"
+                },
+                {
+                    "lang": "cpp",
+                    "value": "bsoncxx::builder::stream::document temp_builder{};\ntemp_builder << \"oh\" << \"no\";\nbsoncxx::document::view dangling_view = temp_builder.extract().view(); // Bad!!"
+                },
+                {
+                    "lang": "cpp",
+                    "value": "bsoncxx::document::value = document{} << \"I am\" << \"a BSON document\" << finalize;\nstd::cout << bsoncxx::to_json(doc.view()) << std::endl;"
+                },
+                {
+                    "lang": "cpp",
+                    "value": "// doc_view = { \"store\" : \"Key Foods\", \"fruits\" : [ \"apple\", \"banana\" ] }\nauto store = doc_view[\"store\"];\nauto first_fruit = doc_view[\"fruits\"][0];"
+                },
+                {
+                    "lang": "cpp",
+                    "value": "document::element store_ele{doc_view[\"store\"]};\nif (store_ele) {\n    // this block will only execute if \"store\" was found in the document\n    std::cout << \"Examining inventory at \" << to_json(store_ele.get_value()) << std::endl;\n}"
+                }
+            ],
+            "preview": "The mongocxx driver ships with a new library, bsoncxx.  This article will\ngo over some of the different types in this library, and how and when to\nuse each.  For more information and example code, see our\nexamples.",
+            "tags": "bson, concert, schema, types",
+            "facets": {
+                "genre": [
+                    "reference"
+                ],
+                "target_product": [
+                    "drivers"
+                ],
+                "programming_language": [
+                    "cpp"
+                ]
+            }
+        },
+        {
+            "slug": "installation/windows",
+            "title": "Installation on Windows",
+            "headings": [
+                "Step 1: Choose a C++17 polyfill",
+                "Step 2: Download the latest version of the mongocxx driver",
+                "Step 3: Configure the driver",
+                "Configuring with mongocxx 3.7.0 and Older",
+                "Configuring with mongocxx 3.1.x or 3.0.x",
+                "Step 4: Build and install the driver"
+            ],
+            "paragraphs": "First,  choose a C++17 polyfill library . The most reliable starting point for building the mongocxx driver is the latest\nrelease tarball. The  mongocxx releases \npage will have links to the release tarball for the version you wish you install.  For\nexample, to download version 3.10.0: Make sure you change to the  build  directory of whatever source tree you\nobtain. On Windows, the C++ driver is configured as follows (adjusting the path of the CMake executable as appropriate to your system): The example above assumes: To build with Visual Studio 2017 without a C++17 polyfill, configure as follows: Boost is found in  C:\\local\\boost_1_60_0 . mongocxx  is to be installed into  C:\\mongo-cxx-driver . To build versions 3.7.0 and older without a C++17 polyfill, it is necessary to\nconfigure with additional options: /Zc:__cplusplus  to opt into the correct definition of  __cplusplus  ( problem described here ) /EHsc  to enable recommended  exception handling behavior . Build and install the driver. Use  --config  to select a build configuration (e.g.  Debug ,  RelWithDebInfo ,  Release ): The driver can be uninstalled at a later time in one of two ways.  First,\nthe uninstall target can be called: Second, the uninstall script can be called:",
+            "code": [
+                {
+                    "lang": "bash",
+                    "value": "curl -OL https://github.com/mongodb/mongo-cxx-driver/releases/download/r3.10.0/mongo-cxx-driver-r3.10.0.tar.gz\ntar -xzf mongo-cxx-driver-r3.10.0.tar.gz\ncd mongo-cxx-driver-r3.10.0/build"
+                },
+                {
+                    "lang": "bash",
+                    "value": "'C:\\Program Files (x86)\\CMake\\bin\\cmake.exe' .. \\\n     -G \"Visual Studio 14 2015\" -A \"x64\"        \\\n    -DBOOST_ROOT=C:\\local\\boost_1_60_0          \\\n    -DCMAKE_INSTALL_PREFIX=C:\\mongo-cxx-driver"
+                },
+                {
+                    "lang": "bash",
+                    "value": "'C:\\Program Files (x86)\\CMake\\bin\\cmake.exe' .. \\\n    -G \"Visual Studio 15 2017\" -A \"x64\"         \\\n    -DCMAKE_CXX_STANDARD=17                     \\\n    -DCMAKE_INSTALL_PREFIX=C:\\mongo-cxx-driver  \\"
+                },
+                {
+                    "lang": "bash",
+                    "value": "'C:\\Program Files (x86)\\CMake\\bin\\cmake.exe' .. \\\n    -G \"Visual Studio 15 2017\" -A \"x64\"         \\\n    -DCMAKE_CXX_STANDARD=17                     \\\n    -DCMAKE_CXX_FLAGS=\"/Zc:__cplusplus /EHsc\"   \\\n    -DCMAKE_INSTALL_PREFIX=C:\\mongo-cxx-driver  \\"
+                },
+                {
+                    "lang": "bash",
+                    "value": "cmake ..                                            \\\n    -DLIBMONGOC_DIR=C:\\mongo-c-driver               \\\n    -DCMAKE_INSTALL_PREFIX=C:\\mongo-cxx-driver"
+                },
+                {
+                    "lang": "bash",
+                    "value": "cmake --build . --config RelWithDebInfo\ncmake --build . --target install --config RelWithDebInfo"
+                },
+                {
+                    "lang": "bash",
+                    "value": "cmake --build . --target uninstall"
+                },
+                {
+                    "lang": "none",
+                    "value": "C:\\opt\\mongo-cxx-driver\\share\\mongo-cxx-driver\\uninstall.cmd"
+                }
+            ],
+            "preview": "First, choose a C++17 polyfill library.",
+            "tags": null,
+            "facets": {
+                "genre": [
+                    "reference"
+                ],
+                "target_product": [
+                    "drivers"
+                ],
+                "programming_language": [
+                    "cpp"
+                ]
+            }
+        },
+        {
+            "slug": "installation/macos",
+            "title": "Installation on macOS",
+            "headings": [
+                "Step 1: Choose a C++17 polyfill",
+                "Step 2: Download the latest version of the mongocxx driver",
+                "Step 3: Configure the driver",
+                "Step 4: Build and install the driver"
+            ],
+            "paragraphs": "First,  choose a C++17 polyfill library . The most reliable starting point for building the mongocxx driver is the latest\nrelease tarball. The  mongocxx releases \npage will have links to the release tarball for the version you wish you install.  For\nexample, to download version 3.10.0: Make sure you change to the  build  directory of whatever source tree you\nobtain. Without additional configuration,  mongocxx  installs into its local build\ndirectory as a courtesy to those who build from source. To configure\n mongocxx  for installation into  /usr/local  as well, use the following\n cmake  command: These options can be freely mixed with a C++17 polyfill option. For instance, this is how a user\nwould run the command above with the Boost polyfill option: Build and install the driver: The driver can be uninstalled at a later time in one of two ways.  First,\nthe uninstall target can be called: Second, the uninstall script can be called:",
+            "code": [
+                {
+                    "lang": "bash",
+                    "value": "curl -OL https://github.com/mongodb/mongo-cxx-driver/releases/download/r3.10.0/mongo-cxx-driver-r3.10.0.tar.gz\ntar -xzf mongo-cxx-driver-r3.10.0.tar.gz\ncd mongo-cxx-driver-r3.10.0/build"
+                },
+                {
+                    "lang": "bash",
+                    "value": "cmake ..                                \\\n    -DCMAKE_BUILD_TYPE=Release          \\\n    -DMONGOCXX_OVERRIDE_DEFAULT_INSTALL_PREFIX=OFF"
+                },
+                {
+                    "lang": "bash",
+                    "value": "cmake ..                                            \\\n    -DCMAKE_BUILD_TYPE=Release                      \\\n    -DBSONCXX_POLY_USE_BOOST=1                      \\\n    -DMONGOCXX_OVERRIDE_DEFAULT_INSTALL_PREFIX=OFF"
+                },
+                {
+                    "lang": "bash",
+                    "value": "cmake --build .\nsudo cmake --build . --target install"
+                },
+                {
+                    "lang": "bash",
+                    "value": "sudo cmake --build . --target uninstall"
+                },
+                {
+                    "lang": "bash",
+                    "value": "sudo <install-dir>/share/mongo-cxx-driver/uninstall.sh"
+                }
+            ],
+            "preview": "First, choose a C++17 polyfill library.",
+            "tags": null,
+            "facets": {
+                "genre": [
+                    "reference"
+                ],
+                "target_product": [
+                    "drivers"
+                ],
+                "programming_language": [
+                    "cpp"
+                ]
+            }
+        },
+        {
+            "slug": "installation/linux",
+            "title": "Installation on Linux",
+            "headings": [
+                "Step 1: Choose a C++17 polyfill",
+                "Step 2: Download the latest version of the mongocxx driver",
+                "Step 3: Configure the driver",
+                "Step 4: Build and install the driver"
+            ],
+            "paragraphs": "First,  choose a C++17 polyfill library . The most reliable starting point for building the mongocxx driver is the latest\nrelease tarball. The  mongocxx releases \npage will have links to the release tarball for the version you wish you install.  For\nexample, to download version 3.10.0: Make sure you change to the  build  directory of whatever source tree you\nobtain. Without additional configuration,  mongocxx  installs into its local build\ndirectory as a courtesy to those who build from source. To configure  mongocxx \nfor installation into  /usr/local  as well, use the following\n cmake  command: These options can be freely mixed with a C++17 polyfill option. For instance, this is how a user\nwould run the command above with the Boost polyfill option: Build and install the driver: The driver can be uninstalled at a later time in one of two ways.  First,\nthe uninstall target can be called: Second, the uninstall script can be called:",
+            "code": [
+                {
+                    "lang": "bash",
+                    "value": "curl -OL https://github.com/mongodb/mongo-cxx-driver/releases/download/r3.10.0/mongo-cxx-driver-r3.10.0.tar.gz\ntar -xzf mongo-cxx-driver-r3.10.0.tar.gz\ncd mongo-cxx-driver-r3.10.0/build"
+                },
+                {
+                    "lang": "bash",
+                    "value": "cmake ..                                \\\n    -DCMAKE_BUILD_TYPE=Release          \\\n    -DMONGOCXX_OVERRIDE_DEFAULT_INSTALL_PREFIX=OFF"
+                },
+                {
+                    "lang": "bash",
+                    "value": "cmake ..                                            \\\n    -DCMAKE_BUILD_TYPE=Release                      \\\n    -DBSONCXX_POLY_USE_BOOST=1                      \\\n    -DMONGOCXX_OVERRIDE_DEFAULT_INSTALL_PREFIX=OFF"
+                },
+                {
+                    "lang": "bash",
+                    "value": "cmake --build .\nsudo cmake --build . --target install"
+                },
+                {
+                    "lang": "bash",
+                    "value": "sudo cmake --build . --target uninstall"
+                },
+                {
+                    "lang": "bash",
+                    "value": "sudo <install-dir>/share/mongo-cxx-driver/uninstall.sh"
+                }
+            ],
+            "preview": "First, choose a C++17 polyfill library.",
+            "tags": null,
+            "facets": {
+                "genre": [
+                    "reference"
+                ],
+                "target_product": [
+                    "drivers"
+                ],
+                "programming_language": [
+                    "cpp"
+                ]
+            }
+        },
+        {
+            "slug": "installation/advanced",
+            "title": "Advanced Configuration and Installation Options",
+            "headings": [
+                "Additional Options for Integrators",
+                "Installing the MongoDB C Driver",
+                "Advanced Configuration (Static Configurations)",
+                "Configuring with mongocxx 3.2.x or Newer",
+                "Configuring with mongocxx 3.5.0 or Newer",
+                "Disabling Tests",
+                "Installing to Non-Standard Directories",
+                "Configuring with mongocxx 3.1.x or 3.0.x",
+                "Fixing the Library not loaded error on macOS",
+                "Fixing the \"cannot open shared object file\" error on Linux"
+            ],
+            "paragraphs": "In the event that you are building the BSON C++ library and/or the C++ driver to embed with other components and you wish to avoid the potential for collision with components installed from a standard build or from a distribution package manager, you can make use of the  BSONCXX_OUTPUT_BASENAME  and  MONGOCXX_OUTPUT_BASENAME  options to  cmake . The above command would produce libraries named  libcustom_bsoncxx.so  and  libcustom_mongocxx.so  (or with the extension appropriate for the build platform).  Those libraries could be placed in a standard system directory or in an alternate location and could be linked to by specifying something like  -lcustom_mongocxx -lcustom_bsoncxx  on the linker command line (possibly adjusting the specific flags to those required by your linker). The mongocxx driver builds on top of the  MongoDB C driver . The build of mongocxx-3.9.0 automatically downloads and installs the C driver if the C driver is not detected.\nTo use an existing install of the C driver, set  CMAKE_PREFIX_PATH  to the directory containing the C driver install. Unless you know that your package manager offers a sufficiently recent version, you\nwill need to download and build from the source code. Get a tarball from\nthe  C Driver release \npage. Follow the instructions for building from a tarball at\n Installing libmongoc . Industry best practices and some regulations require the use of TLS 1.1\nor newer. The MongoDB C Driver supports TLS 1.1 on Linux if OpenSSL is\nat least version 1.0.1. On macOS and Windows, the C Driver uses native\nTLS implementations that support TLS 1.1. For mongocxx-3.10.x, libmongoc 1.25.0 or later is required. For mongocxx-3.9.x, libmongoc 1.25.0 or later is required. For mongocxx-3.8.x, libmongoc 1.24.0 or later is required. For mongocxx-3.7.x, libmongoc 1.22.1 or later is required. For mongocxx-3.6.x, libmongoc 1.17.0 or later is required. For mongocxx-3.5.x, libmongoc 1.15.0 or later is required. For mongocxx-3.4.x, libmongoc 1.13.0 or later is required. For mongocxx-3.3.x, libmongoc 1.10.1 or later is required. For mongocxx-3.2.x, libmongoc 1.9.2 or later is required. For mongocxx-3.1.4+, libmongoc 1.7.0 or later is required. For mongocxx-3.1.[0-3], libmongoc 1.5.0 or later is required. For mongocxx-3.0.x, we recommend the last 1.4.x version of libmongoc The following sub-sections detail advanced options for configuring the C++ driver and/or its\ndependencies as static libraries rather than the typical shared libraries.  These options will\nproduce library artifacts that will behave differently.  Ensure you have a complete understanding\nof the implications of the various linking approaches before utilizing these options. Users have the option to build  mongocxx  as a static library.  This is not recommended for novice\nusers.  A user can enable this behavior with the  -DBUILD_SHARED_LIBS  option: Users have the option to build  mongocxx  as both static and shared libraries. A user can enable\nthis behavior with the  -DBUILD_SHARED_AND_STATIC_LIBS  option: Users have the option to build  mongocxx  as a shared library that has statically linked\n libmongoc .  This is not recommended for novice users.  A user can enable this behavior with the\n -DBUILD_SHARED_LIBS_WITH_STATIC_MONGOC  option: Pass  -DENABLE_TESTS=OFF  as a cmake option to disable configuration of test targets. To install the C++ driver to a non-standard directory, specify  CMAKE_INSTALL_PREFIX  to the desired\ninstall path: Consider also specifying the  -DCMAKE_INSTALL_RPATH=  option to the  lib  directory of the install.\nThis may enable libmongocxx.so to locate libbsoncxx.so: If the C driver is installed to a non-standard directory, specify  CMAKE_PREFIX_PATH  to the install\npath of the C driver: If you need multiple paths in a CMake PATH variable, separate them with a semicolon like this:  -DCMAKE_PREFIX_PATH=\"/your/cdriver/prefix;/some/other/path\" Instead of the  -DCMAKE_PREFIX_PATH  option, users must specify the  libmongoc  installation\ndirectory by using the  -DLIBMONGOC_DIR  and  -DLIBBSON_DIR  options: Applications linking to a non-standard directory installation may encounter an error loading the C++ driver at runtime. Example: The default  install name  of the C++ driver on macOS includes  @rpath : Including  @rpath  in the install name allows linking applications to control the list of search paths for the library. app.out  includes the load command for  @rpath/libmongocxx._noabi.dylib .  app.out  does not have entries to substitute for  @rpath . There are several ways to consider solving this on macOS: Pass  DYLD_FALLBACK_LIBRARY_PATH  to the directory containing the C++ driver libraries: Alternatively, the linker option  -Wl,-rpath  can be passed to add entries to substitute for  @rpath : If building the application with cmake, the  Default RPATH settings  include the full RPATH to all used libraries in the build tree. However, when installing, cmake will clear the RPATH of these targets so they are installed with an empty RPATH. This may result in a  Library not loaded  error after install. Example: Consider setting  -DCMAKE_INSTALL_RPATH_USE_LINK_PATH=TRUE  so the rpath for the executable is kept in the install target. See the cmake documentation for  RPATH handling  for more information. Applications linking to a non-standard directory installation may encounter an error loading the C++ driver at runtime. Example: There are several ways to consider solving this on Linux: Pass  LD_LIBRARY_PATH  to the directory containing the C++ driver libraries: Alternatively, the linker option  -Wl,-rpath  can be passed to add  rpath  entries: If building the application with cmake, the  Default RPATH settings  include the full RPATH to all used libraries in the build tree. However, when installing, cmake will clear the RPATH of these targets so they are installed with an empty RPATH. This may result in a  Library not loaded  error after install. Example: Consider setting  -DCMAKE_INSTALL_RPATH_USE_LINK_PATH=TRUE  so the rpath for the executable is kept in the install target. See the cmake documentation for  RPATH handling  for more information.",
+            "code": [
+                {
+                    "lang": "bash",
+                    "value": "cmake ..                                            \\\n    -DBSONCXX_OUTPUT_BASENAME=custom_bsoncxx        \\\n    -DMONGOCXX_OUTPUT_BASENAME=custom_mongocxx"
+                },
+                {
+                    "lang": "bash",
+                    "value": "cmake ..                                            \\\n    -DCMAKE_BUILD_TYPE=Release                      \\\n    -DBUILD_SHARED_LIBS=OFF"
+                },
+                {
+                    "lang": "bash",
+                    "value": "cmake ..                                            \\\n    -DCMAKE_BUILD_TYPE=Release                      \\\n    -DBUILD_SHARED_AND_STATIC_LIBS=ON"
+                },
+                {
+                    "lang": "bash",
+                    "value": "cmake ..                                            \\\n    -DCMAKE_BUILD_TYPE=Release                      \\\n    -DBUILD_SHARED_LIBS_WITH_STATIC_MONGOC=ON"
+                },
+                {
+                    "lang": "bash",
+                    "value": "cmake .. -DENABLE_TESTS=OFF\ncmake --build .. --target help\n# No test targets are configured."
+                },
+                {
+                    "lang": "bash",
+                    "value": "cmake ..                                            \\\n    -DCMAKE_BUILD_TYPE=Release                      \\\n    -DCMAKE_INSTALL_PREFIX=$HOME/mongo-cxx-driver"
+                },
+                {
+                    "lang": "bash",
+                    "value": "cmake ..                                             \\\n    -DCMAKE_BUILD_TYPE=Release                       \\\n    -DCMAKE_INSTALL_PREFIX=$HOME/mongo-cxx-driver    \\\n    -DCMAKE_INSTALL_RPATH=$HOME/mongo-cxx-driver/lib"
+                },
+                {
+                    "lang": "bash",
+                    "value": "cmake ..                                            \\\n    -DCMAKE_BUILD_TYPE=Release                      \\\n    -DCMAKE_PREFIX_PATH=$HOME/mongo-c-driver        \\\n    -DCMAKE_INSTALL_PREFIX=$HOME/mongo-cxx-driver"
+                },
+                {
+                    "lang": "bash",
+                    "value": "cmake ..                                            \\\n    -DCMAKE_BUILD_TYPE=Release                      \\\n    -DLIBMONGOC_DIR=$HOME/mongo-c-driver            \\\n    -DLIBBSON_DIR=$HOME/mongo-c-driver              \\\n    -DCMAKE_INSTALL_PREFIX=$HOME/mongo-cxx-driver"
+                },
+                {
+                    "lang": "bash",
+                    "value": "# Tell pkg-config where to find C++ driver installation.\nexport PKG_CONFIG_PATH=$HOME/mongo-cxx-driver/lib/pkgconfig\nclang++ app.cpp -std=c++11 $(pkg-config --cflags --libs libmongocxx) -o ./app.out\n./app.out\n# Prints the following error:\n# dyld[3217]: Library not loaded: '@rpath/libmongocxx._noabi.dylib'\n#   Referenced from: '/Users/kevin.albertson/code/app.out'\n#   Reason: tried: '/usr/local/lib/libmongocxx._noabi.dylib' (no such file), '/usr/lib/libmongocxx._noabi.dylib' (no such file)\n# zsh: abort      ./app.out"
+                },
+                {
+                    "lang": "bash",
+                    "value": "otool -D $HOME/mongo-cxx-driver/lib/libmongocxx.dylib\n# Prints:\n# /Users/kevin.albertson/mongo-cxx-driver/lib/libmongocxx.dylib:\n# @rpath/libmongocxx._noabi.dylib"
+                },
+                {
+                    "lang": "bash",
+                    "value": "DYLD_FALLBACK_LIBRARY_PATH=$HOME/mongo-cxx-driver/lib ./app.out\n# Prints \"successfully connected with C++ driver\""
+                },
+                {
+                    "lang": "bash",
+                    "value": "# Tell pkg-config where to find C++ driver installation.\nexport PKG_CONFIG_PATH=$HOME/mongo-cxx-driver/lib/pkgconfig\n# Pass the linker option -rpath to set an rpath in the final executable.\nclang++ app.cpp -std=c++11 -Wl,-rpath,$HOME/mongo-cxx-driver/lib $(pkg-config --cflags --libs libmongocxx) -o ./app.out\n./app.out\n# Prints \"successfully connected with C++ driver\""
+                },
+                {
+                    "lang": "bash",
+                    "value": "# Build application ``app`` using the C++ driver from a non-standard install.\ncmake \\\n    -DCMAKE_PREFIX_PATH=$HOME/mongo-cxx-driver \\\n    -DCMAKE_INSTALL_PREFIX=$HOME/app \\\n    -DCMAKE_CXX_STANDARD=11 \\\n    -Bcmake-build -S.\ncmake --build cmake-build --target app.out\n# Running app.out from build tree includes rpath to C++ driver.\n./cmake-build ./cmake-build/app.out\n# Prints: \"successfully connected with C++ driver\"\n\ncmake --build cmake-build --target install\n# Running app.out from install tree does not include rpath to C++ driver.\n$HOME/app/bin/app.out\n# Prints \"Library not loaded\" error."
+                },
+                {
+                    "lang": "bash",
+                    "value": "# Build application ``app`` using the C++ driver from a non-standard install.\n# Use CMAKE_INSTALL_RPATH_USE_LINK_PATH=TRUE to keep rpath entry on installed app.\ncmake \\\n    -DCMAKE_PREFIX_PATH=$HOME/mongo-cxx-driver \\\n    -DCMAKE_INSTALL_PREFIX=$HOME/app \\\n    -DCMAKE_INSTALL_RPATH_USE_LINK_PATH=TRUE \\\n    -DCMAKE_CXX_STANDARD=11 \\\n    -Bcmake-build -S.\n\ncmake --build cmake-build --target install\n$HOME/app/bin/app.out\n# Prints \"successfully connected with C++ driver\""
+                },
+                {
+                    "lang": "bash",
+                    "value": "# Tell pkg-config where to find C++ driver installation.\nexport PKG_CONFIG_PATH=$HOME/mongo-cxx-driver/lib/pkgconfig\ng++ -std=c++11 app.cpp $(pkg-config --cflags --libs libmongocxx) -o ./app.out\n./app.out\n# Prints the following error:\n# ./app.out: error while loading shared libraries: libmongocxx.so._noabi: cannot open shared object file: No such file or directory"
+                },
+                {
+                    "lang": "bash",
+                    "value": "LD_LIBRARY_PATH=$HOME/mongo-cxx-driver/lib ./app.out\n# Prints \"successfully connected with C++ driver\""
+                },
+                {
+                    "lang": "bash",
+                    "value": "# Tell pkg-config where to find C++ driver installation.\nexport PKG_CONFIG_PATH=$HOME/mongo-cxx-driver/lib/pkgconfig\n# Pass the linker option -rpath to set an rpath in the final executable.\ng++ app.cpp -std=c++11 -Wl,-rpath,$HOME/mongo-cxx-driver/lib $(pkg-config --cflags --libs libmongocxx) -o ./app.out\n./app.out\n# Prints \"successfully connected with C++ driver\""
+                },
+                {
+                    "lang": "bash",
+                    "value": "# Build application ``app`` using the C++ driver from a non-standard install.\ncmake \\\n    -DCMAKE_PREFIX_PATH=$HOME/mongo-cxx-driver \\\n    -DCMAKE_INSTALL_PREFIX=$HOME/app \\\n    -DCMAKE_CXX_STANDARD=11 \\\n    -Bcmake-build -S.\ncmake --build cmake-build --target app.out\n# Running app.out from build tree includes rpath to C++ driver.\n./cmake-build ./cmake-build/app.out\n# Prints: \"successfully connected with C++ driver\"\n\ncmake --build cmake-build --target install\n# Running app.out from install tree does not include rpath to C++ driver.\n$HOME/app/bin/app.out\n# Prints \"cannot open shared object file\" error."
+                },
+                {
+                    "lang": "bash",
+                    "value": "# Build application ``app`` using the C++ driver from a non-standard install.\n# Use CMAKE_INSTALL_RPATH_USE_LINK_PATH=TRUE to keep rpath entry on installed app.\ncmake \\\n    -DCMAKE_PREFIX_PATH=$HOME/mongo-cxx-driver \\\n    -DCMAKE_INSTALL_PREFIX=$HOME/app \\\n    -DCMAKE_INSTALL_RPATH_USE_LINK_PATH=TRUE \\\n    -DCMAKE_CXX_STANDARD=11 \\\n    -Bcmake-build -S.\n\ncmake --build cmake-build --target install\n$HOME/app/bin/app.out\n# Prints \"successfully connected with C++ driver\""
+                }
+            ],
+            "preview": "In the event that you are building the BSON C++ library and/or the C++ driver to embed with other components and you wish to avoid the potential for collision with components installed from a standard build or from a distribution package manager, you can make use of the BSONCXX_OUTPUT_BASENAME and MONGOCXX_OUTPUT_BASENAME options to cmake.",
+            "tags": null,
+            "facets": {
+                "genre": [
+                    "reference"
+                ],
+                "target_product": [
+                    "drivers"
+                ],
+                "programming_language": [
+                    "cpp"
+                ]
+            }
+        },
+        {
+            "slug": "",
+            "title": "MongoDB C++ Driver",
+            "headings": [
+                "Driver Status by Family and Version",
+                "Current Driver",
+                "Compatibility",
+                "MongoDB Compatibility",
+                "Compatibility Table Legend",
+                "Language Compatibility",
+                "How to get help",
+                "License"
+            ],
+            "paragraphs": "Welcome to the MongoDB C++ driver.  On this site, you'll find documentation\nto help you get the most from MongoDB and C++.  If you're just starting\nout, take a look at these pages first: Installing mongocxx Quick-start tutorial Stability indicates whether this driver is recommended for production use.\nCurrently, no drivers guarantee API or ABI stability. For documentation about previous releases, see the  legacy documentation . Family/version Stability Development Purpose (repo master branch) Unstable Active development New feature development mongocxx 3.10.x Stable Bug fixes only Current stable C++ driver release mongocxx 3.9.x Stable None Previous stable C++ driver release mongocxx 3.8.x Stable None Previous stable C++ driver release mongocxx 3.7.x Stable None Previous stable C++ driver release mongocxx 3.6.x Stable None Previous stable C++ driver release mongocxx 3.5.x Stable None Previous stable C++ driver release mongocxx 3.4.x Stable None Previous stable C++ driver release mongocxx 3.3.x Stable None Previous stable C++ driver release mongocxx 3.2.x Stable None Previous stable C++ driver release mongocxx 3.1.x Stable None Previous stable C++ driver release mongocxx 3.0.x Stable None Previous stable C++ driver release  | The mongocxx is a ground-up rewrite of a C++ driver for MongoDB based on\n libmongoc .  It requires a C++11 compiler.  It is\nknown to build on x86 and x86-64 architectures for Linux, macOS,\nWindows, and FreeBSD. The mongocxx driver library includes a matching bson package, bsoncxx, that\nimplements the  BSON specification . This\nlibrary can be used standalone for object serialization and deserialization\neven when one is not using MongoDB at all. Releases of the mongocxx driver have version numbers like v3.x.y. There were no v2.x.y C++ drivers to avoid confusion with the deprecated legacy-0.0-26compat-2.x.y drivers. The following compatibility table specifies the recommended version or versions\nof the MongoDB C++ driver for use with a specific version of MongoDB. The first column lists the driver version. The driver does not support older versions of MongoDB. MongoDB ensures compatibility between the MongoDB Server and the drivers\nfor three years after the server version's end of life (EOL) date. To learn\nmore about the MongoDB release and EOL dates, see\n MongoDB Software Lifecycle Schedules . Icon Explanation \u2713 All features are supported. \u229b The Driver version will work with the MongoDB version, but not all\nnew MongoDB features are supported. No mark The Driver version is not tested with the MongoDB version. C++ Driver Version MongoDB 7.0 MongoDB 6.0 MongoDB 5.0 MongoDB 4.4 MongoDB 4.2 MongoDB 4.0 MongoDB 3.6 MongoDB 3.4 MongoDB 3.2 MongoDB 3.0 MongoDB 2.6 MongoDB 2.4 3.8+ \u2713 \u2713 \u2713 \u2713 \u2713 \u2713 \u2713 3.7 \u229b \u229b \u2713 \u2713 \u2713 \u2713 \u2713 3.6 \u229b \u229b \u229b \u2713 \u2713 \u2713 \u2713 \u2713 \u2713 \u2713 3.5 \u229b \u229b \u229b \u229b \u229b \u2713 \u2713 \u2713 \u2713 \u2713 3.4 \u229b \u229b \u229b \u229b \u229b \u2713 \u2713 \u2713 \u2713 \u2713 3.3 \u2713 \u2713 \u2713 \u2713 3.2 \u2713 \u2713 \u2713 \u2713 \u2713 3.1 \u2713 \u2713 \u2713 \u2713 \u2713 3.0 \u2713 \u2713 \u2713 \u2713 The following compatibility table specifies the recommended version or versions\nof the MongoDB C++ driver for use with a specific version of C++. The first column lists the driver version. For more information on how to read the compatibility tables, see our guide on  MongoDB Compatibility Tables . C++ Driver Version C++20 C++17 C++14 C++11 C++03 3.8+ \u2713 \u2713 \u2713 \u2713 <= 3.7 \u2713 \u2713 \u2713 1.x \u2713 \u2713 \u2713 Ask questions on our  MongoDB Community Forums . Visit our  Support Channels . See how to  report a bug . MongoDB C++ drivers are available under the terms of the Apache License, version 2.0.",
+            "code": [],
+            "preview": "Welcome to the MongoDB C++ driver.  On this site, you'll find documentation\nto help you get the most from MongoDB and C++.  If you're just starting\nout, take a look at these pages first:",
+            "tags": null,
+            "facets": {
+                "genre": [
+                    "reference"
+                ],
+                "target_product": [
+                    "drivers"
+                ],
+                "programming_language": [
+                    "cpp"
+                ]
+            }
+        }
+    ]
+}

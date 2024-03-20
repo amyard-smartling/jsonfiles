@@ -1,0 +1,487 @@
+{
+    "url": "http://mongodb.com/docs/atlas/government",
+    "includeInGlobalSearch": true,
+    "documents": [
+        {
+            "slug": "overview",
+            "title": "AtlasGov Overview",
+            "headings": [],
+            "paragraphs": "",
+            "code": [],
+            "preview": null,
+            "tags": null,
+            "facets": null
+        },
+        {
+            "slug": "getting-started",
+            "title": "Getting Started",
+            "headings": [],
+            "paragraphs": "MongoDB Atlas for Government  is a fully-managed cloud database for the U.S. government\n(federal agencies and state, local, and education (SLED) entities). This tutorial guides you through creating: An  AtlasGov  account An organization A project An accessible cluster A database user for your cluster",
+            "code": [],
+            "preview": "MongoDB Atlas for Government is a fully-managed cloud database for the U.S. government\n(federal agencies and state, local, and education (SLED) entities).",
+            "tags": null,
+            "facets": null
+        },
+        {
+            "slug": "clusters",
+            "title": "Clusters",
+            "headings": [
+                "Atlas for Government Considerations"
+            ],
+            "paragraphs": "Clusters are  MongoDB Atlas for Government -managed MongoDB deployments. A cluster can be\neither a  replica set  or a  sharded cluster . See the  Atlas  documentation to\n Configure Clusters . When you create a project, you can designate it as an  AWS GovCloud \nregion-only project. If you do not, that project is an\n AWS Standard  region-only project. You may only deploy clusters\nto the type of region that your project supports. You can only create clusters tier  M20  and above. Free and shared\ntier clusters are not available.",
+            "code": [],
+            "preview": "Clusters are MongoDB Atlas for Government-managed MongoDB deployments. A cluster can be\neither a replica set or a sharded cluster.",
+            "tags": null,
+            "facets": null
+        },
+        {
+            "slug": "database-access",
+            "title": "Database Users",
+            "headings": [
+                "Atlas for Government Considerations"
+            ],
+            "paragraphs": "Create database users to provide clients access to the clusters in your\nproject. A database user's access is determined by the roles assigned\nto the user.  AtlasGov  user roles are the same as\n Atlas User Roles .\nWhen you create a database user, the user is added to all clusters in\nyour  AtlasGov  project. This page covers  MongoDB Atlas for Government   database  user accounts. Database users\nare separate from  AtlasGov  users. Database users can access\nMongoDB databases, while  AtlasGov  users can access the\n AtlasGov  application itself. Database users who authenticate with\n SCRAM  must use  SCRAM-SHA-256 . See the  Atlas  documentation to\n Configure Database Users",
+            "code": [],
+            "preview": "Create database users to provide clients access to the clusters in your\nproject. A database user's access is determined by the roles assigned\nto the user. AtlasGov user roles are the same as\nAtlas User Roles.\nWhen you create a database user, the user is added to all clusters in\nyour AtlasGov project.",
+            "tags": null,
+            "facets": null
+        },
+        {
+            "slug": "support",
+            "title": "Support",
+            "headings": [
+                "Support Guarantees",
+                "Request Support",
+                "Organization Support",
+                "Project Support",
+                "Required Roles"
+            ],
+            "paragraphs": "Your  MongoDB Atlas for Government  subscription entitles you to a premium support plan. The same support guarantees that apply to  Atlas  apply to\n MongoDB Atlas for Government , including a 99.995% uptime Service Level Agreement (SLA).\nTo learn more about commercial  Atlas  support, see\n Support . If your project is designated as a GovCloud regions-only project, you\nare guaranteed support from US persons on US soil. Only  Organization Owners  can open a\nsupport case at the organization level. Organizations with no\nprojects cannot open a support case. Select your organization from the  Organizations  menu in\nthe navigation bar. Click  Support  in the sidebar. Select your organization from the  Organizations  menu in\nthe navigation bar. Select your project from the  Projects  menu in\nthe navigation bar. Next to the  Projects  menu, expand the\n Options  menu, then click  Project Support . To raise and view support cases, you must have the appropriate role: AtlasGov  user roles are the same as\n Atlas User Roles . Support Cases Scope Role Can View Project Any user with any role in the project Can Raise Project All user with any project role except the\n Project Read Only  role Can View and Raise Organization and Project Any user with the\n Organization Owner  for the organization",
+            "code": [],
+            "preview": "Your MongoDB Atlas for Government subscription entitles you to a premium support plan.",
+            "tags": null,
+            "facets": null
+        },
+        {
+            "slug": "atlas-search",
+            "title": "Atlas Search",
+            "headings": [],
+            "paragraphs": "MongoDB's  Atlas  Search feature offers fine-grained text indexing to\nenable advanced search functionality without any additional management.\n Atlas  Search is fully available in  MongoDB Atlas for Government . See the  Atlas  documentation to configure\n Atlas Search  indexes.",
+            "code": [],
+            "preview": "MongoDB's Atlas Search feature offers fine-grained text indexing to\nenable advanced search functionality without any additional management.\nAtlas Search is fully available in MongoDB Atlas for Government.",
+            "tags": null,
+            "facets": null
+        },
+        {
+            "slug": "import-data",
+            "title": "Migrate or Import Data into Your Cluster",
+            "headings": [],
+            "paragraphs": "The Atlas Live Migration Service can migrate your data from your\nexisting environment to  MongoDB Atlas for Government  with minimal impact to your\napp. Live Migration Service procedures for  Atlas  are also\napplicable to  AtlasGov . For an overview of the service and tutorials for common migrations, see\n Atlas Live Migration . For detailed information on importing data, see\n Migrate or Import Data into Your Cluster .",
+            "code": [],
+            "preview": "The Atlas Live Migration Service can migrate your data from your\nexisting environment to MongoDB Atlas for Government with minimal impact to your\napp. Live Migration Service procedures for Atlas are also\napplicable to AtlasGov.",
+            "tags": null,
+            "facets": null
+        },
+        {
+            "slug": "api",
+            "title": "API",
+            "headings": [
+                "Example Usage",
+                "See the Atlas Documentation",
+                "Creating a Project",
+                "Atlas for Government Considerations",
+                "Database Users",
+                "Clusters",
+                "Alerts",
+                "Third-Party Integration Settings",
+                "Datadog",
+                "Cloud Backups",
+                "Shared-Tier Snapshots and Restore Jobs",
+                "Online Archive",
+                "Network Peering",
+                "Private Endpoints",
+                "Monitoring and Logs",
+                "Encryption at Rest using Customer Key Management",
+                "Atlas Users",
+                "Cloud Provider Access",
+                "Atlas Stream Processing",
+                "Triggers"
+            ],
+            "paragraphs": "The  MongoDB Atlas for Government   API (Application Programming Interface)  functions in the same way as the  Atlas   API (Application Programming Interface) ,\nexcept that it uses the following base URL: AtlasGov  authenticates  API (Application Programming Interface)  requests with  SHA-256  using\n HTTP Digest Authentication . This  curl  example retrieves database users for a project: You can find your  PROJECT-ID  in your  Project Settings . You can generate an  API (Application Programming Interface)  key pair in your organization's\n Access Manager , under the  API Keys  tab. To learn more about using the  API (Application Programming Interface) , see the\n Atlas API . To configure the API, see\n Configure Atlas API Access . For a list of possible errors, see\n Atlas API Error Codes . By default, the  AtlasGov  API designates new projects for\nstandard region usage. To use the API to create a project for government regions, include\nthe following in your  POST  request data: You must designate projects for either standard or government\n( gov ) region usage upon creation. You cannot deploy clusters\nacross government and standard regions in the same project.  AWS (Amazon Web Services) \nis the only cloud provider for  AtlasGov . For detailed information on creating a project with the API,\nincluding an example request, see\n Create One Project . The following cloud providers, MongoDB products, and features are\nunavailable for all  API (Application Programming Interface)  resources: Many of the commercial  Atlas   API (Application Programming Interface)  resources are limited or\nunavailable: Azure (Microsoft Azure) GCP (Google Cloud Platform) Atlas  Data Lake Atlas  Online Archives Atlas  Triggers MongoDB Charts MongoDB Realm Free, shared, and  M10  clusters Database users who authenticate with\n SCRAM  must use  SCRAM-SHA-256 . AtlasGov  clusters must be tier  M20  or higher. Free and\nshared-tier clusters are not supported. Alerts related to payment methods are unavailable. Alerts can come from several different email addresses. For more\ninformation, see  Alerts and Communications . You must have the  Project Owner  role to\nconfigure a third-party monitoring integration. When integrated with Datadog,  AtlasGov  uses the Datadog for\nGovernment site (US1-FED). To learn more about US1-FED, see the  Datadog documentation . AWS Standard  and  AWS GovCloud  backups are not compatible\nwith one another. If you create a backup from a  AWS GovCloud \nregion-only project, you can only restore that data to a  AWS GovCloud \nregion-only project. The same is true for  AWS Standard  region-only\nprojects. Shared-tier clusters are unavailable in  AtlasGov . Online Archives are unavailable in  AtlasGov . You can only peer  AWS GovCloud  regions with MongoDB clusters in\n AWS GovCloud  regions. You can only peer  AWS Standard  regions\nwith MongoDB clusters in  AWS Standard  regions. AWS (Amazon Web Services)  is the only supported cloud provider for  AtlasGov . You can only link  AWS GovCloud  regions with MongoDB clusters in\n AWS GovCloud  regions. You can only link  AWS Standard  regions\nwith MongoDB clusters in  AWS Standard  regions. AWS (Amazon Web Services)  is the only supported cloud provider for  AtlasGov . In addition to the standard Atlas logging,\n AtlasGov  logs the username and IP address associated with all\nfailed login attempts, temporary lockouts and failed  API (Application Programming Interface)  digest\nauthentications. You must use KMS keys in  AWS GovCloud  regions to encrypt data in\n AWS GovCloud  region-only projects. You must use KMS keys in\n AWS Standard  regions to encrypt data in  AWS Standard \nregion-only projects. AWS (Amazon Web Services)  is the only supported cloud provider for  AtlasGov . You cannot create  MongoDB Atlas for Government  users.  MongoDB Atlas for Government  is available by\ninvitation only. AWS (Amazon Web Services)  is the only supported cloud provider for  AtlasGov . Atlas  Stream Processing is unavailable in  AtlasGov . Triggers are unavailable in  AtlasGov .",
+            "code": [
+                {
+                    "lang": "shell",
+                    "value": "https://cloud.mongodbgov.com/api/atlas/v1.0"
+                },
+                {
+                    "lang": "shell",
+                    "value": "curl --user \"{PUBLIC-KEY}:{PRIVATE-KEY}\" --digest \\\n  --header \"Accept: application/json\" \\\n  --header \"Content-Type: application/json\" \\\n  --include \\\n  --request GET \"https://cloud.mongodbgov.com/api/atlas/v1.0/groups/{PROJECT-ID}/databaseUsers?pretty=true\""
+                },
+                {
+                    "lang": "json",
+                    "value": "\"regionUsageRestrictions\" : \"GOV_REGIONS_ONLY\""
+                }
+            ],
+            "preview": "The MongoDB Atlas for Government API (Application Programming Interface) functions in the same way as the Atlas API (Application Programming Interface),\nexcept that it uses the following base URL:",
+            "tags": null,
+            "facets": null
+        },
+        {
+            "slug": "security",
+            "title": "Security",
+            "headings": [
+                "Preconfigured Security Features",
+                "TLS (Transport Layer Security)",
+                "FIPS (Federal Information Processing Standard) 140-2",
+                "Required Security Features",
+                "Optional Security Features",
+                "Encryption at Rest",
+                "VPC (Virtual Private Cloud) Peering",
+                "Private Endpoints"
+            ],
+            "paragraphs": "MongoDB Atlas for Government  and databases hosted in  AtlasGov  use\n TLS (Transport Layer Security)  1.2 to encrypt connections. This cannot be disabled. AtlasGov  automatically enables  FIPS (Federal Information Processing Standard)  140-2 for all databases. You  must  configure the following secruity features: IP access list , and Database user authentication . A subset of commercial  Atlas \n optional security features \nare available in  AtlasGov  with some limitations. See the  Atlas  documentation to configure\n Customer Key Management with AWS KMS . You must use KMS keys in  AWS GovCloud  regions to encrypt data in\n AWS GovCloud  region-only projects. You must use KMS keys in\n AWS Standard  regions to encrypt data in  AWS Standard \nregion-only projects. AWS (Amazon Web Services)  is the only supported cloud provider for  AtlasGov . See the  Atlas  documentation to\n Set up a Network Peering Connection You can only peer  AWS GovCloud  regions with MongoDB clusters in\n AWS GovCloud  regions. You can only peer  AWS Standard  regions\nwith MongoDB clusters in  AWS Standard  regions. AWS (Amazon Web Services)  is the only supported cloud provider for  AtlasGov . See the  Atlas  documentation to\n Set up a Private Endpoint . You can only link  AWS GovCloud  regions with MongoDB clusters in\n AWS GovCloud  regions. You can only link  AWS Standard  regions\nwith MongoDB clusters in  AWS Standard  regions. AWS (Amazon Web Services)  is the only supported cloud provider for  AtlasGov .",
+            "code": [],
+            "preview": "You must configure the following secruity features:",
+            "tags": null,
+            "facets": null
+        },
+        {
+            "slug": "",
+            "title": "MongoDB Atlas for Government",
+            "headings": [
+                "Using the AtlasGov Documentation"
+            ],
+            "paragraphs": "MongoDB Atlas for Government  is a fully-managed cloud database for the U.S. government\n(federal agencies and state, local, and education (SLED) entities),\ndeveloped by the same people that build MongoDB. MongoDB Atlas for Government , or  AtlasGov , supports a subset of the commercial\n MongoDB Atlas  features and some\nunique features. To learn more, see  Supported Features . This documentation provides tutorials for common tasks, broad\ncomparisons between  AtlasGov  features and their commercial\n Atlas  equivalents, and reference material for features unique to\n AtlasGov . Many procedures and reference materials are identical across\n AtlasGov  and commercial  Atlas . In those cases, this\ndocumentation provides links to the  Atlas  documentation.\n We recommend opening Atlas links in a new browser tab to save your place in the MongoDB AtlasGov documentation. Links to the  Atlas  documentation are presented: At the end of a section to expand on the topic, after highlighting\n AtlasGov  differences you should keep in mind, or As  Tips  for optional further reading on a topic.",
+            "code": [],
+            "preview": "MongoDB Atlas for Government is a fully-managed cloud database for the U.S. government\n(federal agencies and state, local, and education (SLED) entities),\ndeveloped by the same people that build MongoDB.",
+            "tags": null,
+            "facets": null
+        },
+        {
+            "slug": "billing",
+            "title": "Subscriptions and Billing",
+            "headings": [
+                "Purchase a Subscription",
+                "Activate Your Subscription",
+                "Limitations"
+            ],
+            "paragraphs": "You must purchase a subscription to pay for  MongoDB Atlas for Government . You can purchase a  MongoDB Atlas for Government  subscription from: The  AWS (Amazon Web Services)  Marketplace, or MongoDB Sales . Activate your subscription by first accepting the email invitation sent\nto you by the  AWS (Amazon Web Services)  Marketplace or MongoDB Sales. When you accept an invitation to register for a new account, your\nactivation code is applied to the first organization you create. For a complete tutorial on creating an account, activating your\nsubscription and getting started with  MongoDB Atlas for Government , see\n Getting Started . Elastic invoicing is not currently available. You cannot use a credit card or PayPal to pay for  AtlasGov .\nCredit card alerts are disabled.",
+            "code": [],
+            "preview": "You must purchase a subscription to pay for MongoDB Atlas for Government.",
+            "tags": null,
+            "facets": null
+        },
+        {
+            "slug": "clusters/backup-restore-data",
+            "title": "Backup and Restore Cluster Data",
+            "headings": [],
+            "paragraphs": "Backups are copies of your data that encapsulate the state of your\ncluster at a given time. Backups provide a safety measure in the\nevent of data loss. You must have the  Project Owner  role for an\n AtlasGov  project to manage backups for or to restore a\nbackup to clusters in that project. AWS Standard  and  AWS GovCloud  backups are not compatible\nwith one another. If you create a backup from a  AWS GovCloud \nregion-only project, you can only restore that data to a  AWS GovCloud \nregion-only project. The same is true for  AWS Standard  region-only\nprojects. For a list of regions by cloud provider, see  Supported Cloud Providers and Regions . See the  Atlas  documentation to configure\n Cloud Backups AtlasGov  user roles are the same as\n Atlas User Roles .",
+            "code": [],
+            "preview": "Backups are copies of your data that encapsulate the state of your\ncluster at a given time. Backups provide a safety measure in the\nevent of data loss.",
+            "tags": null,
+            "facets": null
+        },
+        {
+            "slug": "clusters/monitoring",
+            "title": "Monitoring, Logging and Alerts",
+            "headings": [
+                "Monitoring",
+                "Datadog",
+                "Logging",
+                "Alerts and Communications",
+                "AWS GovCloud",
+                "AWS Standard"
+            ],
+            "paragraphs": "You must have the  Project Owner  role to\nconfigure a third-party monitoring integration. See the  Atlas  documentation to\n Integrate with Third-Party Monitoring Services AtlasGov  user roles are the same as\n Atlas User Roles . When integrated with Datadog,  AtlasGov  uses the Datadog for\nGovernment site (US1-FED). To learn more about US1-FED, see the  Datadog documentation . In addition to the standard Atlas logging,\n AtlasGov  logs the username and IP address associated with all\nfailed login attempts, temporary lockouts and failed  API (Application Programming Interface)  digest\nauthentications. See the  Atlas  documentation to\n View and Download MongoDB Logs You receive emails from a different MongoDB account depending on the\nregion to which your resources are deployed and the type of\ncommunication. See the  Atlas  documentation to\n Configure and Resolve Alerts Alerts come from  mongodb-atlasgov-alerts@mongodb.com . All other emails come from  mongodb-atlasgov-support@mongodb.com . Alerts come from  mongodb-cloud-alerts@mongodb.com . All other emails come from  mongodb-cloud-support@mongodb.com .",
+            "code": [],
+            "preview": "You must have the Project Owner role to\nconfigure a third-party monitoring integration.",
+            "tags": null,
+            "facets": null
+        },
+        {
+            "slug": "atlas-access",
+            "title": "AtlasGov User Access",
+            "headings": [
+                "Create an AtlasGov Account",
+                "Purchase and Activate a Subscription",
+                "Accept an Invitation to an Organization",
+                "Click Accept Invite in the MongoDB Atlas for Government email you receive.",
+                "Provide information about yourself.",
+                "Accept the MongoDB Atlas for Government Privacy Policy and Terms of Service.",
+                "Click Sign Up.",
+                "Invite a New User to an Organization",
+                "Navigate to the Organization Access Manager.",
+                "Click Invite Users.",
+                "Add new organization members and set permissions for each.",
+                "Click Invite to Organization.",
+                "Account Limitations",
+                "Account Security",
+                "Passwords",
+                "Account",
+                "User Sessions",
+                "Organizations and Projects"
+            ],
+            "paragraphs": "This page covers  MongoDB Atlas for Government  user accounts.  AtlasGov  users\nare separate from database users. Database users can access MongoDB\ndatabases, while  AtlasGov  users can access the\n AtlasGov  application itself. MongoDB Atlas for Government  is available by invitation only. To create a\n AtlasGov  account, you must either: Purchase a subscription and activate an account, or Accept an invitation from an existing user in an existing\norganization. To purchase and activate a  AtlasGov  subscription, see\n Subscriptions and Billing . AtlasGov  invitations are sent by email. To accept an invitation\nto an organization: Provide the following information about yourself: You cannot change your email address or the organization to which you\nare invited. First Name Last Name Password Country To invite a user to your organization: You must be an  Organization Owner  to invite users to\nyour organization. Select your organization from the dropdown menu in the top\nnavigation bar. Click  Access Manager  in the left navigation column. For each new user you want to add to your organization: Provide the email address of the person to invite. Select organization-level permissions to grant that person\nfrom the dropdown menu next to their email address. Invitations are sent to the email addresses you provide. Your\npending invitations are displayed in the\n Organization Access Manager . If you want to revoke a pending invitation, click the\n  icon next to that invitation. You cannot register for an  AtlasGov  account through the login\npage or create an  AtlasGov  account using the  API (Application Programming Interface) . You must\nreceive an activation code from MongoDB Sales or be invited to an\nexisting organization. You cannot sign up or log in with third-party accounts,\nsuch as Google, GitHub, Apple, or Facebook credentials. AtlasGov  passwords expire after 60 days. You can only change your password once each day. When you change your password, you cannot use any of your previous 24\npasswords. AtlasGov  requires that passwords contain: At least 14 characters Unique characters, numbers, or symbols After 3 failed login attempts your account is locked for 30 minutes,\npreventing further login attempts. You can contact support to unlock\nyour account. Your  AtlasGov  account is considered inactive and suspended if\nyou do not log in for 90 consecutive days. If your account is\nsuspended due to inactivity, reset your password to unsuspend your\naccount. AtlasGov  ends your session after 15 minutes of\ninactivity, requiring you to log in again. You are prompted to\ncontinue your current session after 10 minutes of inactivity. See the  Atlas  documentation to learn more about using\n Organizations and Projects \nto manage  AtlasGov  user access.",
+            "code": [],
+            "preview": "MongoDB Atlas for Government is available by invitation only. To create a\nAtlasGov account, you must either:",
+            "tags": null,
+            "facets": null
+        },
+        {
+            "slug": "overview/supported-features",
+            "title": "Supported Features",
+            "headings": [
+                "Atlas Features",
+                "Infrastructure as Code Features"
+            ],
+            "paragraphs": "MongoDB Atlas for Government  supports a subset of  Atlas  features and some unique\nfeatures. The following tables compare  Atlas  features to those in\n MongoDB Atlas for Government . Feature Commercial  Atlas AtlasGov Free/ shared tier clusters M10  clusters Serverless instances AWS GovCloud regions Cross-region clusters   Global Clusters   Private Link for GovCloud VPC Peering for GovCloud SCRAM-SHA1  database authentication SCRAM-SHA256  database authentication AWS IAM database authentication AWS IAM (GovCloud) database authentication Backup for FedRAMP Moderate regions     Backups for  AWS GovCloud  regions   Push logs to AWS S3 Atlas  Data Federation Atlas  Data Lake Atlas  Online Archives Atlas  Search Atlas  Stream Processing Atlas  Triggers MongoDB Charts MongoDB Realm Prometheus Integration You cannot deploy clusters across government\nand standard regions in the same project. You can enable Global Writes on an  Atlas  cluster by\n creating a Global Cluster . AtlasGov  backups for  AWS Standard  deployments are\nstored in  AWS Standard  regions. AtlasGov  backups for  AWS GovCloud  deployments are stored\nin  AWS GovCloud  regions. Feature Commercial  Atlas AtlasGov Atlas  Kubernetes Operator  Hashicorp Terraform MongoDB  Atlas  Provider Atlas  Kubernetes Operator is available on  AWS (Amazon Web Services)  only.",
+            "code": [],
+            "preview": "MongoDB Atlas for Government supports a subset of Atlas features and some unique\nfeatures. The following tables compare Atlas features to those in\nMongoDB Atlas for Government.",
+            "tags": null,
+            "facets": null
+        },
+        {
+            "slug": "overview/supported-regions",
+            "title": "Supported Cloud Providers and Regions",
+            "headings": [
+                "AWS GovCloud",
+                "AWS Standard"
+            ],
+            "paragraphs": "You must designate projects for either standard or government\n( gov ) region usage upon creation. You cannot deploy clusters\nacross government and standard regions in the same project.  AWS (Amazon Web Services) \nis the only cloud provider for  AtlasGov . AWS (Amazon Web Services)  GovCloud regions meet more stringent U.S. government security\nrequirements. To learn more, see the\n AWS GovCloud documentation . You can deploy an  AtlasGov  cluster in the following government\nregions: Northwestern US ( us-gov-west-1 ) Eastern US ( us-gov-east-1 ) You can deploy an  AtlasGov  cluster in the following\n AWS (Amazon Web Services)   FedRAMP  Moderate standard regions: Northern Virginia ( us-east-1 ) Ohio ( us-east-2 ) Northern California ( us-west-1 ) Oregon ( us-west-2 ) Learn more about  Cloud Providers and Regions",
+            "code": [],
+            "preview": "AWS (Amazon Web Services) GovCloud regions meet more stringent U.S. government security\nrequirements. To learn more, see the\nAWS GovCloud documentation.",
+            "tags": null,
+            "facets": null
+        },
+        {
+            "slug": "api/configure",
+            "title": "Configure AtlasGov API Access",
+            "headings": [],
+            "paragraphs": "See the  Atlas  documentation to\n Configure API Access .",
+            "code": [],
+            "preview": "See the Atlas documentation to\nConfigure API Access.",
+            "tags": null,
+            "facets": null
+        },
+        {
+            "slug": "overview/atlasgov-considerations",
+            "title": "MongoDB Atlas for Government Considerations",
+            "headings": [
+                "AtlasGov Accounts",
+                "Supported Features",
+                "Available Regions",
+                "Clusters",
+                "Security",
+                "Database Users",
+                "Network Security",
+                "Alerts and Communications",
+                "AWS GovCloud",
+                "AWS Standard",
+                "Support"
+            ],
+            "paragraphs": "MongoDB Atlas for Government  is a a fully-managed cloud database for the U.S.\ngovernment (federal agencies and state, local, and education (SLED)\nentities). When you are logged into the  MongoDB Atlas for Government  console, an\nindicator at the top of the page displays: Much of the information and many of the procedures in the\n Atlas documentation  hold true for  AtlasGov , but\nthere are key differences. Review the following sections to understand\nthe restrictions and limitations of the  MongoDB Atlas for Government  environment. To learn more about  AtlasGov  accounts, see\n AtlasGov  User Access . To create a  AtlasGov  account, you must purchase a\nsubscription or be invited by an active user. Invitations are sent by\nemail. AtlasGov  accounts and user sessions are subject to additional\nsecurity precautions. AtlasGov  supports a subset of  Atlas  features and some\nunique features. For a list of features\ncompared to  Atlas , see  Supported Features . To learn more about the regions available for  AtlasGov \ndeployments, see  Supported Cloud Providers and Regions . To learn more about AWS  gov  regions, see the\n AWS documentation . AtlasGov  allows you to deploy clusters in government regions\nthat meet more stringent security standards. You must designate projects for either standard or government\n( gov ) region usage upon creation. You cannot deploy clusters\nacross government and standard regions in the same project.  AWS (Amazon Web Services) \nis the only cloud provider for  AtlasGov . AtlasGov  clusters must be tier  M20  or higher. Free and\nshared-tier clusters are not supported. To learn how to deploy an  AtlasGov  cluster, see\n Create a Cluster . AtlasGov  database users who authenticate with\n SCRAM  must use  SCRAM-SHA-256 . To learn more about  AtlasGov  database users,\nsee  Database Users . To learn more about network security in  AtlasGov , see\n Security . AtlasGov  uses  TLS (Transport Layer Security)  1.2 to encrypt connections. This cannot\nbe disabled. Some security features have  AtlasGov -specific\nrestrictions. You receive emails from a different MongoDB account depending on the\nregion to which your resources are deployed and the type of\ncommunication. Alerts come from  mongodb-atlasgov-alerts@mongodb.com . All other emails come from  mongodb-atlasgov-support@mongodb.com . Alerts come from  mongodb-cloud-alerts@mongodb.com . All other emails come from  mongodb-cloud-support@mongodb.com . Deployments in  AWS GovCloud  regions benefit from additional support\nguarantees. To learn more, see  Support .",
+            "code": [],
+            "preview": "MongoDB Atlas for Government is a a fully-managed cloud database for the U.S.\ngovernment (federal agencies and state, local, and education (SLED)\nentities). When you are logged into the MongoDB Atlas for Government console, an\nindicator at the top of the page displays:",
+            "tags": null,
+            "facets": null
+        },
+        {
+            "slug": "api/resources",
+            "title": "API Resources",
+            "headings": [],
+            "paragraphs": "Placeholder for API resources.",
+            "code": [],
+            "preview": "Placeholder for API resources.",
+            "tags": null,
+            "facets": null
+        },
+        {
+            "slug": "tutorial/create-project",
+            "title": "Create a Project",
+            "headings": [
+                "Prerequisites",
+                "Atlas for Government Considerations",
+                "Procedure",
+                "Navigate to the Create a Project page.",
+                "Enter the name for your new project.",
+                "Designate your project for standard or government region use.",
+                "Add members.",
+                "Specify the access for the members.",
+                "Click Create Project.",
+                "Next Steps"
+            ],
+            "paragraphs": "When you create a project, you are added as an\n Project Owner  for the project. To create a project for an organization, you must be either an\n Organization Owner  or an\n Organization Project Creator . You must designate projects for either standard or government\n( gov ) region usage upon creation. You cannot deploy clusters\nacross government and standard regions in the same project.  AWS (Amazon Web Services) \nis the only cloud provider for  AtlasGov . To create a project for an organization: Select an organization for which to create a project from\nthe    Organizations  menu  in the navigation bar. Click the  Leaf  icon in the upper left corner of the\npage or expand the  Projects  menu in the navigation\nbar. Click  New Project . Check  Designate as a Gov Cloud regions-only project  if\nyou want to deploy clusters only to  gov  regions. Otherwise,\nyou may deploy clusters only to standard regions. Click  Next . For existing  AtlasGov  users, enter the email\nthat the person used to register. For new  AtlasGov  users, enter their email\naddress to send an invitation. To learn more about projects, including how to move and delete them,\nsee  Projects . After you create a project,  create a cluster  in\nthat project.",
+            "code": [],
+            "preview": "When you create a project, you are added as an\nProject Owner for the project.",
+            "tags": null,
+            "facets": null
+        },
+        {
+            "slug": "tutorial/create-cluster",
+            "title": "Create a Cluster",
+            "headings": [
+                "Atlas for Government Considerations",
+                "Procedure",
+                "Navigate to the Clusters page for your project.",
+                "Click Create a New Cluster.",
+                "Select your preferred Cloud Provider & Region.",
+                "Select a Cluster Tier.",
+                "Set any Additional Settings.",
+                "Enter a Cluster Name.",
+                "Deploy your cluster.",
+                "Next Steps"
+            ],
+            "paragraphs": "MongoDB Atlas for Government -managed  Atlas  deployments, or \"clusters\", can be\neither a  replica set  or a\n sharded cluster .\nThis tutorial walks you through creating a replica set. AtlasGov  clusters must be tier  M20  or higher. You must designate projects for either standard or government\n( gov ) region usage upon creation. You cannot deploy clusters\nacross government and standard regions in the same project.  AWS (Amazon Web Services) \nis the only cloud provider for  AtlasGov . To deploy a cluster in  MongoDB Atlas for Government : Click the  Context  drop down in the top left corner to\nselect the project in which to deploy your cluster. To learn more about creating and managing organizations and\nprojects, see\n Manage Organizations  and\n Manage Projects . From the  Cloud Provider & Region  section, you can also\nchoose to deploy your cluster across multiple regions. Multi-region\nclusters can better withstand data center outages and may contain\ndedicated geographic regions for localized reads, thereby improving\nperformance. You cannot deploy clusters across government and standard\nregions. To learn more about multi-region clusters, see\n High Availability and Workload Isolation Options . The selected tier dictates the memory, storage, and  IOPS (Input/Output Operations per Second) \nspecification for each data-bearing server   in the\ncluster. MongoDB Atlas for Government  clusters support  Cluster Auto-Scaling . When auto-scaling is enabled,  AtlasGov \nautomatically scales your cluster tier, storage capacity, or both in\nresponse to cluster usage. Consider enabling auto-scaling to allow your\ncluster to adapt to your current workload and reduce the need to make\nmanual optimizations. Cluster storage scaling \nautomatically increases your cluster storage capacity when 90% of disk\ncapacity is used. This setting is on by default to help ensure that\nyour cluster can always support sudden influxes of data. Cluster tier scaling \nautomatically scales your cluster tier up or down in response to\nvarious cluster metrics. You must manually opt-in to cluster tier\nscaling. When you enable cluster tier scaling, you set: A maximum cluster tier to which your cluster can automatically\nscale up, and (Optional)  A minimum tier to which your cluster can scale down. To learn more about selecting appropriate cluster tier\nand storage settings for your workload, see\n Select Cluster Tier  and  Customize Cluster Storage . Select the MongoDB Version of the Cluster Configure Backup Options for the Cluster Deploy a Sharded Cluster Configure the Number of Shards Enable BI Connector for Atlas Manage Your Own Encryption Keys Configure Additional Options This is the cluster name as it appears in  MongoDB Atlas for Government . You cannot\nchange the cluster name once  AtlasGov  deploys the cluster. Click  Create Cluster  below the form to deploy your\ncluster. For replica sets, the data-bearing servers are the servers hosting\nthe replica set nodes. For sharded clusters, the data-bearing\nservers are the servers hosting the shards. For sharded clusters,\n AtlasGov  also deploys servers for the\n config servers ; these are charged at\na rate separate from the cluster costs. To access your cluster, you must  allow your IP address .",
+            "code": [],
+            "preview": "MongoDB Atlas for Government-managed Atlas deployments, or \"clusters\", can be\neither a replica set or a\nsharded cluster.\nThis tutorial walks you through creating a replica set.",
+            "tags": null,
+            "facets": null
+        },
+        {
+            "slug": "tutorial/create-account",
+            "title": "Create an Account",
+            "headings": [
+                "Register a New AtlasGov Account",
+                "Accept the email invitation to create a MongoDB Atlas for Government account.",
+                "Provide information about yourself.",
+                "Review and accept the MongoDB Atlas for Government Privacy Policy and the Terms of Service.",
+                "Click Sign Up to create your account.",
+                "Log In to Your AtlasGov Account",
+                "Navigate to MongoDB Atlas for Government.",
+                "Enter your email address.",
+                "Click Next.",
+                "Follow the prompts to log in to your account.",
+                "Next Steps"
+            ],
+            "paragraphs": "To create a  MongoDB Atlas for Government  account, you must purchase a subscription or be\ninvited by an active user. Invitations are sent by email. You can purchase a  MongoDB Atlas for Government  subscription from: The  AWS (Amazon Web Services)  Marketplace, or MongoDB Sales . Provide the following information about yourself: Email Address First Name Last Name Password Country If you already created a  MongoDB Atlas for Government  account, log in to your account: With your  MongoDB Atlas for Government  account,\n create an organization .",
+            "code": [],
+            "preview": "To create a MongoDB Atlas for Government account, you must purchase a subscription or be\ninvited by an active user. Invitations are sent by email.",
+            "tags": null,
+            "facets": null
+        },
+        {
+            "slug": "tutorial/create-organization",
+            "title": "Create an Organization",
+            "headings": [
+                "Procedure",
+                "View all of your organizations",
+                "Click New Organization.",
+                "Enter the name for your organization.",
+                "Add members.",
+                "Specify the access for the members.",
+                "Click Create Organization.",
+                "Next Steps"
+            ],
+            "paragraphs": "When you create an organization, you are added as an\n Organization Owner  for the organization. To create an organization: When you accept an invitation from MongoDB Sales to register for a\nnew account, your activation code is applied to the first\norganization you create. Expand the    Organizations  menu  in the navigation bar. Click  View All Organizations . For existing  MongoDB Atlas for Government  users, enter the email that the person\nused to register. For new  MongoDB Atlas for Government  users, enter their email address to send\nan invitation. To learn more about organizations, including how to leave and delete\nthem, see  Organizations . After you create an organization,\n create a project  in that organization.",
+            "code": [],
+            "preview": "When you create an organization, you are added as an\nOrganization Owner for the organization.",
+            "tags": null,
+            "facets": null
+        },
+        {
+            "slug": "tutorial/allow-ip",
+            "title": "Add Your Connection IP Address to IP Access List",
+            "headings": [
+                "Procedure",
+                "Click Connect.",
+                "Click Add Your Current IP Address.",
+                "Click Add IP Address.",
+                "Next Steps"
+            ],
+            "paragraphs": "An  IP (Internet Protocol)  is a unique numeric identifier for a device connecting to a\nnetwork. In  MongoDB Atlas for Government , you can only connect to a cluster from a\ntrusted IP address. Within  AtlasGov , you can create a list of\ntrusted IP addresses, referred to as a IP access list, that can be used\nto connect to your cluster and access your data. You must add your IP address to the IP access list before you can\nconnect to your cluster. To add your IP address to the IP access list: In the  Clusters  view, click  Connect  for the\ncluster to which you want to connect. Atlas highlights the  Setup connection security  step. To secure your  AtlasGov  cluster, limit access to specified\nIP addresses. The menu expands to show the  Add a connection IP address \nmodal. Configure IP Access List Entries After allowing your IP address, you must\n create a database user  to connect to your\ncluster.",
+            "code": [],
+            "preview": "An IP (Internet Protocol) is a unique numeric identifier for a device connecting to a\nnetwork. In MongoDB Atlas for Government, you can only connect to a cluster from a\ntrusted IP address. Within AtlasGov, you can create a list of\ntrusted IP addresses, referred to as a IP access list, that can be used\nto connect to your cluster and access your data.",
+            "tags": null,
+            "facets": null
+        },
+        {
+            "slug": "tutorial/create-mongodb-user-for-cluster",
+            "title": "Create a Database User for Your Cluster",
+            "headings": [
+                "Atlas for Government Considerations",
+                "Procedure",
+                "Click Connect.",
+                "Set the new user's Username and Password.",
+                "Click Create Database User.",
+                "Next steps"
+            ],
+            "paragraphs": "You must create a database user to access your cluster. For\nsecurity purposes,  AtlasGov  requires clients to authenticate\nas MongoDB database users to access clusters. Database users are separate from  AtlasGov  users: Database users can access databases hosted in  AtlasGov . AtlasGov  users can log in to  MongoDB Atlas for Government  but do not have\naccess to MongoDB databases. Database users who authenticate with\n SCRAM  must use  SCRAM-SHA-256 . To add a  SCRAM-SHA-256 -authenticated database user to your cluster: In the  Clusters  view, click  Connect \nfor the cluster to which you want to connect. AtlasGov  highlights the  Setup connection security \nstep. You'll use this username and password combination to grant a user\naccess to databases and collections in your cluster in this\n AtlasGov  project. To use a password auto-generated by  AtlasGov , click\n Autogenerate Secure Password . If you use special characters in your password, you will\nneed to escape them later in the connection string that you\nwill use to connect to your cluster. To learn\nmore, see  Special Characters in Connection String Password . To learn more about configuring database users or to add a user with\nan alternative authentication method, see  Configure Database Users . To connect and insert data into your cluster as a database user, follow\nthe  Atlas  procedures: Connect to Your Cluster Insert and View Data in Your Cluster To import existing data from  JSON  or  CSV  files, see\n Load File with mongoimport .",
+            "code": [],
+            "preview": "You must create a database user to access your cluster. For\nsecurity purposes, AtlasGov requires clients to authenticate\nas MongoDB database users to access clusters.",
+            "tags": null,
+            "facets": null
+        },
+        {
+            "slug": "security/private-endpoint",
+            "title": "Set up a Private Endpoint",
+            "headings": [
+                "Considerations",
+                "High Availability",
+                "Private Endpoint-Aware Connection Strings",
+                "IP Access Lists and Network Peering Connections with Private Endpoints",
+                "Regionalized Private Endpoints for Multi-Region Sharded Clusters",
+                "Navigate to the Settings page for your project.",
+                "Enable the setting.",
+                "Limitations",
+                "Prerequisites",
+                "Procedures",
+                "Configure an AtlasGov Private Endpoint",
+                "Navigate to the Network Access page for your project.",
+                "Create a private endpoint.",
+                "Choose a cloud provider.",
+                "Choose a region.",
+                "Configure your private endpoint.",
+                "Finalize your private endpoint connection.",
+                "Configure your resources' security groups to send traffic to and receive traffic from the interface endpoint.",
+                "Create a security group for your interface endpoint to allow resources to access it.",
+                "Verify that the private endpoint is available.",
+                "Connect to AtlasGov using a Private Endpoint",
+                "Click Connect.",
+                "Select the Private Endpoint connection type.",
+                "Select the private endpoint to which you want to connect.",
+                "Create a Database User.",
+                "Click Choose a connection method.",
+                "Remove a Private Endpoint from AtlasGov",
+                "Navigate to the Network Access page for your project.",
+                "Remove the private endpoint from AtlasGov.",
+                "Troubleshoot Private Endpoint Connection Issues",
+                "Check the status of your AWS PrivateLink connections.",
+                "Make sure that your security groups are configured properly."
+            ],
+            "paragraphs": "MongoDB Atlas for Government  supports private endpoints on  AWS (Amazon Web Services)  using the\n AWS PrivateLink  feature. When you enable this feature,  AtlasGov  creates its own  VPC (Virtual Private Cloud) \nand places clusters within a region behind a network load balancer in\nthe  AtlasGov   VPC (Virtual Private Cloud) . Then you create resources that establish a one-way connection\nfrom your  VPC (Virtual Private Cloud)  to the network load balancer in the  AtlasGov \n VPC (Virtual Private Cloud)  using a private endpoint. Connections to  AtlasGov  clusters using private endpoints offer\nthe following advantages over other network access management\noptions: Connections using private endpoints are one-way.  AtlasGov \n VPC (Virtual Private Cloud) s can't initiate connections back to your  VPC (Virtual Private Cloud) s. This\nensures your perceived network trust boundary is not extended. Connections to private endpoints within your  VPC (Virtual Private Cloud)  can be made\ntransitively from: Another  VPC (Virtual Private Cloud)  peered to the private endpoint-connected  VPC (Virtual Private Cloud) . An on-premises data center connected with\n DirectConnect \nto the private endpoint-connected  VPC (Virtual Private Cloud) . This enables you to\nconnect to  AtlasGov  directly from your on-premises data\ncenter without adding public IP addresses to the  AtlasGov \nIP access list. Configure IP Access List Entries To ensure private endpoint connections to  AtlasGov  can withstand\nan availability zone outage, you should deploy subnets to multiple\navailability zones in a region. When you configure a private endpoint,  AtlasGov  generates DNS\nseedlist and standard private endpoint-aware connection strings: When a client in your  VPC (Virtual Private Cloud)  connects to an  AtlasGov  cluster\nusing one of these private endpoint-aware connection strings, the\nclient attempts to establish a connection to the load balancer in the\n AtlasGov   VPC (Virtual Private Cloud)  through one of the interface endpoints. Your client's  DNS (Domain Name System)  resolution mechanism handles which of the interface\nendpoints the hostname resolves to. If one interface endpoint is\nunavailable the next is used. This is opaque to the driver or other\nconnection mechanism. The driver is only aware of the hostname in the\nSRV record or in the connection string. SRV Record for DNS Seedlist Private Endpoint-Aware Connection Strings The following example shows the SRV record for an AWS PrivateLink-enabled\nsingle-region cluster, showing three unique ports defined for\n pl-0-us-east-1-k45tj.mongodb.net : Hostname DNS Resolution in Private Endpoint-Aware Connection Strings and SRV Records The hostname in the SRV record and the standard connection string is a\n DNS (Domain Name System)  Canonical Name ( CNAME ) record that resolves to the\nendpoint-specific regional  DNS (Domain Name System)  name that  AWS (Amazon Web Services)  generates for the\ninterface endpoint. A  DNS (Domain Name System)   ALIAS  record exists for each subnet in\nyour  VPC (Virtual Private Cloud)  that you deployed the interface endpoint to. Each  ALIAS \nrecord contains the private IP address of the interface endpoint\nfor that subnet. The following example shows the  DNS (Domain Name System)  lookup for the hostname in the\nSRV record and in the standard connection string, including the\nendpoint-specific regional  DNS (Domain Name System)  name for the interface endpoint and its\n DNS (Domain Name System)   ALIAS  records: DNS seedlist connection Standard connection string Interface endpoints In the preceding example: _mongodb._tcp.cluster0-pl-0-k45tj.mongodb.net  is the SRV\nrecord that the  mongodb+srv://cluster0-pl-0-k45tj.mongodb.net \nconnection string references. pl-0-us-east-1-k45tj.mongodb.net  is the hostname for each\nnode in one  AtlasGov  cluster in one region for which you\nhave configured AWS PrivateLink. 1024 ,  1025 , and  1026  are unique ports that\n AtlasGov \nassigns on the load balancer for each replica set node in\nthe region for which you enabled AWS PrivateLink. All nodes in an\n AtlasGov  replica set are accessible via the same\nhostname, with the load balancer resolving individual nodes by\ntheir unique port. When Private Endpoints are enabled, you can still enable access to your\n AtlasGov  clusters using other methods, such as adding public\nIPs to IP access lists and network peering. Clients connecting to  AtlasGov  clusters using other methods\nuse standard connection strings. Your clients may have to identify when\nto use private endpoint-aware connection strings and standard\nconnection strings. IP access lists Network peering For multi-region and global sharded clusters, you can deploy multiple\nprivate endpoints to a region if you need to connect to\n AtlasGov  using a private endpoint from networks that can't be\npeered with one another. You can deploy any number of private endpoints to regions that you\ndeployed your cluster to. Each regional private endpoint connects to the\n mongos  instances in that region. You can enable this setting only if your  AtlasGov  project\ncontains no replica sets. You can't disable this setting if you have: To use this feature, you must enable the regionalized private endpoint\nsetting: Your connection strings to existing multi-region and global sharded\nclusters change when you enable this setting. You must update your applications to use new connections strings.\nThis may require downtime. More than one private endpoint in more than one region, or More than one private endpoint in one region and one private endpoint\nin one or more regions. If it is not already displayed, select the organization that\ncontains your desired project from the    Organizations  menu  in the\nnavigation bar. If it is not already displayed, select your desired project\nfrom the  Projects  menu in the navigation bar. Next to the  Projects  menu, expand the\n Options  menu, then click  Project Settings . Toggle the  Multiple Regionalized Private Endpoints  setting\nto  Yes . You must designate projects for either standard or government\n( gov ) region usage upon creation. You cannot deploy clusters\nacross government and standard regions in the same project.  AWS (Amazon Web Services) \nis the only cloud provider for  AtlasGov . AWS PrivateLink must be active in all regions into which you deploy\na multi-region cluster. You will receive an error if AWS PrivateLink\nis active in some, but not all, targeted regions. You can do only one of the following: See  Regionalized Private Endpoints for Multi-Region Sharded Clusters  for an exception for\nmulti-region and global sharded clusters. Create more than one private endpoint in a single region, or Create one private endpoint in multiple regions. If this is the first private endpoint that you deploy to a\nregion, you must first resume any paused clusters in your\nproject with nodes deployed to that region.\nThis limitation doesn't apply for additional private endpoints\nthat you deploy to the same region. To connect to  AtlasGov  clusters using AWS PrivateLink from\nregions in which you haven't deployed a private endpoint\nconnection, you must peer  VPC (Virtual Private Cloud) s in those regions to  VPC (Virtual Private Cloud) s\nin a region in which you have deployed a private endpoint\nconnection. To learn about inter-region  VPC (Virtual Private Cloud)  peering, see the  AWS\ndocumentation . You can use AWS PrivateLink in  AtlasGov  projects with up to\n50 addressable targets  per region . If you need more than 50\naddressable targets in a region: Addressable targets include: Contact  MongoDB Support , or Use additional projects or regions to connect to addressable\ntargets beyond this limit. Each node in a replica set, excluding nodes that comprise a\nshard in a sharded cluster. Each  mongos  instance for sharded clusters. Each  BI Connector for Atlas  instance across all dedicated clusters in the\nproject. To request a one-time increase to use AWS PrivateLink with up to\n100 addressable targets per  AtlasGov  project, contact\n MongoDB Support . To enable connections to  AtlasGov  using private endpoints,\nyou must: Have either the  Project Owner  or\n Organization Owner  role in  AtlasGov . Have an  AWS (Amazon Web Services)  user account with an  IAM (Identity and Access Management)  user policy that\ngrants permissions to create, modify, describe, and delete\nendpoints. For more information on controlling the use of\ninterface endpoints, see the\n AWS Documentation . (Recommended) :\n Install the AWS CLI . If you have not already done so, create your  VPC (Virtual Private Cloud)  and EC2\ninstances in  AWS (Amazon Web Services) . See the\n AWS documentation  for guidance. Enable clients to connect to  AtlasGov  clusters using private\nendpoints with the following procedure: If it is not already displayed, select the organization that\ncontains your desired project from the    Organizations  menu  in the\nnavigation bar. If it is not already displayed, select your desired project\nfrom the  Projects  menu in the navigation bar. Click  Network Access  in the sidebar. Click the  Private Endpoint  tab. Click  Add Private Endpoint . Click the  AWS (Amazon Web Services)  logo, then click  Next . AtlasGov  creates  VPC (Virtual Private Cloud)  resources in the region\nyou selected. This might take several minutes to complete. From the  Atlas Region  list, select the region\nin which you want to create the private endpoint. Click  Next . Enter the following details about your  AWS (Amazon Web Services)   VPC (Virtual Private Cloud) : Your VPC ID Unique identifier of the peer  AWS (Amazon Web Services)   VPC (Virtual Private Cloud) . Find this\nvalue on the  VPC (Virtual Private Cloud)  dashboard in your  AWS (Amazon Web Services)  account. Your Subnet IDs Unique identifiers of the subnets your  AWS (Amazon Web Services)   VPC (Virtual Private Cloud)  uses.\nFind these values on the  Subnet  dashboard in\nyour  AWS (Amazon Web Services)  account. You must specify at least one subnet. If you don't,\n AWS (Amazon Web Services)  won't provision an interface endpoint in\nyour  VPC (Virtual Private Cloud) . An  is required for\nclients in your  VPC (Virtual Private Cloud)  to send traffic to the private endpoint. Copy the command the dialog displays and run it using the  AWS (Amazon Web Services) \nCLI. You can't copy the command until  AtlasGov  finishes\ncreating  VPC (Virtual Private Cloud)  resources in the background. See  Creating an Interface Endpoint  to perform this task using the  AWS (Amazon Web Services)  CLI. You might receive an error like the following when you create\nthe private endpoint: If you receive this error,  AtlasGov  has deployed  VPC (Virtual Private Cloud) \nresources into different availability zones than the ones to\nwhich you deployed your  VPC (Virtual Private Cloud)  subnets.\nPlease contact MongoDB Support for assistance resolving this\nerror. To contact support, click  Support  from the\nleft-hand navigation bar of the  AtlasGov  UI. Click  Next . Enter your  VPC Endpoint ID . This is a\n22-character alphanumeric string that identifies your private\nendpoint. Find this value on the  AWS (Amazon Web Services)  VPC Dashboard under\n Endpoints  >  VPC ID . Click  Create . For each resource that needs to connect to your  AtlasGov \nclusters using AWS PrivateLink, the resource's security group must allow\noutbound traffic to the interface endpoint's private IP(s) on all\nports. See  Adding Rules to a Security Group  in the  AWS (Amazon Web Services) \ndocumentation for more information. This security group must allow inbound traffic on all ports from each\nresource that needs to connect to your  AtlasGov  clusters\nusing AWS PrivateLink: See  VPC security groups  in the  AWS (Amazon Web Services) \ndocumentation for more information. In the  AWS (Amazon Web Services)  console, navigate to the  VPC Dashboard . Click  Security Groups , then click\n Create security group . Use the wizard to create a security group. Make sure you select\nyour VPC from the  VPC  list. Select the security group you just created, then click the\n Inbound Rules  tab. Click  Edit Rules . Add rules to allow all inbound traffic from each resource in your\nVPC that you want to connect to your  AtlasGov  cluster. Click  Save Rules . Click  Endpoints , then click the endpoint for your\nVPC. Click the  Security Groups  tab, then click\n Edit Security Groups . Add the security group you just created, then click\n Save . You can connect to an  AtlasGov  cluster using the AWS PrivateLink\nprivate endpoint when all of the resources are configured and the\nprivate endpoint becomes available. To verify that the AWS PrivateLink private endpoint is available: If you do not see these statuses, see\n Troubleshoot Private Endpoint Connection Issues  for additional information. In the  Security  section of the left navigation,\nclick  Network Access . On the  Private Endpoint  tab, verify the following\nstatuses for the region that contains the cluster\nyou want to connect to using AWS PrivateLink: Atlas Endpoint Service Status Ready for connection requests Endpoint Status Available Use a private endpoint-aware connection string to connect to an\n AtlasGov  cluster with the following procedure: For important considerations about private endpoint-aware connection\nstrings, see\n Private Endpoint-Aware Connection Strings . In the  Clusters  view, click  Connect \nfor the cluster to which you want to connect. To access the cluster, you need a MongoDB user with access to the\ndesired database or databases on the cluster in your project. If your\nproject has no MongoDB users,  AtlasGov  prompts you to\ncreate a new user with the  Atlas Admin \nrole. Use this user to connect to your cluster in the following step. Once you have added an IP address to your IP access list and added a\ndatabase user, click  Choose Your Connection Method . Skip this step  if  AtlasGov  indicates in the\n Setup connection security  step that you have at least\none database user configured in your project. To manage existing\ndatabase users, see  Database Users . Enter the new user's  Username . Enter a  Password  for this new user or click\n Autogenerate Secure Password . Click  Create Database User  to save the user. Private endpoint-aware connection strings are available in one\nof the following formats: MongoDB recommends that your clients use the DNS seedlist connection\nstring format. If your driver doesn't support this format, select an\nolder version of your driver or version  3.4 or earlier  of\nthe  mongo  shell from the  Connect  tab to use the\nstandard connection string format. DNS seedlist connection Standard connection string If it is not already displayed, select the organization that\ncontains your desired project from the    Organizations  menu  in the\nnavigation bar. If it is not already displayed, select your desired project\nfrom the  Projects  menu in the navigation bar. Click  Network Access  in the sidebar. Click the  Private Endpoint  tab. Next to the private endpoint you want to remove, click\n Terminate . To confirm, click  Confirm  in the dialog. When you delete a private endpoint from a region in\n AtlasGov , you must manually\n delete the private endpoint \nin  AWS (Amazon Web Services) .  AWS (Amazon Web Services)  lists the endpoint as  rejected .\n AtlasGov  can't delete this resource because it lacks the\nrequired permissions. The  Private Endpoint  tab on the  Network Access \npage lists each private endpoint you've created. The\n Atlas Endpoint Service Status  and\n Endpoint Status  fields show the status of each\nprivate endpoint. Refer to the following statuses to help you determine the state of\nyour private endpoint connections: Atlas Endpoint Service Status Endpoint Status Status Description Creating private link AtlasGov  is creating the network load balancer\nand  VPC (Virtual Private Cloud)  resources. Failed A system failure has occurred. Ready for connection requests The  AtlasGov  network load balancer and  VPC (Virtual Private Cloud) \nendpoint service are created and ready to receive connection\nrequests. Deleting AtlasGov  is deleting the private endpoint service. Status Description Not configured AtlasGov  created the network load balancer and  VPC (Virtual Private Cloud) \nendpoint\nservice, but  AWS (Amazon Web Services)  hasn't yet created the interface endpoint.\nClick  Edit  and complete the wizard to create the\ninterface endpoint. Pending acceptance AWS (Amazon Web Services)  has received the connection request from your\ninterface endpoint to the  AtlasGov   VPC (Virtual Private Cloud)  endpoint\nservice. Pending AWS (Amazon Web Services)  is establishing the connection between your\ninterface endpoint and the  AtlasGov   VPC (Virtual Private Cloud)  endpoint\nservice. Failed AWS (Amazon Web Services)  failed to establish a connection between\n AtlasGov \n VPC (Virtual Private Cloud)  resources and the interface endpoint in your  VPC (Virtual Private Cloud) .\nClick  Edit , verify that the information you\nprovided is correct, and then create the private endpoint\nagain. If your interface endpoint fails, you might see\nthe following message: This message indicated that you didn't specify\na subnet when you created the AWS PrivateLink\nconnection. To resolve this error: No dns entries found for endpoint vpce-<guid>,\nyour endpoint must be provisioned in at least one subnet\nClick \"Edit\" to fix the problem. Click  Edit . Click  Back . Specify at least one subnet. Follow the remaining instructions to create\nthe AWS PrivateLink connection. Available AtlasGov   VPC (Virtual Private Cloud)  resources are connected to the\ninterface endpoint in your  VPC (Virtual Private Cloud) . You can connect to\n AtlasGov  clusters in this region using AWS PrivateLink. Deleting AtlasGov  is removing the interface endpoint from the\nprivate endpoint service. For each resource that needs to connect to your  AtlasGov \nclusters using AWS PrivateLink, the resource's security group must\nallow outbound traffic to the interface endpoint's private IP(s)\non all ports. See  Adding Rules to a Security Group \nfor more information. Your interface endpoint security group must allow inbound\ntraffic on all ports from each resource that needs to connect to\nyour  AtlasGov  clusters using AWS PrivateLink. Whitelist instance IP addresses or security groups \nto allow traffic from them to reach the interface endpoint\nsecurity group.",
+            "code": [
+                {
+                    "lang": "sh",
+                    "value": "$ nslookup -type=SRV _mongodb._tcp.cluster0-pl-0-k45tj.mongodb.net\n\nServer: 127.0.0.53\nAddress: 127.0.0.53#53\n\nNon-authoritative answer:\n_mongodb._tcp.cluster0-pl-0-k45tj.mongodb.net service = 0 0 1026 pl-0-us-east-1-k45tj.mongodb.net.\n_mongodb._tcp.cluster0-pl-0-k45tj.mongodb.net service = 0 0 1024 pl-0-us-east-1-k45tj.mongodb.net.\n_mongodb._tcp.cluster0-pl-0-k45tj.mongodb.net service = 0 0 1025 pl-0-us-east-1-k45tj.mongodb.net."
+                },
+                {
+                    "lang": "sh",
+                    "value": "$ nslookup pl-0-us-east-1-k45tj.mongodb.net\nServer: 127.0.0.53\nAddress: 127.0.0.53#53\n\nNon-authoritative answer:\npl-0-us-east-1-k45tj.mongodb.net\ncanonical name = vpce-024f5b57108c8d3ed-ypwbxwll.vpce-svc-02863655456245e5c.us-east-1.vpce.amazonaws.com.\n\nName: vpce-024f5b57108c8d3ed-ypwbxwll.vpce-svc-02863655456245e5c.us-east-1.vpce.amazonaws.com\nAddress: 10.0.30.194\nName: vpce-024f5b57108c8d3ed-ypwbxwll.vpce-svc-02863655456245e5c.us-east-1.vpce.amazonaws.com\nAddress: 10.0.20.54"
+                },
+                {
+                    "lang": "none",
+                    "value": "mongodb+srv://cluster0-pl-0-k45tj.mongodb.net"
+                },
+                {
+                    "lang": "none",
+                    "value": "mongodb://pl-0-us-east-1-k45tj.mongodb.net:1024,pl-0-us-east-1-k45tj.mongodb.net:1025,pl-0-us-east-1-k45tj.mongodb.net:1026/?ssl=true&authSource=admin&replicaSet=Cluster0-shard-0-shard-0"
+                },
+                {
+                    "lang": "sh",
+                    "value": "An error occurred (InvalidParameter) when calling the CreateVpcEndpoint\noperation: The VPC endpoint service com.amazonaws.vpce.us-east-1.vpce-svc-<...>\ndoes not support the availability zone of the subnet: subnet-<...>."
+                },
+                {
+                    "lang": "none",
+                    "value": "mongodb+srv://cluster0-pl-0-auylw.mongodb.net"
+                },
+                {
+                    "lang": "none",
+                    "value": "mongodb://pl-0-us-east-1-auylw.mongodb.net:1024,pl-0-us-east-1-auylw.mongodb.net:1025,pl-0-us-east-1-auylw.mongodb.net:1026/?ssl=true&authSource=admin&replicaSet=Cluster0-shard-0-shard-0"
+                }
+            ],
+            "preview": "MongoDB Atlas for Government supports private endpoints on AWS (Amazon Web Services) using the\nAWS PrivateLink feature.",
+            "tags": null,
+            "facets": null
+        }
+    ]
+}

@@ -1,0 +1,1505 @@
+{
+    "url": "http://mongodb.com/docs/guides",
+    "includeInGlobalSearch": true,
+    "documents": [
+        {
+            "slug": "",
+            "title": "Start with Guides",
+            "headings": [],
+            "paragraphs": "Discover step-by-step guides to help you complete essential tasks to\nget started with MongoDB.",
+            "code": [],
+            "preview": null,
+            "tags": "drivers, search",
+            "facets": {
+                "target_product": [
+                    "atlas"
+                ],
+                "genre": [
+                    "tutorial"
+                ]
+            }
+        },
+        {
+            "slug": "crud/delete",
+            "title": "Delete Data from MongoDB",
+            "headings": [
+                "Overview",
+                "What You'll Need",
+                "Procedure",
+                "Connect to your MongoDB instance.",
+                "Create a class that resembles a document from your collection.",
+                "Automap your class to the documents fields.",
+                "Verify your connection code.",
+                "Get the database and collection.",
+                "Delete specific documents in the comets collection.",
+                "Display your results.",
+                "Check your results.",
+                "Summary",
+                "See Also"
+            ],
+            "paragraphs": "In this guide, you will delete data from MongoDB. Specify which documents to delete from MongoDB. A  connection string  to your MongoDB deployment. Sample datasets  loaded into your cluster . An  installed MongoDB Driver . Data inserted from the  Insert Data into MongoDB  guide. The following class lists all the field names and types\nthat your document will have. In C#, you map fields to class properties, which are\nuppercase by convention. However, you should delete the\ndata with camel case fields. To make the driver\nautomatically convert the fields from uppercase to camel\ncase, create a  ConventionPack  and register the naming\nconvention for  CamelCase . The following is an outline with the minimum code necessary to connect to MongoDB.\nYou'll make additions over the next few steps to delete data. At line 6, replace the URI string with your own\n Atlas connection string . The following is an outline with the minimum code necessary to connect to MongoDB.\nYou'll make additions over the next few steps to delete data. At line 15, replace the URI string with your own\n Atlas connection string . The following is an outline with the minimum code necessary to connect to MongoDB.\nYou'll make additions over the next few steps to delete data. At line 13, replace the URI string with your own\n Atlas connection string . The following is an outline with the minimum code necessary to connect to MongoDB.\nYou'll make additions over the next few steps to delete data. At line 5, replace the URI string with your own\n Atlas connection string . The following is an outline with the minimum code necessary to connect to MongoDB.\nYou'll make additions over the next few steps to delete data. At line 4, replace the URI string with your own\n Atlas connection string . Make sure you've installed PyMongo with the  srv  option. Switch to the database and collection you wish to query. In\nthis case you will be using the  sample_guides  database and\n comets  collection. The following example illustrates using a query filter to delete\ndocuments where their  orbitalPeriod  is greater than 5 and less\nthan 85. The MongoDB Java Driver includes\n Builders \nthat simplify the process of creating queries (and other operations).\nHere, you use the  Filters.and ,  Filters.lt , and\n Filters.gt  builders to construct the query document. The  result  contains some information about the delete\noperation. To verify you deleted documents, print the amount of\ndocuments the driver deleted. Here is the complete code followed by sample output. If you have completed this guide, you have deleted data from MongoDB. That completes this introduction to CRUD operations in MongoDB. See the following resources for more in-depth information about the concepts presented here: Delete Documents Delete Methods The  MongoDB C# Driver  documentation The  MongoDB Go Driver  documentation The  MongoDB Java(Sync) Driver  documentation The  MongoDB Node.js Driver  documentation",
+            "code": [
+                {
+                    "lang": "csharp",
+                    "value": "\ufeff// class that maps to the fields of a document in the sample_guides.comets collection\r\nclass Comet {\r\n    public ObjectId Id { get; set;  }\r\n    public string Name { get; set; }\r\n    public string OfficialName { get; set; }\r\n    public double OrbitalPeriod { get; set; }\r\n    public double Radius { get; set; }\r\n    public double Mass { get; set; }\r\n}\r\n"
+                },
+                {
+                    "lang": "csharp",
+                    "value": "// instruct the driver to camelCase the fields in MongoDB\nvar pack = new ConventionPack { new CamelCaseElementNameConvention() };\nConventionRegistry.Register(\"elementNameConvention\", pack, x => true);\n"
+                },
+                {
+                    "lang": "csharp",
+                    "value": "using MongoDB.Bson;\nusing MongoDB.Bson.Serialization.Conventions;\nusing MongoDB.Driver;\n\n// Replace the uri string with your MongoDB deployment's connection string.\nvar uri = \"mongodb+srv://<user>:<password>@<cluster-url>?retryWrites=true&writeConcern=majority\";\n\n// instruct the driver to read the fields in camelCase\nvar pack = new ConventionPack { new CamelCaseElementNameConvention() };\nConventionRegistry.Register(\"elementNameConvention\", pack, x => true);\n\nvar client = new MongoClient(uri);\n\n// database and collection code goes here\n// delete code goes here\n// amount deleted code goes here\n\n// class that represents the fields of a document in the\n// sample_guides.comets collection\nclass Comet {\n    public ObjectId Id { get; set;  }\n    public string Name { get; set; }\n    public string OfficialName { get; set; }\n    public double OrbitalPeriod { get; set; }\n    public double Radius { get; set; }\n    public double Mass { get; set; }\n}\n"
+                },
+                {
+                    "lang": "go",
+                    "value": "package main\n\nimport (\n\t\"context\"\n\t\"fmt\"\n\t\"log\"\n\t\"os\"\n\n\t\"go.mongodb.org/mongo-driver/bson\"\n\t\"go.mongodb.org/mongo-driver/mongo\"\n\t\"go.mongodb.org/mongo-driver/mongo/options\"\n)\n\nfunc main() {\n\turi := \"mongodb+srv://<user>:<password>@<cluster-url>?retryWrites=true&writeConcern=majority\"\n\n\tclient, err := mongo.Connect(context.TODO(), options.Client().ApplyURI(uri))\n\tif err != nil {\n\t\tpanic(err)\n\t}\n\t\n\tdefer func() {\n\t\tif err = client.Disconnect(context.TODO()); err != nil {\n\t\t\tpanic(err)\n\t\t}\n\t}()\n\n\t// database and colletion code goes here\n\t// delete code goes here\n\t// amount deleted code goes here\n}\n"
+                },
+                {
+                    "lang": "java",
+                    "value": "import com.mongodb.client.MongoClient;\nimport com.mongodb.client.MongoClients;\nimport com.mongodb.client.MongoCollection;\nimport com.mongodb.client.MongoDatabase;\nimport com.mongodb.client.result.DeleteResult;\nimport com.mongodb.client.model.Filters;\n\nimport org.bson.Document;\nimport org.bson.conversions.Bson;\n\npublic class CrudDelete {\n    public static void main(String[] args) {\n        String uri = \"mongodb+srv://<user>:<password>@<cluster-url>?retryWrites=true&writeConcern=majority\";\n\n        try (MongoClient mongoClient = MongoClients.create(uri)) {\n            // database and collection code goes here\n            // insert code goes here\n            // amount deleted code goes here\n        }\n    }\n}\n"
+                },
+                {
+                    "lang": "javascript",
+                    "value": "const { MongoClient } = require(\"mongodb\");\n\n// Replace the uri string with your MongoDB deployment's connection string.\nconst uri =\n  \"mongodb+srv://<user>:<password>@<cluster-url>?retryWrites=true&writeConcern=majority\";\n\nconst client = new MongoClient(uri);\n\nasync function run() {\n  try {\n    await client.connect();\n    // database and collection code goes here\n    // delete code goes here\n    // amount deleted code goes here\n  } finally {\n    // Ensures that the client will close when you finish/error\n    await client.close();\n  }\n}\nrun().catch(console.dir);\n"
+                },
+                {
+                    "lang": "python",
+                    "value": "from pymongo import MongoClient\n\n# Replace the uri string with your MongoDB deployment's connection string.\nuri = \"mongodb+srv://<user>:<password>@<cluster-url>?retryWrites=true&writeConcern=majority\"\n\nclient = MongoClient(uri)\n\n# database and collection code goes here\n# delete code goes here\n# amount deleted code goes here\n\n# Close the connection to MongoDB when you're done.\nclient.close()\n"
+                },
+                {
+                    "lang": "sh",
+                    "value": "python3 -m pip install \"pymongo[srv]\""
+                },
+                {
+                    "lang": "csharp",
+                    "value": "\ufeff// database and collection code goes here\r\nvar db = client.GetDatabase(\"sample_guides\");\r\nvar coll = db.GetCollection<Comet>(\"comets\");\r\n"
+                },
+                {
+                    "lang": "go",
+                    "value": "// database and colletion code goes here\ndb := client.Database(\"sample_guides\")\ncoll := db.Collection(\"comets\")\n"
+                },
+                {
+                    "lang": "java",
+                    "value": "// database and collection code goes here\nMongoDatabase db = mongoClient.getDatabase(\"sample_guides\");\nMongoCollection<Document> coll = db.getCollection(\"comets\");\n"
+                },
+                {
+                    "lang": "javascript",
+                    "value": "// database and collection code goes here\nconst db = client.db(\"sample_guides\");\nconst coll = db.collection(\"comets\");\n"
+                },
+                {
+                    "lang": "python",
+                    "value": "# database and collection code goes here\ndb = client.sample_guides\ncoll = db.comets\n"
+                },
+                {
+                    "lang": "csharp",
+                    "value": "// delete code goes here\nvar result = coll.DeleteMany(x => x.OrbitalPeriod > 5 && x.OrbitalPeriod < 85);\n"
+                },
+                {
+                    "lang": "go",
+                    "value": "// delete code goes here\nfilter := bson.D{\n\t{\"$and\",\n\t\tbson.A{\n\t\t\tbson.D{{\"orbitalPeriod\", bson.D{{\"$gt\", 5}}}},\n\t\t\tbson.D{{\"orbitalPeriod\", bson.D{{\"$lt\", 85}}}},\n\t\t},\n\t},\n}\n"
+                },
+                {
+                    "lang": "java",
+                    "value": "// delete code goes here\nBson filter = Filters.and(Filters.gt(\"orbitalPeriod\", 5), Filters.lt(\"orbitalPeriod\", 85));\nDeleteResult result = coll.deleteMany(filter);\n"
+                },
+                {
+                    "lang": "javascript",
+                    "value": "// delete code goes here\nconst doc = {\n  orbitalPeriod: {\n    $gt: 5,\n    $lt: 85\n  }\n};\n\nconst result = await coll.deleteMany(doc);\n"
+                },
+                {
+                    "lang": "python",
+                    "value": "# delete code goes here\ndoc = {\n    \"orbitalPeriod\": {\n        \"$gt\": 5,\n        \"$lt\": 85\n    }\n}\nresult = coll.delete_many(doc)\n"
+                },
+                {
+                    "lang": "csharp",
+                    "value": "// amount deleted code goes here\nConsole.WriteLine($\"Number of documents deleted: {result.DeletedCount}\");\n"
+                },
+                {
+                    "lang": "go",
+                    "value": "// amount deleted code goes here\nfmt.Printf(\"Number of documents deleted: %d\", result.DeletedCount)\n"
+                },
+                {
+                    "lang": "java",
+                    "value": "// amount deleted code goes here\nSystem.out.println(\"Number of documents deleted: \" +result.getDeletedCount());\n"
+                },
+                {
+                    "lang": "javascript",
+                    "value": "// amount deleted code goes here\nconsole.log(\"Number of documents deleted: \" + result.deletedCount);\n"
+                },
+                {
+                    "lang": "python",
+                    "value": "# amount deleted code goes here\nprint(\"Number of documents deleted: \", result.deleted_count)\n"
+                },
+                {
+                    "lang": "csharp",
+                    "value": "using MongoDB.Bson;\nusing MongoDB.Bson.Serialization.Conventions;\nusing MongoDB.Driver;\n\n// Replace the uri string with your MongoDB deployment's connection string.\nvar uri = \"mongodb+srv://<user>:<password>@<cluster-url>?retryWrites=true&writeConcern=majority\";\n\n// instruct the driver to read the fields in camelCase\nvar pack = new ConventionPack { new CamelCaseElementNameConvention() };\nConventionRegistry.Register(\"elementNameConvention\", pack, x => true);\n\nvar client = new MongoClient(uri);\n\n// database and collection code goes here\nvar db = client.GetDatabase(\"sample_guides\");\nvar coll = db.GetCollection<Comet>(\"comets\");\n\n// delete code goes here\nvar result = coll.DeleteMany(x => x.OrbitalPeriod > 5 && x.OrbitalPeriod < 85);\n\n// amount deleted code goes here\nConsole.WriteLine($\"Number of documents deleted: {result.DeletedCount}\");\n\n// class that maps to the fields of a document in the sample_guides.comets collection\nclass Comet\n{\n    public ObjectId Id { get; set; }\n    public string Name { get; set; }\n    public string OfficialName { get; set; }\n    public double OrbitalPeriod { get; set; }\n    public double Radius { get; set; }\n    public double Mass { get; set; }\n}\n"
+                },
+                {
+                    "lang": "json",
+                    "value": "Number of documents deleted: 2"
+                },
+                {
+                    "lang": "go",
+                    "value": "package main\n\nimport (\n\t\"context\"\n\t\"fmt\"\n\t\"log\"\n\t\"os\"\n\n\t\"go.mongodb.org/mongo-driver/bson\"\n\t\"go.mongodb.org/mongo-driver/mongo\"\n\t\"go.mongodb.org/mongo-driver/mongo/options\"\n)\n\nfunc main() {\n\turi := \"mongodb+srv://<user>:<password>@<cluster-url>?retryWrites=true&writeConcern=majority\"\n\n\tclient, err := mongo.Connect(context.TODO(), options.Client().ApplyURI(uri))\n\tif err != nil {\n\t\tpanic(err)\n\t}\n\t\n\tdefer func() {\n\t\tif err = client.Disconnect(context.TODO()); err != nil {\n\t\t\tpanic(err)\n\t\t}\n\t}()\n\n\t// database and colletion code goes here\n\tdb := client.Database(\"sample_guides\")\n\tcoll := db.Collection(\"comets\")\n\n\t// delete code goes here\n\tfilter := bson.D{\n\t\t{\"$and\",\n\t\t\tbson.A{\n\t\t\t\tbson.D{{\"orbitalPeriod\", bson.D{{\"$gt\", 5}}}},\n\t\t\t\tbson.D{{\"orbitalPeriod\", bson.D{{\"$lt\", 85}}}},\n\t\t\t},\n\t\t},\n\t}\n\n\tresult, err := coll.DeleteMany(context.TODO(), filter)\n\tif err != nil {\n\t\tpanic(err)\n\t}\n\n\t// amount deleted code goes here\n\tfmt.Printf(\"Number of documents deleted: %d\", result.DeletedCount)\n}\n"
+                },
+                {
+                    "lang": "json",
+                    "value": "Number of documents deleted: 2"
+                },
+                {
+                    "lang": "java",
+                    "value": "import com.mongodb.client.MongoClient;\nimport com.mongodb.client.MongoClients;\nimport com.mongodb.client.MongoCollection;\nimport com.mongodb.client.MongoDatabase;\nimport com.mongodb.client.result.DeleteResult;\nimport com.mongodb.client.model.Filters;\n\nimport org.bson.Document;\nimport org.bson.conversions.Bson;\n\npublic class CrudDelete {\n    public static void main(String[] args) {\n        String uri = \"mongodb+srv://<user>:<password>@<cluster-url>?retryWrites=true&writeConcern=majority\";\n\n        try (MongoClient mongoClient = MongoClients.create(uri)) {\n            // database and collection code goes here\n            MongoDatabase db = mongoClient.getDatabase(\"sample_guides\");\n            MongoCollection<Document> coll = db.getCollection(\"comets\");\n\n            // delete code goes here\n            Bson filter = Filters.and(Filters.gt(\"orbitalPeriod\", 5), Filters.lt(\"orbitalPeriod\", 85));\n            DeleteResult result = coll.deleteMany(filter);\n\n            // amount deleted code goes here\n            System.out.println(\"Number of documents deleted: \" +result.getDeletedCount());\n        }\n    }\n}\n"
+                },
+                {
+                    "lang": "json",
+                    "value": "Number of documents deleted: 2"
+                },
+                {
+                    "lang": "javascript",
+                    "value": "const { MongoClient } = require(\"mongodb\");\n\n// Replace the uri string with your MongoDB deployment's connection string.\nconst uri =\n  \"mongodb+srv://<user>:<password>@<cluster-url>?retryWrites=true&writeConcern=majority\";\n\nconst client = new MongoClient(uri);\n\nasync function run() {\n  try {\n    await client.connect();\n    // database and collection code goes here\n    const db = client.db(\"sample_guides\");\n    const coll = db.collection(\"comets\");\n\n    // delete code goes here\n    const doc = {\n      orbitalPeriod: {\n        $gt: 5,\n        $lt: 85\n      }\n    };\n\n    const result = await coll.deleteMany(doc);\n\n    // amount deleted code goes here\n    console.log(\"Number of documents deleted: \" + result.deletedCount);\n\n  } finally {\n    // Ensures that the client will close when you finish/error\n    await client.close();\n  }\n}\nrun().catch(console.dir);\n"
+                },
+                {
+                    "lang": "json",
+                    "value": "Number of documents deleted: 2"
+                },
+                {
+                    "lang": "python",
+                    "value": "from pymongo import MongoClient\n\n# Replace the uri string with your MongoDB deployment's connection string.\nuri = \"mongodb+srv://<user>:<password>@<cluster-url>?retryWrites=true&writeConcern=majority\"\n\nclient = MongoClient(uri)\n\n# database and collection code goes here\ndb = client.sample_guides\ncoll = db.comets\n\n# delete code goes here\ndoc = {\n    \"orbitalPeriod\": {\n        \"$gt\": 5,\n        \"$lt\": 85\n    }\n}\nresult = coll.delete_many(doc)\n\n# amount deleted code goes here\nprint(\"Number of documents deleted: \", result.deleted_count)\n\n# Close the connection to MongoDB when you're done.\nclient.close()\n"
+                },
+                {
+                    "lang": "json",
+                    "value": "Number of documents deleted: 2"
+                }
+            ],
+            "preview": "In this guide, you will delete data from MongoDB.",
+            "tags": null,
+            "facets": {
+                "genre": [
+                    "tutorial"
+                ]
+            }
+        },
+        {
+            "slug": "crud/read",
+            "title": "Read Data in MongoDB",
+            "headings": [
+                "Overview",
+                "What You'll Need",
+                "Procedure",
+                "Connect to your MongoDB instance.",
+                "Get the database and collection.",
+                "Retrieve all documents in the planets collection.",
+                "Iterate over the results.",
+                "Check your results.",
+                "Summary",
+                "See Also"
+            ],
+            "paragraphs": "In this guide, you will learn how to retrieve data from MongoDB. Without a query, retrieve documents in MongoDB. A  connection string  to your MongoDB deployment. Sample datasets  loaded into your cluster . An  installed MongoDB Driver . In this code block there is a comment to replace the connection URI\nwith your own. Make sure to replace the URI string with your\n Atlas connection string . The following is an outline with the minimum code necessary to connect to MongoDB.\nYou'll make additions over the next few steps to read data. At line 5, replace the URI string with your own\n Atlas connection string . The following is an outline with the minimum code necessary to connect to MongoDB.\nYou'll make additions over the next few steps to read data. At line 11, replace the URI string with your own\n Atlas connection string . The following is an outline with the minimum code necessary to connect to MongoDB.\nYou'll make additions over the next few steps to read data. At line 8, replace the URI string with your own\n Atlas connection string . The following is an outline with the minimum code necessary to connect to MongoDB.\nYou'll make additions over the next few steps to read data. At line 4, replace the URI string with your own\n Atlas connection string . The following is an outline with the minimum code necessary to connect to MongoDB.\nYou'll make additions over the next few steps to read data. At line 4, replace the URI string with your own\n Atlas connection string . Make sure you've installed PyMongo with the  srv  option. Switch to the database and collection you want to query. In this case\nyou will use the  sample_guides  database and  planets \ncollection. Use the  Find()  method to retrieve all documents. In another\nguide, you'll learn how to use the same method to retrieve documents\nthat match specific criteria. The empty  bson.D{}  is required to match all documents. Use the  find()  method to retrieve all documents. In another\nguide, you'll learn how to use the same method to retrieve documents\nthat match specific criteria. Use the  find()  method to retrieve all documents. In another\nguide, you'll learn how to use the same method to retrieve documents\nthat match specific criteria. Use the  find()  method to retrieve all documents. In another\nguide, you'll learn how to use the same method to retrieve documents\nthat match specific criteria. Iterate the results and print them to the console. Operations like\nthis are  asychronous  in the MongoDB Node.js\ndriver by default, meaning the Node.js runtime doesn't block other\noperations while waiting for them to finish execution. In order to simplify the operation, you specify the  await \nkeyword, which  will  cause the runtime to wait for the operation.\nThis is often easier than specifying a callback, or chaining\na promise. For more information, see the  Promise and Callbacks guide . Here is the complete code followed by sample output. Your  ObjectId  values will differ from those shown. Here is the complete code followed by sample output. Here is the complete code followed by sample output. Here is the complete code followed by sample output. Here is the complete code followed by sample output. Here is the complete code followed by sample output. If you successfully completed the procedure in this guide, you have\nretrieved data from MongoDB. In the next guide, you'll learn how to retrieve data from MongoDB using criteria. For other CRUD guides: The  MongoDB C# Driver  documentation. The  MongoDB Go Driver  documentation. The  MongoDB Java(Sync) Driver  documentation. The  MongoDB Node.js Driver  documentation. The  PyMongo  documentation. Read Data from MongoDB With Queries Read Data using Operators and Compound Queries Insert Data into MongoDB Update Data in MongoDB Delete Data from MongoDB",
+            "code": [
+                {
+                    "lang": "csharp",
+                    "value": "\ufeffusing MongoDB.Bson;\r\nusing MongoDB.Driver;\r\n\r\n// Replace the uri string with your MongoDB deployment's connection string.\r\nvar uri = \"mongodb+srv://<user>:<password>@<cluster-url>?retryWrites=true&writeConcern=majority\";\r\n\r\nvar client = new MongoClient(uri);\r\n\r\n// database and collection code goes here\r\n// find code goes here\r\n// iterate code goes here\r\n\r\n\r\n\r\n"
+                },
+                {
+                    "lang": "go",
+                    "value": "package main\n\nimport (\n\t\"context\"\n\n\t\"go.mongodb.org/mongo-driver/mongo\"\n\t\"go.mongodb.org/mongo-driver/mongo/options\"\n)\n\nfunc main() {\n\turi := \"mongodb+srv://<user>:<password>@<cluster-url>?retryWrites=true&writeConcern=majority\"\n\n\tclient, err := mongo.Connect(context.TODO(), options.Client().ApplyURI(uri))\n\tif err != nil {\n\t\tpanic(err)\n\t}\n\n\tdefer func() {\n\t\tif err = client.Disconnect(context.TODO()); err != nil {\n\t\t\tpanic(err)\n\t\t}\n\t}()\n\n\t// database and colletion code goes here\n\t// find code goes here\n\t// iterate code goes here\n}\n"
+                },
+                {
+                    "lang": "java",
+                    "value": "import com.mongodb.client.*;\nimport com.mongodb.client.model.Filters.*;\nimport org.bson.Document;\nimport org.bson.conversions.Bson;\n\npublic class CrudRead {\n    public static void main(String[] args) {\n        String uri = \"mongodb+srv://<user>:<password>@<cluster-url>?retryWrites=true&writeConcern=majority\";\n\n        try (MongoClient mongoClient = MongoClients.create(uri)) {\n            // database and collection code goes here\n            // find code goes here\n            // iterate code goes here\n        }\n    }\n}\n"
+                },
+                {
+                    "lang": "javascript",
+                    "value": "const { MongoClient } = require(\"mongodb\");\n// Replace the uri string with your MongoDB deployment's connection string.\nconst uri =\n  \"mongodb+srv://<user>:<password>@<cluster-url>?retryWrites=true&writeConcern=majority\";\nconst client = new MongoClient(uri);\nasync function run() {\n  try {\n    await client.connect();\n    // database and collection code goes here\n    // find code goes here\n    // iterate code goes here\n  } finally {\n    // Ensures that the client will close when you finish/error\n    await client.close();\n  }\n}\nrun().catch(console.dir);\n"
+                },
+                {
+                    "lang": "python",
+                    "value": "from pymongo import MongoClient\n\n# Replace the uri string with your MongoDB deployment's connection string.\nuri = \"mongodb+srv://<user>:<password>@<cluster-url>?retryWrites=true&writeConcern=majority\"\n\nclient = MongoClient(uri)\n\n# database and collection code goes here\n# find code goes here\n# iterate code goes here\n\n# Close the connection to MongoDB when you're done.\nclient.close()\n"
+                },
+                {
+                    "lang": "sh",
+                    "value": "python3 -m pip install \"pymongo[srv]\""
+                },
+                {
+                    "lang": "csharp",
+                    "value": "\ufeff// database and collection code goes here\r\nvar db = client.GetDatabase(\"sample_guides\");\r\nvar coll = db.GetCollection<BsonDocument>(\"planets\");\r\n\r\n"
+                },
+                {
+                    "lang": "go",
+                    "value": "// database and colletion code goes here\ndb := client.Database(\"sample_guides\")\ncoll := db.Collection(\"planets\")\n"
+                },
+                {
+                    "lang": "java",
+                    "value": "// database and collection code goes here\nMongoDatabase db = mongoClient.getDatabase(\"sample_guides\");\nMongoCollection<Document> coll = db.getCollection(\"planets\");\n"
+                },
+                {
+                    "lang": "javascript",
+                    "value": "// database and collection code goes here\nconst db = client.db(\"sample_guides\");\nconst coll = db.collection(\"planets\");\n"
+                },
+                {
+                    "lang": "python",
+                    "value": "# database and collection code goes here\ndb = client.sample_guides\ncoll = db.planets\n"
+                },
+                {
+                    "lang": "csharp",
+                    "value": "\ufeff// find code goes here\r\nvar cursor = coll.AsQueryable();\r\n"
+                },
+                {
+                    "lang": "go",
+                    "value": "// find code goes here\ncursor, err := coll.Find(context.TODO(), bson.D{})\nif err != nil {\n\tpanic(err)\n}\n"
+                },
+                {
+                    "lang": "java",
+                    "value": "// find code goes here\nMongoCursor<Document> cursor = coll.find().iterator();\n"
+                },
+                {
+                    "lang": "javascript",
+                    "value": "// find code goes here\nconst cursor = coll.find();\n"
+                },
+                {
+                    "lang": "python",
+                    "value": "# find code goes here\ncursor = coll.find()\n"
+                },
+                {
+                    "lang": "csharp",
+                    "value": "\ufeff// iterate code goes here\r\nforeach (var document in cursor.ToEnumerable())\r\n{\r\n    Console.WriteLine(document);\r\n}\r\n"
+                },
+                {
+                    "lang": "go",
+                    "value": "// iterate code goes here\nfor cursor.Next(context.TODO()) {\n\tvar result bson.M\n\tif err := cursor.Decode(&result); err != nil {\n\t\tpanic(err)\n\t}\n\tfmt.Println(result)\n}\nif err := cursor.Err(); err != nil {\n\tpanic(err)\n}\n"
+                },
+                {
+                    "lang": "java",
+                    "value": "// iterate code goes here\ntry {\n    while (cursor.hasNext()) {\n        System.out.println(cursor.next().toJson());\n    }\n} finally {\n    cursor.close();\n}\n"
+                },
+                {
+                    "lang": "javascript",
+                    "value": "// iterate code goes here\nawait cursor.forEach(console.log);\n"
+                },
+                {
+                    "lang": "python",
+                    "value": "# iterate code goes here\nfor doc in cursor:\n    print(doc)\n"
+                },
+                {
+                    "lang": "csharp",
+                    "value": "\ufeffusing MongoDB.Bson;\r\nusing MongoDB.Driver;\r\n\r\n// Replace the uri string with your MongoDB deployment's connection string.\r\nvar uri = \"mongodb+srv://<user>:<password>@<cluster-url>?retryWrites=true&writeConcern=majority\";\r\n\r\nvar client = new MongoClient(uri);\r\n\r\n// database and collection code goes here\r\nvar db = client.GetDatabase(\"sample_guides\");\r\nvar coll = db.GetCollection<BsonDocument>(\"planets\");\r\n// find code goes here\r\nvar cursor = coll.AsQueryable();\r\n// iterate code goes here\r\nforeach (var document in cursor)\r\n{\r\n    Console.WriteLine(document);\r\n}\r\n\r\n\r\n"
+                },
+                {
+                    "lang": "json",
+                    "value": "{\n  '_id': ObjectId('621ff30d2a3e781873fcb65c'),\n  'name': 'Mercury',\n  'orderFromSun': 1,\n  'hasRings': False,\n  'mainAtmosphere': [],\n  'surfaceTemperatureC': {'min': -173, 'max': 427, 'mean': 67}\n},\n..."
+                },
+                {
+                    "lang": "go",
+                    "value": "package main\n\nimport (\n\t\"context\"\n\t\"fmt\"\n\n\t\"go.mongodb.org/mongo-driver/bson\"\n\t\"go.mongodb.org/mongo-driver/mongo\"\n\t\"go.mongodb.org/mongo-driver/mongo/options\"\n)\n\nfunc main() {\n\turi := \"mongodb+srv://<user>:<password>@<cluster-url>?retryWrites=true&writeConcern=majority\"\n\n\tclient, err := mongo.Connect(context.TODO(), options.Client().ApplyURI(uri))\n\tif err != nil {\n\t\tpanic(err)\n\t}\n\n\tdefer func() {\n\t\tif err = client.Disconnect(context.TODO()); err != nil {\n\t\t\tpanic(err)\n\t\t}\n\t}()\n\n\t// database and colletion code goes here\n\tdb := client.Database(\"sample_guides\")\n\tcoll := db.Collection(\"planets\")\n\n\t// find code goes here\n\tcursor, err := coll.Find(context.TODO(), bson.D{})\n\tif err != nil {\n\t\tpanic(err)\n\t}\n\n\t// iterate code goes here\n\tfor cursor.Next(context.TODO()) {\n\t\tvar result bson.M\n\t\tif err := cursor.Decode(&result); err != nil {\n\t\t\tpanic(err)\n\t\t}\n\t\tfmt.Println(result)\n\t}\n\tif err := cursor.Err(); err != nil {\n\t\tpanic(err)\n\t}\n\n}\n"
+                },
+                {
+                    "lang": "json",
+                    "value": "map[_id:ObjectID(\"621ff30d2a3e781873fcb65c\") hasRings:false mainAtmosphere:[] name:Mercury orderFromSun:1 surfaceTemperatureC:map[max:427 mean:67 min:-173]]\n..."
+                },
+                {
+                    "lang": "java",
+                    "value": "import com.mongodb.client.*;\nimport com.mongodb.client.model.Filters.*;\nimport org.bson.Document;\nimport org.bson.conversions.Bson;\n\npublic class CrudRead {\n    public static void main(String[] args) {\n        String uri = \"mongodb+srv://<user>:<password>@<cluster-url>?retryWrites=true&writeConcern=majority\";\n\n        try (MongoClient mongoClient = MongoClients.create(uri)) {\n            // database and collection code goes here\n            MongoDatabase db = mongoClient.getDatabase(\"sample_guides\");\n            MongoCollection<Document> coll = db.getCollection(\"planets\");\n\n            // find code goes here\n            MongoCursor<Document> cursor = coll.find().iterator();\n\n            // iterate code goes here\n            try {\n                while (cursor.hasNext()) {\n                    System.out.println(cursor.next().toJson());\n                }\n            } finally {\n                cursor.close();\n            }\n        }\n    }\n}\n"
+                },
+                {
+                    "lang": "json",
+                    "value": "{\"_id\": {\"$oid\": \"621ff30d2a3e781873fcb65c\"}, \"name\": \"Mercury\", \"orderFromSun\": 1, \"hasRings\": false, \"mainAtmosphere\": [], \"surfaceTemperatureC\": {\"min\": -173, \"max\": 427, \"mean\": 67}}\n..."
+                },
+                {
+                    "lang": "javascript",
+                    "value": "const { MongoClient } = require(\"mongodb\");\n// Replace the uri string with your MongoDB deployment's connection string.\nconst uri =\n  \"mongodb+srv://<user>:<password>@<cluster-url>?retryWrites=true&writeConcern=majority\";\nconst client = new MongoClient(uri);\nasync function run() {\n  try {\n    await client.connect();\n    // database and collection code goes here\n    const db = client.db(\"sample_guides\");\n    const coll = db.collection(\"planets\");\n\n    // find code goes here\n    const cursor = coll.find();\n\n    // iterate code goes here\n    await cursor.forEach(console.log);\n  } finally {\n    // Ensures that the client will close when you finish/error\n    await client.close();\n  }\n}\nrun().catch(console.dir);\n"
+                },
+                {
+                    "lang": "json",
+                    "value": "{\n  '_id': ObjectId('621ff30d2a3e781873fcb65c'),\n  'name': 'Mercury',\n  'orderFromSun': 1,\n  'hasRings': False,\n  'mainAtmosphere': [],\n  'surfaceTemperatureC': {'min': -173, 'max': 427, 'mean': 67}\n},\n..."
+                },
+                {
+                    "lang": "python",
+                    "value": "from pymongo import MongoClient\n\n# Replace the uri string with your MongoDB deployment's connection string.\nuri = \"mongodb+srv://<user>:<password>@<cluster-url>?retryWrites=true&writeConcern=majority\"\n\nclient = MongoClient(uri)\n\n# database and collection code goes here\ndb = client.sample_guides\ncoll = db.planets\n# find code goes here\ncursor = coll.find({\"hasRings\": True})\n# iterate code goes here\nfor doc in cursor:\n    print(doc)\n\n# Close the connection to MongoDB when you're done.\nclient.close()\n"
+                },
+                {
+                    "lang": "json",
+                    "value": "{\n  '_id': ObjectId('621ff30d2a3e781873fcb65c'),\n  'name': 'Mercury',\n  'orderFromSun': 1,\n  'hasRings': False,\n  'mainAtmosphere': [],\n  'surfaceTemperatureC': {'min': -173, 'max': 427, 'mean': 67}\n},\n..."
+                }
+            ],
+            "preview": "In this guide, you will learn how to retrieve data from MongoDB.",
+            "tags": null,
+            "facets": {
+                "genre": [
+                    "tutorial"
+                ]
+            }
+        },
+        {
+            "slug": "crud/read_queries",
+            "title": "Read Data from MongoDB With Queries",
+            "headings": [
+                "Overview",
+                "What You'll Need",
+                "Procedure",
+                "Connect to your MongoDB instance.",
+                "Get the database and collection.",
+                "Retrieve specific documents in the planets collection.",
+                "Iterate over the results.",
+                "Check your results.",
+                "Query using multiple criteria.",
+                "Summary",
+                "See Also"
+            ],
+            "paragraphs": "In the previous guide,  Read Data in MongoDB , you retrieved all documents\nfrom the  sample_guides.planets  collection without specifying any\ncriteria that the documents should meet. In this guide, you will query the collection and retrieve documents that\nmatch specific  equality  criteria, meaning the values of the specified\nfield or fields must match. Use a query to specify which documents to retrieve documents in MongoDB. A  connection string  to your MongoDB deployment. Sample datasets  loaded into your cluster . An  installed MongoDB Driver . In this code block there is a comment to replace the connection URI\nwith your own. Replace the URI string with your own\n Atlas connection string . The following is an outline with the minimum code necessary to connect to MongoDB.\nYou'll make additions over the next few steps to read data. At line 5, replace the URI string with your own\n Atlas connection string . The following is an outline with the minimum code necessary to connect to MongoDB.\nYou'll make additions over the next few steps to read data. At line 11, replace the URI string with your own\n Atlas connection string . The following is an outline with the minimum code necessary to connect to MongoDB.\nYou'll make additions over the next few steps to read data. At line 8, replace the URI string with your own\n Atlas connection string . The following is an outline with the minimum code necessary to connect to MongoDB.\nYou'll make additions over the next few steps to read data. At line 4, replace the URI string with your own\n Atlas connection string . The following is an outline with the minimum code necessary to connect to MongoDB.\nYou'll make additions over the next few steps to read data. At line 4, replace the URI string with your own\n Atlas connection string . Make sure you've installed PyMongo with the  srv  option. Switch to the database and collection you want to query. In this case\nyou will use the  sample_guides  database and  planets \ncollection. You can retrieve specific documents from a collection by applying a query filter.\nA query filter is a document that contains the criteria you are searching for.\nThe following example illustrates using a query filter to retrieve documents\nfrom the  planets  collection that have a  hasRings  field\nwith a value of  true . BSON.D  should be used when sending documents to MongoDB,\nbecause  BSON.D  is ordered. This is important in more complex\noperations. The MongoDB Java Driver includes\n Builders \nthat simplify the process of creating queries (and other operations).\nHere, you use the  Filters.eq  builder to construct the query document. Iterate the results and print them to the console. Operations like\nthis are  asychronous  in the MongoDB Node.js\ndriver by default, meaning the Node.js runtime doesn't block other\noperations while waiting for them to finish execution. In order to simplify the operation, you specify the  await \nkeyword, which  will  cause the runtime to wait for the operation.\nThis is often easier than specifying a callback, or chaining\na promise. For more information, see the  Promise and Callbacks guide . Here is the complete code followed by sample output. Your  ObjectId  values will differ from those shown. Here is the complete code followed by sample output. Here is the complete code followed by sample output. The output\ndocuments have been truncated here for display purposes. Here is the complete code followed by sample output. Here is the complete code followed by sample output. Here is the complete code followed by sample output. You can also query the collection using multiple criteria.\nThe following example illustrates using multiple criteria to retrieve\ndocuments from the  planets  collection that have a\n hasRings  field with a value of  false  and  Argon(Ar)  as an\nentry in the   mainAtmosphere  field. Even though the  mainAtmosphere  field is an array, you can use\na strict equality query because MongoDB treats arrays as first-class\ntypes. During execution of the query, MongoDB compared each entry\nin the array to the value you specified, in this case  \"Ar\" ,\nto determine if the documents matched your criteria. Here is the complete code followed by sample output. Here is the complete code followed by sample output. The output\ndocuments have been truncated here for display purposes. Here is the complete code followed by sample output. Here is the complete code followed by sample output. If you have completed this guide, you have retrieved data from MongoDB\nusing specific equality criteria. This is useful when you know exactly\nwhat you're searching for, for example an item number, a username, or\nchemical element. In the next guide, you'll learn how to read data from MongoDB using comparison\noperators to retrieve documents that match a broader set of criteria. See the following resources for more in-depth information about the\nconcepts presented here: Specify Equality Condition Match an Embedded or Nested Array The  MongoDB C# Driver  documentation The  MongoDB Go Driver  documentation The  MongoDB Java(Sync) Driver  documentation The  MongoDB Node.js Driver  documentation The  PyMongo  documentation",
+            "code": [
+                {
+                    "lang": "csharp",
+                    "value": "\ufeffusing MongoDB.Bson;\r\nusing MongoDB.Driver;\r\n\r\n// Replace the uri string with your MongoDB deployment's connection string.\r\nvar uri = \"mongodb+srv://<user>:<password>@<cluster-url>?retryWrites=true&writeConcern=majority\";\r\n\r\nvar client = new MongoClient(uri);\r\n\r\n// database and collection code goes here\r\n// find code goes here\r\n// iterate code goes here\r\n\r\n\r\n\r\n"
+                },
+                {
+                    "lang": "go",
+                    "value": "package main\n\nimport (\n\t\"context\"\n\n\t\"go.mongodb.org/mongo-driver/mongo\"\n\t\"go.mongodb.org/mongo-driver/mongo/options\"\n)\n\nfunc main() {\n\turi := \"mongodb+srv://<user>:<password>@<cluster-url>?retryWrites=true&writeConcern=majority\"\n\n\tclient, err := mongo.Connect(context.TODO(), options.Client().ApplyURI(uri))\n\tif err != nil {\n\t\tpanic(err)\n\t}\n\n\tdefer func() {\n\t\tif err = client.Disconnect(context.TODO()); err != nil {\n\t\t\tpanic(err)\n\t\t}\n\t}()\n\n\t// database and colletion code goes here\n\t// find code goes here\n\t// iterate code goes here\n}\n"
+                },
+                {
+                    "lang": "java",
+                    "value": "import com.mongodb.client.*;\nimport com.mongodb.client.model.Filters.*;\nimport org.bson.Document;\nimport org.bson.conversions.Bson;\n\npublic class CrudRead {\n    public static void main(String[] args) {\n        String uri = \"mongodb+srv://<user>:<password>@<cluster-url>?retryWrites=true&writeConcern=majority\";\n\n        try (MongoClient mongoClient = MongoClients.create(uri)) {\n            // database and collection code goes here\n            // find code goes here\n            // iterate code goes here\n        }\n    }\n}\n"
+                },
+                {
+                    "lang": "javascript",
+                    "value": "const { MongoClient } = require(\"mongodb\");\n// Replace the uri string with your MongoDB deployment's connection string.\nconst uri =\n  \"mongodb+srv://<user>:<password>@<cluster-url>?retryWrites=true&writeConcern=majority\";\nconst client = new MongoClient(uri);\nasync function run() {\n  try {\n    await client.connect();\n    // database and collection code goes here\n    // find code goes here\n    // iterate code goes here\n  } finally {\n    // Ensures that the client will close when you finish/error\n    await client.close();\n  }\n}\nrun().catch(console.dir);\n"
+                },
+                {
+                    "lang": "python",
+                    "value": "from pymongo import MongoClient\n\n# Replace the uri string with your MongoDB deployment's connection string.\nuri = \"mongodb+srv://<user>:<password>@<cluster-url>?retryWrites=true&writeConcern=majority\"\n\nclient = MongoClient(uri)\n\n# database and collection code goes here\n# find code goes here\n# iterate code goes here\n\n# Close the connection to MongoDB when you're done.\nclient.close()\n"
+                },
+                {
+                    "lang": "sh",
+                    "value": "python3 -m pip install \"pymongo[srv]\""
+                },
+                {
+                    "lang": "csharp",
+                    "value": "\ufeff// database and collection code goes here\r\nvar db = client.GetDatabase(\"sample_guides\");\r\nvar coll = db.GetCollection<BsonDocument>(\"planets\");\r\n\r\n"
+                },
+                {
+                    "lang": "go",
+                    "value": "// database and colletion code goes here\ndb := client.Database(\"sample_guides\")\ncoll := db.Collection(\"planets\")\n"
+                },
+                {
+                    "lang": "java",
+                    "value": "// database and collection code goes here\nMongoDatabase db = mongoClient.getDatabase(\"sample_guides\");\nMongoCollection<Document> coll = db.getCollection(\"planets\");\n"
+                },
+                {
+                    "lang": "javascript",
+                    "value": "// database and collection code goes here\nconst db = client.db(\"sample_guides\");\nconst coll = db.collection(\"planets\");\n"
+                },
+                {
+                    "lang": "python",
+                    "value": "# database and collection code goes here\ndb = client.sample_guides\ncoll = db.planets\n"
+                },
+                {
+                    "lang": "csharp",
+                    "value": "\ufeff// find code goes here\r\nvar cursor = from planet in coll.AsQueryable()\r\n             where planet[\"hasRings\"] == true\r\n             select planet;\r\n"
+                },
+                {
+                    "lang": "go",
+                    "value": "// find code goes here\nfilter := bson.D{{\"hasRings\", true}}\ncursor, err := coll.Find(context.TODO(), filter)\nif err != nil {\n\tpanic(err)\n}\n"
+                },
+                {
+                    "lang": "java",
+                    "value": "// find code goes here\nBson filter = eq(\"hasRings\", true);\nMongoCursor<Document> cursor = coll.find(filter).iterator();\n"
+                },
+                {
+                    "lang": "javascript",
+                    "value": "// find code goes here\nconst cursor = coll.find({ hasRings: true });\n"
+                },
+                {
+                    "lang": "python",
+                    "value": "# find code goes here\ncursor = coll.find({\"hasRings\": True})\n"
+                },
+                {
+                    "lang": "csharp",
+                    "value": "\ufeff// iterate code goes here\r\nforeach (var document in cursor.ToEnumerable())\r\n{\r\n    Console.WriteLine(document);\r\n}\r\n"
+                },
+                {
+                    "lang": "go",
+                    "value": "// iterate code goes here\nfor cursor.Next(context.TODO()) {\n\tvar result bson.M\n\tif err := cursor.Decode(&result); err != nil {\n\t\tpanic(err)\n\t}\n\tfmt.Println(result)\n}\nif err := cursor.Err(); err != nil {\n\tpanic(err)\n}\n"
+                },
+                {
+                    "lang": "java",
+                    "value": "// iterate code goes here\ntry {\n    while (cursor.hasNext()) {\n        System.out.println(cursor.next().toJson());\n    }\n} finally {\n    cursor.close();\n}\n"
+                },
+                {
+                    "lang": "javascript",
+                    "value": "// iterate code goes here\nawait cursor.forEach(console.log);\n"
+                },
+                {
+                    "lang": "python",
+                    "value": "# iterate code goes here\nfor doc in cursor:\n    print(doc)\n"
+                },
+                {
+                    "lang": "csharp",
+                    "value": "\ufeffusing MongoDB.Bson;\r\nusing MongoDB.Driver;\r\n\r\n// Replace the uri string with your MongoDB deployment's connection string.\r\nvar uri = \"mongodb+srv://<user>:<password>@<cluster-url>?retryWrites=true&writeConcern=majority\";\r\n\r\nvar client = new MongoClient(uri);\r\n\r\n// database and collection code goes here\r\nvar db = client.GetDatabase(\"sample_guides\");\r\nvar coll = db.GetCollection<BsonDocument>(\"planets\");\r\n// find code goes here\r\nvar cursor = from planet in coll.AsQueryable()\r\n             where planet[\"hasRings\"] == true\r\n             select planet;\r\n// iterate code goes here\r\nforeach (var document in cursor)\r\n{\r\n    Console.WriteLine(document);\r\n}\r\n\r\n\r\n"
+                },
+                {
+                    "lang": "json",
+                    "value": "{... 'name': 'Uranus', 'hasRings': True, ...}\n{... 'name': 'Neptune', 'hasRings': True, ... }\n{... 'name': 'Jupiter', 'hasRings': True, ... }\n{... 'name': 'Saturn', 'hasRings': True, ... }"
+                },
+                {
+                    "lang": "go",
+                    "value": "package main\n\nimport (\n\t\"context\"\n\t\"fmt\"\n\n\t\"go.mongodb.org/mongo-driver/bson\"\n\t\"go.mongodb.org/mongo-driver/mongo\"\n\t\"go.mongodb.org/mongo-driver/mongo/options\"\n)\n\nfunc main() {\n\turi := \"mongodb+srv://<user>:<password>@<cluster-url>?retryWrites=true&writeConcern=majority\"\n\n\tclient, err := mongo.Connect(context.TODO(), options.Client().ApplyURI(uri))\n\tif err != nil {\n\t\tpanic(err)\n\t}\n\n\tdefer func() {\n\t\tif err = client.Disconnect(context.TODO()); err != nil {\n\t\t\tpanic(err)\n\t\t}\n\t}()\n\n\t// database and colletion code goes here\n\tdb := client.Database(\"sample_guides\")\n\tcoll := db.Collection(\"planets\")\n\n\t// find code goes here\n\tfilter := bson.D{{\"hasRings\", true}}\n\tcursor, err := coll.Find(context.TODO(), filter)\n\tif err != nil {\n\t\tpanic(err)\n\t}\n\n\t// iterate code goes here\n\tfor cursor.Next(context.TODO()) {\n\t\tvar result bson.M\n\t\tif err := cursor.Decode(&result); err != nil {\n\t\t\tpanic(err)\n\t\t}\n\t\tfmt.Println(result)\n\t}\n\tif err := cursor.Err(); err != nil {\n\t\tpanic(err)\n\t}\n\n}\n"
+                },
+                {
+                    "lang": "json",
+                    "value": " map[... hasRings:true name:Uranus ... ]]\n map[... hasRings:true name:Neptune ... ]]\n map[... hasRings:true name:Jupiter ... ]]\n map[... hasRings:true name:Saturn ... ]]"
+                },
+                {
+                    "lang": "java",
+                    "value": "import com.mongodb.client.*;\nimport com.mongodb.client.model.Filters.*;\nimport org.bson.Document;\nimport org.bson.conversions.Bson;\n\npublic class CrudRead {\n    public static void main(String[] args) {\n        String uri = \"mongodb+srv://<user>:<password>@<cluster-url>?retryWrites=true&writeConcern=majority\";\n\n        try (MongoClient mongoClient = MongoClients.create(uri)) {\n            // database and collection code goes here\n            MongoDatabase db = mongoClient.getDatabase(\"sample_guides\");\n            MongoCollection<Document> coll = db.getCollection(\"planets\");\n\n            // find code goes here\n            Bson filter = eq(\"hasRings\", true);\n            MongoCursor<Document> cursor = coll.find(filter).iterator();\n\n            // iterate code goes here\n            try {\n                while (cursor.hasNext()) {\n                    System.out.println(cursor.next().toJson());\n                }\n            } finally {\n                cursor.close();\n            }\n        }\n    }\n}\n"
+                },
+                {
+                    "lang": "json",
+                    "value": "{... 'name': 'Uranus', 'hasRings': True, ...}\n{... 'name': 'Neptune', 'hasRings': True, ... }\n{... 'name': 'Jupiter', 'hasRings': True, ... }\n{... 'name': 'Saturn', 'hasRings': True, ... }"
+                },
+                {
+                    "lang": "javascript",
+                    "value": "const { MongoClient } = require(\"mongodb\");\n// Replace the uri string with your MongoDB deployment's connection string.\nconst uri =\n  \"mongodb+srv://<user>:<password>@<cluster-url>?retryWrites=true&writeConcern=majority\";\nconst client = new MongoClient(uri);\nasync function run() {\n  try {\n    await client.connect();\n    // database and collection code goes here\n    const db = client.db(\"sample_guides\");\n    const coll = db.collection(\"planets\");\n\n    // find code goes here\n    const cursor = coll.find({ hasRings: true });\n\n    // iterate code goes here\n    await cursor.forEach(console.log);\n  } finally {\n    // Ensures that the client will close when you finish/error\n    await client.close();\n  }\n}\nrun().catch(console.dir);\n"
+                },
+                {
+                    "lang": "json",
+                    "value": "{... 'name': 'Uranus', 'hasRings': True, ...}\n{... 'name': 'Neptune', 'hasRings': True, ... }\n{... 'name': 'Jupiter', 'hasRings': True, ... }\n{... 'name': 'Saturn', 'hasRings': True, ... }"
+                },
+                {
+                    "lang": "python",
+                    "value": "from pymongo import MongoClient\n\n# Replace the uri string with your MongoDB deployment's connection string.\nuri = \"mongodb+srv://<user>:<password>@<cluster-url>?retryWrites=true&writeConcern=majority\"\n\nclient = MongoClient(uri)\n\n# database and collection code goes here\ndb = client.sample_guides\ncoll = db.planets\n# find code goes here\ncursor = coll.find({\"hasRings\": True})\n# iterate code goes here\nfor doc in cursor:\n    print(doc)\n\n# Close the connection to MongoDB when you're done.\nclient.close()\n"
+                },
+                {
+                    "lang": "json",
+                    "value": "{... 'name': 'Uranus', 'hasRings': True, ...}\n{... 'name': 'Neptune', 'hasRings': True, ... }\n{... 'name': 'Jupiter', 'hasRings': True, ... }\n{... 'name': 'Saturn', 'hasRings': True, ... }"
+                },
+                {
+                    "lang": "csharp",
+                    "value": "\ufeff// find code goes here\r\nvar cursor = from planet in coll.AsQueryable()\r\n             where planet[\"hasRings\"] == false\r\n             where planet[\"mainAtmosphere\"] == \"Ar\"\r\n             select planet;\r\n"
+                },
+                {
+                    "lang": "json",
+                    "value": "{..., \"name\" : \"Mars\", \"mainAtmosphere\" : [\"CO2\", \"Ar\", \"N\"], ... }\n{..., \"name\" : \"Earth\", \"mainAtmosphere\" : [\"N\", \"O2\", \"Ar\"], ... }\n"
+                },
+                {
+                    "lang": "go",
+                    "value": "// find code goes here\nfilter := bson.D{\n\t{\"$and\",\n\t\tbson.A{\n\t\t\tbson.D{{\"hasRings\", false}},\n\t\t\tbson.D{{\"mainAtmosphere\", \"Ar\"}},\n\t\t},\n\t},\n}\ncursor, err := coll.Find(context.TODO(), filter)\nif err != nil {\n\tpanic(err)\n}\n"
+                },
+                {
+                    "lang": "json",
+                    "value": "map[... hasRings:false mainAtmosphere:[CO2 Ar N] ... ]]\nmap[... hasRings:false mainAtmosphere:[N O2 Ar] ... ]]"
+                },
+                {
+                    "lang": "java",
+                    "value": "// find code goes here\nBson filter = and(eq(\"hasRings\", false), eq(\"mainAtmosphere\", \"Ar\"));\nMongoCursor<Document> cursor = coll.find(filter).iterator();\n"
+                },
+                {
+                    "lang": "json",
+                    "value": "{..., \"name\" : \"Mars\", \"mainAtmosphere\" : [\"CO2\", \"Ar\", \"N\"], ... }\n{..., \"name\" : \"Earth\", \"mainAtmosphere\" : [\"N\", \"O2\", \"Ar\"], ... }\n"
+                },
+                {
+                    "lang": "javascript",
+                    "value": "// find code goes here\nconst cursor = coll.find({ hasRings: false, mainAtomsphere: \"Ar\" });\n"
+                },
+                {
+                    "lang": "json",
+                    "value": "{..., \"name\" : \"Mars\", \"mainAtmosphere\" : [\"CO2\", \"Ar\", \"N\"], ... }\n{..., \"name\" : \"Earth\", \"mainAtmosphere\" : [\"N\", \"O2\", \"Ar\"], ... }\n"
+                },
+                {
+                    "lang": "python",
+                    "value": "# find code goes here\ncursor = coll.find({\"hasRings\": False, \"mainAtmosphere\": \"Ar\"})\n"
+                },
+                {
+                    "lang": "json",
+                    "value": "{..., \"name\" : \"Mars\", \"mainAtmosphere\" : [\"CO2\", \"Ar\", \"N\"], ... }\n{..., \"name\" : \"Earth\", \"mainAtmosphere\" : [\"N\", \"O2\", \"Ar\"], ... }\n"
+                }
+            ],
+            "preview": "In the previous guide, Read Data in MongoDB, you retrieved all documents\nfrom the sample_guides.planets collection without specifying any\ncriteria that the documents should meet.",
+            "tags": null,
+            "facets": {
+                "genre": [
+                    "tutorial"
+                ]
+            }
+        },
+        {
+            "slug": "crud/install",
+            "title": "Add a MongoDB Driver",
+            "headings": [
+                "Overview",
+                "What You'll Need",
+                "Procedure",
+                "Summary",
+                "See Also"
+            ],
+            "paragraphs": "In this guide, you will learn how to add a MongoDB driver to your\nproject. View and install one of the MongoDB drivers we cover in our guides. An environment configured for your programming language. Use the language selector above to switch between languages. Add the MongoDB .NET/C# driver using  NuGet . Use  MongoDB.Driver \nfor all new projects. .NET CLI Package Manager Package Reference Add the MongoDB Go driver using  go mod . Add the MongoDB Java driver to your project in one of the following ways: Once you configure your dependencies, ensure they are available to your\nproject which may require running your dependency manager and refreshing\nthe project in your IDE. If you are using  Maven , add the following to\nyour  pom.xml  dependencies list: If you are using  Gradle , add the following to your\n build.gradle  dependencies list: Add the MongoDB Node.js driver to your project using  npm . Add the MongoDB Python driver, Pymongo, using  pip . If you successfully completed the procedure in this guide, you have\nadded a MongoDB driver to your project. In the next guide, you'll learn how to retrieve data from MongoDB. For other CRUD guides: Read Data in MongoDB Read Data from MongoDB With Queries Read Data using Operators and Compound Queries Insert Data into MongoDB Update Data in MongoDB Delete Data from MongoDB",
+            "code": [
+                {
+                    "lang": "sh",
+                    "value": "dotnet add package MongoDB.Driver --version 2.17.0"
+                },
+                {
+                    "lang": "sh",
+                    "value": "PM > Install-Package MongoDB.Driver -Version 2.17.0"
+                },
+                {
+                    "lang": "sh",
+                    "value": "<PackageReference Include=MongoDB.Driver\" Version=\"2.17.0\" />"
+                },
+                {
+                    "lang": "sh",
+                    "value": "mkdir guides\ncd guides\ngo mod init guides\ngo get go.mongodb.org/mongo-driver/mongo"
+                },
+                {
+                    "lang": "xml",
+                    "value": "<dependencies>\n    <dependency>\n        <groupId>org.mongodb</groupId>\n        <artifactId>mongodb-driver-sync</artifactId>\n        <version>4.7.0</version>\n    </dependency>\n</dependencies>"
+                },
+                {
+                    "lang": "groovy",
+                    "value": "dependencies {\n  implementation 'org.mongodb:mongodb-driver-sync:4.7.0'\n}"
+                },
+                {
+                    "lang": "bash",
+                    "value": "npm install mongodb"
+                },
+                {
+                    "lang": "sh",
+                    "value": "python3 -m pip install 'pymongo[srv]'"
+                }
+            ],
+            "preview": "In this guide, you will learn how to add a MongoDB driver to your\nproject.",
+            "tags": null,
+            "facets": {
+                "genre": [
+                    "tutorial"
+                ]
+            }
+        },
+        {
+            "slug": "crud/read_operators",
+            "title": "Read Data using Operators and Compound Queries",
+            "headings": [
+                "Overview",
+                "What You'll Need",
+                "Procedure",
+                "Read Data with Embedded Fields and Comparison Operators",
+                "Connect to your MongoDB instance.",
+                "Select documents using the less-than operator.",
+                "Check your results.",
+                "Read Data with Compound Queries",
+                "Write an AND query.",
+                "Write an OR query.",
+                "Summary",
+                "See Also"
+            ],
+            "paragraphs": "In the previous read guide,  Read Data from MongoDB With Queries ,\nyou read data using equality queries. In this guide, you will: Use operators and compound queries to retrieve documents in MongoDB. Read data from the  sample_guides.planets  collection with MongoDB's comparison operators. Combine query criteria to make compound queries. Use  dot notation  to query embedded fields. A  connection string  to your MongoDB deployment. Sample datasets  loaded into your cluster . An  installed MongoDB Driver . In this exercise, you will read data using comparison operators. The following is an outline with the minimum code necessary to connect to MongoDB.\nYou'll make additions over the next few steps to read data. At line 5, replace the URI string with your own\n Atlas connection string . The following is an outline with the minimum code necessary to connect to MongoDB.\nYou'll make additions over the next few steps to read data. At line 13, replace the URI string with your own\n Atlas connection string . The following is an outline with the minimum code necessary to connect to MongoDB.\nYou'll make additions over the next few steps to read data. At line 8, replace the URI string with your own\n Atlas connection string . The following is an outline with the minimum code necessary to connect to MongoDB.\nYou'll make additions over the next few steps to read data. At line 4, replace the URI string with your own\n Atlas connection string . The following is an outline with the minimum code necessary to connect to MongoDB.\nYou'll make additions over the next few steps to read data. At line 4, replace the URI string with your own\n Atlas connection string . Make sure you've installed PyMongo with the  srv  option. Use  dot notation \nin this query to select documents where the embedded document  surfaceTemperatureC \nhas a value in its  mean  field less than 15 degrees (Celsius). The MongoDB Java Driver includes\n Builders \nthat simplify the process of creating queries (and other operations).\nHere, you use the  Filters.lt  builder to construct the query document. Here is the complete code followed by sample output. Results have been\ntruncated for display purposes. Now you will read data from MongoDB using AND and OR logic to form compound queries. To write a compound query in MongoDB that matches all of the query\npredicates (i.e. a logical AND), specify all of the fields that you\nwish to match in your find document. By default, MongoDB matches all\nof the fields. If you followed the  previous guide \nyou've already done this! The following example retrieves all documents in the  planets \ncollection where the  surfaceTemperatureC.mean  field is less than  15 \n and  the  surfaceTemperatureC.min  field is greater than  -100 . Specifying multiple criteria is common. If you don't specify any query operators,\nthe driver interprets your criteria in an AND fashion. However, sometimes you\nmust be explicit when specifying multiple criteria, particularly\nwhen specifying criteria on the same field. For example, to find documents in the  planets  collection that have\nan  orderFromSun  value greater than  2  AND less than  5 , you must\nuse the  $and  query operator. If you do not use the  $and  operator, the driver encounters the\nsame key multiple times in the query filter, and uses the last\nkey encountered. Try omitting the  $and  operator and see what\nhappens. Specifying multiple criteria is common. If you don't specify any query operators,\nthe driver interprets your criteria in an AND fashion. However, sometimes you\nmust be explicit when specifying multiple criteria, particularly\nwhen specifying criteria on the same field. For example, to find documents in the  planets  collection that have\nan  orderFromSun  value greater than  2  AND less than  5 , you must\nuse the  $and  query operator. If you do not use the  $and  operator, the driver encounters the\nsame key multiple times in the query filter, and uses the last\nkey encountered. Try omitting the  $and  operator and see what\nhappens. OR queries are required when you want to specify criteria that are\nmutually exclusive. For example, you can't match documents in the\n planets  collection where the  orderFromSun  value is both\ngreater than  7  AND less than  2 . The following example shows how to use the  $or  operator to express\nmutually exclusive criteria. If you have successfully completed this guide, you have read data from MongoDB\nusing MongoDB query operators and compound queries. You can combine query operators in almost limitless ways to express complex queries.\nFor example, you could query for documents that have rings AND a specific chemical\ncompound in their atmosphere, or that are a specific temperature, AND all\nhave the letter 'E' in their name. In the next guide, you'll learn how to insert data into MongoDB. Query Operators in MongoDB The  MongoDB C# Driver  documentation The  MongoDB Go Driver  documentation The  MongoDB Java(Sync) Driver  documentation The  MongoDB Node.js Driver  documentation The  PyMongo  documentation",
+            "code": [
+                {
+                    "lang": "csharp",
+                    "value": "\ufeffusing MongoDB.Bson;\r\nusing MongoDB.Driver;\r\n\r\n// Replace the uri string with your MongoDB deployment's connection string.\r\nvar uri = \"mongodb+srv://<user>:<password>@<cluster-url>?retryWrites=true&writeConcern=majority\";\r\n\r\nvar client = new MongoClient(uri);\r\n\r\nvar coll = client.GetDatabase(\"sample_guides\").GetCollection<BsonDocument>(\"planets\");\r\n// find code goes here\r\nvar cursor = coll.AsQueryable();\r\n\r\nforeach (var document in cursor)\r\n{\r\n    Console.WriteLine(document);\r\n}\r\n"
+                },
+                {
+                    "lang": "go",
+                    "value": "package main\n\nimport (\n\t\"context\"\n\t\"fmt\"\n\n\t\"go.mongodb.org/mongo-driver/bson\"\n\t\"go.mongodb.org/mongo-driver/mongo\"\n\t\"go.mongodb.org/mongo-driver/mongo/options\"\n)\n\nfunc main() {\n\turi := \"mongodb+srv://<user>:<password>@<cluster-url>?retryWrites=true&writeConcern=majority\"\n\n\tclient, err := mongo.Connect(context.TODO(), options.Client().ApplyURI(uri))\n\tif err != nil {\n\t\tpanic(err)\n\t}\n\n\tdefer func() {\n\t\tif err = client.Disconnect(context.TODO()); err != nil {\n\t\t\tpanic(err)\n\t\t}\n\t}()\n\tcoll := client.Database(\"sample_guides\").Collection(\"planets\")\n\n\t// find code goes here\n\tfilter := bson.D{{}}\n\tcursor, err := coll.Find(context.TODO(), filter)\n\tif err != nil {\n\t\tpanic(err)\n\t}\n\n\tfor cursor.Next(context.TODO()) {\n\t\tvar result bson.M\n\t\tif err := cursor.Decode(&result); err != nil {\n\t\t\tpanic(err)\n\t\t}\n\t\tfmt.Println(result)\n\t}\n\tif err := cursor.Err(); err != nil {\n\t\tpanic(err)\n\t}\n}\n"
+                },
+                {
+                    "lang": "java",
+                    "value": "import com.mongodb.client.*;\nimport com.mongodb.client.model.Filters.*;\nimport org.bson.Document;\nimport org.bson.conversions.Bson;\n\npublic class CrudRead {\n    public static void main(String[] args) {\n        String uri = \"mongodb+srv://<user>:<password>@<cluster-url>?retryWrites=true&writeConcern=majority\";\n\n        try (MongoClient mongoClient = MongoClients.create(uri)) {\n            MongoCollection<Document> coll = mongoClient.getDatabase(\"sample_guides\")\n                    .getCollection(\"planets\");\n            // find code goes here\n            Bson filter = Filters.empty();\n            MongoCursor<Document> cursor = coll.find(filter).iterator();\n            try {\n                while (cursor.hasNext()) {\n                    System.out.println(cursor.next().toJson());\n                }\n            } finally {\n                cursor.close();\n            }\n        }\n    }\n}\n"
+                },
+                {
+                    "lang": "javascript",
+                    "value": "const { MongoClient } = require(\"mongodb\");\n// Replace the uri string with your MongoDB deployment's connection string.\nconst uri =\n  \"mongodb+srv://<user>:<password>@<cluster-url>?retryWrites=true&writeConcern=majority\";\nconst client = new MongoClient(uri);\nasync function run() {\n  try {\n    await client.connect();\n    const coll = client.db(\"sample_guides\").collection(\"planets\");\n\n    // find code goes here\n    let cursor = coll.find();\n\n    await cursor.forEach(console.log);\n  } finally {\n    // Ensures that the client will close when you finish/error\n    await client.close();\n  }\n}\nrun().catch(console.dir);\n"
+                },
+                {
+                    "lang": "python",
+                    "value": "from pymongo import MongoClient\n\n# Replace the uri string with your MongoDB deployment's connection string.\nuri = \"mongodb+srv://<user>:<password>@<cluster-url>?retryWrites=true&writeConcern=majority\"\n\nclient = MongoClient(uri)\ncoll = client.sample_guides.planets\n\n# find code goes here\ncursor = coll.find()\n\nfor doc in cursor:\n    print(doc)\n\n# Close the connection to MongoDB when you're done.\nclient.close()\n"
+                },
+                {
+                    "lang": "sh",
+                    "value": "python3 -m pip install \"pymongo[srv]\""
+                },
+                {
+                    "lang": "csharp",
+                    "value": "\ufeff// find code goes here\r\nvar cursor = from planet in coll.AsQueryable()\r\n             where planet[\"surfaceTemperatureC.mean\"] < 15\r\n             select planet;\r\n"
+                },
+                {
+                    "lang": "go",
+                    "value": "// find code goes here\nfilter := bson.D{{\"surfaceTemperatureC.mean\", bson.D{{\"$lt\", 15}}}}\ncursor, err := coll.Find(context.TODO(), filter)\nif err != nil {\n\tpanic(err)\n}\n"
+                },
+                {
+                    "lang": "java",
+                    "value": "// find code goes here\nBson filter = lt(\"surfaceTemperatureC.mean\", 15);\nMongoCursor<Document> cursor = coll.find(filter).iterator();\n"
+                },
+                {
+                    "lang": "javascript",
+                    "value": "// find code goes here\nconst cursor = coll.find({ \"surfaceTemperatureC.mean\": { $lt: 15 } });\n"
+                },
+                {
+                    "lang": "python",
+                    "value": "# find code goes here\ncursor = coll.find({\"surfaceTemperatureC.mean\": {\"$lt\": 15}})\n"
+                },
+                {
+                    "lang": "csharp",
+                    "value": "\ufeffusing MongoDB.Bson;\r\nusing MongoDB.Driver;\r\n\r\n// Replace the uri string with your MongoDB deployment's connection string.\r\nvar uri = \"mongodb+srv://<user>:<password>@<cluster-url>?retryWrites=true&writeConcern=majority\";\r\n\r\nvar client = new MongoClient(uri);\r\n\r\nvar coll = client.GetDatabase(\"sample_guides\").GetCollection<BsonDocument>(\"planets\");\r\n// find code goes here\r\nvar cursor = from planet in coll.AsQueryable()\r\n             where planet[\"surfaceTemperatureC.mean\"] < 15\r\n             select planet;\r\n\r\nforeach (var document in cursor)\r\n{\r\n    Console.WriteLine(document);\r\n}\r\n"
+                },
+                {
+                    "lang": "json",
+                    "value": "{ \"name\" : \"Uranus\", \"surfaceTemperatureC\" : { \"min\" : null, \"max\" : null, \"mean\" : -197.19999999999999 }, ... }\n{ \"name\" : \"Mars\", \"surfaceTemperatureC\" : { \"min\" : -143, \"max\" : 35, \"mean\" : -63 }, ... }\n{ \"name\" : \"Neptune\", \"surfaceTemperatureC\" : { \"min\" : null, \"max\" : null, \"mean\" : -201 }, ... }\n{ \"name\" : \"Jupiter\", \"surfaceTemperatureC\" : { \"min\" : null, \"max\" : null, \"mean\" : -145.15000000000001 }, ... }\n{ \"name\" : \"Earth\", \"surfaceTemperatureC\" : { \"min\" : -89.200000000000003, \"max\" : 56.700000000000003, \"mean\" : 14 }, ... }\n{ \"name\" : \"Saturn\", \"surfaceTemperatureC\" : { \"min\" : null, \"max\" : null, \"mean\" : -139.15000000000001 }, ... }\n"
+                },
+                {
+                    "lang": "go",
+                    "value": "package main\n\nimport (\n\t\"context\"\n\t\"fmt\"\n\n\t\"go.mongodb.org/mongo-driver/bson\"\n\t\"go.mongodb.org/mongo-driver/mongo\"\n\t\"go.mongodb.org/mongo-driver/mongo/options\"\n)\n\nfunc main() {\n\turi := \"mongodb+srv://<user>:<password>@<cluster-url>?retryWrites=true&writeConcern=majority\"\n\n\tclient, err := mongo.Connect(context.TODO(), options.Client().ApplyURI(uri))\n\tif err != nil {\n\t\tpanic(err)\n\t}\n\n\tdefer func() {\n\t\tif err = client.Disconnect(context.TODO()); err != nil {\n\t\t\tpanic(err)\n\t\t}\n\t}()\n\tcoll := client.Database(\"sample_guides\").Collection(\"planets\")\n\n\t// find code goes here\n\tfilter := bson.D{{\"surfaceTemperatureC.mean\", bson.D{{\"$lt\", 15}}}}\n\tcursor, err := coll.Find(context.TODO(), filter)\n\tif err != nil {\n\t\tpanic(err)\n\t}\n\n\tfor cursor.Next(context.TODO()) {\n\t\tvar result bson.M\n\t\tif err := cursor.Decode(&result); err != nil {\n\t\t\tpanic(err)\n\t\t}\n\t\tfmt.Println(result)\n\t}\n\tif err := cursor.Err(); err != nil {\n\t\tpanic(err)\n\t}\n}\n"
+                },
+                {
+                    "lang": "json",
+                    "value": " map[ name:Uranus surfaceTemperatureC:map[max:<nil> mean:-197.2 min:<nil>] ...]\n map[ name:Mars surfaceTemperatureC:map[max:35 mean:-63 min:-143] ... ]\n map[ name:Neptune surfaceTemperatureC:map[max:<nil> mean:-201 min:<nil>] ... ]\n map[ name:Jupiter surfaceTemperatureC:map[max:<nil> mean:-145.15 min:<nil>] ... ]\n map[ name:Earth surfaceTemperatureC:map[max:56.7 mean:14 min:-89.2]]\n map[ name:Saturn surfaceTemperatureC:map[max:<nil> mean:-139.15 min:<nil>] ... ]"
+                },
+                {
+                    "lang": "java",
+                    "value": "import com.mongodb.client.*;\nimport com.mongodb.client.model.Filters.*;\nimport org.bson.Document;\nimport org.bson.conversions.Bson;\n\npublic class CrudRead {\n    public static void main(String[] args) {\n        String uri = \"mongodb+srv://<user>:<password>@<cluster-url>?retryWrites=true&writeConcern=majority\";\n\n        try (MongoClient mongoClient = MongoClients.create(uri)) {\n            MongoCollection<Document> coll = mongoClient.getDatabase(\"sample_guides\")\n                    .getCollection(\"planets\");\n\n            // find code goes here\n            Bson filter = lt(\"surfaceTemperatureC.mean\", 15);\n            MongoCursor<Document> cursor = coll.find(filter).iterator();\n\n            // iterate code goes here\n            try {\n                while (cursor.hasNext()) {\n                    System.out.println(cursor.next().toJson());\n                }\n            } finally {\n                cursor.close();\n            }\n        }\n    }\n}\n"
+                },
+                {
+                    "lang": "json",
+                    "value": "{ \"name\" : \"Uranus\", \"surfaceTemperatureC\" : { \"min\" : null, \"max\" : null, \"mean\" : -197.19999999999999 }, ... }\n{ \"name\" : \"Mars\", \"surfaceTemperatureC\" : { \"min\" : -143, \"max\" : 35, \"mean\" : -63 }, ... }\n{ \"name\" : \"Neptune\", \"surfaceTemperatureC\" : { \"min\" : null, \"max\" : null, \"mean\" : -201 }, ... }\n{ \"name\" : \"Jupiter\", \"surfaceTemperatureC\" : { \"min\" : null, \"max\" : null, \"mean\" : -145.15000000000001 }, ... }\n{ \"name\" : \"Earth\", \"surfaceTemperatureC\" : { \"min\" : -89.200000000000003, \"max\" : 56.700000000000003, \"mean\" : 14 }, ... }\n{ \"name\" : \"Saturn\", \"surfaceTemperatureC\" : { \"min\" : null, \"max\" : null, \"mean\" : -139.15000000000001 }, ... }\n"
+                },
+                {
+                    "lang": "javascript",
+                    "value": "const { MongoClient } = require(\"mongodb\");\n// Replace the uri string with your MongoDB deployment's connection string.\nconst uri =\n  \"mongodb+srv://<user>:<password>@<cluster-url>?retryWrites=true&writeConcern=majority\";\nconst client = new MongoClient(uri);\nasync function run() {\n  try {\n    await client.connect();\n    const coll = client.db(\"sample_guides\").collection(\"planets\");\n\n    // find code goes here\n    const cursor = coll.find({ \"surfaceTemperatureC.mean\": { $lt: 15 } });\n\n    await cursor.forEach(console.log);\n  } finally {\n    // Ensures that the client will close when you finish/error\n    await client.close();\n  }\n}\nrun().catch(console.dir);\n"
+                },
+                {
+                    "lang": "json",
+                    "value": "{ \"name\" : \"Uranus\", \"surfaceTemperatureC\" : { \"min\" : null, \"max\" : null, \"mean\" : -197.19999999999999 }, ... }\n{ \"name\" : \"Mars\", \"surfaceTemperatureC\" : { \"min\" : -143, \"max\" : 35, \"mean\" : -63 }, ... }\n{ \"name\" : \"Neptune\", \"surfaceTemperatureC\" : { \"min\" : null, \"max\" : null, \"mean\" : -201 }, ... }\n{ \"name\" : \"Jupiter\", \"surfaceTemperatureC\" : { \"min\" : null, \"max\" : null, \"mean\" : -145.15000000000001 }, ... }\n{ \"name\" : \"Earth\", \"surfaceTemperatureC\" : { \"min\" : -89.200000000000003, \"max\" : 56.700000000000003, \"mean\" : 14 }, ... }\n{ \"name\" : \"Saturn\", \"surfaceTemperatureC\" : { \"min\" : null, \"max\" : null, \"mean\" : -139.15000000000001 }, ... }\n"
+                },
+                {
+                    "lang": "python",
+                    "value": "from pymongo import MongoClient\n\n# Replace the uri string with your MongoDB deployment's connection string.\nuri = \"mongodb+srv://<user>:<password>@<cluster-url>?retryWrites=true&writeConcern=majority\"\n\nclient = MongoClient(uri)\ncoll = client.sample_guides.planets\n\n# find code goes here\ncursor = coll.find({\"surfaceTemperatureC.mean\": {\"$lt\": 15}})\n\nfor doc in cursor:\n    print(doc)\n\n# Close the connection to MongoDB when you're done.\nclient.close()\n"
+                },
+                {
+                    "lang": "json",
+                    "value": "{ \"name\" : \"Uranus\", \"surfaceTemperatureC\" : { \"min\" : null, \"max\" : null, \"mean\" : -197.19999999999999 }, ... }\n{ \"name\" : \"Mars\", \"surfaceTemperatureC\" : { \"min\" : -143, \"max\" : 35, \"mean\" : -63 }, ... }\n{ \"name\" : \"Neptune\", \"surfaceTemperatureC\" : { \"min\" : null, \"max\" : null, \"mean\" : -201 }, ... }\n{ \"name\" : \"Jupiter\", \"surfaceTemperatureC\" : { \"min\" : null, \"max\" : null, \"mean\" : -145.15000000000001 }, ... }\n{ \"name\" : \"Earth\", \"surfaceTemperatureC\" : { \"min\" : -89.200000000000003, \"max\" : 56.700000000000003, \"mean\" : 14 }, ... }\n{ \"name\" : \"Saturn\", \"surfaceTemperatureC\" : { \"min\" : null, \"max\" : null, \"mean\" : -139.15000000000001 }, ... }\n"
+                },
+                {
+                    "lang": "csharp",
+                    "value": "\ufeff// find code goes here\r\nvar cursor = from planet in coll.AsQueryable()\r\n             where planet[\"surfaceTemperatureC.mean\"] < 15 && planet[\"surfaceTemperatureC.min\"] > -100\r\n             select planet;\r\n\r\n"
+                },
+                {
+                    "lang": "json",
+                    "value": "{'name': 'Earth', 'orderFromSun': 3, ...}\n"
+                },
+                {
+                    "lang": "go",
+                    "value": "// find code goes here\nfilter := bson.D{\n\t{\"$and\",\n\t\tbson.A{\n\t\t\tbson.D{{\"surfaceTemperatureC.mean\",\n\t\t\t\tbson.D{{\"$lt\", 15}},\n\t\t\t}},\n\t\t\tbson.D{{\"surfaceTemperatureC.min\",\n\t\t\t\tbson.D{{\"$gt\", -100}},\n\t\t\t}},\n\t\t},\n\t},\n}\ncursor, err := coll.Find(context.TODO(), filter)\nif err != nil {\n\tpanic(err)\n}\n\n"
+                },
+                {
+                    "lang": "json",
+                    "value": "map[name:Earth orderFromSun:3 ...]"
+                },
+                {
+                    "lang": "java",
+                    "value": "// find code goes here\nBson filter = and(lt(\"surfaceTemperatureC.mean\", 15), gt(\"surfaceTemperatureC.min\", -100));\nMongoCursor<Document> cursor = coll.find(filter).iterator();\n"
+                },
+                {
+                    "lang": "json",
+                    "value": "{'name': 'Earth', 'orderFromSun': 3, ...}\n"
+                },
+                {
+                    "lang": "javascript",
+                    "value": "// find code goes here\nconst cursor = coll.find({\n  \"surfaceTemperatureC.mean\": { $lt: 15 },\n  \"surfaceTemperatureC.min\": { $gt: -100 },\n});\n"
+                },
+                {
+                    "lang": "json",
+                    "value": "{'name': 'Earth', 'orderFromSun': 3, ...}\n"
+                },
+                {
+                    "lang": "javascript",
+                    "value": "const cursor = coll.find({\n  $and: [{ orderFromSun: { $gt: 2 } }, { orderFromSun: { $lt: 5 } }],\n});"
+                },
+                {
+                    "lang": "json",
+                    "value": "{'name': 'Mars', 'orderFromSun': 4, ... }\n{'name': 'Earth', 'orderFromSun': 3, ... }\n"
+                },
+                {
+                    "lang": "python",
+                    "value": "cursor = coll.find(\n    {\"$and\": [{\"orderFromSun\": {\"$gt\": 2}}, {\"orderFromSun\": {\"$lt\": 5}}]}\n)"
+                },
+                {
+                    "lang": "json",
+                    "value": "{'name': 'Mars', 'orderFromSun': 4, ... }\n{'name': 'Earth', 'orderFromSun': 3, ... }\n"
+                },
+                {
+                    "lang": "python",
+                    "value": "# find code goes here\ncursor = coll.find(\n    {\"surfaceTemperatureC.mean\": {\"$lt\": 15}, \"surfaceTemperatureC.min\": {\"$gt\": -100}}\n)\n"
+                },
+                {
+                    "lang": "json",
+                    "value": "{'name': 'Earth', 'orderFromSun': 3, ...}\n"
+                },
+                {
+                    "lang": "javascript",
+                    "value": "const cursor = coll.find({\n  $and: [{ orderFromSun: { $gt: 2 } }, { orderFromSun: { $lt: 5 } }],\n});"
+                },
+                {
+                    "lang": "json",
+                    "value": "{'name': 'Mars', 'orderFromSun': 4, ... }\n{'name': 'Earth', 'orderFromSun': 3, ... }\n"
+                },
+                {
+                    "lang": "python",
+                    "value": "cursor = coll.find(\n    {\"$and\": [{\"orderFromSun\": {\"$gt\": 2}}, {\"orderFromSun\": {\"$lt\": 5}}]}\n)"
+                },
+                {
+                    "lang": "json",
+                    "value": "{'name': 'Mars', 'orderFromSun': 4, ... }\n{'name': 'Earth', 'orderFromSun': 3, ... }\n"
+                },
+                {
+                    "lang": "csharp",
+                    "value": "\ufeff// find code goes here\r\nvar cursor = from planet in coll.AsQueryable()\r\n             where planet[\"orderFromSun\"] > 7 || planet[\"orderFromSun\"] < 2\r\n             select planet;\r\n"
+                },
+                {
+                    "lang": "json",
+                    "value": "{ name: 'Mercury', orderFromSun: 1, ... }\n{ name: 'Neptune', orderFromSun: 8, ... }\n"
+                },
+                {
+                    "lang": "go",
+                    "value": "// find code goes here\nfilter := bson.D{\n\t{\"$or\",\n\t\tbson.A{\n\t\t\tbson.D{{\"orderFromSun\",\n\t\t\t\tbson.D{{\"$gt\", 7}},\n\t\t\t}},\n\t\t\tbson.D{{\"orderFromSun\", bson.D{{\"$lt\", 2}}}},\n\t\t},\n\t},\n}\n\ncursor, err := coll.Find(context.TODO(), filter)\nif err != nil {\n\tpanic(err)\n}\n\n"
+                },
+                {
+                    "lang": "json",
+                    "value": " map[name:Mercury orderFromSun:1 ...]\n map[name:Neptune orderFromSun:8 ...]"
+                },
+                {
+                    "lang": "java",
+                    "value": "// find code goes here\nBson filter = or(gt(\"orderFromSun\", 7), lt(\"orderFromSun\", 2));\nMongoCursor<Document> cursor = coll.find(filter).iterator();\n"
+                },
+                {
+                    "lang": "json",
+                    "value": "{ name: 'Mercury', orderFromSun: 1, ... }\n{ name: 'Neptune', orderFromSun: 8, ... }\n"
+                },
+                {
+                    "lang": "javascript",
+                    "value": "// find code goes here\nconst cursor = coll.find({\n  $or: [{ orderFromSun: { $gt: 7 } }, { orderFromSun: { $lt: 2 } }],\n});\n"
+                },
+                {
+                    "lang": "json",
+                    "value": "{ name: 'Mercury', orderFromSun: 1, ... }\n{ name: 'Neptune', orderFromSun: 8, ... }\n"
+                },
+                {
+                    "lang": "python",
+                    "value": "# find code goes here\ncursor = coll.find(\n    {\n        \"$or\": [\n            {\"orderFromSun\": {\"$gt\": 7}},\n            {\"orderFromSun\": {\"$lt\": 2}},\n        ]\n    }\n)\n"
+                },
+                {
+                    "lang": "json",
+                    "value": "{ name: 'Mercury', orderFromSun: 1, ... }\n{ name: 'Neptune', orderFromSun: 8, ... }\n"
+                }
+            ],
+            "preview": "In the previous read guide, Read Data from MongoDB With Queries,\nyou read data using equality queries. In this guide, you will:",
+            "tags": null,
+            "facets": {
+                "genre": [
+                    "tutorial"
+                ]
+            }
+        },
+        {
+            "slug": "cloud/migrate-from-object-rocket-to-atlas",
+            "title": "Migrate from ObjectRocket to MongoDB Atlas",
+            "headings": [
+                "Overview",
+                "What You'll Need",
+                "Procedure",
+                "Create an Atlas deployment.",
+                "Stop your applications.",
+                "Run mongodump on your ObjectRocket deployment.",
+                "Verify your data integrity.",
+                "Update your applications with your new connection string.",
+                "Restart your applications.",
+                "Migration Support",
+                "Summary"
+            ],
+            "paragraphs": "Moving your MongoDB deployment to Atlas allows you take advantage\nof all the benefits Atlas brings, including best-in-class automation,\nbackup, scalability, and compliance with the most demanding data\nsecurity and privacy standards. This guide will walk you through how to use the  mongodump  and  mongorestore  tools to migrate your data from\nObjectRocket to Atlas. A MongoDB account for Atlas. See  Sign Up for a MongoDB Account . An ObjectRocket MongoDB deployment. The  mongodump  and  mongorestore  executables. See\n MongoDB server bundle  for your platform and locate\n mongodump  and  mongorestore  in the  bin  directory. The time required for this procedure varies according to the\nquantity of data you plan to move. Small data sets can be\nexported quickly, while larger data sets require more time. If you don't already have an Atlas deployment,  create one  now. Stopping your applications prevents any additional database writes\nfrom occurring while you move your data from ObjectRocket to Atlas. mongodump  creates a binary export of the contents of your deployment.\nThe  mongodump documentation \ncontains detailed instructions on using the  mongodump  utility. Use\nyour ObjectRocket credentials to access your ObjectRocket deployment.\nIn the following example, a user named  db_user  exports all databases\nto a directory named  dump  in the current working directory: Use  mongorestore  to restore the  dump  directory to your\nAtlas deployment. The  mongorestore documentation \ncontains detailed instructions on using the  mongorestore  utility. Use\nyour Atlas credentials to access your Atlas deployment.\nIn the following example, a user named  db_user  restores the default\n dump  directory to the host  example1.mongodb.net : Use the  Atlas Data Explorer \nto verify that all of your collections are present and populate Click the  Connect  button in the cluster panel for your Atlas\ncluster to obtain the connection string to use in your applications.\nTo learn more about connecting to your Atlas cluster, see\n Connect to a Cluster . You're ready to start using your Atlas deployment. If you have any questions regarding migration beyond what is covered\nin this documentation, or if you encounter an error during migration, please\nsee the Atlas documentation on\n requesting support . You created an Atlas cluster, migrated data from your old ObjectRocket\nMongoDB cluster, and updated your applications to use the connection string\nfor your new Atlas cluster.",
+            "code": [
+                {
+                    "lang": "shell",
+                    "value": "mongodump --host iad-mongos2.objectrocket.com --port 12345 --username db_user --password \"myPwd\" --out dump"
+                },
+                {
+                    "lang": "shell",
+                    "value": "mongorestore --host example1.mongodb.net --port 27017 --username db_user --password \"myPwd\" dump/"
+                }
+            ],
+            "preview": "Moving your MongoDB deployment to Atlas allows you take advantage\nof all the benefits Atlas brings, including best-in-class automation,\nbackup, scalability, and compliance with the most demanding data\nsecurity and privacy standards.",
+            "tags": null,
+            "facets": {
+                "genre": [
+                    "tutorial"
+                ]
+            }
+        },
+        {
+            "slug": "crud/update",
+            "title": "Update Data in MongoDB",
+            "headings": [
+                "Overview",
+                "What You'll Need",
+                "Procedure",
+                "Connect to your MongoDB instance.",
+                "Create a class that resembles a document from your collection.",
+                "Automap your class to the documents fields.",
+                "Verify your connection code.",
+                "Get the database and collection.",
+                "Update all documents in the comets collection.",
+                "Display your results.",
+                "Check your results.",
+                "Summary",
+                "See Also"
+            ],
+            "paragraphs": "In this guide, you will update a field in a document. Specify which documents to update and how to update them in MongoDB. A  connection string  to your MongoDB deployment. Sample datasets  loaded into your cluster . An  installed MongoDB Driver . Data inserted from  Insert Data into MongoDB . The following class lists all the field names and types\nthat your document will have. In C#, you map fields to class properties, which are\nuppercase by convention. However, you should insert the\ndata with camel case fields. To make the driver\nautomatically convert the fields from uppercase to camel\ncase, create a  ConventionPack  and register the naming\nconvention for  CamelCase . The following is an outline with the minimum code necessary to connect to MongoDB.\nYou'll make additions over the next few steps to insert data. At line 5, replace the URI string with your own\n Atlas connection string . The following is an outline with the minimum code necessary to connect to MongoDB.\nYou'll make additions over the next few steps to insert data. At line 13, replace the URI string with your own\n Atlas connection string . The following is an outline with the minimum code necessary to connect to MongoDB.\nYou'll make additions over the next few steps to insert data. At line 14, replace the URI string with your own\n Atlas connection string . The following is an outline with the minimum code necessary to connect to MongoDB.\nYou'll make additions over the next few steps to insert data. At line 4, replace the URI string with your own\n Atlas connection string . The following is an outline with the minimum code necessary to connect to MongoDB.\nYou'll make additions over the next few steps to insert data. At line 4, replace the URI string with your own\n Atlas connection string . Make sure you've installed PyMongo with the  srv  option. Switch to the database and collection you wish to work with. In\nthis case you will be using the  sample_guides  database and\n comets  collection. In  the previous guide , you inserted\ndocuments into the  comets  collection. Now, you have a\nrequirement to update those documents. All fields are in metric\nunits except for the  radius , which is in imperial. The following example uses an update document to convert\nthe  radius  field from the metric system to the imperial system\nin all documents. 1 mile = 1.60934 kilometers The MongoDB C# Driver includes\n Builders \nthat simplify the process of creating queries and other operations.\nHere, you use the  Filter.Empty  and  Update.Mul \nbuilders to construct the query document and update document. The MongoDB Java Driver includes\n Builders \nthat simplify the process of creating queries (and other operations).\nHere, you use the  Filters.empty  and  Updates.mul \nbuilders to construct the query document. Many write operations in MongoDB return a result object that\ncontains information about the operation. For update operations, the result object will contain the\nmodified count of documents the driver successfully updated. Here,\nyou access this property and print them. Here is the complete code followed by sample output. If you have completed this guide, you have updated data in MongoDB. In the next guide, you will delete documents from MongoDB. See the following resources for more in-depth information about the\nconcepts presented here: Update Documents Update Methods The  MongoDB C# Driver  documentation The  MongoDB Go Driver  documentation The  MongoDB Java (Sync) Driver  documentation The  MongoDB Node.js Driver  documentation",
+            "code": [
+                {
+                    "lang": "csharp",
+                    "value": "\ufeff// class that maps to the fields of a document in the sample_guides.comets collection\r\nclass Comet {\r\n    public ObjectId Id { get; set;  }\r\n    public string Name { get; set; }\r\n    public string OfficialName { get; set; }\r\n    public double OrbitalPeriod { get; set; }\r\n    public double Radius { get; set; }\r\n    public double Mass { get; set; }\r\n}\r\n"
+                },
+                {
+                    "lang": "csharp",
+                    "value": "// instruct the driver to camelCase the fields in MongoDB\nvar pack = new ConventionPack { new CamelCaseElementNameConvention() };\nConventionRegistry.Register(\"elementNameConvention\", pack, x => true);\n"
+                },
+                {
+                    "lang": "csharp",
+                    "value": "using MongoDB.Bson;\nusing MongoDB.Driver;\n\n// Replace the uri string with your MongoDB deployment's connection string.\nvar uri = \"mongodb+srv://<user>:<password>@<cluster-url>?retryWrites=true&writeConcern=majority\";\n\n// instruct the driver to camelCase the fields in MongoDB\nvar pack = new ConventionPack { new CamelCaseElementNameConvention() };\nConventionRegistry.Register(\"elementNameConvention\", pack, x => true);\n\nvar client = new MongoClient(uri);\n\n// database and collection code goes here\n// update code goes here\n// amount updated code goes here\n\n// class that maps to the fields of a document in the sample_guides.comets collection\nclass Comet\n{\n    public ObjectId Id { get; set; }\n    public string Name { get; set; }\n    public string OfficialName { get; set; }\n    public double OrbitalPeriod { get; set; }\n    public double Radius { get; set; }\n    public double Mass { get; set; }\n}\n"
+                },
+                {
+                    "lang": "go",
+                    "value": "package main\n\nimport (\n\t\"context\"\n\t\"log\"\n\t\"os\"\n\n\t\"go.mongodb.org/mongo-driver/mongo\"\n\t\"go.mongodb.org/mongo-driver/mongo/options\"\n)\n\nfunc main() {\n\turi := \"mongodb+srv://<user>:<password>@<cluster-url>?retryWrites=true&writeConcern=majority\"\n\n\tclient, err := mongo.Connect(context.TODO(), options.Client().ApplyURI(uri))\n\tif err != nil {\n\t\tpanic(err)\n\t}\n\n\tclient, err := mongo.Connect(context.TODO(), options.Client().ApplyURI(uri))\n\tif err != nil {\n\t\tpanic(err)\n\t}\n\tdefer func() {\n\t\tif err = client.Disconnect(context.TODO()); err != nil {\n\t\t\tpanic(err)\n\t\t}\n\t}()\n\n\t// database and colletion code goes here\n\t// update code goes here\n\t// amount update code goes here\n}\n"
+                },
+                {
+                    "lang": "java",
+                    "value": "import com.mongodb.client.MongoClient;\nimport com.mongodb.client.MongoClients;\nimport com.mongodb.client.MongoCollection;\nimport com.mongodb.client.MongoDatabase;\nimport com.mongodb.client.result.UpdateResult;\nimport com.mongodb.client.model.Filters;\nimport com.mongodb.client.model.Updates;\n\nimport org.bson.Document;\nimport org.bson.conversions.Bson;\n\npublic class CrudUpdate {\n    public static void main(String[] args) {\n        String uri = \"mongodb+srv://<user>:<password>@<cluster-url>?retryWrites=true&writeConcern=majority\";\n\n        try (MongoClient mongoClient = MongoClients.create(uri)) {\n            // database and collection code goes here\n            // update code goes here\n            // amount updated code goes here\n        }\n    }\n}\n"
+                },
+                {
+                    "lang": "javascript",
+                    "value": "const { MongoClient } = require(\"mongodb\");\n// Replace the uri string with your MongoDB deployment's connection string.\nconst uri =\n  \"mongodb+srv://<user>:<password>@<cluster-url>?retryWrites=true&writeConcern=majority\";\n\nconst client = new MongoClient(uri);\n\nasync function run() {\n  try {\n    await client.connect();\n    // database and collection code goes here\n    // update code goes here\n    // amount deleted code goes here\n  } finally {\n    // Ensures that the client will close when you finish/error\n    await client.close();\n  }\n}\nrun().catch(console.dir);\n"
+                },
+                {
+                    "lang": "python",
+                    "value": "from pymongo import MongoClient\n\n# Replace the uri string with your MongoDB deployment's connection string.\nuri = \"mongodb+srv://<user>:<password>@<cluster-url>?retryWrites=true&writeConcern=majority\"\n\nclient = MongoClient(uri)\n\n# database and collection code goes here\n# update code goes here\n# amount updated code goes here\n\n# Close the connection to MongoDB when you're done.\nclient.close()\n"
+                },
+                {
+                    "lang": "sh",
+                    "value": "python3 -m pip install \"pymongo[srv]\""
+                },
+                {
+                    "lang": "csharp",
+                    "value": "\ufeff// database and collection code goes here\r\nvar db = client.GetDatabase(\"sample_guides\");\r\nvar coll = db.GetCollection<Comet>(\"comets\");\r\n"
+                },
+                {
+                    "lang": "go",
+                    "value": "// database and colletion code goes here\ndb := client.Database(\"sample_guides\")\ncoll := db.Collection(\"comets\")\n"
+                },
+                {
+                    "lang": "java",
+                    "value": "// database and collection code goes here\nMongoDatabase db = mongoClient.getDatabase(\"sample_guides\");\nMongoCollection<Document> coll = db.getCollection(\"comets\");\n"
+                },
+                {
+                    "lang": "javascript",
+                    "value": "// database and collection code goes here\nconst db = client.db(\"sample_guides\");\nconst coll = db.collection(\"comets\");\n"
+                },
+                {
+                    "lang": "python",
+                    "value": "# database and collection code goes here\ndb = client.sample_guides\ncoll = db.comets\n"
+                },
+                {
+                    "lang": "csharp",
+                    "value": "// update code goes here\nvar filter = Builders<Comet>.Filter.Empty;\nvar update = Builders<Comet>.Update.Mul(\"radius\", 1.60934);\nvar result = coll.UpdateMany(filter, update);\n"
+                },
+                {
+                    "lang": "go",
+                    "value": "// database and colletion code goes here\ndb := client.Database(\"sample_guides\")\ncoll := db.Collection(\"comets\")\n\n// update code goes here\nfilter := bson.D{{}}\nupdate := bson.D{{\"$mul\", bson.D{{\"radius\", 1.60934}}}}\n\nresult, err := coll.UpdateMany(context.TODO(), filter, update)\nif err != nil {\n\tpanic(err)\n}\n"
+                },
+                {
+                    "lang": "java",
+                    "value": "// update code goes here\nBson filter = Filters.empty();\nBson update = Updates.mul(\"radius\", 1.60934);\nUpdateResult result = coll.updateMany(filter, update);\n"
+                },
+                {
+                    "lang": "javascript",
+                    "value": "// update code goes here\nconst filter = { };\nconst updateDoc = {\n  $mul: {\n      radius: 1.60934\n  }\n};\n\nconst result = await coll.updateMany(filter, updateDoc);\n"
+                },
+                {
+                    "lang": "python",
+                    "value": "# update code goes here\ndoc = {\n    '$mul': {'radius': 1.60934}\n}\nresult = coll.update_many({}, doc)\n"
+                },
+                {
+                    "lang": "csharp",
+                    "value": "// display the results of your operation\nConsole.WriteLine($\"Number of documents updated: {result.ModifiedCount}\");\n"
+                },
+                {
+                    "lang": "go",
+                    "value": "// display the results of your operation\nfmt.Printf(\"Number of documents updated: %d\", result.ModifiedCount)\n"
+                },
+                {
+                    "lang": "java",
+                    "value": "// display the results of your operation\nSystem.out.println(\"Number of documents updated: \" + result.getModifiedCount());\n"
+                },
+                {
+                    "lang": "javascript",
+                    "value": "// display the results of your operation\nconsole.log(\"Number of documents updated: \" + result.modifiedCount);\n"
+                },
+                {
+                    "lang": "python",
+                    "value": "# display the results of your operation\nprint(\"Number of documents updated: \", result.modified_count)\n"
+                },
+                {
+                    "lang": "csharp",
+                    "value": "using MongoDB.Bson;\nusing MongoDB.Driver;\nusing MongoDB.Bson.Serialization.Conventions;\n\n// Replace the uri string with your MongoDB deployment's connection string.\nvar uri = \"mongodb+srv://<user>:<password>@<cluster-url>?retryWrites=true&writeConcern=majority\";\n\n// instruct the driver to camelCase the fields in MongoDB\nvar pack = new ConventionPack { new CamelCaseElementNameConvention() };\nConventionRegistry.Register(\"elementNameConvention\", pack, x => true);\n\nvar client = new MongoClient(uri);\n\n// database and collection code goes here\nvar db = client.GetDatabase(\"sample_guides\");\nvar coll = db.GetCollection<Comet>(\"comets\");\n\n// update code goes here\nvar filter = Builders<Comet>.Filter.Empty;\nvar update = Builders<Comet>.Update.Mul(\"radius\", 1.60934);\nvar result = coll.UpdateMany(filter, update);\n\n// display the results of your operation\nConsole.WriteLine($\"Number of documents updated: {result.ModifiedCount}\");\n\n// class that maps to the fields of a document in the sample_guides.comets collection\nclass Comet\n{\n    public ObjectId Id { get; set; }\n    public string Name { get; set; }\n    public string OfficialName { get; set; }\n    public double OrbitalPeriod { get; set; }\n    public double Radius { get; set; }\n    public double Mass { get; set; }\n}\n"
+                },
+                {
+                    "lang": "json",
+                    "value": "Number of documents updated: 3"
+                },
+                {
+                    "lang": "go",
+                    "value": "package main\n\nimport (\n\t\"context\"\n\t\"fmt\"\n\n\t\"go.mongodb.org/mongo-driver/bson\"\n\t\"go.mongodb.org/mongo-driver/mongo\"\n\t\"go.mongodb.org/mongo-driver/mongo/options\"\n)\n\nfunc main() {\n\turi := \"mongodb+srv://<user>:<password>@<cluster-url>?retryWrites=true&writeConcern=majority\"\n\n\tclient, err := mongo.Connect(context.TODO(), options.Client().ApplyURI(uri))\n\tif err != nil {\n\t\tpanic(err)\n\t}\n\n\tdefer func() {\n\t\tif err = client.Disconnect(context.TODO()); err != nil {\n\t\t\tpanic(err)\n\t\t}\n\t}()\n\n\t// database and colletion code goes here\n\tdb := client.Database(\"sample_guides\")\n\tcoll := db.Collection(\"comets\")\n\n\t// update code goes here\n\tfilter := bson.D{{}}\n\tupdate := bson.D{{\"$mul\", bson.D{{\"radius\", 1.60934}}}}\n\n\tresult, err := coll.UpdateMany(context.TODO(), filter, update)\n\tif err != nil {\n\t\tpanic(err)\n\t}\n\n\t// display the results of your operation\n\tfmt.Printf(\"Number of documents updated: %d\", result.ModifiedCount)\n}\n"
+                },
+                {
+                    "lang": "json",
+                    "value": "Number of documents updated: 3"
+                },
+                {
+                    "lang": "java",
+                    "value": "import com.mongodb.client.MongoClient;\nimport com.mongodb.client.MongoClients;\nimport com.mongodb.client.MongoCollection;\nimport com.mongodb.client.MongoDatabase;\nimport com.mongodb.client.result.UpdateResult;\nimport com.mongodb.client.model.Filters;\nimport com.mongodb.client.model.Updates;\n\nimport org.bson.Document;\nimport org.bson.conversions.Bson;\n\npublic class CrudUpdate {\n    public static void main(String[] args) {\n        String uri = \"mongodb+srv://<user>:<password>@<cluster-url>?retryWrites=true&writeConcern=majority\";\n\n        try (MongoClient mongoClient = MongoClients.create(uri)) {\n            // database and collection code goes here\n            MongoDatabase db = mongoClient.getDatabase(\"sample_guides\");\n            MongoCollection<Document> coll = db.getCollection(\"comets\");\n\n            // update code goes here\n            Bson filter = Filters.empty();\n            Bson update = Updates.mul(\"radius\", 1.60934);\n            UpdateResult result = coll.updateMany(filter, update);\n\n            // display the results of your operation\n            System.out.println(\"Number of documents updated: \" + result.getModifiedCount());\n        }\n    }\n}\n"
+                },
+                {
+                    "lang": "json",
+                    "value": "Number of documents updated: 3"
+                },
+                {
+                    "lang": "javascript",
+                    "value": "const { MongoClient } = require(\"mongodb\");\n\n// Replace the uri string with your MongoDB deployment's connection string.\nconst uri =\n  \"mongodb+srv://<user>:<password>@<cluster-url>?retryWrites=true&writeConcern=majority\";\n\nconst client = new MongoClient(uri);\n\nasync function run() {\n  try {\n    await client.connect();\n    // database and collection code goes here\n    const db = client.db(\"sample_guides\");\n    const coll = db.collection(\"comets\");\n\n    // update code goes here\n    const filter = {};\n    const updateDoc = {\n      $mul: {\n        radius: 1.60934,\n      },\n    };\n\n    const result = await coll.updateMany(filter, updateDoc);\n\n    // display the results of your operation\n    console.log(\"Number of documents updated: \" + result.modifiedCount);\n  } finally {\n    // Ensures that the client will close when you finish/error\n    await client.close();\n  }\n}\nrun().catch(console.dir);\n"
+                },
+                {
+                    "lang": "json",
+                    "value": "Number of documents updated: 3"
+                },
+                {
+                    "lang": "python",
+                    "value": "from pymongo import MongoClient\n\n# Replace the uri string with your MongoDB deployment's connection string.\nuri = \"mongodb+srv://<user>:<password>@<cluster-url>?retryWrites=true&writeConcern=majority\"\n\nclient = MongoClient(uri)\n\n# database and collection code goes here\ndb = client.sample_guides\ncoll = db.comets\n\n# update code goes here\ndoc = {\"$mul\": {\"radius\": 1.60934}}\nresult = coll.update_many({}, doc)\n\n# display the results of your operation\nprint(\"Number of documents updated: \", result.modified_count)\n\n# Close the connection to MongoDB when you're done.\nclient.close()\n"
+                },
+                {
+                    "lang": "json",
+                    "value": "Number of documents updated: 3"
+                }
+            ],
+            "preview": "In this guide, you will update a field in a document.",
+            "tags": null,
+            "facets": {
+                "genre": [
+                    "tutorial"
+                ]
+            }
+        },
+        {
+            "slug": "crud/insert",
+            "title": "Insert Data into MongoDB",
+            "headings": [
+                "Overview",
+                "What You'll Need",
+                "Procedure",
+                "Connect to your MongoDB instance.",
+                "Create a class that resembles a document from your collection.",
+                "Automap your class to the documents fields.",
+                "Verify your connection code.",
+                "Get the database and collection.",
+                "Insert documents into the comets collection.",
+                "Display your results.",
+                "Check your results.",
+                "Summary",
+                "See Also"
+            ],
+            "paragraphs": "In this guide, you will insert data into MongoDB. Create and insert documents into MongoDB. A  connection string  to your MongoDB deployment. Sample datasets  loaded into your cluster . An  installed MongoDB Driver . The following class lists all the field names and types\nthat your document will have. In C#, you map fields to class properties, which are\nuppercase by convention. However, you should insert the\ndata with camel case fields. To make the driver\nautomatically convert the fields from uppercase to camel\ncase, create a  ConventionPack  and register the naming\nconvention for  CamelCase . The following is an outline with the minimum code necessary to connect to MongoDB.\nYou'll make additions over the next few steps to insert data. At line 6, replace the URI string with your own\n Atlas connection string . The following is an outline with the minimum code necessary to connect to MongoDB.\nYou'll make additions over the next few steps to insert data. At line 13, replace the URI string with your own\n Atlas connection string . The following is an outline with the minimum code necessary to connect to MongoDB.\nYou'll make additions over the next few steps to insert data. At line 15, replace the URI string with your own\n Atlas connection string . The following is an outline with the minimum code necessary to connect to MongoDB.\nYou'll make additions over the next few steps to insert data. At line 4, replace the URI string with your own\n Atlas connection string . The following is an outline with the minimum code necessary to connect to MongoDB.\nYou'll make additions over the next few steps to insert data. At line 4, replace the URI string with your own\n Atlas connection string . Make sure you've installed PyMongo with the  srv  option. Switch to the database and collection you want to work with. In\nthis case you will be using the  sample_guides  database and\n comets  collection. Create and insert three new documents for the  comets \ncollection. Each document consists of the following\ninformation about the comet: The name The official name The orbital period in years The radius in miles The mass in kilograms If you omit the  _id  field, the driver\nautomatically generates a unique  ObjectId  value for the\n _id  field. Many write operations in MongoDB return a result object that\ncontains information about the operation. For insert operations, the C# driver automatically creates the\n _id  of documents that are being inserted. Here, you\naccess this property from the original array and print them. For insert operations, the result object will contain the\n _id  of documents the driver successfully inserted. Here,\nyou access this property and print them. For insert operations, the result object will contain the\n _id  of documents the driver successfully inserted. Here,\nyou access this property and print them. For insert operations, the result object will contain the\n _id  of documents the driver successfully inserted. Here,\nyou access this property and print them. For insert operations, the result object will contain the\n _id  of documents the driver successfully inserted. Here,\nyou access this property and print them. Here is the complete code followed by sample output. Your  ObjectId  values will differ from those shown. If you have completed this guide, you have inserted data into MongoDB. In the next guide, you will learn how to update a field in a document. See the following resources for more in-depth information about the\nconcepts presented here: Insert Documents Insert Methods The  MongoDB C# Driver  documentation Automapping a Class The  MongoDB Go Driver  documentation The  MongoDB Java(Sync) Driver  documentation The  MongoDB Node.js Driver  documentation The  PyMongo  documentation",
+            "code": [
+                {
+                    "lang": "csharp",
+                    "value": "\ufeff// class that maps to the fields of a document in the sample_guides.comets collection\r\nclass Comet {\r\n    public ObjectId Id { get; set;  }\r\n    public string Name { get; set; }\r\n    public string OfficialName { get; set; }\r\n    public double OrbitalPeriod { get; set; }\r\n    public double Radius { get; set; }\r\n    public double Mass { get; set; }\r\n}\r\n"
+                },
+                {
+                    "lang": "csharp",
+                    "value": "// instruct the driver to camelCase the fields in MongoDB\nvar pack = new ConventionPack { new CamelCaseElementNameConvention() };\nConventionRegistry.Register(\"elementNameConvention\", pack, x => true);\n"
+                },
+                {
+                    "lang": "csharp",
+                    "value": "\ufeffusing MongoDB.Bson;\r\nusing MongoDB.Bson.Serialization.Conventions;\r\nusing MongoDB.Driver;\r\n\r\n// Replace the uri string with your MongoDB deployment's connection string.\r\nvar uri = \"mongodb+srv://<user>:<password>@<cluster-url>?retryWrites=true&writeConcern=majority\";\r\n\r\n// instruct the driver to camelCase the fields in MongoDB\r\nvar pack = new ConventionPack { new CamelCaseElementNameConvention() };\r\nConventionRegistry.Register(\"elementNameConvention\", pack, x => true);\r\n\r\nvar client = new MongoClient(uri);\r\n\r\n// database and colletion code goes here\r\n// insert code goes here\r\n// display the results of your operation\r\n\r\n// class that maps to the fields of a document in the sample_guides.comets collection\r\nclass Comet {\r\n    public ObjectId Id { get; set;  }\r\n    public string Name { get; set; }\r\n    public string OfficialName { get; set; }\r\n    public double OrbitalPeriod { get; set; }\r\n    public double Radius { get; set; }\r\n    public double Mass { get; set; }\r\n}\r\n"
+                },
+                {
+                    "lang": "go",
+                    "value": "import (\n\t\"context\"\n\t\"fmt\"\n\t\"log\"\n\t\"os\"\n\n\t\"go.mongodb.org/mongo-driver/bson\"\n\t\"go.mongodb.org/mongo-driver/mongo\"\n\t\"go.mongodb.org/mongo-driver/mongo/options\"\n)\n\nfunc main() {\n\turi := \"mongodb+srv://<user>:<password>@<cluster-url>?retryWrites=true&writeConcern=majority\"\n\n\tclient, err := mongo.Connect(context.TODO(), options.Client().ApplyURI(uri))\n\tif err != nil {\n\t\tpanic(err)\n\t}\n\tdefer func() {\n\t\tif err = client.Disconnect(context.TODO()); err != nil {\n\t\t\tpanic(err)\n\t\t}\n\t}()\n\n\t// database and colletion code goes here\n\t// insert code goes here\n\t// display the results of your operation\n}\n\n"
+                },
+                {
+                    "lang": "java",
+                    "value": "import com.mongodb.client.MongoClient;\nimport com.mongodb.client.MongoClients;\nimport com.mongodb.client.MongoCollection;\nimport com.mongodb.client.MongoDatabase;\nimport com.mongodb.client.result.InsertManyResult;\n\nimport org.bson.Document;\nimport org.bson.types.ObjectId;\n\nimport java.util.List;\nimport java.util.ArrayList;\n\npublic class CrudInsert {\n    public static void main(String[] args) {\n        String uri = \"mongodb+srv://<user>:<password>@<cluster-url>?retryWrites=true&writeConcern=majority\";\n\n        try (MongoClient mongoClient = MongoClients.create(uri)) {\n            // database and collection code goes here\n            // insert code goes here\n            // display the results of your operation\n        }\n    }\n}\n"
+                },
+                {
+                    "lang": "javascript",
+                    "value": "const { MongoClient } = require(\"mongodb\");\n// Replace the uri string with your MongoDB deployment's connection string.\nconst uri =\n  \"mongodb+srv://<user>:<password>@<cluster-url>?retryWrites=true&writeConcern=majority\";\nconst client = new MongoClient(uri);\nasync function run() {\n  try {\n    await client.connect();\n    // database and collection code goes here\n    // insert code goes here\n    // display the results of your operation\n  } finally {\n    // Ensures that the client will close when you finish/error\n    await client.close();\n  }\n}\nrun().catch(console.dir);\n"
+                },
+                {
+                    "lang": "python",
+                    "value": "from pymongo import MongoClient\n\n# Replace the uri string with your MongoDB deployment's connection string.\nuri = \"mongodb+srv://<user>:<password>@<cluster-url>?retryWrites=true&writeConcern=majority\"\n\nclient = MongoClient(uri)\n\n# database and collection code goes here\n# insert code goes here\n# display the results of your operation\n\n# Close the connection to MongoDB when you're done.\nclient.close()\n"
+                },
+                {
+                    "lang": "sh",
+                    "value": "python3 -m pip install \"pymongo[srv]\""
+                },
+                {
+                    "lang": "csharp",
+                    "value": "\ufeff// database and collection code goes here\r\nvar db = client.GetDatabase(\"sample_guides\");\r\nvar coll = db.GetCollection<Comet>(\"comets\");\r\n"
+                },
+                {
+                    "lang": "go",
+                    "value": "// database and colletion code goes here\ndb := client.Database(\"sample_guides\")\ncoll := db.Collection(\"comets\")\n"
+                },
+                {
+                    "lang": "java",
+                    "value": "// database and collection code goes here\nMongoDatabase db = mongoClient.getDatabase(\"sample_guides\");\nMongoCollection<Document> coll = db.getCollection(\"comets\");\n"
+                },
+                {
+                    "lang": "javascript",
+                    "value": "// database and collection code goes here\nconst db = client.db(\"sample_guides\");\nconst coll = db.collection(\"comets\");\n"
+                },
+                {
+                    "lang": "python",
+                    "value": "# database and collection code goes here\ndb = client.sample_guides\ncoll = db.comets\n"
+                },
+                {
+                    "lang": "csharp",
+                    "value": "\ufeff// insert code goes here\r\nvar comets = new [] {\r\n    new Comet {\r\n        Name = \"Halley's Comet\",\r\n        OfficialName = \"1P/Halley\",\r\n        OrbitalPeriod = 75,\r\n        Radius = 3.4175,\r\n        Mass = 2.2e14\r\n    },\r\n    new Comet {\r\n        Name = \"Wild2\",\r\n        OfficialName = \"81P/Wild\",\r\n        OrbitalPeriod = 6.41,\r\n        Radius = 1.5534,\r\n        Mass = 2.3e13\r\n    },\r\n    new Comet {\r\n        Name = \"Comet Hyakutake\",\r\n        OfficialName = \"C/1996 B2\",\r\n        OrbitalPeriod = 17000,\r\n        Radius = 0.77671,\r\n        Mass = 8.8e12\r\n    }\r\n};\r\n\r\ncoll.InsertMany(comets);\r\n"
+                },
+                {
+                    "lang": "go",
+                    "value": "// insert code goes here\ndocs := []interface{}{\n\tbson.D{{\"name\", \"Halley's Comet\"}, {\"officialName\", \"1P/Halley\"}, {\"orbitalPeriod\", 75}, {\"radius\", 3.4175}, {\"mass\", 2.2e14}},\n\tbson.D{{\"name\", \"Wild2\"}, {\"officialName\", \"81P/Wild\"}, {\"orbitalPeriod\", 6.41}, {\"radius\", 1.5534}, {\"mass\", 2.3e13}},\n\tbson.D{{\"name\", \"Comet Hyakutake\"}, {\"officialName\", \"C/1996 B2\"}, {\"orbitalPeriod\", 17000}, {\"radius\", 0.77671}, {\"mass\", 8.8e12}},\n}\n\nresult, err := coll.InsertMany(context.TODO(), docs)\nif err != nil {\n\tpanic(err)\n}\n"
+                },
+                {
+                    "lang": "java",
+                    "value": "// insert code goes here\nList<Document> documents = new ArrayList<>();\n\nDocument doc1 = new Document(\"name\", \"Halley's Comet\").append(\"officialName\", \"1P/Halley\").append(\"orbitalPeriod\", 75).append(\"radius\", 3.4175).append(\"mass\", 2.2e14);\nDocument doc2 = new Document(\"name\", \"Wild2\").append(\"officialName\", \"81P/Wild\").append(\"orbitalPeriod\", 6.41).append(\"radius\", 1.5534).append(\"mass\", 2.3e13);\nDocument doc3 = new Document(\"name\", \"Comet Hyakutake\").append(\"officialName\", \"C/1996 B2\").append(\"orbitalPeriod\", 17000).append(\"radius\", 0.77671).append(\"mass\", 8.8e12);\n\ndocuments.add(doc1);\ndocuments.add(doc2);\ndocuments.add(doc3);\n\nInsertManyResult result = coll.insertMany(documents);\n"
+                },
+                {
+                    "lang": "javascript",
+                    "value": "// insert code goes here\nconst docs = [\n  {name: \"Halley's Comet\", officialName: \"1P/Halley\", orbitalPeriod: 75, radius: 3.4175, mass: 2.2e14},\n  {name: \"Wild2\", officialName: \"81P/Wild\", orbitalPeriod: 6.41, radius: 1.5534, mass: 2.3e13},\n  {name: \"Comet Hyakutake\", officialName: \"C/1996 B2\", orbitalPeriod: 17000, radius: 0.77671, mass: 8.8e12}\n];\n\nconst result = await coll.insertMany(docs);\n"
+                },
+                {
+                    "lang": "python",
+                    "value": "# insert code goes here\ndocs = [\n\t{\"name\": \"Halley's Comet\", \"officialName\": \"1P/Halley\", \"orbitalPeriod\": 75, \"radius\": 3.4175, \"mass\": 2.2e14},\n\t{\"name\": \"Wild2\", \"officialName\": \"81P/Wild\", \"orbitalPeriod\": 6.41, \"radius\": 1.5534, \"mass\": 2.3e13},\n\t{\"name\": \"Comet Hyakutake\", \"officialName\": \"C/1996 B2\", \"orbitalPeriod\": 17000, \"radius\": 0.77671, \"mass\": 8.8e12},\n    ]\n\nresult = coll.insert_many(docs)\n"
+                },
+                {
+                    "lang": "csharp",
+                    "value": "\ufeff// display the results of your operation\r\nforeach (var comet in comets) {\r\n    Console.WriteLine(comet.Id);\r\n}\r\n"
+                },
+                {
+                    "lang": "go",
+                    "value": "// display the results of your operation\nfor _, id := range result.InsertedIDs {\n\tfmt.Printf(\"\\t%s\\n\", id)\n}\n"
+                },
+                {
+                    "lang": "java",
+                    "value": "// display the results of your operation\nresult.getInsertedIds().values().forEach(doc -> System.out.println(doc.asObjectId().getValue()));\n"
+                },
+                {
+                    "lang": "javascript",
+                    "value": "// display the results of your operation\nconsole.log(result.insertedIds);\n"
+                },
+                {
+                    "lang": "python",
+                    "value": "# display the results of your operation\nprint(result.inserted_ids)\n"
+                },
+                {
+                    "lang": "csharp",
+                    "value": "\ufeffusing MongoDB.Bson;\r\nusing MongoDB.Bson.Serialization.Conventions;\r\nusing MongoDB.Driver;\r\n\r\n// Replace the uri string with your MongoDB deployment's connection string.\r\nvar uri = \"mongodb+srv://<user>:<password>@<cluster-url>?retryWrites=true&writeConcern=majority\";\r\n\r\n// instruct the driver to camelCase the fields in MongoDB\r\nvar pack = new ConventionPack { new CamelCaseElementNameConvention() };\r\nConventionRegistry.Register(\"elementNameConvention\", pack, x => true);\r\n\r\nvar client = new MongoClient(uri);\r\n\r\n// database and colletion code goes here\r\nvar db = client.GetDatabase(\"sample_guides\");\r\nvar coll = db.GetCollection<Comet>(\"comets\");\r\n\r\n// insert code goes here\r\nvar comets = new [] {\r\n    new Comet {\r\n        Name = \"Halley's Comet\",\r\n        OfficialName = \"1P/Halley\",\r\n        OrbitalPeriod = 75,\r\n        Radius = 3.4175,\r\n        Mass = 2.2e14\r\n    },\r\n    new Comet {\r\n        Name = \"Wild2\",\r\n        OfficialName = \"81P/Wild\",\r\n        OrbitalPeriod = 6.41,\r\n        Radius = 1.5534,\r\n        Mass = 2.3e13\r\n    },\r\n    new Comet {\r\n        Name = \"Comet Hyakutake\",\r\n        OfficialName = \"C/1996 B2\",\r\n        OrbitalPeriod = 17000,\r\n        Radius = 0.77671,\r\n        Mass = 8.8e12\r\n    }\r\n};\r\n\r\ncoll.InsertMany(comets);\r\n\r\n// display the results of your operation\r\nforeach (var comet in comets) {\r\n    Console.WriteLine(comet.Id);\r\n}\r\n\r\n// class that maps to the fields of a document in the sample_guides.comets collection\r\nclass Comet {\r\n    public ObjectId Id { get; set;  }\r\n    public string Name { get; set; }\r\n    public string OfficialName { get; set; }\r\n    public double OrbitalPeriod { get; set; }\r\n    public double Radius { get; set; }\r\n    public double Mass { get; set; }\r\n}\r\n"
+                },
+                {
+                    "lang": "json",
+                    "value": "625604fbd301606fd9998b14\n625604fbd301606fd9998b15\n625604fbd301606fd9998b16"
+                },
+                {
+                    "lang": "go",
+                    "value": "import (\n\t\"context\"\n\t\"fmt\"\n\t\"log\"\n\t\"os\"\n\n\t\"go.mongodb.org/mongo-driver/bson\"\n\t\"go.mongodb.org/mongo-driver/mongo\"\n\t\"go.mongodb.org/mongo-driver/mongo/options\"\n)\n\nfunc main() {\n\turi := \"mongodb+srv://<user>:<password>@<cluster-url>?retryWrites=true&writeConcern=majority\"\n\n\tclient, err := mongo.Connect(context.TODO(), options.Client().ApplyURI(uri))\n\tif err != nil {\n\t\tpanic(err)\n\t}\n\tdefer func() {\n\t\tif err = client.Disconnect(context.TODO()); err != nil {\n\t\t\tpanic(err)\n\t\t}\n\t}()\n\n\t// database and colletion code goes here\n\tdb := client.Database(\"sample_guides\")\n\tcoll := db.Collection(\"comets\")\n\n\t// insert code goes here\n\tdocs := []interface{}{\n\t\tbson.D{{\"name\", \"Halley's Comet\"}, {\"officialName\", \"1P/Halley\"}, {\"orbitalPeriod\", 75}, {\"radius\", 3.4175}, {\"mass\", 2.2e14}},\n\t\tbson.D{{\"name\", \"Wild2\"}, {\"officialName\", \"81P/Wild\"}, {\"orbitalPeriod\", 6.41}, {\"radius\", 1.5534}, {\"mass\", 2.3e13}},\n\t\tbson.D{{\"name\", \"Comet Hyakutake\"}, {\"officialName\", \"C/1996 B2\"}, {\"orbitalPeriod\", 17000}, {\"radius\", 0.77671}, {\"mass\", 8.8e12}},\n\t}\n\n\tresult, err := coll.InsertMany(context.TODO(), docs)\n\tif err != nil {\n\t\tpanic(err)\n\t}\n            \n\t// display the results of your operation\n\tfor _, id := range result.InsertedIDs {\n\t\tfmt.Printf(\"\\t%s\\n\", id)\n\t}\n}\n\n"
+                },
+                {
+                    "lang": "json",
+                    "value": "ObjectID(\"624cf31b350635c487d55215\")\nObjectID(\"624cf31b350635c487d55216\")\nObjectID(\"624cf31b350635c487d55217\")"
+                },
+                {
+                    "lang": "java",
+                    "value": "import com.mongodb.client.MongoClient;\nimport com.mongodb.client.MongoClients;\nimport com.mongodb.client.MongoCollection;\nimport com.mongodb.client.MongoDatabase;\nimport com.mongodb.client.result.InsertManyResult;\n\nimport org.bson.Document;\n\nimport java.util.List;\nimport java.util.ArrayList;\n\npublic class CrudInsert {\n    public static void main(String[] args) {\n        String uri = \"mongodb+srv://<user>:<password>@<cluster-url>?retryWrites=true&writeConcern=majority\";\n\n        try (MongoClient mongoClient = MongoClients.create(uri)) {\n            // database and collection code goes here\n            MongoDatabase db = mongoClient.getDatabase(\"sample_guides\");\n            MongoCollection<Document> coll = db.getCollection(\"comets\");\n\n            // insert code goes here\n            List<Document> documents = new ArrayList<>();\n\n            Document doc1 = new Document(\"name\", \"Halley's Comet\").append(\"officialName\", \"1P/Halley\").append(\"orbitalPeriod\", 75).append(\"radius\", 3.4175).append(\"mass\", 2.2e14);\n            Document doc2 = new Document(\"name\", \"Wild2\").append(\"officialName\", \"81P/Wild\").append(\"orbitalPeriod\", 6.41).append(\"radius\", 1.5534).append(\"mass\", 2.3e13);\n            Document doc3 = new Document(\"name\", \"Comet Hyakutake\").append(\"officialName\", \"C/1996 B2\").append(\"orbitalPeriod\", 17000).append(\"radius\", 0.77671).append(\"mass\", 8.8e12);\n            \n            documents.add(doc1);\n            documents.add(doc2);\n            documents.add(doc3);\n            \n            InsertManyResult result = coll.insertMany(documents);\n            \n            // display the results of your operation\n            result.getInsertedIds().values().forEach(doc -> System.out.println(doc.asObjectId().getValue()));\n        }\n    }\n}\n"
+                },
+                {
+                    "lang": "json",
+                    "value": "625716fc5749232edfb4b2d7\n625716fc5749232edfb4b2d8\n625716fc5749232edfb4b2d9"
+                },
+                {
+                    "lang": "javascript",
+                    "value": "const { MongoClient } = require(\"mongodb\");\n// Replace the uri string with your MongoDB deployment's connection string.\nconst uri =\n\"mongodb+srv://<user>:<password>@<cluster-url>?retryWrites=true&writeConcern=majority\";\n\nconst client = new MongoClient(uri);\n\nasync function run() {\n  try {\n    await client.connect();\n    // database and collection code goes here\n    const db = client.db(\"sample_guides\");\n    const coll = db.collection(\"comets\");\n\n    // insert code goes here\n    const docs = [\n      {name: \"Halley's Comet\", officialName: \"1P/Halley\", orbitalPeriod: 75, radius: 3.4175, mass: 2.2e14},\n      {name: \"Wild2\", officialName: \"81P/Wild\", orbitalPeriod: 6.41, radius: 1.5534, mass: 2.3e13},\n      {name: \"Comet Hyakutake\", officialName: \"C/1996 B2\", orbitalPeriod: 17000, radius: 0.77671, mass: 8.8e12}\n    ];\n\n    const result = await coll.insertMany(docs);\n\n    // display the results of your operation\n    console.log(result.insertedIds);\n\n  } finally {\n    // Ensures that the client will close when you finish/error\n    await client.close();\n  }\n}\nrun().catch(console.dir);\n"
+                },
+                {
+                    "lang": "json",
+                    "value": "{\n   '0': 624d06994e68f44afe8c0da6,\n   '1': 624d06994e68f44afe8c0da7,\n   '2': 624d06994e68f44afe8c0da8\n}"
+                },
+                {
+                    "lang": "python",
+                    "value": "from pymongo import MongoClient\n\n# Replace the uri string with your MongoDB deployment's connection string.\nuri = \"mongodb+srv://<user>:<password>@<cluster-url>?retryWrites=true&writeConcern=majority\"\n\nclient = MongoClient(uri)\n\n# database and collection code goes here\ndb = client.sample_guides\ncoll = db.comets\n\ncoll.drop()\n\n# insert code goes here\ndocs = [\n\t{\"name\": \"Halley's Comet\", \"officialName\": \"1P/Halley\", \"orbitalPeriod\": 75, \"radius\": 3.4175, \"mass\": 2.2e14},\n\t{\"name\": \"Wild2\", \"officialName\": \"81P/Wild\", \"orbitalPeriod\": 6.41, \"radius\": 1.5534, \"mass\": 2.3e13},\n\t{\"name\": \"Comet Hyakutake\", \"officialName\": \"C/1996 B2\", \"orbitalPeriod\": 17000, \"radius\": 0.77671, \"mass\": 8.8e12},\n    ]\n\nresult = coll.insert_many(docs)\n\n# display the results of your operation\nprint(result.inserted_ids)\n\n# Close the connection to MongoDB when you're done.\nclient.close()\n"
+                },
+                {
+                    "lang": "json",
+                    "value": "[ObjectId('624d078756f4582197aad408'), ObjectId('624d078756f4582197aad409'), ObjectId('624d078756f4582197aad40a')]"
+                }
+            ],
+            "preview": "In this guide, you will insert data into MongoDB.",
+            "tags": null,
+            "facets": {
+                "genre": [
+                    "tutorial"
+                ]
+            }
+        },
+        {
+            "slug": "atlas/connection-string",
+            "title": "Get Connection String",
+            "headings": [
+                "Overview",
+                "What You'll Need",
+                "Procedure",
+                "Navigate to the Database Deployments page for your project.",
+                "Click the Connect button.",
+                "Copy the connection string",
+                "Summary"
+            ],
+            "paragraphs": "In this guide, you will retrieve your database deployment's\nconnection string. Get your cluster's connection string to interact with the data in\nMongoDB Shell, a MongoDB driver, or MongoDB Compass. Add your IP address to the allowlist to allow access to your Atlas cluster. Locate your connection string and copy it. A MongoDB account. See  Sign Up for a MongoDB Account . An Atlas cluster. See  Create a New Cluster . A MongoDB user. See  Configure MongoDB Users \nin the Atlas documentation. Click the  Connect  button on the cluster management panel.\nThe following Atlas screenshot shows the  Connect  button: In the  Choose your connection method  step in the\nmodal, select the button marked  Connect Your\nApplication . The following Atlas screenshot shows the connection option\nbuttons: Follow the instructions for your driver language and version. If you have successfully completed this guide, you have retrieved your\ndatabase deployment's connection string in your copy buffer.",
+            "code": [],
+            "preview": "In this guide, you will retrieve your database deployment's\nconnection string.",
+            "tags": null,
+            "facets": {
+                "genre": [
+                    "tutorial"
+                ]
+            }
+        },
+        {
+            "slug": "atlas/sample-data",
+            "title": "Load Sample Data",
+            "headings": [
+                "Overview",
+                "What You'll Need",
+                "Procedure",
+                "Navigate to the Database Deployments page for your project.",
+                "Click on your cluster name.",
+                "Click Load Sample Dataset.",
+                "In the ensuing dialog, click Load Sample Dataset confirm.",
+                "Summary"
+            ],
+            "paragraphs": "In this guide, you will load our sample data into your cluster. Load our sample data into your cluster to quickly get started\nexperimenting with data in MongoDB. A MongoDB account. See  Sign Up for a MongoDB Account . An Atlas cluster. See  Create a Cluster . Click\nthe  Collections  tab. If Atlas prompts you to select which dataset to load, select\n sample_guides . Once the load completes, the  Collections  tab refreshes\nto show your sample data. You see the following databases in your cluster: Dataset Name Description sample-airbnb Contains details on  AirBnB  listings. sample-analytics Contains training data for a mock financial services application. sample-geospatial Contains shipwreck data. sample-guides Contains planet data. sample-mflix Contains movie data. sample-restaurants Contains restaurant data. sample-supplies Contains data from a mock office supply store. sample-training Contains MongoDB training services dataset. sample-weather Contains detailed weather reports. If you successfully completed the procedure in this guide, you have\nloaded our sample data. In the next guide, you will retrieve your database deployments\nconnection string.",
+            "code": [],
+            "preview": "In this guide, you will load our sample data into your cluster.",
+            "tags": null,
+            "facets": {
+                "genre": [
+                    "tutorial"
+                ]
+            }
+        },
+        {
+            "slug": "cloud/migrate-from-compose",
+            "title": "Migrate from Compose to MongoDB Atlas",
+            "headings": [
+                "Overview",
+                "What You'll Need",
+                "Procedure",
+                "Create an Atlas deployment.",
+                "Log in to your Compose account.",
+                "Create an oplog user.",
+                "Review migration steps.",
+                "Add IP address ranges to your Compose deployment whitelist.",
+                "Open two browser tabs:",
+                "Enter the oplog user's credentials in the Live Migration dialog.",
+                "Enter your Compose TLS/SSL Certificate data.",
+                "Validate your Live Migration form.",
+                "Click Start Migration.",
+                "Click Prepare to Cutover.",
+                "Perform the cutover.",
+                "Migration Support",
+                "Summary"
+            ],
+            "paragraphs": "This guide walks you through how to migrate data from Compose to MongoDB Atlas\nusing the Atlas Live Migration process. The MongoDB Atlas Live Migration Service helps you migrate MongoDB databases to\nour fully managed cloud database, MongoDB Atlas, quickly and securely. It works\nby connecting to your existing MongoDB database and synchronizing it with a\ncluster running in Atlas all while your application continues to function\nnormally. Once the data between the two clusters has been synchronized, you can\nsimply update the database connection string in your application to cut over to\nyour cluster in Atlas. If you have SSL enabled on your Compose deployment, you will need\naccess to your SSL certificate to complete the Live Migration\nprocess. In some Compose deployments, you can no longer view your SSL\ncertificate in the Compose UI. If this is the case for your\ndeployment, you have two options: See the  Compose documentation  for more\ninformation about SSL certificates. Contact Compose directly to request your SSL certificate. Use  MongoMirror  to migrate\nyour data to Atlas. Your data is currently in a MongoDB database. This guide focuses on migrating to Atlas from an existing MongoDB deployment\non Compose. Your current MongoDB database is running MongoDB 2.6 or higher. Atlas supports the latest versions of MongoDB: 4.2, 4.4, 5.0, and 6.0.\nIf you're running MongoDB version 2.6 or greater, the Atlas Live Migration\nService can move your data directly into a newer database version.\nUpdate your  MongoDB drivers \nand make any necessary code changes at the application level to ensure\ncompatibility. If you're running a version older than 2.6, see\n Upgrade MongoDB to 2.6 \nfor upgrade instructions. Your current deployment is a MongoDB replica set or sharded cluster. If your deployment is currently a standalone instance, you must first\n convert it to a replica set . Live migration of data from sharded clusters is not supported. Your destination\ncluster may be sharded, but your source cluster must be an unsharded replica\nset. (Optional) Enabled authentication on your source deployment. The migration process requires that authentication is enabled on your\nsource cluster in AWS. See  Enable Auth \nfor instructions on enabling authentication.\nYou can verify that authentication is enabled on your source cluster\nusing the  mongosh  command: The database user from your source cluster that you will use to perform\nthe migration has the required MongoDB roles. To verify that the database user that will run the Live Migration\nprocess has these roles, run the  db.getUser()  command on the  admin  database. In addition, the database user from your source cluster in Compose\nmust have the role to read the oplog on your  admin  database. See\n Oplog Access . You obtain access to\nthis role when you add the oplog user in Compose in the following\nprocedure.\nIf you can't grant all of these permissions to the database user from\nyour source cluster in Compose, the Live Migration process will not work.\nIn this case, use  mongodump and mongorestore \nto migrate your data to Atlas. The  readAnyDatabase  role. The  clusterMonitor  role. The  backup  role. If you don't already have an Atlas deployment,  create one  now.\nYou'll need a  cluster tier \nof  M10  or larger to perform Live Migration. Log in to your  Compose account \nand navigate to the deployment you want to migrate to Atlas. It will be helpful during the migration process to keep one\nbrowser window open on your Compose deployment console and one\nwindow open on your  Atlas console . To perform the migration process, the oplog user must have\nthe following privileges: If you can't grant these permissions to the oplog user,\nthe Live Migration process will not work. In this case, use\n mongodump and mongorestore  to migrate\nyour data to Atlas. Click the  Add-ons  link in the left-side navigation.\nIf you don't have the  Oplog Access  add-on, add it with the\n Add  button. If you already have the  Oplog Access  add-on, click\n Configure  to see the oplog user username and password. The  readAnyDatabase  role. The  clusterMonitor  role. The  backup  role. Read through the overview of migration steps in the Live Migration\ndialog window, then click the green  I'm ready to migrate \nbutton. For the Atlas Live Migration process dialog from the previous step. For your Compose deployment dashboard. On your Compose deployment dashboard, click the  Security \nlink in the left-side navigation. The  Whitelist TCP/HTTP\nIPs  section displays a list of IP address ranges which are allowed\nto access your Compose deployment. Add the IP address range which is listed at the top of the\nAtlas Migration process dialog window. Your Atlas migration IP address ranges may be different from\nthose shown here. Add the hostname and port of your Compose deployment to the\nAtlas Live Migration dialog. On the  Oplog Access  add-on page, you'll find a connection\nstring with a hostname and port for oplog access. Copy them to the Atlas\nLive Migration dialog. Enter the username and password for  oploguser  in the\nAtlas Live Migration dialog window. If you don't have TLS/SSL enabled on your Compose deployment, skip this\nstep. On the  Oplog Access  add-on page, you'll find an SSL\ncertificate. Copy it to the CAFile text box on the Atlas Live\nMigration dialog. In some Compose deployments, you can no longer view your TLS/SSL\ncertificate in the Compose UI. If this is the case for your\ndeployment, you have two options: See the  Compose documentation  for more\ninformation about SSL certificates. Contact Compose directly to request your TLS/SSL certificate. Use  MongoMirror  to migrate your data to Atlas. Copy the entire certificate file, including the\n BEGIN CERTIFICATE  and  END CERTIFICATE  lines. Click the  Validate  button to check that all your form\nfields are valid and your clusters are ready for migration. When your\nform is validated, you're ready to begin the migration. A countdown timer in a progress bar indicates how much time remains\nbefore your target cluster is ready to migrate data from your source\ncluster. Wait until the countdown timer and the  Prepare to Cutover \nbutton are green before proceeding to the next step. When Atlas detects that the source and destination clusters are nearly\nin sync, it starts an extendable 72 hour timer to begin the cutover\nprocedure. If the 72 hour period passes, Atlas stops synchronizing with\nthe source cluster. You can extend the time remaining by 24 hours by\nclicking the  Extend time  hyperlink below the  <time>\nleft to cut over  timer. Once you are prepared to cut your applications over to the\ndestination Atlas cluster, click  Prepare to Cutover . Atlas displays a walk-through screen with instructions\non how to proceed with the cutover. These steps are also outlined\nbelow: Stop your application. This ensures that no additional writes\nare generated to the source cluster. Wait for the optime gap to reach zero. When the counter reaches\nzero, the source and destination clusters are in sync. Restart your application using the new connection string\nprovided in step 3 of the Live Migrate cutover UI. Once you are prepared to cut your applications over to the\ndestination Atlas cluster, click  Prepare to Cutover . Once you have completed the cutover procedure and confirmed\nyour applications are working normally with the Atlas cluster,\nclick  Cut Over  to complete the migration procedure.\nThis allows Atlas to: Mark the migration plan as complete. Remove the Application Server subnets from the destination\ncluster IP access list. Remove the MongoDB user that Live Migrate used to import data\nto the destination cluster. If you have any questions regarding migration beyond what is covered\nin this documentation, or if you encounter an error during migration, please\nsee the Atlas documentation on\n requesting support . You created an Atlas cluster, migrated data from your old Compose cluster, and\nupdated your applications to use the new Atlas Cluster. Congratulations and\nwelcome to MongoDB Atlas!",
+            "code": [
+                {
+                    "lang": "sh",
+                    "value": "mongosh <mongodb-connection-string> -u <mongodb-username> -p --authenticationDatabase admin"
+                },
+                {
+                    "lang": "javascript",
+                    "value": "use admin\ndb.getUser(\"admin\")\n{\n  \"_id\" : \"admin.admin\",\n  \"user\" : \"admin\",\n  \"db\" : \"admin\",\n  \"roles\" : [\n    {\n      \"role\" : \"backup\",\n      \"db\" : \"admin\"\n    },\n    {\n      \"role\" : \"clusterMonitor\",\n      \"db\" : \"admin\"\n    }\n    {\n      \"role\" : \"readAnyDatabase\",\n      \"db\" : \"admin\"\n    }\n  ]\n} ..."
+                }
+            ],
+            "preview": "This guide walks you through how to migrate data from Compose to MongoDB Atlas\nusing the Atlas Live Migration process.",
+            "tags": null,
+            "facets": {
+                "genre": [
+                    "tutorial"
+                ]
+            }
+        },
+        {
+            "slug": "cloud/migrate-from-aws-to-atlas-on-aws",
+            "title": "Migrate a MongoDB Replica Set from AWS to MongoDB Atlas on AWS",
+            "headings": [
+                "What You'll Need",
+                "Procedure",
+                "Launch your target replica set in MongoDB Atlas running on AWS.",
+                "Open Atlas Live Migration Service.",
+                "Click General Live Migration.",
+                "Click I'm ready to migrate.",
+                "Add the IP address for the Atlas Live Migration Service on your AWS source cluster.",
+                "Validate your AWS credentials with Atlas Live Migration Service.",
+                "Click Validate.",
+                "Click Start Migration.",
+                "Click Prepare to Cutover.",
+                "Perform the cutover.",
+                "Migration Support",
+                "Summary"
+            ],
+            "paragraphs": "The MongoDB Atlas Live Migration Service helps you migrate MongoDB databases to\nour fully managed cloud database, MongoDB Atlas, running on AWS quickly and\nsecurely. It works by connecting to your existing MongoDB database and synchronizing\nit with a cluster running in Atlas all while your application continues to function\nnormally. Once the data between the two clusters has been synchronized, you can\nsimply update the database connection string in your application to cut over to\nyour cluster in Atlas. Your data is currently in a MongoDB database. This guide focuses on migrating to MongoDB Atlas on AWS from an existing self-managed MongoDB\ndeployment on AWS. If you have data in other database systems, such as MySQL, PostgreSQL, or\nDynamoDB, please  contact us \nfor help with your migration. Update your  MongoDB drivers \nand make any necessary code changes at the application level to ensure\ncompatibility. Your current deployment is a MongoDB replica set or sharded cluster. If your deployment is currently a standalone instance, you must first\n convert it to a replica set . If you're migrating a replica set, it is running MongoDB 2.6 or\nhigher. The Atlas Live Migration Service can move your data directly into a\nnewer database version. For more information about the supported\nupgrade paths, see the  Atlas documentation . If you're running a version older than 2.6, see\n Upgrade MongoDB to 2.6 \nfor upgrade instructions. If you're migrating a sharded cluster, it is running MongoDB 4.0 or\nhigher. The Atlas Live Migration Service can move your data directly the same database version. For more information about the supported\nupgrade paths, see the  Atlas documentation . If you're running a version older than 4.0, see\n Upgrade MongoDB to 4.0 \nfor upgrade instructions. (Optional) Enabled authentication on your source deployment. The migration process requires that authentication is enabled on your\nsource cluster in AWS. See  Enable Auth \nfor instructions on enabling authentication.\nYou can verify that authentication is enabled on your source cluster\nusing the  mongosh  command: The database user from your source cluster on AWS that you will use to perform the migration has the required MongoDB roles. The user must have the  clusterMonitor  and  backup  roles. To verify\nthat the database user that you intend to use for migration has the appropriate\nroles, run the  db.getUser()  command against the admin database. See  Create a MongoDB Account  and\n Create a New Cluster \nfor instructions. Your target cluster must use  M10  or larger instance nodes.\nFor development or staging environments, deploy a cluster\nwith  M10  or  M20  instance nodes. For production workloads,\nselect  M30  or larger instance nodes. Navigate to your Atlas cluster. Click the ellipsis ( ... ) button and select\n Migrate Data to this Cluster . At the top of the  Migrate Data to Cluster  modal, Atlas displays\nthe IP address ranges that must be accessible from your source cluster.\nThe address ranges displayed depend on the location of your target\ncluster and can change, so verify that you enter the address ranges\nas displayed in the modal. AWS EC2 servers are protected from unauthorized network access using\n Security Groups .\nTo add new IP address ranges to the IP access list, either create a\nnew Security Group, or modify your existing Security Group to permit\ninbound network access from the displayed IP address ranges. Here is an example security group that grants access to Atlas Live Migration Service. If you create a new Security Group, you must associate it with\nthe EC2 instances running your source cluster. In the AWS EC2 console,\nclick the  Actions  dropdown and select  Change\nSecurity Group . For additional information on creating or modifying Security Groups, see  Adding Rules to a Security Group \nin the AWS EC2 documentation. On the  Migrate Data to Cluster  modal, enter the hostname\nand port number of the primary node in your source AWS source cluster\nthat Atlas will use to perform the data migration. The address must be resolvable over the public internet, so do not use\nthe private IP address of the node. Enter the MongoDB username and password from the AWS source cluster\nin  Username/Password . If TLS/SSL is enabled on the source cluster, toggle the  Is TLS/SSL enabled \nto  Yes  and upload the CA file that your source AWS cluster\nuses. A countdown timer in a progress bar indicates how much time remains\nbefore your target cluster is ready to migrate data from your source\ncluster. Wait until the countdown timer and the  Prepare to Cutover \nbutton are green before proceeding to the next step. When Atlas detects that the source and destination clusters are nearly\nin sync, it starts an extendable 72 hour timer to begin the cutover\nprocedure. If the 72 hour period passes, Atlas stops synchronizing with\nthe source cluster. You can extend the time remaining by 24 hours by\nclicking the  Extend time  hyperlink below the  <time>\nleft to cut over  timer. Once you are prepared to cut your applications over to the\ndestination Atlas cluster, click  Prepare to Cutover . Atlas displays a walk-through screen with instructions\non how to proceed with the cutover. These steps are also outlined\nbelow: Stop your application. This ensures that no additional writes\nare generated to the source cluster. Wait for the optime gap to reach zero. When the counter reaches\nzero, the source and destination clusters are in sync. Restart your application using the new connection string\nprovided in step 3 of the Live Migrate cutover UI. Once you are prepared to cut your applications over to the\ndestination Atlas cluster, click  Prepare to Cutover . Once you have completed the cutover procedure and confirmed\nyour applications are working normally with the Atlas cluster,\nclick  Cut Over  to complete the migration procedure.\nThis allows Atlas to: Mark the migration plan as complete. Remove the Application Server subnets from the destination\ncluster IP access list. Remove the MongoDB user that Live Migrate used to import data\nto the destination cluster. If you have any questions regarding migration beyond what is covered\nin this documentation, or if you encounter an error during migration, please\nsee the Atlas documentation on\n requesting support . You created an Atlas cluster, migrated data from your previous AWS\nMongoDB cluster, and updated your applications to use the new\nMongoDB Atlas cluster running on AWS. For more information on the\ndata migration process, see  Live Migrate Your Replica Set to Atlas  and\n mongomirror .",
+            "code": [
+                {
+                    "lang": "sh",
+                    "value": "mongosh <mongodb-connection-string> -u <mongodb-username> -p --authenticationDatabase admin"
+                },
+                {
+                    "lang": "javascript",
+                    "value": "use admin\ndb.getUser(\"admin\")\n{\n  \"_id\" : \"admin.admin\",\n  \"user\" : \"admin\",\n  \"db\" : \"admin\",\n  \"roles\" : [\n    {\n      \"role\" : \"backup\",\n      \"db\" : \"admin\"\n    },\n    {\n      \"role\" : \"clusterMonitor\",\n      \"db\" : \"admin\"\n    }\n  ]\n} ..."
+                }
+            ],
+            "preview": "The MongoDB Atlas Live Migration Service helps you migrate MongoDB databases to\nour fully managed cloud database, MongoDB Atlas, running on AWS quickly and\nsecurely. It works by connecting to your existing MongoDB database and synchronizing\nit with a cluster running in Atlas all while your application continues to function\nnormally. Once the data between the two clusters has been synchronized, you can\nsimply update the database connection string in your application to cut over to\nyour cluster in Atlas.",
+            "tags": null,
+            "facets": {
+                "genre": [
+                    "tutorial"
+                ]
+            }
+        },
+        {
+            "slug": "atlas/network-connections",
+            "title": "Configure a Network Connection",
+            "headings": [
+                "Overview",
+                "What You'll Need",
+                "Procedure",
+                "Select My Local Environment.",
+                "Add your IP address",
+                "Click Finish and Close.",
+                "Summary"
+            ],
+            "paragraphs": "After creating your cluster, Atlas directs you to a page called\n Security Quickstart . In the previous guide, we completed the\nfirst section, which added a user to the database. In this guide, you will configure a network connection with the\nlast section of the page. Configure a network connection to allow your users to access the\ndatabase deployments in your project. A MongoDB account. See  Sign Up for a MongoDB Account . An Atlas cluster. See  Create a Cluster . In the  Where would you like to connect from?  section,\nselect the box labeled  My Local Environment . In the box labeled  Add entries to your IP Access List ,\nclick  Add My Current IP Address . Now, you see your IP address at the bottom of the box. After clicking the  Finish and Create  button at the\nbottom of the page, you see the following modal: If you successfully completed the procedure in this guide, you have\nconfigured a network connection and finished the  Security\nQuickstart . In the next guide, you will load our sample data into your cluster.",
+            "code": [],
+            "preview": "After creating your cluster, Atlas directs you to a page called\nSecurity Quickstart. In the previous guide, we completed the\nfirst section, which added a user to the database.",
+            "tags": null,
+            "facets": {
+                "genre": [
+                    "tutorial"
+                ]
+            }
+        },
+        {
+            "slug": "atlas/db-user",
+            "title": "Add a Database User",
+            "headings": [
+                "Overview",
+                "What You'll Need",
+                "Procedure",
+                "Select Username and Password.",
+                "Enter the users information.",
+                "Enter a username for the new user in the top text field.",
+                "Enter a password for the new user in the lower text field.",
+                "Click Create User.",
+                "Summary"
+            ],
+            "paragraphs": "After creating your cluster, Atlas directs you to a page called\n Security Quickstart . In this guide, you will add a database user in the first section of the\npage. Add a database user to access the database deployments in your\nproject. A MongoDB account. See  Sign Up for a MongoDB Account . A Atlas cluster. See  Create a Cluster . In the  How would you like to authenticate your\nconnection?  section, select the box labeled  Username\nand Password . In the box underneath, there are two text fields. Enter a password of your choice, or use an Atlas auto-generated\none, by clicking the  Autogenerate Secure\nPassword  button. Now, you see your user under the  Create User  button. If you successfully completed the procedure in this guide, you have\nadded a database user. In the next guide, you will continue with the  Security\nQuickstart  page to configure a network connection.",
+            "code": [],
+            "preview": "After creating your cluster, Atlas directs you to a page called\nSecurity Quickstart.",
+            "tags": null,
+            "facets": {
+                "genre": [
+                    "tutorial"
+                ]
+            }
+        },
+        {
+            "slug": "atlas/cluster",
+            "title": "Create a Cluster",
+            "headings": [
+                "Overview",
+                "What You'll Need",
+                "Procedure",
+                "Navigate to the Database Deployments page for your project.",
+                "Open the Build a Database dialog.",
+                "Select a Cluster Type.",
+                "Select a Cluster Tier.",
+                "Create the cluster.",
+                "Summary"
+            ],
+            "paragraphs": "In this guide, you will create a free cluster. Create a free cluster to use. A MongoDB account. See  Sign Up for a MongoDB Account . Click the  Build a Database  button to display the\n Deploy a cloud database  dialog. Select the  Shared  cluster. If it is not already selected, select  M0 Sandbox . Click  Create Cluster . This creates a cluster with the\ndefault values for the  Cloud Provider and Region ,\n Additional Settings  and  Cluster Name . If you successfully completed the procedure in this guide, you have\ncreated a free cluster. In the next guide, you will add a database user.",
+            "code": [],
+            "preview": "In this guide, you will create a free cluster.",
+            "tags": null,
+            "facets": {
+                "genre": [
+                    "tutorial"
+                ]
+            }
+        },
+        {
+            "slug": "search/dynamic",
+            "title": "Build a Dynamic Index",
+            "headings": [
+                "Overview",
+                "What You'll Need",
+                "Procedure",
+                "Navigate to the Database Deployments page for your project.",
+                "Click on your cluster name.",
+                "Create a dynamic search index.",
+                "Click the Search tab.",
+                "Run a query on your index.",
+                "Review the results.",
+                "Summary"
+            ],
+            "paragraphs": "In this guide, you will learn how to create an  Atlas Search index  with  dynamic mappings  to query and quickly retrieve relevant data. Retrieve documents in MongoDB with full-text search. A MongoDB account. See  Sign Up for a MongoDB Account . An Atlas cluster. See  Create a Cluster . Sample datasets  loaded into your cluster . Click\n Create Search Index . Select the  Visual Editor  configuration\nmethod, then click  Next . For the  Database and Collection , select the\n sample_supplies  database and the  sales  collection.\nThen, click  Next . Click  Create Search Index  to confirm your\nselection. Wait for the  Status  column to read\n Active . You now have a search index that\n dynamically indexes  the fields\nacross the documents in your collection. Click  Query \nin the  Actions  column of your index definition. Type  notepad  into the search bar, then click\n Search . This query returns all documents in the  sales  collection with\na field that contains  notepad . Your results should resemble the following sample documents: Each record also includes a  relevance score .\nYou can expand  Array  and  Object  fields to view their\ncontents by clicking on them. Click  Edit Query Syntax . The modal window\ndisplays the query sent through the Atlas Search API. If you successfully completed the procedure in this guide, you have\ncreated an Atlas Search index with dynamic field mappings and used it\nto perform a relevance-based query against the\n sample_supplies.sales  collection. In the next guide, you will learn\nhow to perform a refined search by creating an index with static field\nmappings.",
+            "code": [
+                {
+                    "lang": "json",
+                    "value": "SCORE: 0.20185701549053192\nsalesDate: 2013-03-07T09:27:58.283+00:00\nitems: Array\nstoreLocation: \"Austin\"\n\nSCORE: 0.20185701549053192\nsalesDate: 2013-05-05T19:03:06.358+00:00\nitems: Array\nstoreLocation: \"London\"\n\nSCORE: 0.20185701549053192\nsalesDate: 2016-06-20T14:09:52.408+00:00\nitems: Array\nstoreLocation: \"Denver\""
+                }
+            ],
+            "preview": "In this guide, you will learn how to create an Atlas Search index with dynamic mappings to query and quickly retrieve relevant data.",
+            "tags": null,
+            "facets": {
+                "genre": [
+                    "tutorial"
+                ]
+            }
+        },
+        {
+            "slug": "search/static",
+            "title": "Build an Index with Static Field Mappings",
+            "headings": [
+                "Overview",
+                "What You'll Need",
+                "Procedure",
+                "Navigate to the Database Deployments page for your project.",
+                "Click on your cluster name.",
+                "Create a static search index.",
+                "Click the Search tab.",
+                "For the Index Name, type static.",
+                "Run a query on your index.",
+                "Review the results.",
+                "Summary"
+            ],
+            "paragraphs": "In this guide, you will learn how to index only specified fields in\ndocuments by creating an index with  static field mappings . Static mappings allow you to independently\nindex fields for specific use cases such as  faceting . Retrieve documents in MongoDB with a field-specific query. A MongoDB account. See  Sign Up for a MongoDB Account . An Atlas cluster. See  Create a Cluster . Sample datasets  loaded into your cluster . Click\n Create Index . Select the  Visual Editor  configuration\nmethod, then click  Next . For the  Database and Collection , select the\n sample_supplies  database and the  sales  collection.\nThen, click  Next . Click  Refine Your Index  in the bottom\nleft. Then, in the  Index Configurations  pane,\ntoggle off  Dynamic Mapping . In the  Field Mappings  pane, click\n Add Field Mapping . In the modal window, select\n storeLocation  from the  Field Name  dropdown\nmenu. From the  Data Type  dropdown menu, select\n String . Leave the  Index Configurations \nvalues unchanged, and click  Add  at the bottom\nof the modal window. On the  Search Tester  page, type\n London  into the search bar, then click\n Search . This query returns all documents in the  sales  collection with\na  storeLocation  of  London . Your results should resemble\nthe following sample documents: Each record also includes a  relevance score .\nYou can expand  Array  and  Object  fields to view their\ncontents by clicking on them. Click  Edit Query Syntax . The modal window\ndisplays the query sent through the Atlas Search API. Type  online  into the search bar, then click\n Search . Even though some records include the string  online  in the\n purchaseMethod  field, no records appear. The index only has\na mapping for the  storeLocation  field, which means that\nAtlas Search only returns records with matching values in the\n storeLocation  field. If you successfully completed the procedure in this guide, you have\ncreated an Atlas Search index with a static field mapping and used\nit to perform a targeted relevance-based search. In the next guide,\nyou will learn how to perform compound searches against specific\nfields using the aggregation pipeline.",
+            "code": [
+                {
+                    "lang": "json",
+                    "value": "SCORE: 0.8888952136039734\nsalesDate: 2017-12-03T18:39:48.253+00:00\nitems: Array\nstoreLocation: \"London\"\n\nSCORE: 0.8888952136039734\nsalesDate: 2015-05-15T13:43:24.561+00:00\nitems: Array\nstoreLocation: \"London\"\n\nSCORE: 0.8888952136039734\nsalesDate: 2016-02-06T09:35:02.820+00:00\nitems: Array\nstoreLocation: \"London\""
+                }
+            ],
+            "preview": "In this guide, you will learn how to index only specified fields in\ndocuments by creating an index with static field mappings. Static mappings allow you to independently\nindex fields for specific use cases such as faceting.",
+            "tags": null,
+            "facets": {
+                "genre": [
+                    "tutorial"
+                ]
+            }
+        },
+        {
+            "slug": "search/facet",
+            "title": "Querying with Facets",
+            "headings": [
+                "Overview",
+                "What You'll Need",
+                "Procedure",
+                "Navigate to the Database Deployments page for your project.",
+                "Click on your cluster name.",
+                "Create a search index with facets.",
+                "Click the Search tab.",
+                "For the Index Name, type facets.",
+                "Run a faceted query on your index by using the Aggregation Pipeline.",
+                "Review the results of the faceted query.",
+                "Summary"
+            ],
+            "paragraphs": "In this guide, you will learn how to run a query with the\n facet collector  to group your query results\nand returns the count for each of these groups. Retrieve documents in MongoDB with counts of specific values. A MongoDB account. See  Sign Up for a MongoDB Account . An Atlas cluster. See  Create a Cluster . Sample datasets  loaded into your cluster . You now have a search index that enables faceted queries. Click\n Create Index . Select the  Visual Editor  configuration\nmethod, then click  Next . For the  Database and Collection , select the\n sample_supplies  database and the  sales  collection.\nThen, click  Next . Click  Refine Your Index . In the\n Index Configuration  pane, toggle off\n Dynamic Mapping . In the  Field Mappings  pane, click\n Add Field Mapping . In the modal window, select\n purchaseMethod  from the  Field Name  dropdown menu. From the  Data Type  dropdown menu, select\n String . Click  Add  at the bottom of the\nmodal window. Leave the  Index Configurations \nvalues unchanged, and click  Add  at the bottom\nof the modal window. In the  Field Mappings  pane, click\n Add Field Mapping . In the modal window, select\n storeLocation  from the  Field Name  dropdown\nmenu. From the  Data Type  dropdown, select\n StringFacet . Click  Add  at the bottom of the\nmodal window. Click the\n Aggregation  tab. Click  + Add Stage  to begin creating\nyour aggregation pipeline. In the stage window, click on the dropdown menu\nlabeled  Select...  and select the\n $searchMeta  stage. Replace the placeholder code with the following\nquery. This query uses the  facet  collector with: The  text  operator\nto count only documents with a  purchaseMethod \nvalue of  In store . The facet named\n locationFacet  that creates a bucket\nfor each different  storeLocation  value. Your results should resemble the following sample document,\nwhich is shown partially expanded: You can expand  Array  and  Object  fields to view their\ncontents by clicking on them. If you successfully completed the procedure in this guide, you have\ncreated an Atlas Search index with faceting and created an aggregation\npipeline that leverages faceting to organize matching records into\ncategories for improved visibility.",
+            "code": [
+                {
+                    "lang": "json",
+                    "value": "{\n   \"facet\": {\n      \"operator\": {\n         \"text\": {\n         \"query\": [\"In store\"],\n         \"path\": \"purchaseMethod\"\n         }\n      },\n      \"facets\": {\n         \"locationFacet\": {\n         \"type\": \"string\",\n         \"path\": \"storeLocation\",\n         }\n      }\n   }\n}"
+                },
+                {
+                    "lang": "json",
+                    "value": "count: Object\nlowerBound: 2819\nfacet: Object\nlocationFacet: Object\n   buckets: Array\n      0: Object\n         id: \"Denver\"\n         count: 864\n      1: Object\n         id: \"Seattle\"\n         count: 648\n      2: Object\n      3: Object\n      4: Object\n      5: Object"
+                }
+            ],
+            "preview": "In this guide, you will learn how to run a query with the\nfacet collector to group your query results\nand returns the count for each of these groups.",
+            "tags": null,
+            "facets": {
+                "genre": [
+                    "tutorial"
+                ]
+            }
+        },
+        {
+            "slug": "search/compound",
+            "title": "Querying with the Compound Operator",
+            "headings": [
+                "Overview",
+                "What You'll Need",
+                "Procedure",
+                "Navigate to the Database Deployments page for your project.",
+                "Click on your cluster name.",
+                "Run a compound query on your index in the Aggregations tab.",
+                "Review the results of the compound query.",
+                "Summary"
+            ],
+            "paragraphs": "In this guide, you will learn how to use multiple search operators in\na compound query by using the aggregation pipeline. Retrieve documents in MongoDB with a query on multiple fields. A MongoDB account. See  Sign Up for a MongoDB Account . An Atlas cluster. See  Create a Cluster . Sample datasets  loaded into your cluster . A search index with default settings and dynamic indexing.\nTo create a default dynamic index, see  Build a Dynamic Index . Click\nthe  Collections  tab. Click the  sample_supplies  database,\nthen click the  sales  collection. Click\nthe  Aggregation  tab. Click  + Add Stage  to begin creating\nyour aggregation pipeline. In the stage window, click on the dropdown menu\nlabeled  Select  and select the\n $search  stage. Replace the placeholder code with the following\nquery. This query uses the  compound  operator with: The  filter  clause to return only documents\nwith a  purchaseMethod  of  Online . The  should  clause to return documents\nwith an  items  field that contains  notepad  to have\na higher score than those without. In the right-hand pane, your results should include a list\nof documents that resemble the following sample document: You can expand  Array  and  Object  fields to view their\ncontents by clicking on them. The fields don't always appear in the same order\nfor every returned document. If you successfully completed the procedure in this guide, you have\ncreated an Atlas Search aggregation stage with a compound operator,\nand have seen how different clauses in the operator interact to\nfocus your search results across multiple axes. In the next guide, you\nwill learn how to group search results using facets.",
+            "code": [
+                {
+                    "lang": "json",
+                    "value": "{\n   \"compound\": {\n      \"filter\": [{\n         \"text\": {\n         \"query\": \"Online\",\n            \"path\": \"purchaseMethod\"\n         }\n      }],\n      \"should\": [{\n         \"text\": {\n         \"query\": \"notepad\",\n            \"path\": \"items\"\n         }\n      }]\n   }\n}"
+                },
+                {
+                    "lang": "json",
+                    "value": "items: Array\n   0: Object\n   1: Object\n   2: Object\n      name: \"notepad\"\n   ...\nstoreLocation: \"Denver\"\ncustomer: Object\ncouponUsed: false\npurchaseMethod: \"Online\"\n_id: ObjectID('5bd761dcae323e45a93cd06e')\nsaleDate: 2013-11-22T18:49:45.212+00:00"
+                }
+            ],
+            "preview": "In this guide, you will learn how to use multiple search operators in\na compound query by using the aggregation pipeline.",
+            "tags": null,
+            "facets": {
+                "genre": [
+                    "tutorial"
+                ]
+            }
+        },
+        {
+            "slug": "atlas/account",
+            "title": "Sign Up for a MongoDB Account",
+            "headings": [
+                "Overview",
+                "What You'll Need",
+                "Procedure",
+                "Create your MongoDB account.",
+                "Provide the following information about yourself:",
+                "Click Sign up to create the account.",
+                "Access your MongoDB services.",
+                "Click:",
+                "Summary"
+            ],
+            "paragraphs": "In this guide, you will create a free unified account for MongoDB\nservices like MongoDB Atlas, MongoDB Cloud Manager, MongoDB\nUniversity, and MongoDB Support. Create a free account to access MongoDB Atlas, MongoDB Cloud Manager,\nMongoDB University, and MongoDB Support. Check if you have a supported browser: Supported Web Browser Supported Version(s) Google Chrome latest stable Mozilla Firefox latest stable Microsoft Edge latest stable Apple Safari latest stable version on the current and two prior versions of\nmacOS Go to  account.mongodb.com/account/register  to create your\nMongoDB account. To register for a new MongoDB account, you\nmust do the following: Email Address First Name  and  Last Name Password Phone Number Company Job Function Country Review and select the checkbox to accept the  Privacy\nPolicy  and the  Terms of Service . You can also directly log into the following MongoDB\nservices using your MongoDB account credentials: Log in to your account at  account.mongodb.com/account/login  and select\n Overview  from the left navigation menu to access the\nMongoDB services. Visit MongoDB Atlas  to go to MongoDB Atlas or MongoDB\nCloud Manager UI. Visit MongoDB University  to take courses at the\nMongoDB University. Visit MongoDB Support  to get help from MongoDB Support. Atlas Cloud Manager MongoDB University MongoDB Support If you successfully completed the procedure in this guide, you have\ncreated a MongoDB account. Using your MongoDB account,\nyou can now access MongoDB Atlas, MongoDB Cloud Manager, MongoDB\nUniversity, and MongoDB support portal. In the next guide, you will\ncreate a cluster.",
+            "code": [],
+            "preview": "In this guide, you will create a free unified account for MongoDB\nservices like MongoDB Atlas, MongoDB Cloud Manager, MongoDB\nUniversity, and MongoDB Support.",
+            "tags": null,
+            "facets": {
+                "genre": [
+                    "tutorial"
+                ]
+            }
+        }
+    ]
+}

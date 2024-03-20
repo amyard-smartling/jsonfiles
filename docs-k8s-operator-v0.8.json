@@ -1,0 +1,723 @@
+{
+    "url": "http://mongodb.com/docs/kubernetes-operator/v0.8",
+    "includeInGlobalSearch": false,
+    "documents": [
+        {
+            "slug": "deploy",
+            "title": "Deploy Resources",
+            "headings": [],
+            "paragraphs": "",
+            "code": [],
+            "preview": null,
+            "tags": null,
+            "facets": null
+        },
+        {
+            "slug": "reference",
+            "title": "Reference",
+            "headings": [],
+            "paragraphs": "",
+            "code": [],
+            "preview": null,
+            "tags": null,
+            "facets": null
+        },
+        {
+            "slug": "",
+            "title": "MongoDB Enterprise Kubernetes Operator",
+            "headings": [],
+            "paragraphs": "The   enables  Kubernetes  to\nmanage typical lifecycle events for MongoDB that have strict policies\non data persistence and management. The Operator handles the creation\nof MongoDB enterprise pods, coordinates configuration of MongoDB\ndeployments with  , and orchestrates MongoDB configuration\nchanges -- accomplished through the Kubernetes  , declarative\nconfiguration in  , or other tooling. The   works together with MongoDB  , which applies\nfinal configurations to MongoDB clusters. When MongoDB is deployed and\nrunning in Kubernetes, there are a number of tasks that may not relate\nto Kubernetes operations. You can manage these tasks -- monitoring,\nfine tuning database performance, database backups, index management,\netc. -- in  . The Kubernetes CustomResourceDefinitions allow administrators to\nconfigure resource types and access permissions in Kubernetes.\nDevelopers deploy the MongoDB database in the same way as they deploy\nthe rest of the application services. DBAs can work within the familiar\n  interface to help run MongoDB at optimal performance.",
+            "code": [],
+            "preview": "The  enables Kubernetes to\nmanage typical lifecycle events for MongoDB that have strict policies\non data persistence and management. The Operator handles the creation\nof MongoDB enterprise pods, coordinates configuration of MongoDB\ndeployments with , and orchestrates MongoDB configuration\nchanges -- accomplished through the Kubernetes , declarative\nconfiguration in , or other tooling.",
+            "tags": null,
+            "facets": null
+        },
+        {
+            "slug": "third-party-licenses",
+            "title": "Third-Party Licenses",
+            "headings": [
+                "Apache License 2.0"
+            ],
+            "paragraphs": "MongoDB   uses third-party libraries or other resources that may\nbe distributed under licenses different than the MongoDB software.  depends upon the following third-party packages. These packages\nare licensed as shown in the following list. Should we accidentally fail\nto list a required license, please\n contact the MongoDB Legal Department . Package k8s.io/api k8s.io/apiextensions-apiserver k8s.io/apimachinery k8s.io/client-go k8s.io/kube-openapi",
+            "code": [],
+            "preview": "MongoDB  uses third-party libraries or other resources that may\nbe distributed under licenses different than the MongoDB software.",
+            "tags": null,
+            "facets": null
+        },
+        {
+            "slug": "release-notes",
+            "title": "Release Notes for ",
+            "headings": [
+                " 0.8",
+                " 0.7",
+                " 0.6",
+                " 0.5",
+                " 0.4",
+                " 0.3",
+                " 0.2",
+                " 0.1"
+            ],
+            "paragraphs": "Released 2019-02-26 Perform   clean-up on deletion of MongoDB resource without the\nuse of finalisers. Bug fix:  Race conditions when communicating with  . Bug fix:   ImagePullSecrets  being incorrectly initialized in\nOpenShift. Bug fix:  Unintended fetching of closed projects. Bug fix:  Creation of duplicate organizations. Bug fix:  Reconciliation could fail for the MongoDB resource if\nsome other resources in   were in error state. Released 2019-02-01 Improved detailed status field for MongoDB resources. The   watches changes to configuration parameters in a\nproject configMap and the credentials secret then performs a rolling\nupgrade for relevant Kubernetes resources. Added   structured logging for Automation Agent pods. Support   records for MongoDB access. Bug fix: Avoiding unnecessary reconciliation. Bug fix: Improved Ops Manager/Cloud Manager state management for\ndeleted resources. Released 2018-12-17 Refactored code to use the  controller-runtime  library to fix issues\nwhere Operator could leave resources in inconsistent state. This also\nintroduced a proper reconciliation process. Added new  status  field for all MongoDB Kubernetes resources. Can configure Operator to watch any single namespace or all\nnamespaces in a cluster (requires cluster role). Improved database logging by adding a new configuration property\n logLevel . This property is set to  INFO  by default.\nAutomation Agent and MongoDB logs are merged in to a single log\nstream. Added new configuration Operator timeout. It defines waiting time\nfor database pods start while updating  . Fix:  Fixed failure detection for  mongos . Released 2018-11-14 Image for database no longer includes the binary for the Automation\nAgent. The container downloads the Automation Agent binary from\n  when it starts. Fix:  Communication with   failed if the project with the same\nname existed in different organization. Released 2018-10-04 If a backup was enabled in   for a Replica Set or Sharded\nCluster that the   created, then the  \ndisables the backup before removing a resource. Improved persistence support: The data, journal and log directories are mounted to three\nmountpoints in one or three volumes depending upon the\n podSpec.persistence  setting. Prior to this release, only the data directory was mounted to\npersistent storage. Setting Mount Directories to podSpec.persistence.single One volume podSpec.persistence.multiple Three volumes A new parameter,  labelSelector , allows you to specify the\nselector for volumes that   should consider mounting. If   is not specified in the  persistence \nconfiguration, then the default  StorageClass  for the cluster is\nused. In most of public cloud providers, this results in dynamic\nvolume provisioning. Released 2018-08-07 The Operator no longer creates the CustomResourceDefinition objects.\nThe user needs to create them manually. Download and apply\n this new yaml file \n( crd.yaml ) to create/configure these objects. ClusterRoles are no longer required. How the Operator watches\nresources has changed. Until the last release, the Operator would\nwatch for any resource on any  . With 0.3, the Operator\nwatches for resources in the same namespace in which it was created.\nTo support multiple namespaces, multiple Operators can be installed.\nThis allows isolation of MongoDB deployments. Permissions changes were made to how PersistentVolumes are mounted. Added configuration to Operator to not create\n SecurityContexts \nfor  . This solves an issue with OpenShift which does not\nallow this setting when  SecurityContextContraints  are used. If you are using Helm, set  managedSecurityContext  to  true .\nThis tells the Operator to not create  SecurityContext  for\n , satisfying the OpenShift requirement. The combination of  projectName  and  orgId  replaces\n projectId  alone to configure the connection to  .\nThe project is created if it doesn't exist. Released 2018-08-03 Calculates WiredTiger memory cache. Released 2018-06-27 Initial Release Can deploy standalone instances, replica sets, sharded clusters\nusing   configuration files.",
+            "code": [],
+            "preview": "Released 2019-02-26",
+            "tags": null,
+            "facets": null
+        },
+        {
+            "slug": "reference/known-issues-k8s-beta",
+            "title": "Known Issues in the  Beta",
+            "headings": [
+                "Disable Backups before Deleting a Resource",
+                "Configure Persistent Storage Correctly",
+                "Remove Resources before Removing ",
+                "Create Separate Namespaces for  and MongoDB Resources",
+                "Difficulties with Updates"
+            ],
+            "paragraphs": "When deleting a resource that has backup configured, you must disable backup first. If there are no\n persistent volumes \navailable when you create a resource, the resulting   stays in\ntransient state and the Operator fails  (after 20 retries) with the\nfollowing error: To prevent this error, either: For testing only, you may also set  persistent : false . This\n must not be used in production , as data is not preserved between\nrestarts. Provide  persistent volumes  or Set  persistent : false  for the resource Sometimes   can diverge from  . This mostly occurs when\n  resources are removed manually.   can keep displaying an\nAutomation Agent which has been shut down. If you want to remove deployments of MongoDB on  , use the\nresource specification to delete resources first so no dead Automation\nAgents remain. The best strategy is to create   and its resources in\ndifferent namespaces so that the following operations would work\ncorrectly: or If the   and resources sit in the same  mongodb \n , then operator would also be removed in the same operation.\nThis would mean that it could not clean the configurations, which\nwould have to be done in the  . In some cases, the   can stop receiving change events. As\nthis problem is hard to reproduce, the recommended workaround is to\ndelete the operator pod.   starts the new  \nautomatically and starts working correctly: Kubernetes Operator installation",
+            "code": [
+                {
+                    "lang": "sh",
+                    "value": "Failed to update Ops Manager automation config: Some agents failed to register"
+                },
+                {
+                    "lang": "sh",
+                    "value": "kubectl delete pods --all"
+                },
+                {
+                    "lang": "sh",
+                    "value": "kubectl delete namespace mongodb"
+                },
+                {
+                    "lang": "sh",
+                    "value": "kubectl get pods;\nkubectl delete pod mongodb-enterprise-operator-<podId>`"
+                }
+            ],
+            "preview": "When deleting a resource that has backup configured, you must disable backup first.",
+            "tags": null,
+            "facets": null
+        },
+        {
+            "slug": "tutorial/edit-deployment",
+            "title": "Edit a Deployment's Configuration",
+            "headings": [
+                "Considerations",
+                "All Changes are Clusterwide",
+                "Kubernetes Operator Overrides Some Ops Manager Settings",
+                "Changes not available in Kubernetes",
+                "Prerequisites",
+                "Procedure"
+            ],
+            "paragraphs": "You can modify a deployment's configuration and topology, including its\nMongoDB versions, storage engines, and numbers of hosts or shards. You\ncan make modifications at all levels of a deployment's topology from a\ntop-level  sharded cluster  or\n replica set  to lower levels, such as a replica set within a\nsharded cluster, or an individual process within a replica set. You can\nalso modify  standalone  processes. Changes cannot be made to individual members of a replica\nset or sharded cluster, only to the whole set or cluster. Some settings that you configure using   cannot be\noverridden in the  . If you change one of these settings,\nthe   reverts the settings each time you apply the\nresource specification. Settings that the   does not\nmanage are accepted. The following list of settings are exclusive to  . This list may\nchange at a later date. These settings can be found on the  Automation Configuration  page. processes.args2_6.net.port processes.args2_6.replication.replSetName processes.args2_6.storage.dbPath processes.args2_6.systemLog.path processes.authSchemaVersion processes.cluster  (mongos processes) processes.featureCompatibilityVersion processes.hostname processes.name processes.version replicaSets._id replicaSets.members._id replicaSets.members.host replicaSets.members replicaSets.version sharding.clusterRole  (config server) sharding.configServerReplica sharding.name sharding.shards._id sharding.shards.rs  creates a replica set of 3 members. You changed  storage.wiredTiger.engineConfig.cacheSizeGB \nto  40 . You then scale the replica set to 5 members. The  storage.wiredTiger.engineConfig.cacheSizeGB  on the\nnew members should be  40 . If a setting is not available for a MongoDB Kubernetes resource, then\nthe change must be made in the  . To update a MongoDB Kubernetes object, you need to meet the\nprerequisites for, and complete the procedures on, the\n Install Kubernetes Operator \npage. Edit the   resource specification file. Modify or add any settings you need added or changed. Save your specification file. Invoke the following   command to update your resource.",
+            "code": [
+                {
+                    "lang": "sh",
+                    "value": "kubectl apply -f <standalone-conf>.yaml"
+                }
+            ],
+            "preview": "You can modify a deployment's configuration and topology, including its\nMongoDB versions, storage engines, and numbers of hosts or shards. You\ncan make modifications at all levels of a deployment's topology from a\ntop-level sharded cluster or\nreplica set to lower levels, such as a replica set within a\nsharded cluster, or an individual process within a replica set. You can\nalso modify standalone processes.",
+            "tags": null,
+            "facets": null
+        },
+        {
+            "slug": "tutorial/deploy-replica-set",
+            "title": "Deploy a Replica Set",
+            "headings": [
+                "Prerequisites",
+                "Considerations",
+                "Unique Names for Replica Set",
+                "Procedure",
+                "Copy the following example replica set  .",
+                "Open your preferred text editor and paste the  specification into a new text file.",
+                "Configure the settings highlighted in the above example as follows.",
+                "Add any additional accepted settings for a replica set deployment.",
+                "Save this file with a .yaml file extension.",
+                "Start your replica set deployment.",
+                "Track the status of your replica set deployment."
+            ],
+            "paragraphs": "A  replica set  is a group of MongoDB deployments that maintain\nthe same data set. Replica sets provide redundancy and high\navailability and are the basis for all production deployments. To learn more about replica sets, see the  Replication\nIntroduction  in the MongoDB manual. Use this procedure to deploy a new replica set managed by  . After\ndeployment, use   to manage the replica set, including such\noperations as adding, removing, and reconfiguring members. To deploy a standalone using a Kubernetes object, you need to meet\nthe prerequisites for, and complete the procedures on, the\n Install Kubernetes Operator \npage. You can use   to deploy MongoDB instances with\n  version 4.0 or later. Use a unique name for the replica set. Replica set, sharded cluster, and shard names within the same\nproject must be unique. Failure to have unique names for the\ndeployments will result in broken backup snapshots. To troubleshoot your replica set, see: This is a   file that you can modify to meet your desired\nconfiguration. The highlighted lines should be changed for your\nreplica set configuration. Change the highlighted settings to match your desired\n replica set  deployment. Key Type Description Example metadata.name string Label for this    replica set   . metadata.name  documentation on  names . myproject metadata.namespace string Scope of object names.     where this\n  and other   are created. Using two different namespaces allows you to delete your\nstandalone or all of the resources in the namespace without\naffecting your  . metadata.namespace  documentation on  mongodb spec.project string Name of the   with the   connection configuration. This value  must  match the value you provided for\n metadata.name  in your  \n project ConfigMap . If this   is in a different   than the\n project ConfigMap , you should\nset this value to the namespace  and  name of the\nConfigMap in this format:\n <metadata.namespace>/<metadata.name> The   tracks any changes to the ConfigMap and\nreconciles the state of the  . <myconfigmap>  or\n <namespace>/<myconfigmap> spec.credentials string Name of the     you\n created  as    \nauthentication credentials for the   to\ncommunicate with  . This value  must  match the value you provided for\n namespace  and  name  for your    \n Secret . If this   is in a different   than the\nSecret, you should set this value to the namespace  and \nname of the Secret in this format:\n <namespace>/<name> The   tracks any changes to the Secret and\nreconciles the state of the  . <mycredentials>  or\n <namespace>/<mycredentials> spec.version string Version of MongoDB that this  replica set  should run. The format should be  X.Y.Z  for the Community edition and\n X.Y.Z-ent  for the Enterprise edition. To learn more about MongoDB versioning, see\n release-version-numbers  in the MongoDB Manual. 3.6.7 spec.members integer Number of members of the  replica set . 3 spec.persistent string Optional. Flag indicating if this   should use   for\nstorage. Persistent volumes are not deleted when the\n  is stopped or restarted. If this value is  true , then\n spec.podSpec.persistence.single  is set to its\ndefault value of  16G . To change your   configuration, configure the\nfollowing collections to meet your deployment requirements: If you want one   for each  , configure the\n spec.podSpec.persistence.single  collection. If you want separate   for data, journals, and\nlogs for each  , configure the following\ncollections: spec.podSpec.persistence.multiple.data spec.podSpec.persistence.multiple.journal spec.podSpec.persistence.multiple.logs Your containers must have permissions to write to your  .\nThe   sets  fsGroup = 2000  in\n securityContext \nThis makes  \n try to fix write permissions \nfor the  . If redeploying the deployment item does not fix\nissues with your  , contact MongoDB support. If you do not use  , the  Disk Usage  and\n Disk IOPS  charts cannot be displayed in either the\n Processes  tab on the  Deployment  page or in\nthe  Metrics  page when\n reviewing the data  for this\ndeployment. true You can also add any of the following optional settings to the\n  specification file for a  replica set  deployment: spec.logLevel spec.podSpec.cpu spec.podSpec.memory spec.podSpec.persistence.single spec.podSpec.persistence.multiple.data spec.podSpec.persistence.multiple.journal spec.podSpec.persistence.multiple.logs spec.podSpec.podAffinity spec.podSpec.podAntiAffinityTopologyKey spec.podSpec.nodeAffinity Invoke the following   command to create your\n replica set : To check the status of your  , invoke the following\ncommand: The  -w  flag means \"watch\". The output refreshes immediately if\nsomething changes until the status phase achieves the  Running \nstate. If the deployment fails, see  Troubleshooting the  . Find a Specific Pod Review Logs from Specific Pod",
+            "code": [
+                {
+                    "lang": "yaml",
+                    "value": "---\napiVersion: mongodb.com/v1\nkind: MongoDbReplicaSet\nmetadata:\n  name: <myreplicaset>\n  namespace: <metadata.namespace> # Should match metadata.namespace in\n                                  # your configmap file.\nspec:\n  members: 3\n  version: 3.6.7\n  project: <myconfigmap> # Should match metadata.name in your\n                         # configmap file.\n  credentials: <mycredentials>\n  persistent: true\n...\n"
+                },
+                {
+                    "lang": "sh",
+                    "value": "kubectl apply -f <replica set-conf>.yaml"
+                },
+                {
+                    "lang": "sh",
+                    "value": "kubectl get mrs <rs-name> -n <namespace> -o yaml -w"
+                }
+            ],
+            "preview": "A replica set is a group of MongoDB deployments that maintain\nthe same data set. Replica sets provide redundancy and high\navailability and are the basis for all production deployments.",
+            "tags": null,
+            "facets": null
+        },
+        {
+            "slug": "reference/troubleshooting",
+            "title": "Troubleshooting the ",
+            "headings": [
+                "Get Status of MongoDB Resource",
+                "Review the Logs",
+                "Review Logs from the ",
+                "Find a Specific Pod",
+                "Review Logs from Specific Pod",
+                "View  Specifications",
+                "View All Replica Set  Specifications",
+                "View All Sharded Cluster  Specifications",
+                "View All Standalone  Specifications",
+                "Remove a ",
+                "Remove the ",
+                "Remove the ",
+                "Remove the "
+            ],
+            "paragraphs": "To find the status of a MongoDB Resource (replica set, sharded cluster, or standalone), invoke this command: The command's response describes the status of the resource using the\nfollowing key-value pairs: Key Value message Error message explaining why the resource is in a failed state. phase Status Meaning Pending Resource is transitioning between two states. Running Resource has completed reconciliation successfully. Failed Resource had failures. lastTransition  when the last reconciliation happened. link Deployment   in  . Resource specific fields For descriptions of these fields, see\n MongoDB   Object Specification . If you want to see what the status of a replica set named\n my-replica-set  in the  developer  namespace, run: If  my-replica-set  is running, you should see: If  my-replica-set  is not running, you should see: To review the   logs, invoke this command: You could check the  Ops Manager Logs  as\nwell to see if any issues were reported to  . To find which pods are available, invoke this command first: If you want to narrow your review to a specific  , you can\ninvoke this command: If your  replica set  is labeled  myrs , the   log\ncommand is invoked as: This returns the  Automation Agent Log  for this\nreplica set. To view all replica set   specifications in the provided\n : To view all sharded cluster   specifications in the\nprovided  : To view all standalone   specifications in the provided\n : To read details about the  dublin  standalone resource, invoke\nthis command: This returns the following response: To remove any instance that   deployed, you must use  . You can refer to the   by either their long or short names: You can only use the   to remove  -deployed\ninstances. If you use   to remove the instance,   throws an\nerror. To remove a standalone MongoDB instance you created using  : To remove all MongoDB instances you created using  : MongoDB Deployment Item Resource Long Name Resource Short Name MongoDB Replica Set mongodbreplicaset mrs MongoDB Sharded Cluster mongodbshardedcluster msc MongoDB Standalone Deployment mongodbstandalone mst To remove the  : Remove all Kubernetes resources : Remove the  : To remove the  : Remove all Kubernetes resources : Remove the  : To remove the  : Remove all Kubernetes resources : Remove the  :",
+            "code": [
+                {
+                    "lang": "sh",
+                    "value": "kubectl get <resourcetype> <resourcename>  -n <namespace> -o yaml -w"
+                },
+                {
+                    "lang": "sh",
+                    "value": "kubectl get mrs my-replica-set -n developer -o yaml -w"
+                },
+                {
+                    "lang": "yaml",
+                    "value": "status:\n    lastTransition: \"2019-01-30T10:51:40Z\"\n    link: http://ec2-3-84-128-187.compute-1.amazonaws.com:9080/v2/5c503a8a1b90141cbdc60a77\n    members: 1\n    phase: Running\n    version: 4.0.0"
+                },
+                {
+                    "lang": "yaml",
+                    "value": "status:\n  lastTransition: 2019-02-01T13:00:24Z\n  link: http://ec2-34-204-36-217.compute-1.amazonaws.com:9080/v2/5c51c040d6853d1f50a51678\n  members: 1\n  message: 'Failed to create/update replica set in Ops Manager: Status: 400 (Bad Request),\n    Detail: Something went wrong validating your Automation Config. Sorry!'\n  phase: Failed\n  version: 4.0.0"
+                },
+                {
+                    "lang": "sh",
+                    "value": "kubectl logs -f deployment/mongodb-enterprise-operator -n <metadata.namespace>"
+                },
+                {
+                    "lang": "sh",
+                    "value": "kubectl get pods -n <metadata.namespace>"
+                },
+                {
+                    "lang": "sh",
+                    "value": "kubectl logs <podName> -n <metadata.namespace>"
+                },
+                {
+                    "lang": "sh",
+                    "value": "kubectl logs myrs-0 -n <metadata.namespace>"
+                },
+                {
+                    "lang": "shell",
+                    "value": "kubectl get mrs -n <namespace>"
+                },
+                {
+                    "lang": "shell",
+                    "value": "kubectl get msc -n <namespace>"
+                },
+                {
+                    "lang": "shell",
+                    "value": "kubectl get mst -n <namespace>"
+                },
+                {
+                    "lang": "shell",
+                    "value": "kubectl get mst dublin -n <namespace> -o yaml"
+                },
+                {
+                    "lang": "yaml",
+                    "value": "apiVersion: mongodb.com/v1\nkind: MongoDbStandalone\nmetadata:\n  annotations:\n    kubectl.kubernetes.io/last-applied-configuration: |\n      {\"apiVersion\":\"mongodb.com/v1\",\"kind\":\"MongoDbStandalone\",\"metadata\":{\"annotations\":{},\"name\":\"dublin\",\"namespace\":\"mongodb\"},\"spec\":{\"credentials\":\"alis-credentials\",\"persistent\":false,\"podSpec\":{\"memory\":\"1G\"},\"project\":\"my-om-config\",\"version\":\"4.0.0-ent\"}}\n  clusterName: \"\"\n  creationTimestamp: 2018-09-12T17:15:32Z\n  generation: 1\n  name: dublin\n  namespace: mongodb\n  resourceVersion: \"337269\"\n  selfLink: /apis/mongodb.com/v1/namespaces/mongodb/mongodbstandalones/dublin\n  uid: 7442095b-b6af-11e8-87df-0800271b001d\nspec:\n  credentials: my-credentials\n  persistent: false\n  podSpec:\n    memory: 1G\n  project: my-om-config\n  version: 4.0.0-ent"
+                },
+                {
+                    "lang": "shell",
+                    "value": "kubectl delete mongodbstandalone <name> -n <metadata.namespace>"
+                },
+                {
+                    "lang": "shell",
+                    "value": "kubectl delete [mrs|msc|mst] --all -n <metadata.namespace>"
+                },
+                {
+                    "lang": "shell",
+                    "value": "kubectl delete [mrs|msc|mst] --all -n <metadata.namespace>"
+                },
+                {
+                    "lang": "shell",
+                    "value": "kubectl delete deployment mongodb-enterprise-operator -n <metadata.namespace>"
+                },
+                {
+                    "lang": "shell",
+                    "value": "kubectl delete [mrs|msc|mst] --all -n <metadata.namespace>"
+                },
+                {
+                    "lang": "shell",
+                    "value": "kubectl delete namespace <metadata.namespace>"
+                },
+                {
+                    "lang": "shell",
+                    "value": "kubectl delete [mrs|msc|mst] --all -n <metadata.namespace>"
+                },
+                {
+                    "lang": "shell",
+                    "value": "kubectl delete crd --all"
+                }
+            ],
+            "preview": "To find the status of a MongoDB Resource (replica set, sharded cluster, or standalone), invoke this command:",
+            "tags": null,
+            "facets": null
+        },
+        {
+            "slug": "tutorial/deploy-standalone",
+            "title": "Deploy a Standalone MongoDB Instance",
+            "headings": [
+                "Prerequisites",
+                "Procedure",
+                "Copy the following example standalone  .",
+                "Open your preferred text editor and paste the  specification into a new text file.",
+                "Configure the settings highlighted in the preceeding step as follows.",
+                "Add any additional accepted settings for a Standalone deployment.",
+                "Save this file with a .yaml file extension.",
+                "Start your Standalone deployment.",
+                "Track the status of your standalone deployment."
+            ],
+            "paragraphs": "You can deploy a  standalone  MongoDB instance for   to\nmanage. Use standalone instances for testing and development.\n Do not  use these deployments for production systems as they lack\nreplication and high availability. For all production deployments\nuse replica sets. To learn about replica sets, see\n Deploy a Replica Set . To deploy a standalone using a Kubernetes object, you need to meet the\nprerequisites for, and complete the procedures on, the\n Install Kubernetes Operator \npage. You can use   to deploy MongoDB instances with\n  version 4.0 or later. To troubleshoot your sharded cluster, see: This is a   file that you can modify to meet your desired\nconfiguration. The highlighted lines should be changed for your\nstandalone configuration. You will need to change the highlighted settings to match your\ndesired Standalone deployment. Key Type Description Example metadata.name string Label for this   standalone  . metadata.name  documentation on  names . my-project metadata.namespace string Scope of object names.     where this\n  and other   are created. Using two different namespaces allows you to delete your\nstandalone or all of the resources in the namespace without\naffecting your  . metadata.namespace  documentation on  mongodb spec.project string Name of the   with the   connection configuration. This value  must  match the value you provided for\n metadata.name  in your  \n project ConfigMap . If this   is in a different   than the\n project ConfigMap , you should\nset this value to the namespace  and  name of the\nConfigMap in this format:\n <namespace>/<myconfigmap> The   tracks any changes to the ConfigMap and\nreconciles the state of the  . <myproject>  or\n <namespace>/<myconfigmap> spec.credentials string Name of the     you\n created  as    \nauthentication credentials for the   to\ncommunicate with  . This value  must  match the value you provided for\n namespace  and  name  for your    \n Secret . If this   is in a different   than the\nSecret, you should set this value to the namespace  and \nname of the Secret in this format:\n <namespace>/<name> The   tracks any changes to the Secret and\nreconciles the state of the  . <mycredentials>  or\n <namespace>/<mycredentials> spec.version string Version of MongoDB that is installed on this\nstandalone. The format should be  X.Y.Z  for the Community edition and\n X.Y.Z-ent  for the Enterprise edition. To learn more about MongoDB versioning, see\n release-version-numbers  in the MongoDB Manual. 3.6.7 spec.persistent string Optional. If this value is  true , then\n spec.podSpec.persistence.single  is set to its\ndefault value of  16G . To change your   configuration, configure the\nfollowing collections to meet your deployment requirements: If you want one   for each  , configure the\n spec.podSpec.persistence.single  collection. If you want separate   for data, journals, and\nlogs for each  , configure the following\ncollections: spec.podSpec.persistence.multiple.data spec.podSpec.persistence.multiple.journal spec.podSpec.persistence.multiple.logs Your containers must have permissions to write to your  .\nThe   sets  fsGroup = 2000  in\n securityContext \nThis makes  \n try to fix write permissions \nfor the  . If redeploying the deployment item does not fix\nissues with your  , contact MongoDB support. If you do not use  , the  Disk Usage  and\n Disk IOPS  charts cannot be displayed in either the\n Processes  tab on the  Deployment  page or in\nthe  Metrics  page when\n reviewing the data  for this\ndeployment. true You can also add any of the following optional settings to the\n  specification file for a Standalone deployment: spec.logLevel spec.podSpec.cpu spec.podSpec.memory spec.podSpec.persistence.single spec.podSpec.persistence.multiple.data spec.podSpec.persistence.multiple.journal spec.podSpec.persistence.multiple.logs spec.podSpec.podAffinity spec.podSpec.nodeAffinity Invoke the following   command to create your standalone: To check the status of your  , invoke the following\ncommand: The  -w  flag means \"watch\". The output refreshes immediately if\nsomething changes until the status phase achieves the  Running \nstate. If the deployment fails, see  Troubleshooting the  . Find a Specific Pod Review Logs from Specific Pod",
+            "code": [
+                {
+                    "lang": "yaml",
+                    "value": "---\napiVersion: mongodb.com/v1\nkind: MongoDbStandalone\nmetadata:\n  name: <mystandalone>\n  namespace: <metadata.namespace> # Should match metadata.namespace in\n                                  # your configmap file.\nspec:\n  version: 3.6.7\n  project: <myconfigmap> # Should match metadata.name in your\n                         # configmap file.\n  credentials: <mycredentials>\n  persistent: true\n...\n"
+                },
+                {
+                    "lang": "sh",
+                    "value": "kubectl apply -f <standalone-conf>.yaml"
+                },
+                {
+                    "lang": "sh",
+                    "value": "kubectl get mst <standlone-name> -n <namespace> -o yaml -w"
+                }
+            ],
+            "preview": "You can deploy a standalone MongoDB instance for  to\nmanage. Use standalone instances for testing and development.\nDo not use these deployments for production systems as they lack\nreplication and high availability. For all production deployments\nuse replica sets. To learn about replica sets, see\nDeploy a Replica Set.",
+            "tags": null,
+            "facets": null
+        },
+        {
+            "slug": "reference/k8s-operator-specification",
+            "title": "MongoDB  Object Specification",
+            "headings": [
+                "Common Resource Settings",
+                "Required",
+                "Optional",
+                "Deployment-Specific Resource Settings",
+                "Example"
+            ],
+            "paragraphs": "The  MongoDB Enterprise Kubernetes Operator \ncreates     from specification files that you\nwrote. MongoDB resources are created in Kubernetes as  custom resources .\nAfter you create or update a MongoDB resource specification, you direct\n  to apply this specification to your   environment.\n  creates the defined  , services and\nother Kubernetes resources. After the Operator finishes creating those\nobjects, it updates Ops Manager deployment configuration to reflect\nchanges. Each   uses an   specification in\n YAML (Yet Another Markup Language)  to define the characteristics and settings of the MongoDB object: standalone,  replica set ,\nand  sharded cluster . You can use   to deploy MongoDB instances with\n  version 4.0 or later. Deployment Type StatefulSets Size of StatefulSet Standalone 1 1 per member Replica Set 1 1 per member Sharded Cluster 1 1 per shard or config server member Every resource type must use the following settings: Every resource type may use the following settings: Other settings you can and must use in a   specification depend upon which MongoDB deployment item you want to create. The following example shows a resource specification for a\nstandlone deployment with every setting provided: The following example shows a resource specification for a\n replica set  with every setting provided: The following example shows a resource specification for a\n sharded cluster  with every setting provided:",
+            "code": [
+                {
+                    "lang": "yaml",
+                    "value": "apiVersion: mongodb.com/v1\nkind: MongoDbStandalone\nmetadata:\n  name: my-standalone\n  namespace: mongodb\nspec:\n  version: 4.0.0\n  service: my-service\n  project: my-project\n  credentials: my-credentials\n  persistent: true\n  podSpec:\n    cpu: '0.25'\n    memory: 512M\n    persistence:\n      single:\n        storage: 12G\n        storageClass: standard\n        labelSelector:\n          matchExpressions:\n          - {key: environment, operator: In, values: [dev]}\n    podAffinity:\n      requiredDuringSchedulingIgnoredDuringExecution:\n      - labelSelector:\n          matchExpressions:\n          - key: security\n            operator: In\n            values:\n            - S1\n        topologyKey: failure-domain.beta.kubernetes.io/zone\n    nodeAffinity:\n      requiredDuringSchedulingIgnoredDuringExecution:\n        nodeSelectorTerms:\n        - matchExpressions:\n          - key: kubernetes.io/e2e-az-name\n            operator: In\n            values:\n            - e2e-az1\n            - e2e-az2\n"
+                },
+                {
+                    "lang": "yaml",
+                    "value": "---\napiVersion: mongodb.com/v1\nkind: MongoDbReplicaSet\nmetadata:\n  name: my-replica-set\n  namespace: mongodb\nspec:\n  members: 3\n  version: 4.0.0\n  service: my-service\n  project: my-project\n  credentials: my-credentials\n  persistent: true\n  podSpec:\n    cpu: '0.25'\n    memory: 512M\n    persistence:\n      multiple:\n        data:\n          storage: 10Gi\n        journal:\n          storage: 1Gi\n          labelSelector:\n            matchLabels:\n              app: \"my-app\"\n        logs:\n          storage: 500M\n          storageClass: standard\n    podAntiAffinityTopologyKey: nodeId\n    podAffinity:\n      requiredDuringSchedulingIgnoredDuringExecution:\n      - labelSelector:\n          matchExpressions:\n          - key: security\n            operator: In\n            values:\n            - S1\n        topologyKey: failure-domain.beta.kubernetes.io/zone\n    nodeAffinity:\n      requiredDuringSchedulingIgnoredDuringExecution:\n        nodeSelectorTerms:\n        - matchExpressions:\n          - key: kubernetes.io/e2e-az-name\n            operator: In\n            values:\n            - e2e-az1\n            - e2e-az2\n"
+                },
+                {
+                    "lang": "yaml",
+                    "value": "---\napiVersion: mongodb.com/v1\nkind: MongoDbShardedCluster\nmetadata:\n  name: my-sharded-cluster\n  namespace: mongodb\nspec:\n  shardCount: 2\n  mongodsPerShardCount: 3\n  mongosCount: 2\n  configServerCount: 3\n  version: 4.0.0\n  service: my-service\n\n  ## Please Note: The default Kubernetes cluster name is\n  ## `cluster.local`.\n  ## If your cluster has been configured with another name, you can\n  ## specify it with the `clusterName` attribute.\n\n  project: my-project\n  credentials: my-credentials\n\n  persistent: true\n  configSrvPodSpec:\n    cpu: '0.5'\n    memory: 512M\n\n    # if \"persistence\" element is omitted then Operator uses the\n    # default size (5G) for mounting single Persistent Volume\n\n    podAntiAffinityTopologyKey: kubernetes.io/hostname\n    podAffinity:\n      requiredDuringSchedulingIgnoredDuringExecution:\n      - labelSelector:\n          matchExpressions:\n          - key: security\n            operator: In\n            values:\n            - S1\n        topologyKey: failure-domain.beta.kubernetes.io/zone\n  mongosPodSpec:\n    cpu: '0.8'\n    memory: 1G\n    podAntiAffinityTopologyKey: rackId\n    nodeAffinity:\n      preferredDuringSchedulingIgnoredDuringExecution:\n      - weight: 1\n        preference:\n          matchExpressions:\n          - key: another-node-label-key\n            operator: In\n            values:\n            - another-node-label-value\n  shardPodSpec:\n    cpu: '0.6'\n    memory: 3G\n    persistence:\n      multiple:\n        # if the child of \"multiple\" is omitted then the default size will be used.\n        # 16G for \"data\", 1G for \"journal\", 3Gb for \"logs\"\n        data:\n          storage: 20G\n        logs:\n          storage: 4G\n          storageClass: standard\n    podAntiAffinityTopologyKey: kubernetes.io/hostname\n"
+                }
+            ],
+            "preview": "The MongoDB Enterprise Kubernetes Operator\ncreates   from specification files that you\nwrote.",
+            "tags": null,
+            "facets": null
+        },
+        {
+            "slug": "tutorial/deploy-sharded-cluster",
+            "title": "Deploy a Sharded Cluster",
+            "headings": [
+                "Prerequisites",
+                "Considerations",
+                "Unique Names for Sharded Clusters",
+                "Do Not Deploy Monitoring Agents inside and outside ",
+                "Procedure",
+                "Copy the following example sharded cluster   specification.",
+                "Open your preferred text editor and paste the  specification into a new text file.",
+                "Configure the settings highlighted in the preceeding step as follows.",
+                "Add any additional accepted settings for a sharded cluster deployment.",
+                "Save this file with a .yaml file extension.",
+                "Start your sharded cluster deployment.",
+                "Track the status of your sharded cluster deployment."
+            ],
+            "paragraphs": "Sharded clusters  provide horizontal scaling\nfor large data sets and enable high throughput operations by\ndistributing the data set across a group of servers. To learn more about sharding, see\n Sharding Introduction  in the\nMongoDB manual. Use this procedure to deploy a new sharded cluster that   manages.\nLater, you can use   to add shards and perform other maintenance\noperations on the cluster. You can use   to deploy MongoDB instances with\n  version 4.0 or later. To deploy a standalone using a  , you need to meet\nthe prerequisites for, and complete the procedures on, the\n Install Kubernetes Operator \npage. Use unique names for the new cluster and its shards. Replica set, sharded cluster, and shard names within the same\nproject must be unique. Failure to have unique names for the\ndeployments will result in broken backup snapshots. Do not mix MongoDB deployments outside   with ones insider  \nin the same Project. Due to   network translation, a Monitoring Agent outside  \ncannot monitor MongoDB instnaces inside  . For this reason, k8s\nand non-k8s deployments in the same Project is not supported. Use\nseparate projects. To troubleshoot your sharded cluster, see: This is a   file that you can modify to meet your desired\nconfiguration. The highlighted lines should be changed for your\nsharded cluster configuration. You will need to change the highlighted settings to match your\ndesired  sharded cluster  deployment. Key Type Description Example metadata.name string Label for this    sharded cluster   . metadata.name  documentation on  names . myproject metadata.namespace string Scope of object names.     where this\n  and other   are created. Using two different namespaces allows you to delete your\n sharded cluster  or all of the resources in the\nnamespace without affecting your  . metadata.namespace  documentation on  mongodb spec.shardCount integer Number of shards to deploy. 2 spec.mongodsPerShardCount integer Number of shard members per shard. 3 spec.mongosCount integer Number of shard routers to deploy. 2 spec.configServerCount integer Number of members of the config server replica set. 3 spec.version string Version of MongoDB that this  sharded cluster  should run. The format should be  X.Y.Z  for the Community edition and\n X.Y.Z-ent  for the Enterprise edition. To learn more about MongoDB versioning, see\n release-version-numbers  in the MongoDB Manual. 3.6.7 spec.project string Name of the   with the   connection configuration. This value  must  match the value you provided for\n metadata.name  in your  \n project ConfigMap . If this   is in a different   than the\n project ConfigMap , you should\nset this value to the namespace  and  name of the\nConfigMap in this format:\n <namespace>/<myconfigmap> The   tracks any changes to the ConfigMap and\nreconciles the state of the  . <myproject>  or\n <namespace>/<myconfigmap> spec.credentials string Name of the     you\n created  as    \nauthentication credentials for the   to\ncommunicate with  . This value  must  match the value you provided for\n namespace  and  name  for your    \n Secret . If this   is in a different   than the\nSecret, you should set this value to the namespace  and \nname of the Secret in this format:\n <namespace>/<name> The   tracks any changes to the Secret and\nreconciles the state of the  . <mycredentials>  or\n <namespace>/<mycredentials> spec.persistent string Optional. Flag indicating if this   should use   for\nstorage. Persistent volumes are not deleted when the\n  is stopped or restarted. If this value is  true , then the following values are set\nto their default value of  16G : To change your   configuration, configure the\nfollowing collections to meet your deployment requirements: spec.shardPodSpec.persistence.single spec.configSrvPodSpec.persistence.single If you want one   for each  , configure the\n spec.shardPodSpec.persistence.single  and\n spec.configSrvPodSpec.persistence.single \ncollections. If you want separate   for data, journals, and\nlogs for each  , configure the following\ncollections: In the  spec.configSrvPodSpec.persistence.multiple \ncollection:\n-  data \n-  journal \n-  logs In the  spec.configSrvPodSpec.persistence.multiple  collection:\n-  data \n-  journal \n-  logs Your containers must have permissions to write to your  .\nThe   sets  fsGroup = 2000  in\n securityContext \nThis makes  \n try to fix write permissions \nfor the  . If redeploying the deployment item does not fix\nissues with your  , contact MongoDB support. If you do not use  , the  Disk Usage  and\n Disk IOPS  charts cannot be displayed in either the\n Processes  tab on the  Deployment  page or in\nthe  Metrics  page when\n reviewing the data  for this\ndeployment. true You can also add any of the following optional settings to the\n  specification file for a  sharded cluster \ndeployment: For config server For shard routers For shard members spec.logLevel spec.configSrvPodSpec.cpu spec.configSrvPodSpec.memory spec.configSrvPodSpec.persistence.single spec.configSrvPodSpec.persistence.multiple.data spec.configSrvPodSpec.persistence.multiple.journal spec.configSrvPodSpec.persistence.multiple.logs spec.configSrvPodSpec.nodeAffinity spec.configSrvPodSpec.podAffinity spec.configSrvPodSpec.podAntiAffinityTopologyKey spec.mongosPodSpec.cpu spec.mongosPodSpec.memory spec.mongosPodSpec.nodeAffinity spec.mongosPodSpec.podAffinity spec.mongosPodSpec.podAntiAffinityTopologyKey spec.shardPodSpec.cpu spec.shardPodSpec.memory spec.shardPodSpec.nodeAffinity spec.shardPodSpec.persistence.single spec.shardPodSpec.persistence.multiple.data spec.shardPodSpec.persistence.multiple.journal spec.shardPodSpec.persistence.multiple.logs spec.shardPodSpec.podAffinity spec.shardPodSpec.podAntiAffinityTopologyKey Invoke the following   command to create your\n sharded cluster : Check the log  after running this\ncommand. If the creation was successful, you should see a message\nsimilar to the following: To check the status of your  , invoke the following\ncommand: The  -w  flag means \"watch\". The output refreshes immediately if\nsomething changes until the status phase achieves the  Running \nstate. If the deployment fails, see  Troubleshooting the  . Find a Specific Pod Review Logs from Specific Pod",
+            "code": [
+                {
+                    "lang": "yaml",
+                    "value": "---\napiVersion: mongodb.com/v1\nkind: MongoDbShardedCluster\nmetadata:\n  name: <myshardedcluster>\n  namespace: <metadata.namespace> # Should match metadata.namespace in\n                                  # your configmap file.\nspec:\n  shardCount: 2\n  mongodsPerShardCount: 3\n  mongosCount: 2\n  configServerCount: 3\n  version: 3.6.7\n  project: <myconfigmap> # Should match metadata.name in your\n                         # configmap file.\n  credentials: <mycredentials>\n  persistent: true\n...\n"
+                },
+                {
+                    "lang": "sh",
+                    "value": "kubectl apply -f <sharded-cluster-conf>.yaml"
+                },
+                {
+                    "lang": "sh",
+                    "value": "2018-06-26T10:30:30.346Z INFO operator/shardedclusterkube.go:52 Created! {\"sharded cluster\": \"my-sharded-cluster\"}"
+                },
+                {
+                    "lang": "sh",
+                    "value": "kubectl get msc <sc-name> -n <namespace> -o yaml -w"
+                }
+            ],
+            "preview": "Sharded clusters provide horizontal scaling\nfor large data sets and enable high throughput operations by\ndistributing the data set across a group of servers.",
+            "tags": null,
+            "facets": null
+        },
+        {
+            "slug": "tutorial/install-k8s-operator",
+            "title": "Install ",
+            "headings": [
+                "Prerequisites",
+                " Prerequisites",
+                " Prerequisites",
+                "Considerations",
+                " Compatibility",
+                "Only One Operator per Namespace",
+                "Install the ",
+                "Create your  Project and  ",
+                "Create Credentials",
+                "Upgrade the ",
+                "Verify the Installation"
+            ],
+            "paragraphs": " allows you to deploy MongoDB deployment items with  \nand  . This Operator uses   and     methods to\ndeploy standalone, replica set, and sharded cluster deployments that\n  manages. You can use   to deploy MongoDB instances with\n  version 4.0 or later. This tutorial presumes some knowledge of  , but does link to\nrelevant   documentation where possible. If you are unfamiliar\nwith  , please review that documentation first. To install the  , you must: Have or generate a  Public API Key . Grant the user with this new Public API Key the\n Project Owner  role. Add the   or   block of any hosts that serve the\n  to the\n API Whitelist . (Optional).  Have or create an  \n Organization . Unlike earlier   versions, use the Operator to\ncreate your   project. The Operator adds additional metadata\nto Projects that it creates to help manage the deployments. Have a   solution available to use. If you need a   solution, see the  \n documentation on picking the right solution . Clone the  MongoDB Enterprise Kubernetes Operator repository . You can use  Helm  to install the\n . To learn how to install Helm, see its\n documentation on GitHub Create a   for your   deployment. By default, The\n  uses the  mongodb  namespace. To simplify your\ninstallation, consider creating a namespace labeled  mongodb \nusing the following  kubectl  command: If you do not want to use the  mongodb  namespace, you can label\nyour namespace anything you like:  is compatible with   v1.11 or later. The   can only exist in one  . Your deployment can have: Do not try to deploy more than one Kubernetes Operator in the same\nnamespace as another Operator. Multiple Operators cannot coordinate\nwith one another within the same namespace. One cluster-wide   or Multiple Kubernetes Operators in their own namespaces To troubleshoot your  , see\n Review Logs from the  . The following examples assume that you created a  \nusing the default   namespace of  mongodb .\nIf you specified a different label for your namespace when\nyou  created it , change all\nvalues for  metadata.namespace  to that namespace. To change the label for the namespace for the following\ndeployment to  production , edit all values for\n metadata.namespace  in  mongodb-enterprise.yaml : Change to the directory in which you cloned the repository. Install the   for MongoDB deployments using the\nfollowing  kubectl  command: If you use  OpenShift  as\nyour   orchestrator, you need to allow OpenShift to\nmanage the Security Context for the  . Change the  MANAGED_SECURITY_CONTEXT  value as described\nin the next step. You can edit the Operator   file to further customize\nyour Operator before installing it. Open your  mongodb-enterprise.yaml  in your preferred\ntext editor. You may need to add one or more of the following\noptions: Environment Variable When to Use OPERATOR_ENV Label for the Operator's deployment environment. The  env \nvalue affects default timeouts and the format and level of\nlogging. Accepted values are:   dev ,  prod . Default value is:  prod . You can set the following pair of values: If  OPERATOR_ENV  is Log Level is set to Log Format is set to dev debug text prod info json WATCH_NAMESPACE Namespace that the Operator watches for   changes.\nIf this   differs from the default, ensure that the\nOperator's ServiceAccount\n can access \nthat different namespace. *  means  all namespaces  and requires the\n ClusterRole \nassigned to the  mongodb-enterprise-operator  ServiceAccount\nwhich is the ServiceAccount used to run the  . Default value is:  <metadata.namespace> . You can set the following pair of values: If you need to watch more than one namespace, set the value\nof  WATCH_NAMESPACE  to  *  (all). This environment\nvariable can watch one namespace or all namespaces. MANAGED_SECURITY_CONTEXT If you use  OpenShift  as your\n  orchestrator, set this to  'true'  to allow OpenShift to\nmanage the Security Context for the  . Accepted values are:  'true' ,  'false' . Default value is:  'false' . You can set the following pair of values: POD_WAIT_SEC Time in seconds that the Operator waits for  \nto start when   are being created or updated before\nretrying. Default values depend upon  OPERATOR_ENV : You can set the following pair of values: If  OPERATOR_ENV  is POD_WAIT_SEC  is set to dev 3 prod 5 POD_WAIT_RETRIES Maximum number of retries that the Operator attempts when\nwaiting for   to start after   are\ncreated or updated. Default values depend upon  OPERATOR_ENV : You can set the following pair of values: If  OPERATOR_ENV  is POD_WAIT_RETRIES  is set to dev 60 prod 180 Install the   using the following\n kubectl  command: If you need to remove the Kubernetes Operator or the\n namespace , you first must\n remove MongoDB resources . If you have not already installed Helm, follow the\ninstructions on  GitHub \nto install it. To troubleshoot your  , see\n Review Logs from the  . Change to the directory in which you cloned the repository. Install the   using the following\n helm  command: You can customize your Chart before installing it by using\nthe  --set  option. For this Chart, you may need to add\none or more of the following options: --set  option When to Use namespace To use a different namespace, you need to specify that\n namespace . Default value is:  mongodb . operator.env Label for the Operator's deployment environment. The  env \nvalue affects default timeouts and the format and level of\nlogging. Accepted values are:   dev ,  prod . Default value is:  prod . If  operator.env  is Log Level is set to Log Format is set to dev debug text prod info json operator.watchNamespace Namespace that the Operator watches for   changes.\nIf this   differs from the default, ensure that the\nOperator's ServiceAccount\n can access \nthat different namespace. *  means  all namespaces  and requires the\n ClusterRole \nassigned to the  mongodb-enterprise-operator  ServiceAccount\nwhich is the ServiceAccount used to run the  . Default value is:  <metadata.namespace> . managedSecurityContext If you use  OpenShift  as your\n  orchestrator, set this to  true  to allow OpenShift to\nmanage the Security Context for the  . Accepted values are:  true ,  false . Default value is:  false . operator.podWaitSeconds Time in seconds that the Operator waits for  \nto start when   are being created or updated before\nretrying. Default values depend upon  operator.env : If  operator.env  is operator.podWaitSeconds  is set to dev 3 prod 5 operator.podSetWaitRetries Maximum number of retries that the Operator attempts when\nwaiting for   to start after   are\ncreated or updated. Default values depend upon  operator.env : If  operator.env  is operator.podSetWaitRetries  is set to dev 60 prod 180 If you need to remove the Kubernetes Operator or the\n namespace , you first must\n remove MongoDB resources . Before continuing, install Helm following the instructions on\n GitHub To install the   on a host not connected to the\nInternet, you have two options, you can download the\n  files from either: To troubleshoot your  , see\n Review Logs from the  . Connect to the Internet. Use  docker  to request the files. Disconnect from the Internet. Install the   with modified pull\npolicy values using the following  helm \ncommand: You can further customize your Chart before\ninstalling it by using the  --set  option. For\nthis Chart, you may need to add one or more of the\nfollowing options: --set  option When to Use namespace To use a different namespace, you need to specify that\n namespace . Default value is:  mongodb . operator.env Label for the Operator's deployment environment. The  env \nvalue affects default timeouts and the format and level of\nlogging. Accepted values are:   dev ,  prod . Default value is:  prod . If  operator.env  is Log Level is set to Log Format is set to dev debug text prod info json operator.watchNamespace Namespace that the Operator watches for   changes.\nIf this   differs from the default, ensure that the\nOperator's ServiceAccount\n can access \nthat different namespace. *  means  all namespaces  and requires the\n ClusterRole \nassigned to the  mongodb-enterprise-operator  ServiceAccount\nwhich is the ServiceAccount used to run the  . Default value is:  <metadata.namespace> . managedSecurityContext If you use  OpenShift  as your\n  orchestrator, set this to  true  to allow OpenShift to\nmanage the Security Context for the  . Accepted values are:  true ,  false . Default value is:  false . operator.podWaitSeconds Time in seconds that the Operator waits for  \nto start when   are being created or updated before\nretrying. Default values depend upon  operator.env : If  operator.env  is operator.podWaitSeconds  is set to dev 3 prod 5 operator.podSetWaitRetries Maximum number of retries that the Operator attempts when\nwaiting for   to start after   are\ncreated or updated. Default values depend upon  operator.env : If  operator.env  is operator.podSetWaitRetries  is set to dev 60 prod 180 If you need to remove the Kubernetes Operator or the\n namespace , you first must\n remove MongoDB resources . To troubleshoot your  , see\n Review Logs from the  . Use  docker  to request the files on a host\nconnected to the Internet. Save the Operator files to transferrable files. Copy these  .tar  files to the host running the\n   docker  daemon. Import the  .tar  files into  docker . Install the   with modified pull\npolicy values using the following  helm \ncommand: You can further customize your Chart before\ninstalling it by using the  --set  option. For\nthis Chart, you may need to add one or more of the\nfollowing options: --set  option When to Use namespace To use a different namespace, you need to specify that\n namespace . Default value is:  mongodb . operator.env Label for the Operator's deployment environment. The  env \nvalue affects default timeouts and the format and level of\nlogging. Accepted values are:   dev ,  prod . Default value is:  prod . If  operator.env  is Log Level is set to Log Format is set to dev debug text prod info json operator.watchNamespace Namespace that the Operator watches for   changes.\nIf this   differs from the default, ensure that the\nOperator's ServiceAccount\n can access \nthat different namespace. *  means  all namespaces  and requires the\n ClusterRole \nassigned to the  mongodb-enterprise-operator  ServiceAccount\nwhich is the ServiceAccount used to run the  . Default value is:  <metadata.namespace> . managedSecurityContext If you use  OpenShift  as your\n  orchestrator, set this to  true  to allow OpenShift to\nmanage the Security Context for the  . Accepted values are:  true ,  false . Default value is:  false . operator.podWaitSeconds Time in seconds that the Operator waits for  \nto start when   are being created or updated before\nretrying. Default values depend upon  operator.env : If  operator.env  is operator.podWaitSeconds  is set to dev 3 prod 5 operator.podSetWaitRetries Maximum number of retries that the Operator attempts when\nwaiting for   to start after   are\ncreated or updated. Default values depend upon  operator.env : If  operator.env  is operator.podSetWaitRetries  is set to dev 60 prod 180 If you need to remove the Kubernetes Operator or the\n namespace , you first must\n remove MongoDB resources . The   uses a     to link to your\n   Project . To create a\n  ConfigMap, you need to edit 4 lines of the\n example ConfigMap    file and apply\nthe ConfigMap: Copy the following  example ConfigMap . Open your preferred text editor and paste the example\n  into a new text file. Change the following four lines: Key Type Description Example metadata.name string Label for a    . metadata.name  documentation on  names .\nThis name must follow  RFC1123  naming\nconventions, using only lowercase alphanumeric\ncharacters, '-' or '.', and must start and end with an\nalphanumeric character. myconfigmap metadata.namespace string Scope of object names. Used to limit what can be managed to\na subset of all  . The default value is  mongodb . The  ,  , and  s\n must  be created in the same  . metadata.namespace  documentation on  mongodb data.projectName string Label for your  \n Project . If you need or want to use an existing Project, you can find\nthe  projectName  by clicking the  All Clusters \nlink at the top left of the screen, then either search by\nname in the  Search  box or scroll to find the\nname in the list. Each card in this list represents the\ncombination of one  Organization  and  Project . The   creates the   Project if it does\nnot exist. It is  strongly recommended  to use the\nOperator to create a new Project for   to manage. The\nOperator adds additional internal information to Projects\nthat it creates. Development data.orgId string 24 character hex string that uniquely identifies your\nMongoDB  Organization .\nYou can find the  orgId  in your    : Click the  Context  menu. Select your Organization. Copy the value from the  . This field is  optional . If you omit the  orgId ,\n  creates an Organization called  projectName \nthat contains a Project also called  projectName . You must have the  Organization Project Creator \nrole to create a new project\n within an existing organization . data.baseUrl string  to your   including the   and port\nnumber. You may use   for the  data.baseUrl  value. https://ops.example.com:8443 Save this file with a  .yaml  file extension. Invoke the following   command to create your  : All subsequent  kubectl  commands you invoke must add the\n -n  option with the  metadata.namespace  you\nspecified in your  . Invoke the following   command to verify your  : This command returns a ConfigMap description in the shell: kubectl  defaults to an empty namespace if you do not specify\nthe  -n  option, resulting in deployment failures. You must\nspecify the value of the  <metadata.namespace>  field.\nThe  ,  , and  s should\nrun in the same unique namespace. For the   to create or update   in your  \nProject, you need to store your username and\n Public API Key  as a  \n . Creating a secret stores authentication credentials so\nonly   can access them. Multiple secrets can exist in the same namespace. Each user should\nhave their own secret. To create your   secret: Make sure you have your   username and Public API Key. If you do not have your Public API Key, you need to generate a new\n Public API Key . Invoke the following   command to create your secret: The  -n  flag limits the   to which this secret\napplies. All MongoDB   resources must be in the same\nnamespace with the   and  . The\n  does not use either the secrets or ConfigMaps. Invoke the following   command to verify your secret: This command returns a secret description in the shell: To upgrade to the latest version of the  : To troubleshoot your  , see\n Review Logs from the  . Change to the directory in which you cloned the\n  repository. Upgrade the   for MongoDB deployments using the\nfollowing  kubectl  command: If you use  OpenShift  as\nyour   orchestrator, you need to allow OpenShift to\nmanage the Security Context for the  . Change the  MANAGED_SECURITY_CONTEXT  value as described\nin the next step. You can edit the Operator   file to further customize\nyour Operator before upgrading it. Open your  mongodb-enterprise.yaml  in your preferred\ntext editor. You may need to add one or more of the following\noptions: Environment Variable When to Use OPERATOR_ENV Label for the Operator's deployment environment. The  env \nvalue affects default timeouts and the format and level of\nlogging. Accepted values are:   dev ,  prod . Default value is:  prod . You can set the following pair of values: If  OPERATOR_ENV  is Log Level is set to Log Format is set to dev debug text prod info json WATCH_NAMESPACE Namespace that the Operator watches for   changes.\nIf this   differs from the default, ensure that the\nOperator's ServiceAccount\n can access \nthat different namespace. *  means  all namespaces  and requires the\n ClusterRole \nassigned to the  mongodb-enterprise-operator  ServiceAccount\nwhich is the ServiceAccount used to run the  . Default value is:  <metadata.namespace> . You can set the following pair of values: If you need to watch more than one namespace, set the value\nof  WATCH_NAMESPACE  to  *  (all). This environment\nvariable can watch one namespace or all namespaces. MANAGED_SECURITY_CONTEXT If you use  OpenShift  as your\n  orchestrator, set this to  'true'  to allow OpenShift to\nmanage the Security Context for the  . Accepted values are:  'true' ,  'false' . Default value is:  'false' . You can set the following pair of values: POD_WAIT_SEC Time in seconds that the Operator waits for  \nto start when   are being created or updated before\nretrying. Default values depend upon  OPERATOR_ENV : You can set the following pair of values: If  OPERATOR_ENV  is POD_WAIT_SEC  is set to dev 3 prod 5 POD_WAIT_RETRIES Maximum number of retries that the Operator attempts when\nwaiting for   to start after   are\ncreated or updated. Default values depend upon  OPERATOR_ENV : You can set the following pair of values: If  OPERATOR_ENV  is POD_WAIT_RETRIES  is set to dev 60 prod 180 Any values enclosed in single or double quotes\n require  those quotes. Include the quotes when\nsetting these values. Upgrade the   using the following\n kubectl  command: If you need to remove the Kubernetes Operator or the\n namespace , you first must\n remove MongoDB resources . To troubleshoot your  , see\n Review Logs from the  . Change to the directory in which you cloned the\n  repository. Upgrade the latest version of the   using the\nfollowing  helm  command: You can customize your Chart before installing it by using\nthe  --set  option. For this Chart, you may need to add\none or more of the following options: --set  option When to Use namespace To use a different namespace, you need to specify that\n namespace . Default value is:  mongodb . operator.env Label for the Operator's deployment environment. The  env \nvalue affects default timeouts and the format and level of\nlogging. Accepted values are:   dev ,  prod . Default value is:  prod . If  operator.env  is Log Level is set to Log Format is set to dev debug text prod info json operator.watchNamespace Namespace that the Operator watches for   changes.\nIf this   differs from the default, ensure that the\nOperator's ServiceAccount\n can access \nthat different namespace. *  means  all namespaces  and requires the\n ClusterRole \nassigned to the  mongodb-enterprise-operator  ServiceAccount\nwhich is the ServiceAccount used to run the  . Default value is:  <metadata.namespace> . managedSecurityContext If you use  OpenShift  as your\n  orchestrator, set this to  true  to allow OpenShift to\nmanage the Security Context for the  . Accepted values are:  true ,  false . Default value is:  false . operator.podWaitSeconds Time in seconds that the Operator waits for  \nto start when   are being created or updated before\nretrying. Default values depend upon  operator.env : If  operator.env  is operator.podWaitSeconds  is set to dev 3 prod 5 operator.podSetWaitRetries Maximum number of retries that the Operator attempts when\nwaiting for   to start after   are\ncreated or updated. Default values depend upon  operator.env : If  operator.env  is operator.podSetWaitRetries  is set to dev 60 prod 180 If you need to remove the Kubernetes Operator or the\n namespace , you first must\n remove MongoDB resources . To upgrade the   on a host not connected to the\nInternet, you have two options, you can download the\n  files from either: To troubleshoot your  , see\n Review Logs from the  . Change to the directory in which you cloned the\n  repository. Upgrade the latest version of the  \nwith modified pull policy values using the\nfollowing  helm  command: You can further customize your Chart before\ninstalling it by using the  --set  option. For\nthis Chart, you may need to add one or more of the\nfollowing options: --set  option When to Use namespace To use a different namespace, you need to specify that\n namespace . Default value is:  mongodb . operator.env Label for the Operator's deployment environment. The  env \nvalue affects default timeouts and the format and level of\nlogging. Accepted values are:   dev ,  prod . Default value is:  prod . If  operator.env  is Log Level is set to Log Format is set to dev debug text prod info json operator.watchNamespace Namespace that the Operator watches for   changes.\nIf this   differs from the default, ensure that the\nOperator's ServiceAccount\n can access \nthat different namespace. *  means  all namespaces  and requires the\n ClusterRole \nassigned to the  mongodb-enterprise-operator  ServiceAccount\nwhich is the ServiceAccount used to run the  . Default value is:  <metadata.namespace> . managedSecurityContext If you use  OpenShift  as your\n  orchestrator, set this to  true  to allow OpenShift to\nmanage the Security Context for the  . Accepted values are:  true ,  false . Default value is:  false . operator.podWaitSeconds Time in seconds that the Operator waits for  \nto start when   are being created or updated before\nretrying. Default values depend upon  operator.env : If  operator.env  is operator.podWaitSeconds  is set to dev 3 prod 5 operator.podSetWaitRetries Maximum number of retries that the Operator attempts when\nwaiting for   to start after   are\ncreated or updated. Default values depend upon  operator.env : If  operator.env  is operator.podSetWaitRetries  is set to dev 60 prod 180 If you need to remove the Kubernetes Operator or the\n namespace , you first must\n remove MongoDB resources . Change to the directory in which you installed\nthe  . Upgrade the latest version of the  \nwith modified pull policy values using the\nfollowing  helm  command: You can further customize your Chart before\ninstalling it by using the  --set  option. For\nthis Chart, you may need to add one or more of the\nfollowing options: --set  option When to Use namespace To use a different namespace, you need to specify that\n namespace . Default value is:  mongodb . operator.env Label for the Operator's deployment environment. The  env \nvalue affects default timeouts and the format and level of\nlogging. Accepted values are:   dev ,  prod . Default value is:  prod . If  operator.env  is Log Level is set to Log Format is set to dev debug text prod info json operator.watchNamespace Namespace that the Operator watches for   changes.\nIf this   differs from the default, ensure that the\nOperator's ServiceAccount\n can access \nthat different namespace. *  means  all namespaces  and requires the\n ClusterRole \nassigned to the  mongodb-enterprise-operator  ServiceAccount\nwhich is the ServiceAccount used to run the  . Default value is:  <metadata.namespace> . managedSecurityContext If you use  OpenShift  as your\n  orchestrator, set this to  true  to allow OpenShift to\nmanage the Security Context for the  . Accepted values are:  true ,  false . Default value is:  false . operator.podWaitSeconds Time in seconds that the Operator waits for  \nto start when   are being created or updated before\nretrying. Default values depend upon  operator.env : If  operator.env  is operator.podWaitSeconds  is set to dev 3 prod 5 operator.podSetWaitRetries Maximum number of retries that the Operator attempts when\nwaiting for   to start after   are\ncreated or updated. Default values depend upon  operator.env : If  operator.env  is operator.podSetWaitRetries  is set to dev 60 prod 180 To verify that the   installed correctly, run the\nfollowing command and verify the output: By default, deployments exist in the  mongodb  namespace. If the\nfollowing error message appears, ensure you use the correct\nnamespace:",
+            "code": [
+                {
+                    "lang": "sh",
+                    "value": "git clone https://github.com/mongodb/mongodb-enterprise-kubernetes.git"
+                },
+                {
+                    "lang": "sh",
+                    "value": "kubectl create namespace mongodb"
+                },
+                {
+                    "lang": "sh",
+                    "value": "kubectl create namespace <namespaceName>"
+                },
+                {
+                    "lang": "yaml",
+                    "value": "##---\n# Source: mongodb-enterprise-operator/templates/serviceaccount.yaml\n---\napiVersion: v1\nkind: ServiceAccount\nmetadata:\n  name: mongodb-enterprise-operator\n  namespace: production\n##---\n# Source: mongodb-enterprise-operator/templates/operator.yaml\n---\napiVersion: apps/v1\nkind: Deployment\nmetadata:\n  name: mongodb-enterprise-operator\n  namespace: production\n\n---\n# Example truncated\n---\n..."
+                },
+                {
+                    "lang": "sh",
+                    "value": "kubectl apply -f crds.yaml"
+                },
+                {
+                    "lang": "yaml",
+                    "value": "spec.template.spec.containers.name.env.name: OPERATOR_ENV\nspec.template.spec.containers.name.env.value: prod"
+                },
+                {
+                    "lang": "yaml",
+                    "value": "spec:\n  template:\n    spec:\n      serviceAccountName: mongodb-enterprise-operator\n      containers:\n      - name: mongodb-enterprise-operator\n        image: <operatorVersionUrl>\n        imagePullPolicy: <policyChoice>\n        env:\n        - name: OPERATOR_ENV\n          value: prod"
+                },
+                {
+                    "lang": "yaml",
+                    "value": "spec.template.spec.containers.name.env.name: WATCH_NAMESPACE\nspec.template.spec.containers.name.env.value: \"<testNamespace>\""
+                },
+                {
+                    "lang": "yaml",
+                    "value": "spec:\n  template:\n    spec:\n      serviceAccountName: mongodb-enterprise-operator\n      containers:\n      - name: mongodb-enterprise-operator\n        image: <operatorVersionUrl>\n        imagePullPolicy: <policyChoice>\n        env:\n        - name: WATCH_NAMESPACE\n          value: \"<testNamespace>\""
+                },
+                {
+                    "lang": "yaml",
+                    "value": "spec.template.spec.containers.name.env.name: MANAGED_SECURITY_CONTEXT\nspec.template.spec.containers.name.env.value: 'true'"
+                },
+                {
+                    "lang": "yaml",
+                    "value": "spec:\n  template:\n    spec:\n      serviceAccountName: mongodb-enterprise-operator\n      containers:\n      - name: mongodb-enterprise-operator\n        image: <operatorVersionUrl>\n        imagePullPolicy: <policyChoice>\n        env:\n        - name: MANAGED_SECURITY_CONTEXT\n          value: 'true'"
+                },
+                {
+                    "lang": "yaml",
+                    "value": "spec.template.spec.containers.name.env.name: POD_WAIT_SEC\nspec.template.spec.containers.name.env.value: 4"
+                },
+                {
+                    "lang": "yaml",
+                    "value": "spec:\n  template:\n    spec:\n      serviceAccountName: mongodb-enterprise-operator\n      containers:\n      - name: mongodb-enterprise-operator\n        image: <operatorVersionUrl>\n        imagePullPolicy: <policyChoice>\n        env:\n        - name: POD_WAIT_SEC\n          value: 4\n        - name: POD_WAIT_RETRIES\n          value: 30"
+                },
+                {
+                    "lang": "yaml",
+                    "value": "spec.template.spec.containers.name.env.name: POD_WAIT_RETRIES\nspec.template.spec.containers.name.env.value: 30"
+                },
+                {
+                    "lang": "yaml",
+                    "value": "spec:\n  template:\n    spec:\n      serviceAccountName: mongodb-enterprise-operator\n      containers:\n      - name: mongodb-enterprise-operator\n        image: <operatorVersionUrl>\n        imagePullPolicy: <policyChoice>\n        env:\n        - name: POD_WAIT_SEC\n          value: 4\n        - name: POD_WAIT_RETRIES\n          value: 30"
+                },
+                {
+                    "lang": "sh",
+                    "value": "kubectl apply -f mongodb-enterprise.yaml"
+                },
+                {
+                    "lang": "sh",
+                    "value": "helm template helm_chart > operator.yaml\nkubectl apply -f operator.yaml"
+                },
+                {
+                    "lang": "sh",
+                    "value": "helm template \\\n  --set namespace=<testNamespace> \\\n  helm_chart > operator.yaml\nkubectl apply -f operator.yaml"
+                },
+                {
+                    "lang": "sh",
+                    "value": "helm template \\\n  --set operator.env=dev \\\n  helm_chart > operator.yaml\nkubectl apply -f operator.yaml"
+                },
+                {
+                    "lang": "sh",
+                    "value": "helm template \\\n  --set operator.watchNamespace=<testNamespace> \\\n  helm_chart > operator.yaml\nkubectl apply -f operator.yaml"
+                },
+                {
+                    "lang": "sh",
+                    "value": "helm template \\\n  --set managedSecurityContext=false \\\n  helm_chart > operator.yaml\nkubectl apply -f operator.yaml"
+                },
+                {
+                    "lang": "sh",
+                    "value": "helm template \\\n  --set operator.env=dev \\\n  --set operator.podWaitSeconds=10 \\\n  helm_chart > operator.yaml\nkubectl apply -f operator.yaml"
+                },
+                {
+                    "lang": "sh",
+                    "value": "helm template\n  --set operator.env=dev \\\n  --set operator.podWaitSeconds=10 \\\n  --set operator.podSetWaitRetries=20 \\\n  helm_chart > operator.yaml\nkubectl apply -f operator.yaml"
+                },
+                {
+                    "lang": "sh",
+                    "value": "docker pull quay.io/mongodb/mongodb-enterprise-operator:0.1; \\\ndocker pull quay.io/mongodb/mongodb-enterprise-database:0.1"
+                },
+                {
+                    "lang": "sh",
+                    "value": "helm template --set registry.pullPolicy=IfNotPresent \\\n  helm_chart > operator.yaml\nkubectl apply -f operator.yaml"
+                },
+                {
+                    "lang": "sh",
+                    "value": "helm template \\\n  --set registry.pullPolicy=IfNotPresent \\\n  --set namespace=<testNamespace> \\\n  helm_chart > operator.yaml\nkubectl apply -f operator.yaml"
+                },
+                {
+                    "lang": "sh",
+                    "value": "helm template \\\n  --set registry.pullPolicy=IfNotPresent \\\n  --set operator.env=dev \\\n  helm_chart > operator.yaml\nkubectl apply -f operator.yaml"
+                },
+                {
+                    "lang": "sh",
+                    "value": "helm template \\\n  --set registry.pullPolicy=IfNotPresent \\\n  --set operator.watchNamespace=<testNamespace> \\\n  helm_chart > operator.yaml\nkubectl apply -f operator.yaml"
+                },
+                {
+                    "lang": "sh",
+                    "value": "helm template \\\n  --set registry.pullPolicy=IfNotPresent \\\n  --set managedSecurityContext=false \\\n  helm_chart > operator.yaml\nkubectl apply -f operator.yaml"
+                },
+                {
+                    "lang": "sh",
+                    "value": "helm template \\\n  --set registry.pullPolicy=IfNotPresent \\\n  --set operator.env=dev \\\n  --set operator.podWaitSeconds=10 \\\n  helm_chart > operator.yaml\nkubectl apply -f operator.yaml"
+                },
+                {
+                    "lang": "sh",
+                    "value": "helm template \\\n  --set registry.pullPolicy=IfNotPresent \\\n  --set operator.env=dev \\\n  --set operator.podWaitSeconds=10 \\\n  --set operator.podSetWaitRetries=20 \\\n  helm_chart > operator.yaml\nkubectl apply -f operator.yaml"
+                },
+                {
+                    "lang": "sh",
+                    "value": "docker pull quay.io/mongodb/mongodb-enterprise-operator:0.1; \\\ndocker pull quay.io/mongodb/mongodb-enterprise-database:0.1"
+                },
+                {
+                    "lang": "sh",
+                    "value": "docker save quay.io/mongodb/mongodb-enterprise-operator:0.1 -o mongodb-enterprise-operator.tar; \\\ndocker save quay.io/mongodb/mongodb-enterprise-database:0.1 -o mongodb-enterprise-database.tar"
+                },
+                {
+                    "lang": "sh",
+                    "value": "docker import mongodb-enterprise-operator.tar quay.io/mongodb/mongodb-enterprise-operator:0.1; \\\ndocker import mongodb-enterprise-database.tar quay.io/mongodb/mongodb-enterprise-database:0.1"
+                },
+                {
+                    "lang": "sh",
+                    "value": "helm template --set registry.pullPolicy=IfNotPresent \\\n  helm_chart > operator.yaml\nkubectl apply -f operator.yaml"
+                },
+                {
+                    "lang": "sh",
+                    "value": "helm template \\\n  --set registry.pullPolicy=IfNotPresent \\\n  --set namespace=<testNamespace> \\\n  helm_chart > operator.yaml\nkubectl apply -f operator.yaml"
+                },
+                {
+                    "lang": "sh",
+                    "value": "helm template \\\n  --set registry.pullPolicy=IfNotPresent \\\n  --set operator.env=dev \\\n  helm_chart > operator.yaml\nkubectl apply -f operator.yaml"
+                },
+                {
+                    "lang": "sh",
+                    "value": "helm template \\\n  --set registry.pullPolicy=IfNotPresent \\\n  --set operator.watchNamespace=<testNamespace> \\\n  helm_chart > operator.yaml\nkubectl apply -f operator.yaml"
+                },
+                {
+                    "lang": "sh",
+                    "value": "helm template \\\n  --set registry.pullPolicy=IfNotPresent \\\n  --set managedSecurityContext=false \\\n  helm_chart > operator.yaml\nkubectl apply -f operator.yaml"
+                },
+                {
+                    "lang": "sh",
+                    "value": "helm template \\\n  --set registry.pullPolicy=IfNotPresent \\\n  --set operator.env=dev \\\n  --set operator.podWaitSeconds=10 \\\n  helm_chart > operator.yaml\nkubectl apply -f operator.yaml"
+                },
+                {
+                    "lang": "sh",
+                    "value": "helm template \\\n  --set registry.pullPolicy=IfNotPresent \\\n  --set operator.env=dev \\\n  --set operator.podWaitSeconds=10 \\\n  --set operator.podSetWaitRetries=20 \\\n  helm_chart > operator.yaml\nkubectl apply -f operator.yaml"
+                },
+                {
+                    "lang": "yaml",
+                    "value": "---\napiVersion: v1\nkind: ConfigMap\nmetadata:\n  name: <myconfigmap>\n  namespace: <myNamespace>\ndata:\n  projectName: <myOpsManagerProjectName>\n  orgId: <orgId> # Optional\n  baseUrl: https://<myOpsManagerURL>\n...\n"
+                },
+                {
+                    "lang": "sh",
+                    "value": "kubectl apply -f <myconfigmap.yaml>"
+                },
+                {
+                    "lang": "sh",
+                    "value": "kubectl describe configmaps <myconfigmap> -n <metadata.namespace>"
+                },
+                {
+                    "lang": "sh",
+                    "value": "Name:           <myconfigmap>\nNamespace:      <metadata.namespace>\nLabels:         <none>\nAnnotations:    <none>"
+                },
+                {
+                    "lang": "sh",
+                    "value": "kubectl -n <metadata.namespace> \\\n  create secret generic <myCredentials> \\\n  --from-literal=\"user=<first.last@example.com>\" \\\n  --from-literal=\"publicApiKey=<my-public-api-key>\""
+                },
+                {
+                    "lang": "sh",
+                    "value": "kubectl describe secrets/<myCredentials> -n <metadata.namespace>"
+                },
+                {
+                    "lang": "sh",
+                    "value": "Name:         <myCredentials>\nNamespace:    <metadata.namespace>\nLabels:       <none>\nAnnotations:  <none>\n\nType:  Opaque\n\nData\n====\npublicApiKey:  31 bytes\nuser:          22 bytes"
+                },
+                {
+                    "lang": "sh",
+                    "value": "kubectl apply -f crds.yaml"
+                },
+                {
+                    "lang": "yaml",
+                    "value": "spec.template.spec.containers.name.env.name: OPERATOR_ENV\nspec.template.spec.containers.name.env.value: prod"
+                },
+                {
+                    "lang": "yaml",
+                    "value": "spec:\n  template:\n    spec:\n      serviceAccountName: mongodb-enterprise-operator\n      containers:\n      - name: mongodb-enterprise-operator\n        image: <operatorVersionUrl>\n        imagePullPolicy: <policyChoice>\n        env:\n        - name: OPERATOR_ENV\n          value: prod"
+                },
+                {
+                    "lang": "yaml",
+                    "value": "spec.template.spec.containers.name.env.name: WATCH_NAMESPACE\nspec.template.spec.containers.name.env.value: \"<testNamespace>\""
+                },
+                {
+                    "lang": "yaml",
+                    "value": "spec:\n  template:\n    spec:\n      serviceAccountName: mongodb-enterprise-operator\n      containers:\n      - name: mongodb-enterprise-operator\n        image: <operatorVersionUrl>\n        imagePullPolicy: <policyChoice>\n        env:\n        - name: WATCH_NAMESPACE\n          value: \"<testNamespace>\""
+                },
+                {
+                    "lang": "yaml",
+                    "value": "spec.template.spec.containers.name.env.name: MANAGED_SECURITY_CONTEXT\nspec.template.spec.containers.name.env.value: 'true'"
+                },
+                {
+                    "lang": "yaml",
+                    "value": "spec:\n  template:\n    spec:\n      serviceAccountName: mongodb-enterprise-operator\n      containers:\n      - name: mongodb-enterprise-operator\n        image: <operatorVersionUrl>\n        imagePullPolicy: <policyChoice>\n        env:\n        - name: MANAGED_SECURITY_CONTEXT\n          value: 'true'"
+                },
+                {
+                    "lang": "yaml",
+                    "value": "spec.template.spec.containers.name.env.name: POD_WAIT_SEC\nspec.template.spec.containers.name.env.value: 4"
+                },
+                {
+                    "lang": "yaml",
+                    "value": "spec:\n  template:\n    spec:\n      serviceAccountName: mongodb-enterprise-operator\n      containers:\n      - name: mongodb-enterprise-operator\n        image: <operatorVersionUrl>\n        imagePullPolicy: <policyChoice>\n        env:\n        - name: POD_WAIT_SEC\n          value: 4\n        - name: POD_WAIT_RETRIES\n          value: 30"
+                },
+                {
+                    "lang": "yaml",
+                    "value": "spec.template.spec.containers.name.env.name: POD_WAIT_RETRIES\nspec.template.spec.containers.name.env.value: 30"
+                },
+                {
+                    "lang": "yaml",
+                    "value": "spec:\n  template:\n    spec:\n      serviceAccountName: mongodb-enterprise-operator\n      containers:\n      - name: mongodb-enterprise-operator\n        image: <operatorVersionUrl>\n        imagePullPolicy: <policyChoice>\n        env:\n        - name: POD_WAIT_SEC\n          value: 4\n        - name: POD_WAIT_RETRIES\n          value: 30"
+                },
+                {
+                    "lang": "sh",
+                    "value": "kubectl apply -f mongodb-enterprise.yaml"
+                },
+                {
+                    "lang": "sh",
+                    "value": "helm template helm_chart > operator.yaml\nkubectl apply -f operator.yaml"
+                },
+                {
+                    "lang": "sh",
+                    "value": "helm template \\\n  --set namespace=<testNamespace> \\\n  helm_chart > operator.yaml\nkubectl apply -f operator.yaml"
+                },
+                {
+                    "lang": "sh",
+                    "value": "helm template \\\n  --set operator.env=dev \\\n  helm_chart > operator.yaml\nkubectl apply -f operator.yaml"
+                },
+                {
+                    "lang": "sh",
+                    "value": "helm template \\\n  --set operator.watchNamespace=<testNamespace> \\\n  helm_chart > operator.yaml\nkubectl apply -f operator.yaml"
+                },
+                {
+                    "lang": "sh",
+                    "value": "helm template \\\n  --set managedSecurityContext=false \\\n  helm_chart > operator.yaml\nkubectl apply -f operator.yaml"
+                },
+                {
+                    "lang": "sh",
+                    "value": "helm template \\\n  --set operator.env=dev \\\n  --set operator.podWaitSeconds=10 \\\n  helm_chart > operator.yaml\nkubectl apply -f operator.yaml"
+                },
+                {
+                    "lang": "sh",
+                    "value": "helm template\n  --set operator.env=dev \\\n  --set operator.podWaitSeconds=10 \\\n  --set operator.podSetWaitRetries=20 \\\n  helm_chart > operator.yaml\nkubectl apply -f operator.yaml"
+                },
+                {
+                    "lang": "sh",
+                    "value": "helm template --set registry.pullPolicy=IfNotPresent \\\n  helm_chart > operator.yaml\nkubectl apply -f operator.yaml"
+                },
+                {
+                    "lang": "sh",
+                    "value": "helm template \\\n  --set registry.pullPolicy=IfNotPresent \\\n  --set namespace=<testNamespace> \\\n  helm_chart > operator.yaml\nkubectl apply -f operator.yaml"
+                },
+                {
+                    "lang": "sh",
+                    "value": "helm template \\\n  --set registry.pullPolicy=IfNotPresent \\\n  --set operator.env=dev \\\n  helm_chart > operator.yaml\nkubectl apply -f operator.yaml"
+                },
+                {
+                    "lang": "sh",
+                    "value": "helm template \\\n  --set registry.pullPolicy=IfNotPresent \\\n  --set operator.watchNamespace=<testNamespace> \\\n  helm_chart > operator.yaml\nkubectl apply -f operator.yaml"
+                },
+                {
+                    "lang": "sh",
+                    "value": "helm template \\\n  --set registry.pullPolicy=IfNotPresent \\\n  --set managedSecurityContext=false \\\n  helm_chart > operator.yaml\nkubectl apply -f operator.yaml"
+                },
+                {
+                    "lang": "sh",
+                    "value": "helm template \\\n  --set registry.pullPolicy=IfNotPresent \\\n  --set operator.env=dev \\\n  --set operator.podWaitSeconds=10 \\\n  helm_chart > operator.yaml\nkubectl apply -f operator.yaml"
+                },
+                {
+                    "lang": "sh",
+                    "value": "helm template \\\n  --set registry.pullPolicy=IfNotPresent \\\n  --set operator.env=dev \\\n  --set operator.podWaitSeconds=10 \\\n  --set operator.podSetWaitRetries=20 \\\n  helm_chart > operator.yaml\nkubectl apply -f operator.yaml"
+                },
+                {
+                    "lang": "sh",
+                    "value": "helm template --set registry.pullPolicy=IfNotPresent \\\n  helm_chart > operator.yaml\nkubectl apply -f operator.yaml"
+                },
+                {
+                    "lang": "sh",
+                    "value": "helm template \\\n  --set registry.pullPolicy=IfNotPresent \\\n  --set namespace=<testNamespace> \\\n  helm_chart > operator.yaml\nkubectl apply -f operator.yaml"
+                },
+                {
+                    "lang": "sh",
+                    "value": "helm template \\\n  --set registry.pullPolicy=IfNotPresent \\\n  --set operator.env=dev \\\n  helm_chart > operator.yaml\nkubectl apply -f operator.yaml"
+                },
+                {
+                    "lang": "sh",
+                    "value": "helm template \\\n  --set registry.pullPolicy=IfNotPresent \\\n  --set operator.watchNamespace=<testNamespace> \\\n  helm_chart > operator.yaml\nkubectl apply -f operator.yaml"
+                },
+                {
+                    "lang": "sh",
+                    "value": "helm template \\\n  --set registry.pullPolicy=IfNotPresent \\\n  --set managedSecurityContext=false \\\n  helm_chart > operator.yaml\nkubectl apply -f operator.yaml"
+                },
+                {
+                    "lang": "sh",
+                    "value": "helm template \\\n  --set registry.pullPolicy=IfNotPresent \\\n  --set operator.env=dev \\\n  --set operator.podWaitSeconds=10 \\\n  helm_chart > operator.yaml\nkubectl apply -f operator.yaml"
+                },
+                {
+                    "lang": "sh",
+                    "value": "helm template \\\n  --set registry.pullPolicy=IfNotPresent \\\n  --set operator.env=dev \\\n  --set operator.podWaitSeconds=10 \\\n  --set operator.podSetWaitRetries=20 \\\n  helm_chart > operator.yaml\nkubectl apply -f operator.yaml"
+                },
+                {
+                    "lang": "sh",
+                    "value": "kubectl describe deployments mongodb-enterprise-operator -n <namespace>"
+                },
+                {
+                    "lang": "sh",
+                    "value": "Error from server (NotFound): deployments.apps \"mongodb-enterprise-operator\" not found"
+                }
+            ],
+            "preview": " allows you to deploy MongoDB deployment items with \nand . This Operator uses  and   methods to\ndeploy standalone, replica set, and sharded cluster deployments that\n manages.",
+            "tags": null,
+            "facets": null
+        }
+    ]
+}

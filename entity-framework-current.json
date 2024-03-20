@@ -1,0 +1,340 @@
+{
+    "url": "http://mongodb.com/docs/entity-framework/current",
+    "includeInGlobalSearch": true,
+    "documents": [
+        {
+            "slug": "",
+            "title": "MongoDB Entity Framework Core Provider",
+            "headings": [
+                "Introduction",
+                "Quick Start",
+                "Quick Reference",
+                "Compatibility"
+            ],
+            "paragraphs": "Welcome to the documentation site for the official MongoDB Entity Framework Core Provider. You can add the Entity Framework Core Provider to your .NET application as an\nobject-relational mapper (ORM) to work with data in MongoDB. You can use the\nprovider to access and manipulate data from your application without explicitly\nrunning database commands. The Entity Framework Core Provider tracks any queries or data\nchanges you make, and automatically runs them on the database by using the\nMongoDB Query API. Use the MongoDB Entity Framework Core Provider if you want to build a .NET application\nthat uses Entity Framework Core with MongoDB. Download the provider by using  NuGet ,\nor set up a runnable project by following our  Quick Start guide . Learn how to establish a connection to MongoDB Atlas and begin\nworking with data in the  Quick Start  section. See driver syntax examples for common MongoDB commands in the\n Quick Reference  section. The MongoDB Entity Framework Core Provider is compatible with the following the following versions of\nEntity Framework Core and .NET. MongoDB Entity Framework Core Provider Entity Framework Core Version .NET Version MongoDB Version 7.0 7.0 7.0 or later 3.6 or later",
+            "code": [],
+            "preview": "Welcome to the documentation site for the official MongoDB Entity Framework Core Provider.",
+            "tags": null,
+            "facets": null
+        },
+        {
+            "slug": "limitations",
+            "title": "Limitations",
+            "headings": [
+                "Overview",
+                "Unsupported MongoDB Features",
+                "Time Series",
+                "Atlas Search",
+                "Vector Search",
+                "Unsupported Entity Framework Core Features",
+                "Migrations",
+                "Database-First Development",
+                "Foreign Keys",
+                "Alternate Keys",
+                "Table Splitting",
+                "Temporal Tables",
+                "Spatial Data"
+            ],
+            "paragraphs": "On this page, you can find a list of MongoDB and Entity Framework features that\nare not supported by the MongoDB Entity Framework Core Provider. Because the provider is in active\ndevelopment, some features listed on this page might be considered for future\nreleases based on customer demand. The following sections describe MongoDB features that are not supported by the Entity Framework Core Provider. The Entity Framework Core Provider does not support time series data or time series\ncollections. These are MongoDB-exclusive features that are not available in Entity Framework Core. The Entity Framework Core Provider does not support MongoDB Atlas search. Atlas Search is a\nMongoDB-exclusive feature with no similar feature available in Entity Framework Core. The Entity Framework Core Provider does not support MongoDB Atlas Vector search. Atlas Vector Search is a\nMongoDB-exclusive feature with no similar feature available in Entity Framework Core. The following sections describe Entity Framework Core features that are not\nsupported by the Entity Framework Core Provider. Migrations in Entity Framework Core are designed for relational databases. Because\nMongoDB is a document database, migrations are not supported by the\nMongoDB Entity Framework Core Provider. MongoDB is designed to be flexible and does not require a database schema.\nBecause of MongoDB's schemaless design, database-first development is not supported\nin the Entity Framework Core Provider. Because MongoDB is a document database, the Entity Framework Core Provider does not support foreign keys. Because MongoDB is a document database, the Entity Framework Core Provider does not support alternate keys. MongoDB is a document database and does not have normalized tables.\nBecause of this, table splitting is not supported by the\nEntity Framework Core Provider. The Entity Framework Core Provider does not support temporal tables. The Entity Framework Core Provider does not support spatial data.",
+            "code": [],
+            "preview": "On this page, you can find a list of MongoDB and Entity Framework features that\nare not supported by the MongoDB Entity Framework Core Provider. Because the provider is in active\ndevelopment, some features listed on this page might be considered for future\nreleases based on customer demand.",
+            "tags": "EF, EF Core, support",
+            "facets": {
+                "genre": [
+                    "reference"
+                ]
+            }
+        },
+        {
+            "slug": "issues-and-help",
+            "title": "Issues & Help",
+            "headings": [
+                "Bugs / Feature Requests"
+            ],
+            "paragraphs": "To report a bug or to request a new feature in the Entity Framework Core Provider,\nplease open an issue in JIRA, our issue management tool, using the\nfollowing steps: Bug reports in JIRA for the Entity Framework Core Provider project can be viewed by everyone. If you identify a security vulnerability in the driver or in any other\nMongoDB project, please report it according to the instructions found in\n Create a Vulnerability Report . Create a JIRA account . Navigate to  the Entity Framework project . Click  Create Issue . Please provide as much information as possible about the\nissue and the steps to reproduce it.",
+            "code": [],
+            "preview": "To report a bug or to request a new feature in the Entity Framework Core Provider,\nplease open an issue in JIRA, our issue management tool, using the\nfollowing steps:",
+            "tags": null,
+            "facets": null
+        },
+        {
+            "slug": "fundamentals",
+            "title": "Fundamentals",
+            "headings": [],
+            "paragraphs": "Configure Entity Framework Core for MongoDB",
+            "code": [],
+            "preview": "Learn how to use the MongoDB Entity Framework Core Provider.",
+            "tags": null,
+            "facets": null
+        },
+        {
+            "slug": "quick-start",
+            "title": "Quick Start",
+            "headings": [
+                "Create a MongoDB Cluster",
+                "Set Up a Free Tier Cluster in Atlas",
+                "Update the Placeholders",
+                "Add Your Connection String to an Environment Variable",
+                "Set Up Your Project",
+                "Create the Project",
+                "Add the MongoDB Entity Framework Core Provider as a Dependency",
+                "Query Your MongoDB Cluster from Your Application",
+                "Add the Sample Code",
+                "Query the Sample Data",
+                "Next Steps"
+            ],
+            "paragraphs": "This guide shows you how to create a .NET application that uses the Entity Framework Core Provider\nto connect to a  MongoDB Atlas cluster . If you prefer to connect to MongoDB\nusing another programming language, see our\n list of official MongoDB drivers . The Entity Framework Core Provider simplifies operations on data in MongoDB clusters by mapping the\ndata to .NET objects. MongoDB Atlas is a fully-managed cloud database service that hosts your data\non MongoDB clusters. In this guide, we show you how to get started with your\nown free (no credit card required) cluster. Follow the steps below to connect your Entity Framework Core Provider application to a MongoDB Atlas\ncluster. To set up your Atlas free cluster required for this Quick Start, complete the guide\n MongoDB Atlas Setup  guide. After completing the steps in the Atlas guide, you have a new MongoDB\ncluster deployed in Atlas, a new database user, and\nsample datasets loaded into your cluster. You also have\na connection string similar to the following in your copy buffer: Paste the connection string in your copy buffer into a file in your preferred text\neditor. Replace the  <username>  and  <password>  placeholders with\nyour database user's username and password. Save this file to a safe location for use in the next step. Run the following code in your shell to save the MongoDB connection string\nin your copy buffer from the previous step to an\nenvironment variable. Storing your connection string in an\nenvironment variable keeps your credentials separate from your source code. This\nseparation makes it less likely to expose your credentials when sharing your code. Make sure to replace the  <username>  and  <password>  sections of the connection\nstring with the username and password of your database user. Create a new directory and use the  dotnet new  command to initialize your project\nas follows: Use the  dotnet add  command to add the Entity Framework Core Provider to your project as a\ndependency. You must include the  --prerelease  flag to install the prerelease\nversion of the MongoDB.EntityFrameworkCore package. After completing these steps, you should have a working Entity Framework application that\nconnects to your MongoDB cluster, runs a query on the\nsample data, and prints out the result. Open the file named  Program.cs  in the base directory of your project. Copy the\nfollowing sample code into  Program.cs : Run the following command in your shell. It should print the plot of the movie\n\"Back to the Future\" from the sample dataset: If your output is empty, ensure you have loaded the\n sample datasets  into your cluster. Learn how to use the Entity Framework Core Provider to perform common operations in Quick Reference.",
+            "code": [
+                {
+                    "lang": "bash",
+                    "value": "export MONGODB_URI='<your connection string>'"
+                },
+                {
+                    "lang": "bash",
+                    "value": "\"mongodb+srv://<username>:<password>@cluster0.abc.mongodb.net/?retryWrites=true&w=majority\""
+                },
+                {
+                    "lang": "shell",
+                    "value": "mkdir entity-quickstart\ncd entity-quickstart\ndotnet new console"
+                },
+                {
+                    "lang": "shell",
+                    "value": "dotnet add package MongoDB.EntityFrameworkCore --prerelease"
+                },
+                {
+                    "lang": "csharp",
+                    "value": "using Microsoft.EntityFrameworkCore;\nusing MongoDB.Bson;\nusing MongoDB.Driver;\nusing MongoDB.EntityFrameworkCore.Extensions;\n\nvar connectionString = Environment.GetEnvironmentVariable(\"MONGODB_URI\");\n\nif (connectionString == null)\n{\n    Console.WriteLine(\"You must set your 'MONGODB_URI' environment variable. To learn how to set it, see https://www.mongodb.com/docs/drivers/csharp/current/quick-start/#set-your-connection-string\");\n    Environment.Exit(0);\n}\nvar client = new MongoClient(connectionString);\n\nvar db = MflixDbContext.Create(client.GetDatabase(\"sample_mflix\"));\n\nvar movie = db.Movies.First(m => m.title == \"Back to the Future\");\nConsole.WriteLine(movie.plot);\n\ninternal class MflixDbContext : DbContext\n{\n    public DbSet<Movie> Movies { get; init; }\n\n    public static MflixDbContext Create(IMongoDatabase database) =>\n        new(new DbContextOptionsBuilder<MflixDbContext>()\n            .UseMongoDB(database.Client, database.DatabaseNamespace.DatabaseName)\n            .Options);\n\n    public MflixDbContext(DbContextOptions options)\n        : base(options)\n    {\n    }\n\n    protected override void OnModelCreating(ModelBuilder modelBuilder)\n    {\n        base.OnModelCreating(modelBuilder);\n\n        modelBuilder.Entity<Movie>().ToCollection(\"movies\");\n    }\n}\n\ninternal class Movie\n{\n    public ObjectId _id { get; set; }\n    public string title { get; set; }\n    public string rated { get; set; }\n    public string plot { get; set; }\n}"
+                },
+                {
+                    "lang": "none",
+                    "value": "dotnet run entity-quickstart.csproj"
+                },
+                {
+                    "lang": "none",
+                    "value": "A young man is accidentally sent 30 years into the past in a time-traveling\nDeLorean invented by his friend, Dr. Emmett Brown, and must make sure his\nhigh-school-age parents unite in order to save his own existence."
+                }
+            ],
+            "preview": "After completing these steps, you should have a working Entity Framework application that\nconnects to your MongoDB cluster, runs a query on the\nsample data, and prints out the result.",
+            "tags": null,
+            "facets": null
+        },
+        {
+            "slug": "fundamentals/configure",
+            "title": "Configure Entity Framework Core for MongoDB",
+            "headings": [
+                "Create a POCO",
+                "Create a DB Context Class",
+                "Use MongoDB",
+                "Example"
+            ],
+            "paragraphs": "In this guide, you will learn how to configure an application to use the\nMongoDB Entity Framework Core Provider. To learn how to set up a new project and install the\nEntity Framework Core Provider, see the  Quick Start . Create a  Plain old CLR/Class object , or  POCO , to use as\na model for your entity. A POCO is a simple class object that doesn't inherit\nfeatures from any framework-specific base classes or interfaces. The following code example shows how to create a POCO that represents a customer: To learn more about POCOs, see the  POCO guide  in the\n.NET/C# Driver documentation. To begin using Entity Framework Core, create a context class that derives from\n DBContext .\nThe  DbContext  derived class instance represents a database session and is used to\nquery and save instances of your entities. The  DBContext  class exposes  DBSet  properties that specify the entities you\ncan interact with while using that context. The following example creates an instance of a  DBContext  derived class and\nspecifies the  Customer  object as a  DBSet  property: The previous code example overrides the  OnModelCreating()  method. Overriding\nthe  OnModelCreating()  method allows you to specify configuration details for your\nmodel and its properties. This example uses the  ToCollection()  method to\nspecify that the  Customer  entities in your application map to the\n customers  collection in MongoDB. Once you've created a  DBContext  class, construct a\n DbContextOptionsBuilder  object and call its  UseMongoDB()  method. This\nmethod takes two parameters: a  MongoClient  instance and\nthe name of the database that stores the collections you are working with. The  UseMongoDB()  method returns a  DbContextOptions  object. Pass the\n Options  property of this object to the constructor for your  DBContext \nclass. The following example shows how to construct a  DBContext  object in\nthis way: You can call methods from the MongoDB .NET/C# Driver when using\nthe Entity Framework Core Provider. The previous example uses the\n MongoClient()  method from the .NET/C# Driver to create a MongoDB\nclient that connects to a MongoDB instance. To learn more about using the MongoDB .NET/C# Driver\nto connect to MongoDB, see the\n Connection guide \nin the .NET/C# Driver documentation. The following code example shows how to configure the\nEntity Framework Core Provider and insert a document into the database:",
+            "code": [
+                {
+                    "lang": "csharp",
+                    "value": "public class Customer\n{\n    public ObjectId Id { get; set; }\n    public String Name { get; set; }\n    public String Order { get; set; }\n}"
+                },
+                {
+                    "lang": "csharp",
+                    "value": "public class MyDbContext : DbContext\n{\n    public DbSet<Customer> Customers { get; init; }\n\n    public MyDbContext(DbContextOptions options)\n        : base(options)\n    {\n    }\n\n    protected override void OnModelCreating(ModelBuilder modelBuilder)\n    {\n        base.OnModelCreating(modelBuilder);\n        modelBuilder.Entity<Customer>().ToCollection(\"customers\");\n    }\n}"
+                },
+                {
+                    "lang": "csharp",
+                    "value": "var mongoClient = new MongoClient(\"<Your MongoDB Connection URI>\");\n\nvar dbContextOptions =\n    new DbContextOptionsBuilder<MyDbContext>().UseMongoDB(mongoClient, \"<Database Name\");\n\nvar db = new MyDbContext(dbContextOptions.Options);"
+                },
+                {
+                    "lang": "csharp",
+                    "value": "using Microsoft.EntityFrameworkCore;\nusing MongoDB.Bson;\nusing MongoDB.Driver;\nusing Microsoft.Extensions.Configuration;\nusing MongoDB.EntityFrameworkCore.Extensions;\n\nvar mongoClient = new MongoClient(\"<Your MongoDB Connection URI>\");\n\nvar dbContextOptions =\n    new DbContextOptionsBuilder<MyDbContext>().UseMongoDB(mongoClient, \"<Database Name>\");\n\nvar db = new MyDbContext(dbContextOptions.Options);\n\n// Add a new customer and save it to the database\ndb.Customers.Add(new Customer() { name = \"John Doe\", Order = \"1 Green Tea\" });\ndb.SaveChanges();\n\ninternal class Customer\n{\n    public ObjectId Id { get; set; }\n    public String Name { get; set; }\n    public String Order { get; set; }\n}\n\ninternal class MyDbContext : DbContext\n{\n    public DbSet<Customer> Customers { get; init; }\n\n    public MyDbContext(DbContextOptions options)\n        : base(options)\n    {\n    }\n\n    protected override void OnModelCreating(ModelBuilder modelBuilder)\n    {\n        base.OnModelCreating(modelBuilder);\n        modelBuilder.Entity<Customer>().ToCollection(\"customers\");\n    }\n}"
+                }
+            ],
+            "preview": "In this guide, you will learn how to configure an application to use the\nMongoDB Entity Framework Core Provider. To learn how to set up a new project and install the\nEntity Framework Core Provider, see the Quick Start.",
+            "tags": "EF, EF Core, code example",
+            "facets": {
+                "genre": [
+                    "reference"
+                ]
+            }
+        },
+        {
+            "slug": "fundamentals/write-data",
+            "title": "Write Data to MongoDB",
+            "headings": [
+                "Overview",
+                "Insert",
+                "Insert One Entity",
+                "Insert Multiple Entities",
+                "Update",
+                "Delete",
+                "Delete One Entity",
+                "Delete Multiple Entities",
+                "Additional Information"
+            ],
+            "paragraphs": "Entity Framework Core allows you to work with data in your application without\nexplicitly running database commands. You can insert, update, or delete data\nwithin your application and persist those changes to MongoDB by using the\n SaveChanges()  method. When you call the  SaveChanges()  method, the Entity Framework Core Provider automatically detects\nany changes made to your data and runs the necessary commands to update the\ndatabase by using the MongoDB Query API. In this guide, you can see examples of how to perform common write operations on\nan application configured to use the MongoDB Entity Framework Core Provider. To learn how to configure an application to use the Entity Framework Core Provider, see\n Configure Entity Framework Core for MongoDB . You can use the  Add()  method to insert a single entity into your collection,\nor you can use the  AddRange()  method to insert multiple entities at once. The  Add()  method accepts a single entity of the same type that you\nspecified on the  DbSet  instance that you are modifying. The following code uses the  Add()  method to add a new  Planet  object to\nthe  DbSet  called  Planets . It then calls the  SaveChanges()  method to\ninsert that entity into the MongoDB collection. The  AddRange()  method accepts an array of entities that you want to add to the  DbSet . The following code uses the  AddRange()  method to add an array of  Planet \nobjects to the  DbSet  called  Planets . It then calls the  SaveChanges() \nmethod to insert those entities into the MongoDB collection. To update an entity, first retrieve the entity that you want to update. Then\nmake the changes to that entity. The provider tracks any changes made to the entity, such as setting\nproperties or adding and removing items from fields with list values. To save the update to\nMongoDB, call the  SaveChanges()  method. The Entity Framework Core Provider compares the updated entity with a\nsnapshot of the entity before the change and automatically updates the collection\nby using the MongoDB Query API. The following code retrieves an entity in which the  name  value is\n \"Mercury\" , then updates the  name  field. The code then calls the  SaveChanges() \nmethod to persist that change to the collection. You can use the  Remove()  method to delete a single entity from your\ncollection, or the  RemoveRange()  method to delete multiple entities at\nonce. The  Remove()  method accepts a single entity of the same type that you\nspecified on the  DbSet  instance that you are modifying. The following code removes a  Planet  entity in which the  name  value is\n \"Pluto\" . It then calls the  SaveChanges()  method to delete that entity from\nthe MongoDB collection. The  RemoveRange()  method accepts an array of entities to remove from the\n DbSet . The following code finds two  Planet  entities and adds them to an array. It\nthen uses the  RemoveRange()  method to remove both entities from the\n DbSet . Finally, it uses the  SaveChanges()  method to remove those\nentities from the MongoDB collection. To learn more about the methods discussed in this guide, see the following .NET API\ndocumentation links: SaveChanges() Add() AddRange() Remove() RemoveRange()",
+            "code": [
+                {
+                    "lang": "csharp",
+                    "value": "db.Planets.Add(new Planet()\n{\n    name = \"Pluto\",\n    hasRings = false,\n    orderFromSun = 9\n});\n\ndb.SaveChanges();"
+                },
+                {
+                    "lang": "csharp",
+                    "value": "var planets = new[]\n{\n    new Planet()\n    {\n        _id = ObjectId.GenerateNewId(),\n        name = \"Pluto\",\n        hasRings = false,\n        orderFromSun = 9\n    },\n    new Planet()\n    {\n        _id = ObjectId.GenerateNewId(),\n        name = \"Scadrial\",\n        hasRings = false,\n        orderFromSun = 10\n    }\n};\n\ndb.Planets.AddRange(planets);\ndb.SaveChanges();"
+                },
+                {
+                    "lang": "csharp",
+                    "value": "var planet = db.Planets.FirstOrDefault(p => p.name == \"Mercury\");\nplanet.name = \"Mercury the first planet\";\n\ndb.SaveChanges();"
+                },
+                {
+                    "lang": "csharp",
+                    "value": "var planet = db.Planets.FirstOrDefault(p => p.name == \"Pluto\");\ndb.Planets.Remove(planet);\n\ndb.SaveChanges();"
+                },
+                {
+                    "lang": "csharp",
+                    "value": "var pluto = db.Planets.FirstOrDefault(p => p.name == \"Pluto\");\nvar scadrial = db.Planets.FirstOrDefault(p => p.name == \"Scadrial\");\nvar planets = new[] { pluto, scadrial };\ndb.Planets.RemoveRange(planets);\n\ndb.SaveChanges();"
+                }
+            ],
+            "preview": "Entity Framework Core allows you to work with data in your application without\nexplicitly running database commands. You can insert, update, or delete data\nwithin your application and persist those changes to MongoDB by using the\nSaveChanges() method.",
+            "tags": "EF, EF Core, code example, write",
+            "facets": {
+                "genre": [
+                    "reference"
+                ]
+            }
+        },
+        {
+            "slug": "fundamentals/query-data",
+            "title": "Query Data",
+            "headings": [
+                "Overview",
+                "Find Entities",
+                "Find a Single Entity",
+                "Find Multiple Entities",
+                "Sort Entities",
+                "Additional Information"
+            ],
+            "paragraphs": "Entity Framework Core allows you to work with data in your application without\nexplicitly running database commands. To query your data, use the\nLanguage-Integrated Query (LINQ) syntax. LINQ allows you to write strongly typed\nqueries using C#-specific keywords and operators. When you run the application,\nthe MongoDB Entity Framework Core Provider automatically translates the LINQ queries and runs them on the\ndatabase using the MongoDB Query API. In this guide you can see examples of common query operations on\nan application configured to use the MongoDB Entity Framework Core Provider. To learn how to configure an application to use the Entity Framework Core Provider, see\n Configure Entity Framework Core for MongoDB . Find a single entity by using the  FirstOrDefault()  method, or find\nmultiple entities by using the  Where()  method. The  FirstOrDefault()  method returns the first entity it finds in your collection that\nmatches the search criteria, and returns  null  if no matching entities\nare found. The following code uses the  FirstOrDefault()  method to find a planet with\nthe  name  field of \"Mercury\" from a  DBSet  called  Planets  and prints\nthe planet name to the console: You can use the  Where()  method to retrieve multiple entities from your\ncollections.  Where()  returns all entities that match the search\ncriteria. The following code uses the  Where()  method to find all planets that have the\n hasRings  field set to  true  and prints the planet names to the console. Use the  OrderBy()  method to specify an order in which to return entities\nfrom a query.  OrderBy()  sorts the elements in ascending order based on a\nspecified sort criteria. The following code uses the  OrderBy()  method to find all planets and sort\nthem by the value of the  orderFromSun  field in ascending order. It then\nprints the results to the console. You can perform a secondary sort on your query by using the  ThenBy()  method. The\n ThenBy()  method sorts the results of the  OrderBy()  method in ascending\norder based on a specified sort criteria. The  ThenBy()  method should be\nchained to the  OrderBy()  method. The following code uses the  OrderBy()  and  ThenBy()  methods to find all\nplanets and sort them by the  hasRings()  field, with a secondary sort\non the  name  field. You can sort the results of a query in descending order by using the\n OrderByDescending()  method. You can perform a secondary sort in descending order by using the\n ThenByDescending()  method. When sorting on fields with a boolean value, entities with a field value of\n false  show before those with a value of  true . To learn more about the methods discussed in this guide, see the following .NET API\ndocumentation links: FirstOrDefault() Where() OrderBy() OrderByDescending() ThenBy() ThenByDescending()",
+            "code": [
+                {
+                    "lang": "csharp",
+                    "value": "var planet = db.Planets.FirstOrDefault(p => p.name == \"Mercury\");\nConsole.WriteLine(planet.name);"
+                },
+                {
+                    "lang": "csharp",
+                    "value": "var planets = db.Planets.Where(p => p.hasRings);\n\nforeach (var p in planets)\n{\n    Console.WriteLine(p.name);\n}"
+                },
+                {
+                    "lang": "csharp",
+                    "value": "var planetList = db.Planets.OrderBy(p => p.orderFromSun);\n\nforeach (var p in planetList)\n{\n   Console.WriteLine(p.name);\n}"
+                },
+                {
+                    "lang": "json",
+                    "value": "Mercury\nVenus\nEarth\nMars\nJupiter\nSaturn\nUranus\nNeptune"
+                },
+                {
+                    "lang": "csharp",
+                    "value": "var planetList = db.Planets.OrderBy(o => o.hasRings).ThenBy(o => o.name);\n\nforeach (var p in planetList)\n{\n   Console.WriteLine(\"Has rings: \" + p.hasRings + \", Name: \" + p.name);\n}"
+                },
+                {
+                    "lang": "json",
+                    "value": "Has rings: False, Name: Earth\nHas rings: False, Name: Mars\nHas rings: False, Name: Mercury\nHas rings: False, Name: Venus\nHas rings: True, Name: Jupiter\nHas rings: True, Name: Neptune\nHas rings: True, Name: Saturn\nHas rings: True, Name: Uranus"
+                }
+            ],
+            "preview": "Entity Framework Core allows you to work with data in your application without\nexplicitly running database commands. To query your data, use the\nLanguage-Integrated Query (LINQ) syntax. LINQ allows you to write strongly typed\nqueries using C#-specific keywords and operators. When you run the application,\nthe MongoDB Entity Framework Core Provider automatically translates the LINQ queries and runs them on the\ndatabase using the MongoDB Query API.",
+            "tags": "EF, EF Core, code example, read",
+            "facets": {
+                "genre": [
+                    "reference"
+                ]
+            }
+        },
+        {
+            "slug": "quick-reference",
+            "title": "Quick Reference",
+            "headings": [],
+            "paragraphs": "This page shows the provider syntax for several commands and links to\ntheir related API documentation. Command Syntax",
+            "code": [
+                {
+                    "lang": "csharp",
+                    "value": "internal class PlanetDbContext : DbContext\n{\n    public DbSet<Planet> Planets { get; init; }\n\n    public static PlanetDbContext Create(IMongoDatabase database) =>\n        new(new DbContextOptionsBuilder<PlanetDbContext>()\n            .UseMongoDB(database.Client, database.DatabaseNamespace.DatabaseName)\n            .Options);\n\n    public PlanetDbContext(DbContextOptions options)\n        : base(options)\n    {\n    }\n\n    protected override void OnModelCreating(ModelBuilder modelBuilder)\n    {\n        base.OnModelCreating(modelBuilder);\n        modelBuilder.Entity<Planet>().ToCollection(\"planets\");\n    }\n}"
+                },
+                {
+                    "lang": "csharp",
+                    "value": "// Replace the placeholder with your connection URI\nvar client = new MongoClient(\"<Your connection URI>\");\nvar db = PlanetDbContext.Create(client.GetDatabase(\"sample_planets\"));"
+                },
+                {
+                    "lang": "csharp",
+                    "value": "var planet = db.Planets.FirstOrDefault(p => p.name == \"Mercury\");\n\nConsole.WriteLine(planet.name);"
+                },
+                {
+                    "lang": "json",
+                    "value": "Mercury"
+                },
+                {
+                    "lang": "csharp",
+                    "value": "var planets = db.Planets.Where(p => p.hasRings == true);\n\nforeach (var p in planets)\n{\n   Console.WriteLine(p.name);\n}"
+                },
+                {
+                    "lang": "json",
+                    "value": "Neptune\nUranus\nSaturn\nJupiter"
+                },
+                {
+                    "lang": "csharp",
+                    "value": "db.Planets.Add(new Planet()\n{\n    name = \"Pluto\",\n    hasRings = false,\n    orderFromSun = 9\n});\n\ndb.SaveChanges();"
+                },
+                {
+                    "lang": "csharp",
+                    "value": "var planets = new[]\n{\n    new Planet()\n    {\n        _id = ObjectId.GenerateNewId(),\n        name = \"Pluto\",\n        hasRings = false,\n        orderFromSun = 9\n    },\n    new Planet()\n    {\n        _id = ObjectId.GenerateNewId(),\n        name = \"Scadrial\",\n        hasRings = false,\n        orderFromSun = 10\n    }\n};\n\ndb.Planets.AddRange(planets);\ndb.SaveChanges();"
+                },
+                {
+                    "lang": "csharp",
+                    "value": "var planet = db.Planets.FirstOrDefault(p => p.name == \"Mercury\");\nplanet.name = \"Mercury the first planet\";\n\ndb.SaveChanges();"
+                },
+                {
+                    "lang": "csharp",
+                    "value": "var planets = db.Planets.Where(p => p.orderFromSun > 0);\nforeach (var p in planets)\n{\n    p.orderFromSun++;\n}\n\ndb.SaveChanges();"
+                },
+                {
+                    "lang": "csharp",
+                    "value": "var planet = db.Planets.FirstOrDefault(p => p.name == \"Pluto\");\ndb.Planets.Remove(planet);\n\ndb.SaveChanges();"
+                },
+                {
+                    "lang": "csharp",
+                    "value": "var pluto = db.Planets.FirstOrDefault(p => p.name == \"Pluto\");\nvar scadrial = db.Planets.FirstOrDefault(p => p.name == \"Scadrial\");\nvar planets = new[] { pluto, scadrial };\ndb.Planets.RemoveRange(planets);\n\ndb.SaveChanges();"
+                },
+                {
+                    "lang": "csharp",
+                    "value": "var planetList = db.Planets.OrderBy(p => p.orderFromSun);\n\nforeach (var p in planetList)\n{\n    Console.WriteLine(p.name);\n}"
+                },
+                {
+                    "lang": "json",
+                    "value": "Mercury\nVenus\nEarth\nMars\nJupiter\nSaturn\nUranus\nNeptune"
+                },
+                {
+                    "lang": "csharp",
+                    "value": "var planetList = db.Planets.OrderBy(o => o.hasRings).ThenBy(o => o.name);\n\nforeach (var p in planetList)\n{\n    Console.WriteLine(\"Has rings: \" + p.hasRings + \", Name: \" + p.name);\n}"
+                },
+                {
+                    "lang": "json",
+                    "value": "Has rings: False, Name: Earth\nHas rings: False, Name: Mars\nHas rings: False, Name: Mercury\nHas rings: False, Name: Venus\nHas rings: True, Name: Jupiter\nHas rings: True, Name: Neptune\nHas rings: True, Name: Saturn\nHas rings: True, Name: Uranus"
+                },
+                {
+                    "lang": "csharp",
+                    "value": "var planetList = db.Planets.Take(3);\n\nforeach (var p in planetList)\n{\n    Console.WriteLine(p.name);\n}"
+                },
+                {
+                    "lang": "json",
+                    "value": "Neptune\nMercury\nMars"
+                },
+                {
+                    "lang": "csharp",
+                    "value": "var planetList = db.Planets.OrderBy(p => p.orderFromSun).Skip(5);\n\nforeach (var p in planetList)\n{\n    Console.WriteLine(p.name);\n}"
+                },
+                {
+                    "lang": "json",
+                    "value": "Saturn\nUranus\nNeptune"
+                }
+            ],
+            "preview": "This page shows the provider syntax for several commands and links to\ntheir related API documentation.",
+            "tags": null,
+            "facets": null
+        }
+    ]
+}

@@ -1,0 +1,786 @@
+{
+    "url": "http://mongodb.com/docs/cluster-to-cluster-sync/v0.9",
+    "includeInGlobalSearch": false,
+    "documents": [
+        {
+            "slug": "release-notes",
+            "title": "Release Notes",
+            "headings": [],
+            "paragraphs": "Cluster-to-Cluster Sync is available as a Preview feature. This feature\nand the corresponding documentation may change at any time during\nthe Preview phase. MongoDB does not support unreleased software. Cluster-to-Cluster Sync\nshould not be used in production systems.",
+            "code": [],
+            "preview": null,
+            "tags": null,
+            "facets": null
+        },
+        {
+            "slug": "installation",
+            "title": "Installation",
+            "headings": [],
+            "paragraphs": "These documents provide instructions to install MongoDB Cluster-to-Cluster Sync. Cluster-to-Cluster Sync is available as a Preview feature. This feature\nand the corresponding documentation may change at any time during\nthe Preview phase. MongoDB does not support unreleased software. Cluster-to-Cluster Sync\nshould not be used in production systems. Install the official builds of Cluster-to-Cluster Sync on Linux-based operating systems. Install the official build of Cluster-to-Cluster Sync on macOS. Install the official build of Cluster-to-Cluster Sync on Windows.",
+            "code": [],
+            "preview": "These documents provide instructions to install MongoDB Cluster-to-Cluster Sync.",
+            "tags": null,
+            "facets": null
+        },
+        {
+            "slug": "connecting",
+            "title": "Connecting mongosync",
+            "headings": [],
+            "paragraphs": "To configure a connection with  mongosync , refer\nto the connection documentation that matches your environment: Cluster-to-Cluster Sync is available as a Preview feature. This feature\nand the corresponding documentation may change at any time during\nthe Preview phase. MongoDB does not support unreleased software. Cluster-to-Cluster Sync\nshould not be used in production systems. The  mongosync  utility creates a connection\nbetween MongoDB clusters.  mongosync  can make a connection between: self-managed clusters , MongoDB Atlas  hosted clusters, or a self-managed cluster and an Atlas hosted cluster. Connect Two Atlas Clusters Connect Two Self-Managed Clusters Connect a Self-Managed Cluster to Atlas",
+            "code": [],
+            "preview": "To configure a connection with mongosync, refer\nto the connection documentation that matches your environment:",
+            "tags": null,
+            "facets": null
+        },
+        {
+            "slug": "",
+            "title": "Cluster-to-Cluster Sync",
+            "headings": [],
+            "paragraphs": "Cluster-to-Cluster Sync provides continuous data synchronization or a\none-time data migration between two MongoDB clusters in the same or\nhybrid environments. You can enable Cluster-to-Cluster Sync with the\n mongosync  utility. mongosync  can continuously synchronize data between two clusters.\nYou can use  mongosync  to create dedicated analytics, development,\nor testing clusters that mirror your production environment.\nSynchronized clusters can also support locality requirements for audit\nand data residency compliance. In addition to continuous data synchronization,  mongosync  can also\nfacilitate a one time data migration between clusters. To get started with  mongosync , refer to the  Quick Start Guide . For more detailed information, refer to the\n Installation  or  Connecting  mongosync  page that best fits your\nsituation. The  Frequently Asked Questions (FAQ)  page addresses\ncommon questions users have asked about  mongosync . Cluster-to-Cluster Sync is available as a Preview feature. This feature\nand the corresponding documentation may change at any time during\nthe Preview phase. MongoDB does not support unreleased software. Cluster-to-Cluster Sync\nshould not be used in production systems. mongosync  does not check for compliance with the\n documented limitations . Please ensure that\nyour application is not affected by the limitations. Running  mongosync  in the presence of one of  these\nlimitations  could lead to undefined behavior on\nthe destination cluster.",
+            "code": [],
+            "preview": "Cluster-to-Cluster Sync provides continuous data synchronization or a\none-time data migration between two MongoDB clusters in the same or\nhybrid environments. You can enable Cluster-to-Cluster Sync with the\nmongosync utility.",
+            "tags": null,
+            "facets": null
+        },
+        {
+            "slug": "using-mongosync",
+            "title": "Using mongosync",
+            "headings": [],
+            "paragraphs": "Cluster-to-Cluster Sync is available as a Preview feature. This feature\nand the corresponding documentation may change at any time during\nthe Preview phase. MongoDB does not support unreleased software. Cluster-to-Cluster Sync\nshould not be used in production systems.",
+            "code": [],
+            "preview": null,
+            "tags": null,
+            "facets": null
+        },
+        {
+            "slug": "reference",
+            "title": "Reference",
+            "headings": [],
+            "paragraphs": "",
+            "code": [],
+            "preview": null,
+            "tags": null,
+            "facets": null
+        },
+        {
+            "slug": "faq",
+            "title": "Frequently Asked Questions",
+            "headings": [
+                "Can mongosync run on its own hardware?",
+                "Should I increase the size of the oplog in the source cluster?",
+                "Which connection string options does mongosync allow?",
+                "Which security and authentication options are supported?",
+                "Can I configure mongosync for high availability?",
+                "Can the source or destination be a replica set with arbiters?"
+            ],
+            "paragraphs": "This page provides answers to some frequently asked questions we have\nencountered. If you have additional questions please contact MongoDB\nSupport. Cluster-to-Cluster Sync is available as a Preview feature. This feature\nand the corresponding documentation may change at any time during\nthe Preview phase. MongoDB does not support unreleased software. Cluster-to-Cluster Sync\nshould not be used in production systems. Yes,  mongosync  can run on its own hardware.  mongosync  does not\nhave to run on the servers that host your MongoDB instances. When\n mongosync  runs on its own hardware, it can use an operating system\n(OS) that is different than the OS on the source or destination\nclusters. The proper  oplog  size depends on system hardware, network speed,\nand other factors including system workload. However, assuming network\ntransfer speeds of 30-50GB per hour, a rough formula to estimate the\nrequired  oplog  size is: To estimate the size of  oplog  needed for initial synchronization,\nsee:  oplog  Sizing . To learn more about how to increase the size of the  oplog , see:\n Change the Size of the Oplog . The  oplog  in the source cluster must be large enough to track\nevents that happen during the time it takes to complete the initial\nsync to the destination cluster. If you anticipate synchronizing a large data set, or if you plan to\npause synchronization for an extended period of time, increase the size\nof the replica set  oplog  in the source cluster. mongosync  requires  readConcern: \"majority\" \nand  writeConcern: \"majority\" . If the  readConcern  is not  majority ,  mongosync  returns an\nerror: If the  writeConcern  is not  majority ,  mongosync  returns an\nerror: mongosync  accepts all other  connection string options . mongosync  uses a standard MongoDB  connection string  to connect to the source and destination clusters. LDAP  and  X509  are supported. For available\nauthentication options, see  Authentication . There is no automatic failover built into  mongosync . However you\ncan write a script or use your operating system's process managers,\n systemd  for example, to restart the  mongosync  process. The  mongosync  binary is stateless. The metadata for restarting is\nstored on the destination cluster. A  mongosync  operation can be resumed if  mongosync  becomes\nunavailable during synchronization. When  mongosync  becomes\navailable again, restart the  mongosync  process with the same\nparameters.  mongosync  resumes the operation from where it stopped\nwhen  mongosync  became unavailable. Yes, the replica set can have arbiters. The source replica set must\nhave more than 2 non-arbiter nodes and you must sync from a non-arbiter\nnode. Use the source cluster's connection string to specify a\n read preference  for a non-arbiter, data-bearing\nnode.",
+            "code": [
+                {
+                    "lang": "shell",
+                    "value": "minimumRetentionHours = dataSizeInGB / 30"
+                },
+                {
+                    "lang": "shell",
+                    "value": "Invalid URI option, read concern must be majority"
+                },
+                {
+                    "lang": "shell",
+                    "value": "Invalid URI option, write concern must be majority"
+                }
+            ],
+            "preview": "This page provides answers to some frequently asked questions we have\nencountered. If you have additional questions please contact MongoDB\nSupport.",
+            "tags": null,
+            "facets": null
+        },
+        {
+            "slug": "multiple-mongosyncs",
+            "title": "Use mongosync on Sharded Clusters",
+            "headings": [
+                "Configure a Single mongosync Instance",
+                "Configure Multiple mongosync Instances",
+                "Verify cluster configuration",
+                "Determine the shard IDs",
+                "Connect the mongosync instances",
+                "Start Multiple mongosync Instances",
+                "Check Progress",
+                "Pause a mongosync Instance",
+                "Resume Synchronization",
+                "Commit Synchronization From  Multiple mongosync Instances",
+                "Reverse the Synchronization Direction"
+            ],
+            "paragraphs": "There are two ways to synchronize  sharded clusters . You can use either one  monogosync  or several\n monogosync  instances. For best performance with large or heavily\nloaded clusters, use multiple  monogosync  instances, one\n monogosync  for each shard in the cluster. Cluster-to-Cluster Sync is available as a Preview feature. This feature\nand the corresponding documentation may change at any time during\nthe Preview phase. MongoDB does not support unreleased software. Cluster-to-Cluster Sync\nshould not be used in production systems. To configure a single  mongosync , follow the  connection\ninstructions  for your cluster architecture to\nconnect to the  mongos  instance in your cluster. When you connect a single  mongosync  to a sharded cluster do not use\nthe  replicaSet  option or the  id \noption. The rest of this page addresses cluster to cluster synchronization\nusing multiple  monogosync  instances. To configure multiple  mongosync  instances: Verify cluster configuration Determine the shard IDs Connect the instances The source cluster and destination cluster must have the same\nnumber of shards. To get the shard IDs, connect to the source cluster\n mongos  and run the  listShards  command. The information is in the  shards  array. These instructions use a generic connection string. To modify the\nconnection string for your cluster architecture, refer to the\narchitecture specific  connection details . Run the first  mongosync  instance, connecting to  mongos . When running multiple  mongosync  instances, the number of instances\nmust equal the number of shards.  Each  mongosync  instance must be\nstarted with the  --id  option or  id  setting to\nspecify the shard it replicates. Run a new  mongosync  instance for each shard in the source cluster.\nEdit the  --id  and  --port  options for each additional\n mongosync  instance. The connection strings for the  --cluster0  and\n --cluster1  options should point to  mongos  instances.\nIn the example, they use the same  mongos  instance. Each  mongosync  instance: A single host server can run multiple  mongosync  instances. To\nimprove performance, run  mongosync  on multiple host servers. Connects to  mongos  instances in the source cluster. Connects to  mongos  instances in the destination cluster. Replicates a single shard from the source cluster,\nidentified by the  --id  option. Specifies a unique port to use during synchronization.\nConsider designating a range of ports to simplify scripting\nCluster-to-Cluster Sync operations. Use  curl  or another HTTP client to issue the  start  command to each of the  mongosync  instances. The  start  command options must be the same for all of the  mongosync \ninstances. The  mongosync  instances do not aggregate progress information\nacross shards. To review synchronization progress for a particular\nshard, use  curl  or another HTTP client to issue the\n progress  command to the  mongosync \ninstance synchronizing that shard. This command checks the progress of the  mongosync  instance that is\nrunning on  monogsync02Host  and using  port 27602  for\nsynchronization. To check progress on other shards, update the host and\nport number then repeat the API call to each  mongosync  instance. The  pause  command will temporarily halt the\nsynchronization process on a single shard. It does not pause any other\n mongosync  instances that may be running. Use  curl  or another\nHTTP client to issue the  pause  command to a  mongosync  instance. This command pauses the  mongosync  instance that is running on\n monogsync01Host  and using  port 27601  for synchronization. To\npause synchronization on other shards, update the host and port number\nthen repeat the API call to each  mongosync  instance. If one or more  mongosync  instances are paused, you can use the\n resume  command to resume synchronizing. Run a\nseparate  resume  command against each paused  mongosync  instance\nto continue synchronizing. Use  curl  or another HTTP client to issue the  resume  command to each  mongosync  instance. This command resumes synchronization on the  mongosync  instance that\nis running on  monogsync01Host  and using  port 27601 .  To\nresume synchronization on other shards, update the host and port number\nthen repeat the API call to each  mongosync  instance. When you want to complete synchronization, issue the  progress  command and check the values for  canCommit \nand  lagTimeSeconds . To minimize write blocking on the source cluster, you should only run\nthe  commit  command when the  lagTimeSeconds  value is small enough for your application. If the  lagTimeSeconds  value is small enough, and  canCommit  is\n true , issue the  commit  command to commit\nsynchronization. Repeat the process on all of the  mongosync \ninstances. The  commit  operation is blocking. The  commit  command will not\nreturn until  commit  has been called on every  mongosync \ninstance. These commands only check progress and commit synchronization for the\n mongosync  instance that is running on  monogsync01Host  and using\n port 27601 . To synchronize all of the shards, make additional calls\nto  progress  and   commit  on any other  mongosync  instances\nthat may be running. To reverse synchronization so that the original destination cluster\nacts as the source cluster: The  reverse  operation is blocking. The  reverse  command will not\nreturn until  reverse  has been called on every  mongosync \ninstance. This command reverses synchronization on the  mongosync \ninstance that is running on  monogsync01Host  and using  port\n27601 . Make additional calls to  reverse  on any other\n mongosync  instances that may be running. If you have not already done so, issue the  commit  command to each  mongosync  instance and wait\nuntil all of the commits to finish. Issue the  reverse  command to each\n mongosync  instance. Reverse synchronization is only possible if  reversible  and\n enableUserWriteBlocking  are both set to  true  when the\n start API  initiates  mongosync .",
+            "code": [
+                {
+                    "lang": "javascript",
+                    "value": "db.adminCommand( { listShards: 1 } )"
+                },
+                {
+                    "lang": "javascript",
+                    "value": "  shards: [\n    {\n      _id: 'shard01',\n      host: 'shard01/localhost:27501,localhost:27502,localhost:27503',\n      state: 1,\n      topologyTime: Timestamp({ t: 1656612236, i: 2 })\n    },\n    {\n      _id: 'shard02',\n      host: 'shard02/localhost:27504,localhost:27505,localhost:27506',\n      state: 1,\n      topologyTime: Timestamp({ t: 1656612240, i: 4 })\n    }\n  ]"
+                },
+                {
+                    "lang": "javascript",
+                    "value": "mongosync \\\n  --cluster0 \"mongodb://user:password@cluster0host:27500\" \\\n  --cluster1 \"mongodb://user:password@cluster1host:27500\" \\\n  --id shard01 --port 27601"
+                },
+                {
+                    "lang": "javascript",
+                    "value": " mongosync \\\n   --cluster0 \"mongodb://user:password@cluster0host:27500\" \\\n   --cluster1 \"mongodb://user:password@cluster1host:27500\" \\\n   --id shard02 --port 27602"
+                },
+                {
+                    "lang": "shell",
+                    "value": "curl monogsync01Host:27601/api/v1/start -XPOST --data \\\n     '{ \"source\": \"cluster0\", \"destination\": \"cluster1\", \\\n        \"reversible\": false, \"enableUserWriteBlocking\": false }'\n\ncurl monogsync02Host:27602/api/v1/start -XPOST --data \\\n     '{ \"source\": \"cluster0\", \"destination\": \"cluster1\", \\\n        \"reversible\": false, \"enableUserWriteBlocking\": false }'"
+                },
+                {
+                    "lang": "shell",
+                    "value": "curl monogsync02Host:27602/api/v1/progress -XGET"
+                },
+                {
+                    "lang": "shell",
+                    "value": "curl monogsync01Host:27601/api/v1/pause -XPOST --data '{}'"
+                },
+                {
+                    "lang": "shell",
+                    "value": "curl monogsync01Host:27601/api/v1/resume -XPOST --data '{}'"
+                },
+                {
+                    "lang": "shell",
+                    "value": "// Check progress\ncurl monogsync01Host:27601/api/v1/progress -XGET\n\n// Commit\ncurl monogsync01Host:27601/api/v1/commit -XPOST --data '{}'"
+                },
+                {
+                    "lang": "shell",
+                    "value": "curl monogsync01Host:27601/api/v1/reverse -XPOST --data '{}'"
+                }
+            ],
+            "preview": "There are two ways to synchronize sharded clusters. You can use either one monogosync or several\nmonogosync instances. For best performance with large or heavily\nloaded clusters, use multiple monogosync instances, one\nmonogosync for each shard in the cluster.",
+            "tags": null,
+            "facets": null
+        },
+        {
+            "slug": "quickstart",
+            "title": "Quickstart",
+            "headings": [
+                "Overview",
+                "Setup",
+                "Define a source and a destination cluster",
+                "Define administrative users",
+                "Source Cluster Authentication Requirements",
+                "Destination Cluster Authentication Requirements",
+                "Cluster Authentication Notes",
+                "Download and install mongosync",
+                "Connect the Clusters",
+                "Initialize monogsync",
+                "Initialization Notes",
+                "Synchronize Data Between Clusters",
+                "Synchronization Notes"
+            ],
+            "paragraphs": "Cluster-to-Cluster Sync is available as a Preview feature. This feature\nand the corresponding documentation may change at any time during\nthe Preview phase. MongoDB does not support unreleased software. Cluster-to-Cluster Sync\nshould not be used in production systems. MongoDB Cluster-to-Cluster Sync connects MongoDB clusters and provides a way\nto synchronize data between them. The tool that makes the connection is\n mongosync . This page provides a short introduction to help\nyou get started with Cluster-to-Cluster Sync. For more details, please see\nthe rest of the Cluster-to-Cluster Sync documentation. Cluster-to-Cluster Sync synchronizes data between two clusters. To run\n mongosync , you will need to: Follow the instructions below to setup Cluster-to-Cluster Sync. Define a source and a destination cluster. Define administrative users. Download and install  mongosync . Connect the clusters. If you already have a MongoDB cluster, either self-managed or\nhosted in  MongodDB Atlas ,\nuse that cluster as the source cluster. If you don't have a\ncluster to work with, you will need to create one. You will need a destination cluster that has the same topology\nas your source cluster: The source and destination clusters must be: If your clusters are self-managed, they must be MongoDB\nEnterprise clusters. Cluster-to-Cluster Sync is only supported on\nMongoDB Community Edition in a limited number of cases. For more\ninformation on using Cluster-to-Cluster Sync with MongoDB Community\nEdition, contact a MongoDB sales representative. Creating a cluster is beyond the scope of this guide. If you need\nhelp, refer to the documentation to create an  Atlas cluster  or to create a  self-managed cluster . If the source cluster is a  replica  set ,\nthe destination cluster must also be a replica set. The number\nof nodes in the destination replica set does not have to equal\nthe number of nodes in the source replica set. If the source cluster is  sharded ,\nthe destination cluster must have the same number of shards and\nthe same shard key. at least MongoDB 6.0. the same server version at least Feature Compatibility Version 6.0 the same Feature Compatibility Version If either cluster is hosted in Atlas, or if either of them\nrequires authentication, you must create a database user that has\npermissions in both clusters. The source user must have the following roles: In addition, the source user must be able to: If the source cluster is hosted in Atlas, the user must have the\n Atlas admin  role. The user must\nalso be able to read the  change stream  for\nthe cluster. readAnyDatabase  role clusterMonitor  role backup  role Run the  getParameter  command If the destination cluster is hosted in Atlas, the user must have\nthe  Atlas admin  role. To add an Atlas user, see:  Configure Database Users . To add a user to a self-managed cluster, see:  Create a User . To verify user permissions, run  db.getUser() . mongosync  is the tool that connects the source and\ndestination clusters. You can host  mongosync  on its own\nhardware,  mongosync  does not have to run on the hardware that\nhosts your MongodDB clusters. To install  mongosync : For operating system specific installation instructions, see\n Installation . Locate a host server for the  mongosync  executable that has\nnetwork connectivity to your source and destination clusters. Go to the  MongoDB Download Center . Download the  mongosync  package for your host system. Unpack the  mongosync  package. The  mongosync  executable\nis in the  bin  directory. A connection string contains the network and authentication\ndetails that  mongosync  needs to connect to the source and\ndestination clusters. Determine the hostname or IP address and port for your source and\ndestination clusters. You will use this information and the user\nauthentication details to construct the connection strings. The standard URI connection scheme has the form: Your connections strings will resemble: For more details, see  Connecting  mongosync . monogsync  must create an initial connection to the source and\ndestination clusters before it can start to sync data. To create the\ninitial connection, issue the following command on a single line (the\ncommand is reformated here for clarity): When  mongosync  first connects to the source and destination\nclusters it is in the  IDLE  state. mongosync  does not synchronize data until it receives the\n start  command. Designate the source and destination clusters with the  start  command. \"cluster0\" and \"cluster1\" are just labels,\neither cluster can be  cluster0  or  cluster1 . The command interface for  mongosync  is an HTTP server that\npublishes an HTTP API. To control  mongosync , use the API endpoints. The  start  command initiates data synchronization.\nTo start synchronizing, use  curl  or a similar program to issue the\n start  command: Once started,  mongosync  will synchronize existing data on the\nsource cluster with the destination cluster. After the initial sync has\ncompleted, new writes to the source cluster will be synchronized with\nthe destination cluster. The API documentation provides details on using the following endpoints: Endpoint Description start Starts the synchronization between a source and destination\ncluster. progress Returns the status of the synchronization process. pause Pauses the current synchronization operation. resume Resumes a paused synchronization session based on data stored on\nthe destination cluster. commit Commits the synchronization operation to the destination\ncluster. reverse Reverses the direction of a committed sync operation. The default port for the HTTP API is  27182 .  Use the  --port \noption with  mongosync  to  configure another port mongosync  can swap the source and destination clusters to enable\n reverse synchronization . To use  reverse\nsynchronization , you must pass these additional fields when you\nstart  mongosync : reverse enableUserWriteBlocking You may need to increase the file descriptor  ulimits  on the host\nthat is running  mongosync . This applies to any UNIX-like system,\nbut macOS in particular has low defaults. See  UNIX ulimit\nsettings . To estimate the size of  oplog  needed for initial synchronization,\nsee:  oplog  Sizing .",
+            "code": [
+                {
+                    "lang": "shell",
+                    "value": "mongodb://[username:password@]host1[:port1][,...hostN[:portN]][/[defaultauthdb][?options]]"
+                },
+                {
+                    "lang": "shell",
+                    "value": "cluster0:\nmongodb://clusterAdmin:superSecret@clusterOne01.fancyCorp.com:20020,clusterOne02.fancyCorp.com:20020,clusterOne03.fancyCorp.com:20020\ncluster1:\nmongodb://clusterAdmin:superSecret@clusterTwo01.fancyCorp.com:20020,clusterTwo02.fancyCorp.com:20020,clusterTwo03.fancyCorp.com:20020"
+                },
+                {
+                    "lang": "shell",
+                    "value": "./bin/mongosync --cluster0 mongodb://clusterAdmin:superSecret@clusterOne01.fancyCorp.com:20020, \\\n                           clusterOne02.fancyCorp.com:20020, \\\n                           clusterOne03.fancyCorp.com:20020 \\\n                --cluster1 mongodb://clusterAdmin:superSecret@clusterTwo01.fancyCorp.com:20020, \\\n                           clusterTwo02.fancyCorp.com:20020, \\\n                           clusterTwo03.fancyCorp.com:20020"
+                },
+                {
+                    "lang": "shell",
+                    "value": "curl localhost:27182/api/v1/start -XPOST \\\n--data '\n   {\n      \"source\": \"cluster0\",\n      \"destination\": \"cluster1\"\n   } '\n"
+                },
+                {
+                    "lang": "shell",
+                    "value": "curl localhost:27182/api/v1/reverse -XPOST --data '{ }'\n"
+                }
+            ],
+            "preview": "MongoDB Cluster-to-Cluster Sync connects MongoDB clusters and provides a way\nto synchronize data between them. The tool that makes the connection is\nmongosync. This page provides a short introduction to help\nyou get started with Cluster-to-Cluster Sync. For more details, please see\nthe rest of the Cluster-to-Cluster Sync documentation.",
+            "tags": null,
+            "facets": null
+        },
+        {
+            "slug": "connecting/onprem-to-onprem",
+            "title": "Connect Two Self-Managed Clusters",
+            "headings": [
+                "Connection Strings",
+                "Authentication",
+                "Roles",
+                "Behavior",
+                "Hosting",
+                "Initial State",
+                "Example",
+                "Gather Connection Information",
+                "Connect the Source and Destination Clusters with mongosync"
+            ],
+            "paragraphs": "This page provides instructions to connect self-managed clusters using\nMongoDB Cluster-to-Cluster Sync. Cluster-to-Cluster Sync is available as a Preview feature. This feature\nand the corresponding documentation may change at any time during\nthe Preview phase. MongoDB does not support unreleased software. Cluster-to-Cluster Sync\nshould not be used in production systems. The  mongosync  utility creates a connection\nbetween MongoDB clusters.  mongosync  can make a connection between: self-managed clusters , MongoDB Atlas  hosted clusters, or a self-managed cluster and an Atlas hosted cluster. mongosync  uses a standard  MongoDB URI\nconnection string  to connect clusters. The standard URI connection scheme has the form: Specify the hostnames of the  mongod  instances the same way\nthat they are listed in your replica set configuration. For  sharded clusters , specify the\nhostnames of the  mongos  instances instead of the\n mongod  instances. mongosync  does not require the  replicaSet  option. If either the source or destination cluster requires authentication,\nyou must give the correct credentials when calling  mongosync . The user specified in the connection string must have, at a minimum, the\n readAnyDatabase ,  clusterMonitor , and\n backup  roles. To use  mongosync  in the  reverse direction ,\nyou must create a custom role (using the  createRole  command)\nthat grants the following ActionTypes: The  setUserWriteBlockMode  and  bypassWriteBlockingMode \nActionTypes are available starting in MongoDB 6.0. To create the custom\nroles, all clusters in a project must be on MongoDB 6.0 or higher. setUserWriteBlockMode bypassWriteBlockingMode The  mongosync  utility can be hosted on its own hardware close to\neither the source or destination cluster. It does not have to be hosted\non the same server as one of the  mongod  or  mongos \ninstances in the cluster. This flexibility allows you to push, or pull,\ndata to the destination cluster with minimal impact on the\n mongod  or  mongos  instances running there. When  mongosync  connects, it is in the  IDLE  state. You must\nissue the  start  command to begin syncing. The source cluster,  cluster0 , is hosted on the following servers\nand ports: The destination cluster,  cluster1 , is hosted on the following\nservers and ports: There is an administrative user,  clusterAdmin  configured on each\ncluster with password,  superSecret . clusterOne01.fancyCorp.com:20020 clusterOne02.fancyCorp.com:20020 clusterOne03.fancyCorp.com:20020 clusterTwo01.fancyCorp.com:20020 clusterTwo02.fancyCorp.com:20020 clusterTwo03.fancyCorp.com:20020 The generic connection string format is: Use the connection information you gathered to create the connection\nstrings for  cluster0  and  cluster1 : The  mongosync  command layout below is modified for display. To\nconnect  cluster0  to  cluster  with  mongosync , enter the\nfollowing command on one line:",
+            "code": [
+                {
+                    "lang": "none",
+                    "value": "mongodb://[username:password@]host1[:port1][,...hostN[:portN]][/[defaultauthdb][?options]]"
+                },
+                {
+                    "lang": "shell",
+                    "value": "mongodb://<user>:<password>@<ip-address>:<port>,<ip-address>:<port>,<ip-address>:<port>"
+                },
+                {
+                    "lang": "shell",
+                    "value": "cluster0:\nmongodb://clusterAdmin:superSecret@clusterOne01.fancyCorp.com:20020,clusterOne02.fancyCorp.com:20020,clusterOne03.fancyCorp.com:20020\ncluster1:\nmongodb://clusterAdmin:superSecret@clusterTwo01.fancyCorp.com:20020,clusterTwo02.fancyCorp.com:20020,clusterTwo03.fancyCorp.com:20020"
+                },
+                {
+                    "lang": "shell",
+                    "value": "mongosync --cluster0 mongodb://clusterAdmin:superSecret@clusterOne01.fancyCorp.com:20020,\n                    clusterOne02.fancyCorp.com:20020,\n                    clusterOne03.fancyCorp.com:20020\n          --cluster1 mongodb://clusterAdmin:superSecret@clusterTwo01.fancyCorp.com:20020,\n                    clusterTwo02.fancyCorp.com:20020,\n                    clusterTwo03.fancyCorp.com:20020"
+                }
+            ],
+            "preview": "This page provides instructions to connect self-managed clusters using\nMongoDB Cluster-to-Cluster Sync.",
+            "tags": null,
+            "facets": null
+        },
+        {
+            "slug": "installation/install-on-windows",
+            "title": "Install on Windows",
+            "headings": [
+                "Overview",
+                "Cluster-to-Cluster Sync Version",
+                "Considerations",
+                "Platform Support",
+                "Version Requirements",
+                "Install Cluster-to-Cluster Sync",
+                "Download the ZIP file.",
+                "Extract the files from the downloaded archive.",
+                "Ensure the binary is in a directory listed in your PATH environment variable.",
+                "Run Cluster-to-Cluster Sync"
+            ],
+            "paragraphs": "Cluster-to-Cluster Sync is available as a Preview feature. This feature\nand the corresponding documentation may change at any time during\nthe Preview phase. MongoDB does not support unreleased software. Cluster-to-Cluster Sync\nshould not be used in production systems. To configure MongoDB Cluster-to-Cluster Sync on Windows using a downloaded\nZIP file follow the steps on this page. This tutorial installs MongoDB Cluster-to-Cluster Sync 0.9.0. Cluster-to-Cluster Sync is available on the following Windows operating\nsystems: Windows 10 Windows 11 Cluster-to-Cluster Sync supports synchronization between clusters.  Both\nthe source and destination cluster must use MongoDB 6.0 or later. The\n Feature Compatibility Version  must also be set to 6.0 or later. Follow these steps to manually install Cluster-to-Cluster Sync from\nthe ZIP file. Download the Cluster-to-Cluster Sync ZIP file from the MongoDB\nDownload Center. \u27a4   MongoDB Download Center In the  Version  dropdown, select the version of\nCluster-to-Cluster Sync to download. In the  Platform  dropdown, select\n Windows . In the  Package  dropdown, select\n zip . Click  Download . Windows 10 builds after 17062  include the  tar.exe  command.\nTo extract  mongosync , use the  tar  command in a system\nshell: The  mongosync  binary is in the  bin/  directory of the\nextracted ZIP file. To add the location of the  mongosync  binary to\nyour  PATH , do one of the following: Copy the binary into a directory listed in your  PATH . Add the  bin  directory to your  PATH . To update the  PATH ,\nreplace  <path-to-bin>  with the actual path and execute the\nfollowing command in a  cmd  shell: To run and administer  mongosync , see  Using  mongosync .",
+            "code": [
+                {
+                    "lang": "bash",
+                    "value": "tar -xf mongosync-*.zip"
+                },
+                {
+                    "lang": "bash",
+                    "value": "pathman /au` <path-to-bin>"
+                }
+            ],
+            "preview": "To configure MongoDB Cluster-to-Cluster Sync on Windows using a downloaded\nZIP file follow the steps on this page.",
+            "tags": null,
+            "facets": null
+        },
+        {
+            "slug": "installation/install-on-macos",
+            "title": "Install on macOS",
+            "headings": [
+                "Overview",
+                "Cluster-to-Cluster Sync Version",
+                "Considerations",
+                "Platform Support",
+                "Version Requirements",
+                "Install Cluster-to-Cluster Sync",
+                "Download the tarball.",
+                "Extract the files from the downloaded archive.",
+                "Ensure the binary is in a directory listed in your PATH environment variable.",
+                "Run Cluster-to-Cluster Sync"
+            ],
+            "paragraphs": "Cluster-to-Cluster Sync is available as a Preview feature. This feature\nand the corresponding documentation may change at any time during\nthe Preview phase. MongoDB does not support unreleased software. Cluster-to-Cluster Sync\nshould not be used in production systems. To configure MongoDB Cluster-to-Cluster Sync on macOS using a downloaded\nZIP file, follow the steps on this page. This tutorial installs MongoDB Cluster-to-Cluster Sync 0.9.0. MongoDB Cluster-to-Cluster Sync 0.9.0 supports macOS 10.14 or later. Cluster-to-Cluster Sync supports synchronization between clusters.  Both\nthe source and destination cluster must use MongoDB 6.0 or later. The\n Feature Compatibility Version  must also be set to 6.0 or later. Follow these steps to manually install Cluster-to-Cluster Sync from\nthe ZIP file. Download the Cluster-to-Cluster Sync ZIP file from the following\nlink: \u27a4   MongoDB Download Center In the  Version  dropdown, select the version of\nCluster-to-Cluster Sync to download. In the  Platform  dropdown, select  macOS . In the  Package  dropdown, select  zip . Click  Download . To extract  mongosync , use the  tar  command in a system\nshell: The  mongosync  binary is in the  bin/  directory of the\nunpacked tarball. To add the location of the  mongosync  binary to\nyour  PATH , do one of the following: Copy the binary into a directory listed in your  PATH \nvariable, such as  /usr/local/bin . (Update\n /path/to/mongosync/bin  to reflect the location where you\nextracted the  tar  file.) Create symbolic links to the  mongosync  binary from a\ndirectory such as  /usr/local/bin  that is already in your\n PATH . (Update  /path/to/mongosync/bin  to reflect the\nlocation where you extracted the  tar  file.) To run and administer  mongosync , see  Using  mongosync .",
+            "code": [
+                {
+                    "lang": "bash",
+                    "value": "tar xopf mongosync-*.zip"
+                },
+                {
+                    "lang": "bash",
+                    "value": "sudo cp /path/to/mongosync/bin/mongosync /usr/local/bin/"
+                },
+                {
+                    "lang": "bash",
+                    "value": "sudo ln -s  /path/to/mongosync/bin/mongosync /usr/local/bin/mongosync"
+                }
+            ],
+            "preview": "To configure MongoDB Cluster-to-Cluster Sync on macOS using a downloaded\nZIP file, follow the steps on this page.",
+            "tags": null,
+            "facets": null
+        },
+        {
+            "slug": "release-notes/0.9",
+            "title": "Release Notes for mongosync 0.9",
+            "headings": [
+                "Preview Software"
+            ],
+            "paragraphs": "Cluster-to-Cluster Sync is available as a Preview feature. This feature\nand the corresponding documentation may change at any time during\nthe Preview phase. MongoDB does not support unreleased software. Cluster-to-Cluster Sync\nshould not be used in production systems. mongosync  does not check for compliance with the\n documented limitations . Please ensure that\nyour application is not affected by the limitations. Running  mongosync  in the presence of one of  these\nlimitations  could lead to undefined behavior on\nthe destination cluster.",
+            "code": [],
+            "preview": null,
+            "tags": null,
+            "facets": null
+        },
+        {
+            "slug": "connecting/atlas-to-atlas",
+            "title": "Connect Two Atlas Clusters",
+            "headings": [
+                "Connection Strings",
+                "Authentication",
+                "Roles",
+                "Behavior",
+                "Hosting",
+                "Initial State",
+                "Example",
+                "Gather Connection Information",
+                "Connect the Source and Destination Clusters with mongosync"
+            ],
+            "paragraphs": "This page provides instructions to connect Atlas clusters using\nMongoDB Cluster-to-Cluster Sync. For additional details on connecting to an\nAtlas cluster, see  Connect to a Database Deployment Cluster-to-Cluster Sync is available as a Preview feature. This feature\nand the corresponding documentation may change at any time during\nthe Preview phase. MongoDB does not support unreleased software. Cluster-to-Cluster Sync\nshould not be used in production systems. The  mongosync  utility creates a connection\nbetween MongoDB clusters.  mongosync  can make a connection between: self-managed clusters , MongoDB Atlas  hosted clusters, or a self-managed cluster and an Atlas hosted cluster. mongosync  uses a standard  MongoDB URI\nconnection string  to connect clusters. The standard URI connection scheme has the form: Specify the hostnames of the  mongod  instances the same way\nthat they are listed in your replica set configuration. For  sharded clusters , specify the\nhostnames of the  mongos  instances instead of the\n mongod  instances. mongosync  does not require the  replicaSet  option. Provide valid authentication to connect to a  MongoDB Atlas  cluster. If you do not already have an Atlas database user,\nyou must  create a user . The user specified in the connection string must have, at a minimum, the\n atlasAdmin  role. To use  mongosync  in the  reverse direction ,\nyou must  create a custum role  that grants the\nfollowing ActionTypes: The  setUserWriteBlockMode  and  bypassWriteBlockingMode \nActionTypes are available starting in MongoDB 6.0. To create the custom\nroles, all clusters in a project must be on MongoDB 6.0 or higher. setUserWriteBlockMode bypassWriteBlockingMode The  mongosync  utility can be hosted on its own hardware close to\neither the source or destination cluster. It does not have to be hosted\non the same server as one of the  mongod  or  mongos \ninstances in the cluster. This flexibility allows you to push, or pull,\ndata to the destination cluster with minimal impact on the\n mongod  or  mongos  instances running there. When  mongosync  connects, it is in the  IDLE  state. You must\nissue the  start  command to begin syncing. The source cluster,  cluster0 , is hosted on the following servers\nand ports: The destination cluster,  cluster1 , is hosted on the following\nservers and ports: There is an administrative user,  clusterAdmin  configured on each\ncluster with password,  superSecret . clusterOne01.fancyCorp.com:20020 clusterOne02.fancyCorp.com:20020 clusterOne03.fancyCorp.com:20020 clusterTwo01.fancyCorp.com:20020 clusterTwo02.fancyCorp.com:20020 clusterTwo03.fancyCorp.com:20020 The generic connection string format is: Use the connection information you gathered to create the connection\nstrings for  cluster0  and  cluster1 : The  mongosync  command layout below is modified for display. To\nconnect  cluster0  to  cluster  with  mongosync , enter the\nfollowing command on one line:",
+            "code": [
+                {
+                    "lang": "none",
+                    "value": "mongodb://[username:password@]host1[:port1][,...hostN[:portN]][/[defaultauthdb][?options]]"
+                },
+                {
+                    "lang": "shell",
+                    "value": "mongodb://<user>:<password>@<ip-address>:<port>,<ip-address>:<port>,<ip-address>:<port>"
+                },
+                {
+                    "lang": "shell",
+                    "value": "cluster0:\nmongodb://clusterAdmin:superSecret@clusterOne01.fancyCorp.com:20020,clusterOne02.fancyCorp.com:20020,clusterOne03.fancyCorp.com:20020\ncluster1:\nmongodb://clusterAdmin:superSecret@clusterTwo01.fancyCorp.com:20020,clusterTwo02.fancyCorp.com:20020,clusterTwo03.fancyCorp.com:20020"
+                },
+                {
+                    "lang": "shell",
+                    "value": "mongosync --cluster0 mongodb://clusterAdmin:superSecret@clusterOne01.fancyCorp.com:20020,\n                    clusterOne02.fancyCorp.com:20020,\n                    clusterOne03.fancyCorp.com:20020\n          --cluster1 mongodb://clusterAdmin:superSecret@clusterTwo01.fancyCorp.com:20020,\n                    clusterTwo02.fancyCorp.com:20020,\n                    clusterTwo03.fancyCorp.com:20020"
+                }
+            ],
+            "preview": "This page provides instructions to connect Atlas clusters using\nMongoDB Cluster-to-Cluster Sync. For additional details on connecting to an\nAtlas cluster, see Connect to a Database Deployment",
+            "tags": null,
+            "facets": null
+        },
+        {
+            "slug": "installation/install-on-linux",
+            "title": "Install on Linux",
+            "headings": [
+                "Overview",
+                "Cluster-to-Cluster Sync Version",
+                "Considerations",
+                "Platform Support",
+                "Version Requirements",
+                "Install Cluster-to-Cluster Sync",
+                "Download the tarball.",
+                "Extract the files from the downloaded archive.",
+                "Ensure the binary is in a directory listed in your PATH environment variable.",
+                "Run Cluster-to-Cluster Sync"
+            ],
+            "paragraphs": "Cluster-to-Cluster Sync is available as a Preview feature. This feature\nand the corresponding documentation may change at any time during\nthe Preview phase. MongoDB does not support unreleased software. Cluster-to-Cluster Sync\nshould not be used in production systems. To configure MongoDB Cluster-to-Cluster Sync on Linux using a downloaded\n .tgz  tarball, follow the steps on this page. Cluster-to-Cluster Sync is available on select platforms. This tutorial installs MongoDB Cluster-to-Cluster Sync 0.9.0. Cluster-to-Cluster Sync is available on the following Linux operating\nsystems: Amazon Linux 2 Red Hat Enterprise Linux (RHEL) 7 Red Hat Enterprise Linux (RHEL) 8 Ubuntu 18.04 Ubuntu 20.04 Cluster-to-Cluster Sync supports synchronization between clusters.  Both\nthe source and destination cluster must use MongoDB 6.0 or later. The\n Feature Compatibility Version  must also be set to 6.0 or later. Follow these steps to manually install Cluster-to-Cluster Sync from\nthe  .tgz . Download the Cluster-to-Cluster Sync  .tgz  tarball from the\nfollowing link: \u27a4   MongoDB Download Center In the  Version  dropdown, select the version of\nCluster-to-Cluster Sync to download. In the  Platform  dropdown, select\n Linux . In the  Package  dropdown, select\n shell (tgz) . Click  Download . To extract  mongosync , use the  tar  command in a system\nshell: The  mongosync  binary is in the  bin/  directory of the\nunpacked tarball. To add the location of the  mongosync  binary to\nyour  PATH , do one of the following: Copy the binary into a directory listed in your  PATH \nvariable, such as  /usr/local/bin . (Update\n /path/to/mongosync/bin  to reflect the location where you\nextracted the  tar  file.) Create symbolic links to the  mongosync  binary from a\ndirectory such as  /usr/local/bin  that is already in your\n PATH . (Update  /path/to/mongosync/bin  to reflect the\nlocation where you extracted the  tar  file.) To run and administer  mongosync , see  Using  mongosync .",
+            "code": [
+                {
+                    "lang": "bash",
+                    "value": "tar -zxvf mongosync-*.tgz"
+                },
+                {
+                    "lang": "bash",
+                    "value": "sudo cp /path/to/mongosync/bin/mongosync /usr/local/bin/"
+                },
+                {
+                    "lang": "bash",
+                    "value": "sudo ln -s  /path/to/mongosync/bin/mongosync /usr/local/bin/mongosync"
+                }
+            ],
+            "preview": "To configure MongoDB Cluster-to-Cluster Sync on Linux using a downloaded\n.tgz tarball, follow the steps on this page.",
+            "tags": null,
+            "facets": null
+        },
+        {
+            "slug": "reference/api",
+            "title": "mongosync API Endpoints",
+            "headings": [],
+            "paragraphs": "",
+            "code": [],
+            "preview": null,
+            "tags": null,
+            "facets": null
+        },
+        {
+            "slug": "connecting/onprem-to-atlas",
+            "title": "Connect a Self-Managed Cluster to Atlas",
+            "headings": [
+                "Connection Strings",
+                "Authentication",
+                "Roles",
+                "Behavior",
+                "Hosting",
+                "Initial State",
+                "Example",
+                "Gather Connection Information",
+                "Connect the Source and Destination Clusters with mongosync"
+            ],
+            "paragraphs": "This page provides instructions to connect a self-managed cluster to an\nAtlas cluster using MongoDB Cluster-to-Cluster Sync. For additional details on connecting to an Atlas cluster, see\n Connect to a Database Deployment Cluster-to-Cluster Sync is available as a Preview feature. This feature\nand the corresponding documentation may change at any time during\nthe Preview phase. MongoDB does not support unreleased software. Cluster-to-Cluster Sync\nshould not be used in production systems. The  mongosync  utility creates a connection\nbetween MongoDB clusters.  mongosync  can make a connection between: self-managed clusters , MongoDB Atlas  hosted clusters, or a self-managed cluster and an Atlas hosted cluster. mongosync  uses a standard  MongoDB URI\nconnection string  to connect clusters. The standard URI connection scheme has the form: Specify the hostnames of the  mongod  instances the same way\nthat they are listed in your replica set configuration. For  sharded clusters , specify the\nhostnames of the  mongos  instances instead of the\n mongod  instances. mongosync  does not require the  replicaSet  option. Provide valid authentication to connect to a  MongoDB Atlas  cluster. If you do not already have an Atlas database user,\nyou must  create a user . If either the source or destination cluster requires authentication,\nyou must give the correct credentials when calling  mongosync . The user specified in the connection string must have, at a minimum, the\n atlasAdmin  role. To use  mongosync  in the  reverse direction ,\nyou must  create a custum role  that grants the\nfollowing ActionTypes: The  setUserWriteBlockMode  and  bypassWriteBlockingMode \nActionTypes are available starting in MongoDB 6.0. To create the custom\nroles, all clusters in a project must be on MongoDB 6.0 or higher. setUserWriteBlockMode bypassWriteBlockingMode The  mongosync  utility can be hosted on its own hardware close to\neither the source or destination cluster. It does not have to be hosted\non the same server as one of the  mongod  or  mongos \ninstances in the cluster. This flexibility allows you to push, or pull,\ndata to the destination cluster with minimal impact on the\n mongod  or  mongos  instances running there. When  mongosync  connects, it is in the  IDLE  state. You must\nissue the  start  command to begin syncing. The source cluster,  cluster0 , is hosted on the following servers\nand ports: The destination cluster,  cluster1 , is hosted on the following\nservers and ports: There is an administrative user,  clusterAdmin  configured on each\ncluster with password,  superSecret . clusterOne01.fancyCorp.com:20020 clusterOne02.fancyCorp.com:20020 clusterOne03.fancyCorp.com:20020 clusterTwo01.fancyCorp.com:20020 clusterTwo02.fancyCorp.com:20020 clusterTwo03.fancyCorp.com:20020 The generic connection string format is: Use the connection information you gathered to create the connection\nstrings for  cluster0  and  cluster1 : The  mongosync  command layout below is modified for display. To\nconnect  cluster0  to  cluster  with  mongosync , enter the\nfollowing command on one line:",
+            "code": [
+                {
+                    "lang": "none",
+                    "value": "mongodb://[username:password@]host1[:port1][,...hostN[:portN]][/[defaultauthdb][?options]]"
+                },
+                {
+                    "lang": "shell",
+                    "value": "mongodb://<user>:<password>@<ip-address>:<port>,<ip-address>:<port>,<ip-address>:<port>"
+                },
+                {
+                    "lang": "shell",
+                    "value": "cluster0:\nmongodb://clusterAdmin:superSecret@clusterOne01.fancyCorp.com:20020,clusterOne02.fancyCorp.com:20020,clusterOne03.fancyCorp.com:20020\ncluster1:\nmongodb://clusterAdmin:superSecret@clusterTwo01.fancyCorp.com:20020,clusterTwo02.fancyCorp.com:20020,clusterTwo03.fancyCorp.com:20020"
+                },
+                {
+                    "lang": "shell",
+                    "value": "mongosync --cluster0 mongodb://clusterAdmin:superSecret@clusterOne01.fancyCorp.com:20020,\n                    clusterOne02.fancyCorp.com:20020,\n                    clusterOne03.fancyCorp.com:20020\n          --cluster1 mongodb://clusterAdmin:superSecret@clusterTwo01.fancyCorp.com:20020,\n                    clusterTwo02.fancyCorp.com:20020,\n                    clusterTwo03.fancyCorp.com:20020"
+                }
+            ],
+            "preview": "This page provides instructions to connect a self-managed cluster to an\nAtlas cluster using MongoDB Cluster-to-Cluster Sync.",
+            "tags": null,
+            "facets": null
+        },
+        {
+            "slug": "reference/oplog-sizing",
+            "title": "oplog Sizing",
+            "headings": [
+                "Estimate oplog Size Needed for Initial Sync",
+                "Determine the oplog Time Span",
+                "Estimate Copy Rate During Synching",
+                "Estimate Copy Time",
+                "Validate oplog Size"
+            ],
+            "paragraphs": "The  mongosync  program uses  change streams  to synchronize data between source and destination\nclusters.  mongosync  does not access the  oplog  directly,\nbut when a change stream returns events from the past, the events must\nbe within the  oplog  time range. Cluster-to-Cluster Sync is available as a Preview feature. This feature\nand the corresponding documentation may change at any time during\nthe Preview phase. MongoDB does not support unreleased software. Cluster-to-Cluster Sync\nshould not be used in production systems. The  oplog  in the source cluster must be large enough to track\nevents that happen during the time it takes to complete the initial\nsync to the destination cluster. If you anticipate synchronizing a large data set, or if you plan to\npause synchronization for an extended period of time, increase the size\nof the replica set  oplog  in the source cluster. To get the difference in seconds between the first and last entry\nin the  oplog  run  db.getReplicationInfo() . If you\nare replicating a sharded cluster, run the command on each shard. The value returned is the minimum  oplog  window of the\ncluster. If there are multiple shards, the smallest number is the\nminimum  oplog  window. To gather performance data while synching, start the sync process\nand monitor how fast data is transferred between clusters. To start syncing, run the  /start  command. To get the  copy_rate : The  copy_rate  is: run the   /progress  command to get\n estimatedCopiedBytes_time01 wait a second or two run the   /progress  command to get\n estimatedCopiedBytes_time02 Estimate the time needed to copy the entire collection. The\nestimated copy time is: If the estimated time is larger than the minimum oplog window you\nmust cancel synchronization. Before restarting, make one of the\nfollowing changes: Increase the oplog window. Use  replSetResizeOplog \nto set  minRetentionHours  greater than the estimated copy\ntime. Scale up the  mongosync  instance. Add cpu or memory to scale\nup the  mongosync  node so that it has a higher copy rate. The copy rate may vary during synchronization. To monitor progress,\nrepeat the  steps to estimate the copy rate  and verify that the copy rate stays about the\nsame.",
+            "code": [
+                {
+                    "lang": "javascript",
+                    "value": "db.getReplicationInfo().timeDiff"
+                },
+                {
+                    "lang": "shell",
+                    "value": "copy_rate = ( estimatedCopiedBytes_time02 - estimatedCopiedBytes_01) / time_between_requests"
+                },
+                {
+                    "lang": "shell",
+                    "value": "estimatedCopyTime = estimatedTotalBytes / copy_rate"
+                }
+            ],
+            "preview": "The mongosync program uses change streams to synchronize data between source and destination\nclusters. mongosync does not access the oplog directly,\nbut when a change stream returns events from the past, the events must\nbe within the oplog time range.",
+            "tags": null,
+            "facets": null
+        },
+        {
+            "slug": "reference/mongosync-states",
+            "title": "mongosync States",
+            "headings": [
+                "View the Current State",
+                "State Descriptions"
+            ],
+            "paragraphs": "mongosync  enters different states depending on the requests it\nreceives.  mongosync  can only be in a single state at a given time.\nThe current  mongosync  states determines which API operations you can\nrun. This page describes  mongosync  states. Cluster-to-Cluster Sync is available as a Preview feature. This feature\nand the corresponding documentation may change at any time during\nthe Preview phase. MongoDB does not support unreleased software. Cluster-to-Cluster Sync\nshould not be used in production systems. To view the current state of  mongosync , use the  /progress . endpoint. The  /progress \nendpoint returns the state in the  state  field. The following table describes each state and lists the permitted\noperations in that state. State Description Possible API Operations IDLE mongosync  is initialized and ready for a sync job to\nbegin. POST   /start GET   /progress RUNNING The sync process is currently running. In this state, data is\ninitially synced to the destination cluster. Subsequent writes to\nthe source cluster are applied to the destination cluster. POST   /pause POST   /commit GET   /progress PAUSED The sync process is paused. To resume the sync process, send a\nrequest to the  /resume  endpoint. POST   /resume GET   /progress COMMITTING The cutover for the sync process has started. The time it takes\nto transition to the  COMMITTED  phase depends on\n lagTimeSeconds . To monitor  lagTimeSeconds  or to see if\n mongosync  has finished committing, use the  /progress  endpoint. GET   /progress COMMITTED The cutover for the sync process is complete. GET   /progress",
+            "code": [],
+            "preview": "mongosync enters different states depending on the requests it\nreceives. mongosync can only be in a single state at a given time.\nThe current mongosync states determines which API operations you can\nrun.",
+            "tags": null,
+            "facets": null
+        },
+        {
+            "slug": "reference/limitations",
+            "title": "Limitations",
+            "headings": [
+                "General Limitations",
+                "MongoDB Community Edition",
+                "Unsupported Collection Types",
+                "Sharded Clusters",
+                "Reversing",
+                "Multiple Clusters",
+                "System Collections"
+            ],
+            "paragraphs": "MongoDB Cluster-to-Cluster Sync is under active development. This preview\nrelease has several limitations. Review the list for changes after the\nCluster-to-Cluster Sync General Availability release. Cluster-to-Cluster Sync is available as a Preview feature. This feature\nand the corresponding documentation may change at any time during\nthe Preview phase. MongoDB does not support unreleased software. Cluster-to-Cluster Sync\nshould not be used in production systems. mongosync  does not check for compliance with the documented\nlimitations. Please ensure that your application is not affected by\nthe limitations . Running  mongosync  in the presence of one of\nthese limitations could lead to undefined behavior on the destination\ncluster. The minimum supported server version is MongoDB 6.0. The source and destination clusters must have the same release\nversion. The minimum supported  Feature Compatibility Version  is 6.0. The source and destination clusters must have the same Feature\nCompatibility Version. The destination cluster must be empty. mongosync  does not validate that the clusters or the environment\nare properly configured. Other clients must not write to the destination cluster while\n mongosync  is running. If write blocking is disabled, the client must  prevent writes  to the source cluster before starting the commit\nprocess. Synchronizing a subset of the source data, \"Filtered\nSynchronization\", is not supported. Network compression is not supported. applyOps  operations from the source cluster are not\nsupported. system.* collections  are not\nreplicated. Documents that have dollar ( $ ) prefixed field names are not\nsupported. See  Field Names with Periods and Dollar Signs . Serverless clusters are not supported. The MongoDB Shared Tier is not supported. Queryable Encryption  is\nnot supported. Cluster-to-Cluster Sync supports a limited number of operations with\nMongoDB Community Edition. Please contact a sales representative to\ndiscuss your requirements. Capped collections are currently not supported. Time-series collections are not supported. The  shard topologies  must be the same\nin the source and target clusters. The following configurations are\nnot supported. Replica set to sharded cluster. Sharded cluster to replica set. Unequal numbers of source and destination shards. The  movePrimary  command cannot be used to reassign the primary\nshard while syncing There is no replication for zone configuration.  mongosync \nreplicates data, it does not inherit zones. Shards cannot be added or removed while synchronizing. Only indexes which exist on all shards are synchronized. The shard key cannot be  refined  while\nsynchronizing. The shard key cannot be modified using  reshardCollection \nduring resharding. The maximum number of  shard key indexes  is one lower than normal, 63 instead of\n64. If the old source has  unique indexes  which\nare partially distributed across shards, reversing may cause failures.\nEnsure that unique indexes exist on all shards before reversing. Syncing multiple source clusters to one destination cluster is not\nsupported. Syncing one source cluster to many destination clusters is not\nsupported. Cluster-to-Cluster Sync does not replicate  system collections  to the destination cluster. If you issue a  dropDatabase  command on the source cluster,\nthis change is not directly applied on the destination cluster. Instead,\nCluster-to-Cluster Sync drops user collections and views in the database\non the destination cluster, but it does not drop system collections\non that database. For example, on the destination cluster: In these cases, the replication of  dropDatabase  removes all user-created\ncollections from the database, but leaves its system collections on the\ndestination cluster. The drop operation does not affect a user-created\n system.js  collection. If you enable profiling, the  system.profile  collection remains. If you create views on the source cluster and then drop the database,\nreplicating the drop removes the views, but leaves an empty\n system.views  collection.",
+            "code": [],
+            "preview": "MongoDB Cluster-to-Cluster Sync is under active development. This preview\nrelease has several limitations. Review the list for changes after the\nCluster-to-Cluster Sync General Availability release.",
+            "tags": null,
+            "facets": null
+        },
+        {
+            "slug": "reference/api/resume",
+            "title": "resume",
+            "headings": [
+                "Description",
+                "Requirement",
+                "Request",
+                "Request Body Parameters",
+                "Response",
+                "Example",
+                "Request",
+                "Response",
+                "Behavior"
+            ],
+            "paragraphs": "Cluster-to-Cluster Sync is available as a Preview feature. This feature\nand the corresponding documentation may change at any time during\nthe Preview phase. MongoDB does not support unreleased software. Cluster-to-Cluster Sync\nshould not be used in production systems. Resumes a paused synchronization session based on data stored on the\ndestination cluster. To use the  resume  endpoint,  mongosync  must be in the  PAUSED \nstate. This endpoint does not use HTTP request body parameters. However, you\n must  specify the  --data  option with an empty object  { } . Field Type Description success boolean When the request is successful, this value is  true . error string If an error occurred, indicates the name of the error. This field\nis omitted from the response when  success  is  true . errorDescription string Detailed description of the error that occurred. This field is\nomitted from the response when  success  is  true . The following example resumes a paused synchronization operation. If the  resume  request is successful,  mongosync  enters the\n RUNNING  state.",
+            "code": [
+                {
+                    "lang": "http",
+                    "value": "POST /api/v1/resume"
+                },
+                {
+                    "lang": "shell",
+                    "value": "curl localhost:27182/api/v1/resume -XPOST --data '{ }'\n"
+                },
+                {
+                    "lang": "shell",
+                    "value": "{\"success\":true}\n"
+                }
+            ],
+            "preview": "Resumes a paused synchronization session based on data stored on the\ndestination cluster.",
+            "tags": null,
+            "facets": null
+        },
+        {
+            "slug": "reference/configuration",
+            "title": "Configuration",
+            "headings": [
+                "Configuration File",
+                "Options"
+            ],
+            "paragraphs": "You can configure  mongosync  instances at startup using a configuration\nfile.  The configuration file contains settings that are the equivalent of\n mongosync  command-line options. Cluster-to-Cluster Sync is available as a Preview feature. This feature\nand the corresponding documentation may change at any time during\nthe Preview phase. MongoDB does not support unreleased software. Cluster-to-Cluster Sync\nshould not be used in production systems. Most  mongosync  command-line options can be written to file.\nThe configuration file specifies values for each setting using YAML format.\nFor example: To use a configuration file, start  mongosync  with the  --config \noption to set the path to the file: Type : string To set the  cluster0  setting from the command-line,\nsee the  --cluster0  option. Sets the  connection URI  for the first cluster.\nThe first cluster can serve as either the source or the destination\nin the sync process. Designate the source and destination clusters\nin the call to the  start  API endpoint. For more information on connecting  mongosync , see\n Connections . Type : string To set the  cluster1  setting from the command-line,\nsee the  --cluster1  option. Sets the  connection URI  for the second cluster.\nThe second cluster can serve as either the source or the destination\nin the sync process. Designate the source and destination clusters\nin the call to the  start  API endpoint. For more information on connecting  mongosync , see\n Connections . Type : string To set the  id  setting from the command-line,\nsee the  --id  option. Sets an identifier for the  mongosync  instance. Use this  setting  when running multiple instances of  mongosync  on a sharded\ncluster, to synchronize the shards individually. The identifier value for this  setting  must correspond to the shard ID of the\nshard it syncs.  To find the shard ID, use the  listShards  command. Type : string To set the  logPath  setting from the command-line,\nsee the  --logPath  option. Sets the path to the log directory. Cluster-to-Cluster Sync writes logs\nto files in this directory. Type : integer To set the  port  setting from the command-line,\nsee the  --port  option. Default :  27182 Sets the port used by the HTTP server for the Cluster-to-Cluster Sync\nHTTP API. Type : string To set the  verbosity  setting from the command-line,\nsee the  --verbosity  option. Default :  INFO Sets the verbosity level to use in log messages.\nCluster-to-Cluster Sync logs all messages at the specified level and\nany messages at lower levels. The  verbosity   setting  supports the following values: TRACE DEBUG INFO WARN ERROR FATAL PANIC",
+            "code": [
+                {
+                    "lang": "yaml",
+                    "value": "cluster0: \"mongodb://192.0.2.10:27017\"\ncluster1: \"mongodb://192.0.2.20:27017\"\nlogPath: \"/var/log/mongosync\"\nverbosity: \"WARN\""
+                },
+                {
+                    "lang": "console",
+                    "value": "$ mongosync --config mongosync.conf"
+                }
+            ],
+            "preview": "Type: string",
+            "tags": null,
+            "facets": null
+        },
+        {
+            "slug": "reference/api/progress",
+            "title": "progress",
+            "headings": [
+                "Description",
+                "Request",
+                "Response",
+                "Example",
+                "Request",
+                "Response",
+                "Behavior"
+            ],
+            "paragraphs": "Returns the status of the synchronization process. All response fields are wrapped in a top-level  progress  object. Field Type Description state string The current state of  mongosync . For information on the\npossible states, see  State Descriptions . canCommit boolean If  true , indicates that a  commit \nrequest will succeed. This also means that the initial sync has\ncompleted and is applying change events. info string Provides extra information on the synchronization progress.\nPossible  info  values include: \"collection copy\" \"change event application\" \"waiting for commit to complete\" \"commit completed\" lagTimeSeconds integer Time in seconds between the last applied event and time of the\ncurrent latest event. collectionCopy object Describes the total amount of data being copied and the\namount that has already been copied to the destination cluster. collectionCopy.estimatedTotalBytes integer Estimated total number of bytes to be copied. collectionCopy.estimatedCopiedBytes integer Estimated number of bytes which have been copied to the\ndestination cluster. directionMapping object Describes the mapping direction for the synchronization, namely\nthe source and destination clusters. directionMapping.Source string Source cluster. Returned in the form\n <cluster name>: <host>:<port> . directionMapping.Destination string Destination cluster. Returned in the form\n <cluster name>: <host>:<port> . The following example returns the status of the synchronization process. When  mongosync  is in the  IDLE  state, all output\nfields except  state  and  canCommit  are  null . When  mongosync  is in the  PAUSED  state, the\n lagTimeSeconds  field is  null . The endpoint does not auto-refresh. To get updated status, call the\n progress  endpoint again.",
+            "code": [
+                {
+                    "lang": "http",
+                    "value": "GET /api/v1/progress"
+                },
+                {
+                    "lang": "shell",
+                    "value": "curl localhost:27182/api/v1/progress -XGET\n"
+                },
+                {
+                    "lang": "json",
+                    "value": "{\n   \"progress\":\n      {\n         \"state\":\"RUNNING\",\n         \"canCommit\":true,\n         \"info\":\"change event application\",\n         \"lagTimeSeconds\":0,\n         \"collectionCopy\":\n            {\n               \"estimatedTotalBytes\":694,\n               \"estimatedCopiedBytes\":694\n            },\n         \"directionMapping\":\n            {\n               \"Source\":\"cluster0: localhost:27017\",\n               \"Destination\":\"cluster1: localhost:27018\"\n            }\n      }\n}\n"
+                }
+            ],
+            "preview": "Returns the status of the synchronization process.",
+            "tags": null,
+            "facets": null
+        },
+        {
+            "slug": "reference/api/pause",
+            "title": "pause",
+            "headings": [
+                "Description",
+                "Requirement",
+                "Request",
+                "Request Body Parameters",
+                "Response",
+                "Example",
+                "Request",
+                "Response",
+                "Behavior"
+            ],
+            "paragraphs": "Cluster-to-Cluster Sync is available as a Preview feature. This feature\nand the corresponding documentation may change at any time during\nthe Preview phase. MongoDB does not support unreleased software. Cluster-to-Cluster Sync\nshould not be used in production systems. Pauses the current synchronization operation. To use the  pause  endpoint,  mongosync  must be in the  RUNNING \nstate. This endpoint does not use HTTP request body parameters. However, you\n must  specify the  --data  option with an empty object  { } . Field Type Description success boolean When the request is successful, this value is  true . error string If an error occurred, indicates the name of the error. This field\nis omitted from the response when  success  is  true . errorDescription string Detailed description of the error that occurred. This field is\nomitted from the response when  success  is  true . The following example pauses the current synchronization operation. If the  pause  request is successful,  mongosync  enters the\n PAUSED  state. If you plan to pause synchronization for an extended period of time,\nincrease the size of the replica set  oplog  in the source\ncluster. To learn more, see  Frequently Asked Questions .",
+            "code": [
+                {
+                    "lang": "http",
+                    "value": "POST /api/v1/pause"
+                },
+                {
+                    "lang": "shell",
+                    "value": "curl localhost:27182/api/v1/pause -XPOST --data '{ }'\n"
+                },
+                {
+                    "lang": "json",
+                    "value": "{\"success\":true}\n"
+                }
+            ],
+            "preview": "Pauses the current synchronization operation.",
+            "tags": null,
+            "facets": null
+        },
+        {
+            "slug": "reference/api/reverse",
+            "title": "reverse",
+            "headings": [
+                "Description",
+                "Requirements",
+                "Request",
+                "Request Body Parameters",
+                "Response",
+                "Example",
+                "Request",
+                "Response",
+                "Behavior"
+            ],
+            "paragraphs": "Cluster-to-Cluster Sync is available as a Preview feature. This feature\nand the corresponding documentation may change at any time during\nthe Preview phase. MongoDB does not support unreleased software. Cluster-to-Cluster Sync\nshould not be used in production systems. Reverses the direction of a committed sync operation. For example: In this scenario, you can use the  reverse  endpoint to sync writes\nfrom  cluster1  to  cluster0 . You have a  COMMITTED  sync operation. cluster0  is the source and  cluster1  is the destination. After the sync operation is  COMMITTED , new writes occur only on\nthe destination cluster. The source cluster will not accept new\nwrites. To use the  reverse  endpoint: You must have started your original sync operation with the\n reversible  and  enableUserWriteBlocking  options set to\n true . mongosync  must be in the  COMMITTED  state. Source and destination clusters must be MongoDB 6.0 or later. Unique indexes  on the original source\ncluster must be formatted properly. If an upgraded cluster has unique\nindexes that were created in MongoDB 4.2 or earlier, you must\n resync  all of the nodes in the\noriginal source cluster before reversing. This endpoint does not use HTTP request body parameters. However, you\n must  specify the  --data  option with an empty object  { } . Field Type Description success boolean When the request is successful, this value is  true . error string If an error occurred, indicates the name of the error. This field\nis omitted from the response when  success  is  true . errorDescription string Detailed description of the error that occurred. This field is\nomitted from the response when  success  is  true . The following example reverses the direction of a committed sync operation. If the  reverse  request is successful,  mongosync  enters the\n RUNNING  state. The synchronization continues in the reverse\ndirection from the original sync job. You do not need to restart the\nentire sync process to copy the original data. To view the mapping direction for the synchronization of the source and\ndestination clusters, use the  progress \nendpoint and check the  directionMapping  object.",
+            "code": [
+                {
+                    "lang": "http",
+                    "value": "POST /api/v1/reverse"
+                },
+                {
+                    "lang": "shell",
+                    "value": "curl localhost:27182/api/v1/reverse -XPOST --data '{ }'\n"
+                },
+                {
+                    "lang": "json",
+                    "value": "{\"success\":true}\n"
+                }
+            ],
+            "preview": "Reverses the direction of a committed sync operation.",
+            "tags": null,
+            "facets": null
+        },
+        {
+            "slug": "reference/mongosync",
+            "title": "mongosync",
+            "headings": [
+                "Description",
+                "Options",
+                "Global Options",
+                "Behavior",
+                "Cluster Independence",
+                "Configuration File",
+                "Consistency",
+                "Profiling",
+                "Sharded Clusters",
+                "Views",
+                "Write Blocking",
+                "Examples"
+            ],
+            "paragraphs": "Cluster-to-Cluster Sync is available as a Preview feature. This feature\nand the corresponding documentation may change at any time during\nthe Preview phase. MongoDB does not support unreleased software. Cluster-to-Cluster Sync\nshould not be used in production systems. The  mongosync  binary is the primary process used in\nCluster-to-Cluster Sync.  mongosync  migrates data from one cluster to\nanother and can keep the clusters in continuous sync. This document provides a complete overview of the  mongosync  command\nline options. Both the source cluster and destination cluster must use MongoDB\n6.0 or later. mongosync  supports replica sets and sharded clusters. Standalone MongoDB instances are not supported.  Convert the\nstandalone instance  to a\nreplica set before using Cluster-to-Cluster Sync. To set the  --cluster0  option from a configuration file,\nsee the  cluster0  setting. Sets the  connection URI  for the first cluster.\nThe first cluster can serve as either the source or the destination\nin the sync process. Designate the source and destination clusters\nin the call to the  start  API endpoint. For more information on connecting  mongosync , see\n Connections . To set the  --cluster1  option from a configuration file,\nsee the  cluster1  setting. Sets the  connection URI  for the first cluster.\nThe first cluster can serve as either the source or the destination\nin the sync process. Designate the source and destination clusters\nin the call to the  start  API endpoint. For more information on connecting  mongosync , see\n Connections . Sets the path to the configuration file. For more information, see  Cluster Independence . Prints usage information to stdout. To set the  --id  option from a configuration file,\nsee the  id  setting. Sets an identifier for the  mongosync  instance. Use this  option  when running multiple instances of  mongosync  on a sharded\ncluster, to synchronize the shards individually. The identifier value for this  option  must correspond to the shard ID of the\nshard it syncs.  To find the shard ID, use the  listShards  command. To set the  --logPath  option from a configuration file,\nsee the  logPath  setting. Sets the path to the log directory. Cluster-to-Cluster Sync writes logs\nto files in this directory. To set the  --port  option from a configuration file,\nsee the  port  setting. Default :  27182 Sets the port used by the HTTP server for the Cluster-to-Cluster Sync\nHTTP API. To set the  --verbosity  option from a configuration file,\nsee the  verbosity  setting. Default :  INFO Sets the verbosity level to use in log messages.\nCluster-to-Cluster Sync logs all messages at the specified level and\nany messages at lower levels. The  --verbosity   option  supports the following values: TRACE DEBUG INFO WARN ERROR FATAL PANIC Prints  mongosync  version information to stdout. mongosync  synchronizes collection data between a source cluster and\ndestination cluster.  mongosync  does not synchronize  users  or  roles . As a result, you can create\nusers with different access permissions on each cluster. Options for  mongosync  can be set in a YAML configuration file. Use\nthe  --config  option. For example: For information on available settings, see  Configuration . mongosync  supports  eventual consistency  on the destination\ncluster. Read Consistency is not guaranteed on the destination cluster,\nthe source and destination clusters may differ at a given point in\ntime. However, if new writes are halted on the source cluster, the\nsource and destination clusters will eventually hold the same data. Individual writes may be reordered or combined as they are relayed from\nsource to destination. For a given document, the total number of writes\nmay differ between source and destination. Transactions may appear non-atomically on the destination cluster.\nRetryable writes may not be retryable on the destination cluster. If profiling is enabled on a source database, MongoDB creates a special\ncollection named  <db>.system.profile . After synchronization is\ncomplete, Cluster-to-Cluster Sync will not drop the\n <db>.system.profile  collection from the destination even if the\nsource database is dropped at a later time. The  <db>.system.profile \ncollection will not change the accuracy of user data on the\ndestination. Cluster-to-Cluster Sync supports replication between sharded clusters.\nIndividual shards are replicated in parallel from the source cluster to\nthe destination cluster, however a  chunk migration  or similar source update could move\ndocuments to a new source shard during replication. Even if documents move between source shards during replication,\nCluster-to-Cluster Sync maintains the  eventual consistency \nguarantee on the destination cluster. If a database with views is dropped on the source, the destination may\nshow an empty  system.views  collection in that database. The empty\n system.views  collection will not change the accuracy of user\ndata on the destination. By default, write-blocking is not enabled during synchronization. When\nwrite-blocking is enabled,  mongosync  blocks writes: To enable write-blocking, use the  start API \nto set  enableUserWriteBlocking  to  true . Reverse synchronization  requires\nwrite-blocking. To enable reverse synchronization between the source\nand destination clusters, use the  start API  to initiate replication\nwith  reversible  and  enableUserWriteBlocking  set to  true .\nThe options must be set when replication begins, they cannot be updated\nlater. On the destination cluster during replication On the source cluster while committing To set  enableUserWriteBlocking , the  mongosync  user must have a\nrole that includes the  setUserWriteBlockMode  and\n bypassWriteBlockingMode  ActionTypes. When using  enableUserWriteBlocking , writes are only blocked for users\nthat do not have the  bypassWriteBlockingMode  ActionType. Users\nwho have this ActionType are able to perform writes. Deploy a source and a destination cluster. Initialize Cluster-to-Cluster Sync: Use the appropriate connection strings for the  --cluster0 \nand  --cluster1  options so that they can connect to your\nreplica sets. To start the synchronization process, use an HTTP client such as\ncURL to send the  start  command to  mongosync : Example Output:",
+            "code": [
+                {
+                    "lang": "console",
+                    "value": "$ mongosync --config /etc/mongosync.conf"
+                },
+                {
+                    "lang": "bash",
+                    "value": "mongosync \\\n     --cluster0 'mongodb://192.0.2.10:27017,192.0.2.11:27017,192.0.2.12:27017' \\\n     --cluster1 'mongodb://192.0.2.20:27017,192.0.2.21:27017,192.0.2.22:27017'"
+                },
+                {
+                    "lang": "bash",
+                    "value": "curl localhost:27182/api/v1/start -X POST \\\n      --data '{ \"source\": \"cluster0\", \"destination\": \"cluster1\" }'"
+                },
+                {
+                    "lang": "json",
+                    "value": "{ \"success\": true }"
+                }
+            ],
+            "preview": "To set the --cluster0 option from a configuration file,\nsee the cluster0 setting.",
+            "tags": null,
+            "facets": null
+        },
+        {
+            "slug": "reference/api/start",
+            "title": "start",
+            "headings": [
+                "Description",
+                "Requirements",
+                "State",
+                "User Write Blocking",
+                "Request",
+                "Request Body Parameters",
+                "Response",
+                "Example 1 - Start a Standard Sync Job",
+                "Request",
+                "Response",
+                "Example 2 - Start a Reversible Sync Job",
+                "Request",
+                "Response",
+                "Behavior"
+            ],
+            "paragraphs": "Cluster-to-Cluster Sync is available as a Preview feature. This feature\nand the corresponding documentation may change at any time during\nthe Preview phase. MongoDB does not support unreleased software. Cluster-to-Cluster Sync\nshould not be used in production systems. Starts the synchronization between a source and destination cluster. To use the  start  endpoint,  mongosync  must be in the  IDLE \nstate. To set a custom role for the  mongosync  user: Ensure that you use this configured  mongosync  user in the connection\nstrings for the  cluster0  or  cluster1  settings when\nyou start  mongosync . To set  enableUserWriteBlocking , the  mongosync  user must have a\nrole that includes the  setUserWriteBlockMode  and\n bypassWriteBlockingMode  ActionTypes. When using  enableUserWriteBlocking , writes are only blocked for users\nthat do not have the  bypassWriteBlockingMode  ActionType. Users\nwho have this ActionType are able to perform writes. To create a custom role, use the  createRole  command: To grant the custom role to the  mongosync  user, use the  grantRolesToUser  command: Parameter Type Necessity Description source string Required Name of the source cluster. destination string Required Name of the destination cluster. reversible boolean Optional If set to  true , enables the synchronization operation to be\nreversed. For more information, see the  reverse  endpoint. Default value is  false . enableUserWriteBlocking boolean Optional If set to  true , blocks writes on the destination cluster\nwhile the synchronization is in progress. After the\nsynchronization is committed to the destination cluster, the\noriginal source cluster blocks writes and the destination cluster\naccepts writes. Default value is  false . Field Type Description success boolean When the request is successful, this value is  true . error string If an error occurred, indicates the name of the error. This field\nis omitted from the response when  success  is  true . errorDescription string Detailed description of the error that occurred. This field is\nomitted from the response when  success  is  true . The following example starts a synchronization job where  cluster0  is\nthe source and  cluster1  is the destination. The following example starts a synchronization job where  cluster0  is\nthe source and  cluster1  is the destination. The  reversible  and\n enableUserWriteBlocking  fields allow the sync to be reversed. If the  start  request is successful,  mongosync  enters the\n RUNNING  state.",
+            "code": [
+                {
+                    "lang": "javascript",
+                    "value": "db.adminCommand( {\n   createRole: \"reverseSync\",\n   privileges: [ {\n       resource: { db: \"\", collection: \"\" },\n       actions: [ \"setUserWriteBlockMode\", \"bypassWriteBlockingMode\" ]\n   } ],\n   roles: []\n} )"
+                },
+                {
+                    "lang": "javascript",
+                    "value": "db.adminCommand( {\n   grantRolesToUser: \"mongosync-user\",\n   roles: [ { role: \"reverseSync\", db: \"admin\" } ]\n} )"
+                },
+                {
+                    "lang": "http",
+                    "value": "POST /api/v1/start"
+                },
+                {
+                    "lang": "shell",
+                    "value": "curl localhost:27182/api/v1/start -XPOST \\\n--data '\n   {\n      \"source\": \"cluster0\",\n      \"destination\": \"cluster1\"\n   } '\n"
+                },
+                {
+                    "lang": "json",
+                    "value": "{\"success\":true}\n"
+                },
+                {
+                    "lang": "shell",
+                    "value": "curl localhost:27182/api/v1/start -XPOST \\\n--data '\n   {\n      \"source\": \"cluster0\",\n      \"destination\": \"cluster1\",\n      \"reversible\": true,\n      \"enableUserWriteBlocking\": true\n   } '\n"
+                },
+                {
+                    "lang": "json",
+                    "value": "{\"success\":true}\n"
+                }
+            ],
+            "preview": "Starts the synchronization between a source and destination cluster.",
+            "tags": null,
+            "facets": null
+        },
+        {
+            "slug": "reference/api/commit",
+            "title": "commit",
+            "headings": [
+                "Description",
+                "Requirements",
+                "Request",
+                "Request Body Parameters",
+                "Response",
+                "Example",
+                "Confirm that the Synchronization is Ready",
+                "Request",
+                "Response",
+                "Send the Commit Request",
+                "Request",
+                "Response",
+                "Behavior"
+            ],
+            "paragraphs": "Commits the synchronization operation to the destination cluster. Before using the  commit  endpoint: Stop your application. This ensures that no additional writes occur on\nthe source cluster. Use the  progress  endpoint to confirm the\nfollowing values: state: \"RUNNING\" canCommit: true lagTimeSeconds  is near  0  ( Recommended, but not required ) lagTimeSeconds  indicates the time between the last applied\nevent and time of the current latest event. When you send a\n commit  request,  mongosync  enters the  COMMITTING  state\nfor the amount of seconds reported by  lagTimeSeconds , and\nthen transitions to the  COMMITTED  state. When  lagTimeSeconds  is  0 , the source and destination\nclusters are in a consistent state. This endpoint does not use HTTP request body parameters. However, you\n must  specify the  --data  option with an empty object  { } . Field Type Description success boolean When the request is successful, this value is  true . error string If an error occurred, indicates the name of the error. This field\nis omitted from the response when  success  is  true . errorDescription string Detailed description of the error that occurred. This field is\nomitted from the response when  success  is  true . The following example commits the synchronization operation to the\ndestination cluster. Before sending a request to the  commit  endpoint, use the\n progress  endpoint to confirm that the\nsynchronization is ready to be committed. The  progress  endpoint returned  \"canCommit\":true , which means\nthat the  commit  request can run successfully. The following command sends a request to the  commit  endpoint: If the  commit  request is successful,  mongosync  enters the\n COMMITTING  state, then automatically transitions to the\n COMMITTED  state.",
+            "code": [
+                {
+                    "lang": "http",
+                    "value": "POST /api/v1/commit"
+                },
+                {
+                    "lang": "shell",
+                    "value": "curl localhost:27182/api/v1/progress -XGET\n"
+                },
+                {
+                    "lang": "shell",
+                    "value": "{\n   \"progress\":\n      {\n         \"state\":\"RUNNING\",\n         \"canCommit\":true,\n         \"info\":\"change event application\",\n         \"lagTimeSeconds\":0,\n         \"collectionCopy\":\n            {\n               \"estimatedTotalBytes\":694,\n               \"estimatedCopiedBytes\":694\n            },\n         \"directionMapping\":\n            {\n               \"Source\":\"cluster0: localhost:27017\",\n               \"Destination\":\"cluster1: localhost:27018\"\n            }\n      }\n}\n"
+                },
+                {
+                    "lang": "shell",
+                    "value": "curl localhost:27182/api/v1/commit -XPOST --data '{ }'\n"
+                },
+                {
+                    "lang": "json",
+                    "value": "{\"success\":true}\n"
+                }
+            ],
+            "preview": "Commits the synchronization operation to the destination cluster.",
+            "tags": null,
+            "facets": null
+        }
+    ]
+}
